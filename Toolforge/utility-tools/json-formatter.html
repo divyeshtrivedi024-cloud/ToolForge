@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Validator | Clean & Debug JSON Online</title>
+    <meta name="description" content="Free online JSON Formatter and Validator. Beautify, minify, and debug your JSON data instantly with our secure, privacy-first developer tool.">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
+            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        
+        .tool-card { 
+            background: var(--card); border: 1px solid var(--border); 
+            padding: 40px; border-radius: 32px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
+        }
+        h1 { font-family: 'Outfit'; font-size: 2.5rem; color: var(--primary); text-align: center; margin-bottom: 10px; }
+        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 35px; }
+        
+        textarea { 
+            width: 100%; height: 320px; padding: 20px; background: #000; 
+            border: 1px solid var(--border); border-radius: 16px; color: #00ff88; 
+            font-family: 'Fira Code', monospace; font-size: 0.9rem; outline: none; resize: vertical; box-sizing: border-box;
+        }
+        textarea:focus { border-color: var(--primary); }
+
+        .btn-group { display: flex; gap: 15px; margin-top: 25px; }
+        .btn { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit'; }
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 242, 255, 0.4); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
+        .btn-outline:hover { background: var(--glass); border-color: var(--primary); }
+        a[href="index.html"]:hover {
+    color: var(--primary) !important;
+    transform: translateX(-5px);
+}
+
+        /* SEO & FAQ */
+        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
+        h2 { font-family: 'Outfit'; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .faq-item h3 { font-size: 1.1rem; margin-top: 0; color: #fff; margin-bottom: 10px; }
+        .faq-item p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section class="tool-card">
+        <a href="index.html" style="
+    display: inline-flex; 
+    align-items: center; 
+    text-decoration: none; 
+    color: #94a3b8; 
+    font-size: 0.9rem; 
+    font-weight: 600; 
+    margin-bottom: 20px; 
+    transition: 0.3s;
+    gap: 8px;
+">
+    <span style="font-size: 1.2rem;">←</span> Back to Dev Hub
+</a>
+        <h1>JSON Formatter</h1>
+        <p class="subtitle">Validate, beautify, and minify your JSON data in real-time.</p>
+
+        <textarea id="jsonInput" placeholder="Paste your raw JSON code here..."></textarea>
+        
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="formatJSON()">Beautify JSON</button>
+            <button class="btn btn-outline" onclick="minifyJSON()">Minify</button>
+            <button class="btn btn-outline" onclick="copyJSON()">Copy Code</button>
+        </div>
+    </section>
+
+    <article class="seo-content">
+        <h2>Developer's Guide to JSON</h2>
+        <p>JSON (JavaScript Object Notation) is the backbone of modern web communication. Whether you're working with REST APIs, config files, or NoSQL databases, having clean, readable JSON is essential for debugging and development speed.</p>
+        
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3>What does "Beautifying" do?</h3>
+                <p>Beautification takes a "minified" or cramped block of JSON and adds proper indentation (4 spaces) and line breaks. This makes the data hierarchy easy for humans to read.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Why is my JSON invalid?</h3>
+                <p>Common errors include missing double quotes around keys, trailing commas after the last item in a list, or mismatched curly braces. Our validator will highlight these issues.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is my data safe?</h3>
+                <p>Yes. Our JSON Formatter runs entirely on the client-side. We never store, log, or send your data to any server. Your API keys and sensitive data stay in your browser.</p>
+            </div>
+            <div class="faq-item">
+                <h3>JSON vs XML?</h3>
+                <p>JSON is significantly more lightweight and faster to parse for JavaScript applications compared to XML, which is why it has become the industry standard for APIs.</p>
+            </div>
+        </div>
+    </article>
+</div>
+
+<script>
+    const input = document.getElementById('jsonInput');
+    function formatJSON() {
+        try {
+            const obj = JSON.parse(input.value);
+            input.value = JSON.stringify(obj, null, 4);
+            input.style.color = "#00ff88";
+        } catch (e) {
+            alert("Error: " + e.message);
+            input.style.color = "#ff4444";
+        }
+    }
+    function minifyJSON() {
+        try {
+            const obj = JSON.parse(input.value);
+            input.value = JSON.stringify(obj);
+            input.style.color = "#00ff88";
+        } catch (e) {
+            alert("Error: " + e.message);
+        }
+    }
+    function copyJSON() {
+        input.select();
+        document.execCommand('copy');
+        alert("Copied!");
+    }
+</script>
+</body>
+</html>

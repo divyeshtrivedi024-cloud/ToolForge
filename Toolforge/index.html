@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolForge | 500+ Free AI Content & Developer Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #fdfdfd;
+            --glass: rgba(255, 255, 255, 0.7);
+            --text: #0f172a;
+            --primary: #6366f1; 
+            --secondary: #06b6d4; 
+            --accent: #f43f5e; 
+            --card-border: #e2e8f0;
+            --orb-1: rgba(99, 102, 241, 0.1);
+            --orb-2: rgba(6, 182, 212, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #030712;
+            --glass: rgba(17, 24, 39, 0.7);
+            --text: #f1f5f9;
+            --card-border: #1f2937;
+            --orb-1: rgba(99, 102, 241, 0.15);
+            --orb-2: rgba(255, 0, 127, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            transition: background 0.5s ease;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- AMBIENT BACKGROUND GLOWS --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--orb-1); top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: var(--orb-2); bottom: -10%; right: -10%; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 50px); }
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--text);
+            transition: 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--primary); transform: scale(1.05); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 120px 5% 80px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            margin-bottom: 25px;
+            letter-spacing: -3px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, var(--text) 0%, var(--primary) 50%, var(--text) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        /* --- Grid & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            padding: 0 8% 100px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%); transition: 0.6s; z-index: 1;
+        }
+
+        .card:hover { transform: translateY(-12px); }
+        .card:hover::after { transform: translateX(100%); }
+
+        /* Hub Colors */
+        .generator-hub-card:hover { border-color: var(--primary); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
+        .content-hub-card:hover { border-color: #ff007f; box-shadow: 0 20px 40px rgba(255, 0, 127, 0.2); }
+        .utility-hub-card:hover { border-color: #00f2ff; box-shadow: 0 20px 40px rgba(0, 242, 255, 0.2); }
+        .social-hub-card:hover { border-color: #00ff88; box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2); }
+        .web-hub-card:hover { border-color: #f59e0b; box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
+
+        .icon { font-size: 2.8rem; margin-bottom: 20px; display: block; }
+        h3 { font-family: 'Outfit'; font-size: 1.6rem; margin: 0 0 12px 0; }
+        .card p { font-size: 1rem; color: #64748b; margin: 0; line-height: 1.5; }
+        
+        .badge {
+            position: absolute; top: 20px; right: 20px;
+            padding: 5px 12px; border-radius: 50px; font-size: 0.7rem;
+            font-weight: 800; text-transform: uppercase;
+            background: var(--card-border); color: var(--text);
+        }
+        .badge.coming { background: #334155; color: #fff; }
+
+        /* --- SEO Section --- */
+        .seo-section { padding: 100px 8%; background: var(--glass); border-top: 1px solid var(--card-border); }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; }
+        .seo-item h4 { font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
+
+        footer { text-align: center; padding: 60px; opacity: 0.5; font-size: 0.9rem; }
+    </style>
+</head>
+<body data-theme="light">
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    #globalSearch:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    }
+</style>
+
+    <div class="bg-glow">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <nav>
+        <div class="logo">ToolForge.</div>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Mode</button>
+    </nav>
+
+    <header class="hero">
+        <h1>Professional Tools for <span class="shimmer">Modern Builders</span></h1>
+        <p>A lightning-fast ecosystem of 500+ free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
+    </header>
+
+    <main class="grid">
+        <a href="Generators/index.html" class="card generator-hub-card">
+            <span class="icon">🏷️</span>
+            <h3>AI Name Engines</h3>
+            <p>SaaS, Gaming, and Brand name generators powered by linguistic logic.</p>
+        </a>
+
+        <a href="creators/index.html" class="card content-hub-card">
+            <span class="icon">🎬</span>
+            <h3>Content Creator Hub</h3>
+            <p>Viral hooks, script outlines, and thumbnail optimization tools for 10x growth.</p>
+        </a>
+
+        <a href="utility-tools/index.html" class="card utility-hub-card">
+            <span class="icon">⚙️</span>
+            <h3>Developer Utilities</h3>
+            <p>Clean, minimal code formatters, unit converters, and regex helpers for devs.</p>
+        </a>
+
+        <div class="card social-hub-card">
+            <div class="badge coming">Coming Soon</div>
+            <span class="icon">📈</span>
+            <h3>Social Growth Suite</h3>
+            <p>Bio optimizers, caption builders, and hashtag analytics for Instagram & TikTok.</p>
+        </div>
+
+        <div class="card web-hub-card">
+            <div class="badge coming">Coming Soon</div>
+            <span class="icon">🌐</span>
+            <h3>Web-Master Suite</h3>
+            <p>Schema generators, robots.txt builders, and meta-tag optimization for SEO pros.</p>
+        </div>
+    </main>
+
+    <section class="seo-section">
+        <div class="seo-grid">
+            <div class="seo-item">
+                <h4>Engineered for Speed</h4>
+                <p>Built with vanilla JS and optimized CSS. No bloat, no trackers, just raw utility that loads in under 300ms.</p>
+            </div>
+            <div class="seo-item">
+                <h4>Local & Private</h4>
+                <p>Your data stays on your machine. We use client-side processing to ensure 100% privacy for all your inputs.</p>
+            </div>
+            <div class="seo-item">
+                <h4>Open Access</h4>
+                <p>No paywalls. No "Premium" tiers. Every tool in the ToolForge ecosystem is free for everyone, forever.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 ToolForge Hub • Built for the Open Web
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
+    
+</body>
+</html>

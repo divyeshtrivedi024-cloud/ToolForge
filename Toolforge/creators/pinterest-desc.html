@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinterest Aesthetic Gen | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
+        
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 60px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+        input, select { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        input:focus { border-color: var(--primary); }
+        
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 0, 127, 0.6); }
+        
+        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .pin-card { background: var(--glass); padding: 30px; border-radius: 24px; border: 1px solid var(--border); text-align: left; white-space: pre-wrap; position: relative; cursor: pointer; transition: 0.3s; }
+        .pin-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); }
+        .copy-hint { position: absolute; top: 15px; right: 20px; font-size: 0.7rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+
+        .info-header { text-align: left; margin: 80px 0 30px; }
+        .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin: 0; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
+        .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; transition: 0.3s; }
+        .info-card strong { color: #fff; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+        .info-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← Creator Hub</a>
+    <section class="tool-card">
+        <h1>Pinterest Aesthetic Gen</h1>
+        <p>SEO-optimized descriptions for viral Pins and Moodboards.</p>
+        <div class="input-group">
+            <input type="text" id="topicInput" placeholder="What is the Pin about? (e.g. Minimalist Bedroom, Dark Academia Fashion)">
+            <select id="vibeInput">
+                <option value="mood">Moodboard / Lifestyle</option>
+                <option value="how">Tutorial / Step-by-Step</option>
+                <option value="product">Product / Shopping</option>
+            </select>
+        </div>
+        <button class="gen-btn" onclick="generatePins()">Generate 3 Pin Descriptions</button>
+        <div id="result-list"></div>
+    </section>
+
+    <div class="info-header">
+        <h2>Pinterest SEO & FAQ</h2>
+    </div>
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>What is 'Aesthetic' SEO?</strong>
+            <p>Pinterest users search for 'vibes'. Use descriptive adjectives like 'Minimalist', 'Vintage', or 'Ethereal' to show up in related feeds.</p>
+        </div>
+        <div class="info-card">
+            <strong>Do hashtags work?</strong>
+            <p>In 2026, Pinterest prioritizes natural language over hashtag clouds. Use 2-3 specific tags max; focus more on the description text.</p>
+        </div>
+        <div class="info-card">
+            <strong>How to get more 'Saves'?</strong>
+            <p>Pins with a 'Call to Action' like "Save this for your next project" have a 3x higher save rate than those without.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function generatePins() {
+    let topic = document.getElementById('topicInput').value.trim() || "this aesthetic";
+    const vibe = document.getElementById('vibeInput').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // Smart Cleaning
+    topic = topic.replace(/my pin about/gi, "").replace(/aesthetic/gi, "").trim();
+    topic = topic.charAt(0).toUpperCase() + topic.slice(1);
+
+    const database = {
+        mood: [
+            `Entering my ${topic} era. ✨ This vibe is everything for 2026. Whether you're building a moodboard or just looking for inspiration, this is it.\n\n☁️ Save for your aesthetic goals.\n#${topic.replace(/\s+/g, '')} #vibecheck #aesthetic`,
+            `The ultimate guide to the ${topic} aesthetic. 🌿 Found the perfect balance between comfort and style. Which detail is your favorite?\n\n✨ Tap for more inspiration.\n#${topic.replace(/\s+/g, '')} #moodboard #lifestyle`,
+            `Current obsession: ${topic}. 💎 Capturing the light and the small details that make this style so unique. What do you think of this look?\n\n🐚 Save this pin for later.\n#${topic.replace(/\s+/g, '')} #details #inspiration`,
+            `Everything about ${topic} just feels right. 🕯️ If you love moody lighting and clean lines, this is your sign to start your own board.\n\n🧸 Save for your next project.\n#${topic.replace(/\s+/g, '')} #homedecor #aesthetic`,
+            `A little bit of ${topic} magic for your feed. ✨ Sometimes the simplest things are the most beautiful. \n\n🕊️ Follow for more aesthetic content.\n#${topic.replace(/\s+/g, '')} #aestheticvibes`
+        ],
+        how: [
+            `How to achieve the perfect ${topic} look in 5 easy steps. 🛠️ I’ve spent months perfecting this and I’m finally sharing the secret.\n\n📂 Save this to try it tonight.\n#${topic.replace(/\s+/g, '')} #tutorial #diy`,
+            `The beginner's guide to ${topic}. 🎓 Everything you need to know to get started without breaking the bank. Which step surprised you most?\n\n📌 Save for your weekend project.\n#${topic.replace(/\s+/g, '')} #hacks #tips`,
+            `3 ${topic} hacks you’ll wish you knew sooner. 💡 These are the small changes that make a massive difference in your results.\n\n✨ Follow for more daily tips.\n#${topic.replace(/\s+/g, '')} #learning #guide`,
+            `Mastering ${topic} has never been easier. ✅ Check out the link in bio for the full breakdown and resources.\n\n📂 Save this pin so you don't lose it.\n#${topic.replace(/\s+/g, '')} #masterclass`,
+            `My ${topic} routine revealed. 🎞️ Taking you behind the scenes of how I create this specific look every single time.\n\n📌 Save to your board.\n#${topic.replace(/\s+/g, '')} #behindthescenes`
+        ],
+        product: [
+            `Looking for the best ${topic} finds? 🛍️ I’ve curated the ultimate list of essentials for 2026. Link in bio to shop the collection.\n\n✨ Save this for your next shopping trip.\n#${topic.replace(/\s+/g, '')} #wishlist #shopping`,
+            `The ${topic} piece you didn't know you needed. 💎 High quality, timeless, and perfectly aesthetic. Get yours before it’s gone.\n\n🛍️ Tap the link to shop now.\n#${topic.replace(/\s+/g, '')} #musthave #style`,
+            `Upgrade your space with ${topic}. 🏠 Small changes, huge impact. Check out our latest drop for the ultimate home upgrade.\n\n✨ Save this for interior inspo.\n#${topic.replace(/\s+/g, '')} #homedesign #finds`,
+            `Unboxing the newest ${topic} arrivals. 📦 The quality is even better than I expected. Which one is your favorite?\n\n🧸 Save to your wishlist.\n#${topic.replace(/\s+/g, '')} #unboxing #aesthetic`,
+            `The ${topic} gift guide is here. 🎁 Perfect for the person who has everything but wants that specific vibe.\n\n🛍️ Link in bio to shop.\n#${topic.replace(/\s+/g, '')} #giftideas`
+        ]
+    };
+
+    let selected = [...database[vibe]];
+    selected.sort(() => Math.random() - 0.5);
+
+    selected.slice(0, 3).forEach(text => {
+        const div = document.createElement('div');
+        div.className = 'pin-card';
+        div.onclick = function() { copyToClipboard(text, this); };
+        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${text}`;
+        resultList.appendChild(div);
+    });
+}
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const hint = element.querySelector('.copy-hint');
+        hint.innerText = "COPIED!";
+        hint.style.color = "#00ff88";
+        setTimeout(() => { hint.innerText = "One-Tap Copy"; hint.style.color = "var(--primary)"; }, 2000);
+    });
+}
+</script>
+</body>
+</html>

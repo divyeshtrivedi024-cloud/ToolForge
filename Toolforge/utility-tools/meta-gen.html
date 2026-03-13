@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator | SEO & Social Media Preview Tool</title>
+    <meta name="description" content="Generate perfect SEO meta tags for Google, Facebook, and Twitter. Preview your social media cards in real-time. Free, secure, and fast.">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
+            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        
+        .back-btn { display: inline-flex; align-items: center; text-decoration: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; transition: 0.3s; gap: 8px; }
+        .back-btn:hover { color: var(--primary); transform: translateX(-5px); }
+
+        .tool-card { 
+            background: var(--card); border: 1px solid var(--border); 
+            padding: 40px; border-radius: 32px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        @media (max-width: 850px) { .tool-card { grid-template-columns: 1fr; } }
+
+        h1 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin: 0 0 10px 0; }
+        
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+        input, textarea { 
+            width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); 
+            border-radius: 10px; color: white; font-size: 0.9rem; outline: none; box-sizing: border-box;
+        }
+
+        /* Preview Box */
+        .preview-box { background: #fff; color: #1a1a1b; padding: 15px; border-radius: 12px; margin-top: 10px; }
+        .preview-url { font-size: 0.8rem; color: #5f6368; }
+        .preview-title { font-size: 1.1rem; color: #1a0dab; margin: 4px 0; cursor: pointer; }
+        .preview-desc { font-size: 0.85rem; color: #4d5156; }
+
+        pre { 
+            background: #000; padding: 20px; border-radius: 16px; border: 1px solid var(--border);
+            color: #00ff88; font-family: 'Fira Code', monospace; font-size: 0.8rem; overflow-x: auto;
+        }
+
+        .btn-primary { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--primary); color: #000; font-weight: 700; cursor: pointer; margin-top: 20px; }
+
+        /* SEO & FAQ */
+        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
+        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back-btn"><span>←</span> Back to Dev Hub</a>
+
+    <section class="tool-card">
+        <div class="inputs">
+            <h1>Meta Tag Gen</h1>
+            <div class="input-group">
+                <label>Site Title</label>
+                <input type="text" id="title" placeholder="e.g. ToolForge | Best Dev Tools" oninput="update()">
+            </div>
+            <div class="input-group">
+                <label>Description</label>
+                <textarea id="desc" rows="3" placeholder="Describe your site for Google..." oninput="update()"></textarea>
+            </div>
+            <div class="input-group">
+                <label>Site URL</label>
+                <input type="text" id="url" placeholder="https://mysite.com" oninput="update()">
+            </div>
+        </div>
+
+        <div class="output-area">
+            <label>Google Search Preview</label>
+            <div class="preview-box">
+                <div class="preview-url" id="pUrl">https://mysite.com</div>
+                <div class="preview-title" id="pTitle">Your Site Title Here</div>
+                <div class="preview-desc" id="pDesc">Your site description will appear here as a snippet for search engine users.</div>
+            </div>
+
+            <label style="margin-top: 25px;">Generated Code</label>
+            <pre id="codeOutput"></pre>
+            <button class="btn-primary" onclick="copyCode()">Copy Meta Tags</button>
+        </div>
+    </section>
+
+    <article class="seo-content">
+        <h2>What are Meta Tags?</h2>
+        <p>Meta tags are snippets of text that describe a page's content; the meta tags don't appear on the page itself, but only in the page's source code. They are essential for <strong>SEO (Search Engine Optimization)</strong> as they tell search engines what your site is about.</p>
+        
+        <div class="faq-item">
+            <h3>Why is the "Description" tag important?</h3>
+            <p>While the description tag doesn't directly influence rankings, it significantly impacts your <strong>Click-Through Rate (CTR)</strong>. A well-written meta description acts as an advertisement for your site on the search results page.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Do I need tags for Social Media?</h3>
+            <p>Yes. Tags like <code>og:title</code> and <code>twitter:card</code> ensure that when someone shares your URL, it appears as a rich card with a high-quality image and title, rather than just a plain link.</p>
+        </div>
+    </article>
+</div>
+
+<script>
+    function update() {
+        const t = document.getElementById('title').value || "Your Site Title Here";
+        const d = document.getElementById('desc').value || "Your site description will appear here...";
+        const u = document.getElementById('url').value || "https://mysite.com";
+
+        document.getElementById('pTitle').innerText = t;
+        document.getElementById('pDesc').innerText = d;
+        document.getElementById('pUrl').innerText = u;
+
+        const code = `<title>${t}</title>
+<meta name="title" content="${t}">
+<meta name="description" content="${d}">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="${u}">
+<meta property="og:title" content="${t}">
+<meta property="og:description" content="${d}">`;
+
+        document.getElementById('codeOutput').innerText = code;
+    }
+
+    function copyCode() {
+        const range = document.createRange();
+        range.selectNode(document.getElementById('codeOutput'));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        alert("Meta tags copied to clipboard!");
+    }
+
+    update();
+</script>
+</body>
+</html>

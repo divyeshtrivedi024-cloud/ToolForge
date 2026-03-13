@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Stream Namer | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.1);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
+        
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+        input, select { width: 100%; max-width: 500px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        input:focus, select:focus { border-color: var(--primary); }
+        
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 0, 127, 0.6); }
+        
+        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .stream-card { background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); text-align: left; position: relative; cursor: pointer; transition: 0.3s; }
+        .stream-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.05); }
+        .copy-hint { position: absolute; top: 10px; right: 20px; font-size: 0.7rem; color: var(--primary); font-weight: 700; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
+        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← Creator Hub</a>
+    <section class="tool-card">
+        <h1>Twitch Stream Namer</h1>
+        <p>Hype titles to help you stand out on the browse page.</p>
+        <div class="input-group">
+            <input type="text" id="gameInput" placeholder="What are you playing? (e.g. Valorant, Chatting)">
+            <select id="vibe-choice">
+                <option value="competitive">Competitive / Ranked</option>
+                <option value="chill">Chill / Community</option>
+                <option value="challenge">Challenges / Hardcore</option>
+            </select>
+        </div>
+        <button class="gen-btn" onclick="generateTitles()">Generate 5 Hype Titles</button>
+        <div id="result-list"></div>
+    </section>
+
+    <section class="seo-content">
+        <h2>Growing Your Stream in 2026</h2>
+        <div class="tips-grid">
+            <div class="tip-card"><strong>01. Interactive Titles</strong> Titles that include [Sub Goal] or [Viewer Games] have a 40% higher click rate than generic ones.</div>
+            <div class="tip-card"><strong>02. Be Specific</strong> Instead of 'Playing Valorant,' try 'Road to Radiant - Game 1/10.' Progress attracts viewers.</div>
+            <div class="tip-card"><strong>03. Capitalize Key Words</strong> Using ALL CAPS for one or two words helps your title pop against the dark Twitch UI.</div>
+        </div>
+    </section>
+</div>
+
+<script>
+function generateTitles() {
+    let game = document.getElementById('gameInput').value.trim() || "Gaming";
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const database = {
+        competitive: [
+            `THE GRIND NEVER STOPS | ${game} Ranked`,
+            `${game} Road to Rank #1 | !SubGoal`,
+            `CRISP CLEAN LOCKS 🎯 | ${game} Pro Gameplay`,
+            `Is Today The Day? | ${game} High Elo Climb`,
+            `UNSTOPPABLE? 🏆 | ${game} Win Streak Grind`,
+            `LOCKING IN 🔒 | No Losses Allowed | ${game}`,
+            `TOP 1% PEAK? | ${game} Sweat Mode On`,
+            `THE FINAL BOSS 😈 | Dominating ${game} Today`,
+            `I Haven't Slept. | ${game} Rank Push`,
+            `PERFECT GAMEPLAY ONLY | ${game} !Discord`
+        ],
+        chill: [
+            `Vibes & ${game} | Come Hang Out! ✨`,
+            `Lofi, ${game}, & Chatting | Just Vibe With Me`,
+            `Comfy ${game} Stream | Grab a Coffee ☕️`,
+            `No Stress, Just ${game} | !Socials`,
+            `Late Night ${game} Adventures | Pull Up 🌙`,
+            `Is anyone actually awake? | ${game} & Chill`,
+            `Building a Community | ${game} + Chatting`,
+            `Low Key Energy | Playing ${game} with Chat`,
+            `The Safest Space on Twitch | ${game} Vibes`,
+            `Tell me about your day! | ${game} Chill Stream`
+        ],
+        challenge: [
+            `I LOSE = I GIFT SUBS 🎁 | ${game} Challenge`,
+            `CAN WE SURVIVE? 💀 | Hardcore ${game} Run`,
+            `Playing ${game} but EVERY DEATH is 50 Pushups`,
+            `100% COMPLETION RUN | ${game} Perfectionist`,
+            `World Record Attempt? | ${game} Speedrun`,
+            `If I Lose, The Stream Ends. | ${game} High Stakes`,
+            `The Hardest ${game} Mod Ever | Can We Beat It?`,
+            `Blindfolded ${game}? | Don't ask why.`,
+            `Sub Goal = Scary Game | ${game} Challenge`,
+            `ONLY [Weapon/Skill] RUN | ${game} Challenge`
+        ]
+    };
+
+    let titles = [...database[vibe]];
+    titles.sort(() => Math.random() - 0.5);
+
+    titles.slice(0, 5).forEach(text => {
+        const div = document.createElement('div');
+        div.className = 'stream-card';
+        div.onclick = function() { copyToClipboard(text, this); };
+        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${text}`;
+        resultList.appendChild(div);
+    });
+}
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const hint = element.querySelector('.copy-hint');
+        hint.innerText = "COPIED!";
+        hint.style.color = "#00ff88";
+        setTimeout(() => {
+            hint.innerText = "One-Tap Copy";
+            hint.style.color = "var(--primary)";
+        }, 2000);
+    });
+}
+</script>
+</body>
+</html>

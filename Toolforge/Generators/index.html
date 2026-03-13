@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Name Generators | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05070a; /* Ultra dark blue-black */
+            --card: #0f172a; 
+            --text: #f1f5f9;
+            --primary: #6366f1; /* Electric Indigo */
+            --accent: #38bdf8; /* Sky Blue glow */
+            --border: #1e293b;
+            --glass: rgba(99, 102, 241, 0.05);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; overflow-x: hidden; }
+        
+        /* Subtle background glow */
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+        
+        .header { text-align: center; margin-bottom: 80px; }
+        .header h1 { font-family: 'Outfit'; font-size: 3.5rem; margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header p { color: #94a3b8; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        
+        .tool-card { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            padding: 35px; 
+            border-radius: 24px; 
+            text-decoration: none; 
+            color: white; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Hover Glow Effect */
+        .tool-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(56, 189, 248, 0.05), transparent);
+            transform: translateX(-100%); transition: 0.6s;
+        }
+
+        .tool-card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--primary); 
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2); 
+        }
+        
+        .tool-card:hover::after { transform: translateX(100%); }
+        
+        .tool-card h3 { font-family: 'Outfit'; font-size: 1.5rem; margin-bottom: 10px; color: var(--accent); transition: 0.3s; }
+        .tool-card:hover h3 { color: #fff; text-shadow: 0 0 10px var(--primary); }
+        
+        .tool-card p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 20px; }
+        
+        .badge { background: var(--glass); color: var(--accent); padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; border: 1px solid var(--border); transition: 0.3s; }
+        .tool-card:hover .badge { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .back-home { display: block; text-align: center; margin-top: 60px; color: #94a3b8; text-decoration: none; font-weight: 600; }
+        .back-home:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div style="margin-bottom: 10px;"><span class="badge">Category 01</span></div>
+        <h1>AI Name Generators</h1>
+        <p>Give your brand, pet, or persona a unique identity with high-performance naming tools.</p>
+    </div>
+
+    <div class="grid">
+        <a href="gamer-names.html" class="tool-card">
+            <h3>Gamer Names</h3>
+            <p>Pro-level tags for streamers and competitive players.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="saas-names.html" class="tool-card">
+            <h3>SaaS & Startups</h3>
+            <p>Modern, brandable names for the next big tech venture.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="clan-names.html" class="tool-card">
+            <h3>Clan & Squad</h3>
+            <p>Unified identities for your gaming community.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="fantasy-names.html" class="tool-card">
+            <h3>Fantasy RPG</h3>
+            <p>Epic, lore-friendly names for characters and worlds.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="aesthetic-usernames.html" class="tool-card">
+            <h3>Aesthetic User</h3>
+            <p>Trendy, soft, and creative handles for social media.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="pet-names.html" class="tool-card">
+            <h3>Pet Names</h3>
+            <p>Find the perfect name for your new best friend.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="podcast-names.html" class="tool-card">
+            <h3>Podcast Titles</h3>
+            <p>Catchy, binge-worthy names based on your topic.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="discord-names.html" class="tool-card">
+            <h3>Discord Servers</h3>
+            <p>Vibe-based names for your community hub.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="clothing-brand-names.html" class="tool-card">
+            <h3>Clothing Brands</h3>
+            <p>Luxury, Streetwear, and Minimalist fashion identities.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+        <a href="alias-generator.html" class="tool-card">
+            <h3>Alias & Persona</h3>
+            <p>Complete fictional dossiers for writers and RPGs.</p>
+            <div><span class="badge">Open Tool</span></div>
+        </a>
+    </div>
+
+    <a href="../index.html" class="back-home">← Back to Main Portal</a>
+</div>
+</body>
+</html>
