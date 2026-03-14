@@ -67,6 +67,28 @@
 
         .back-home { display: block; text-align: center; margin-top: 60px; color: #94a3b8; text-decoration: none; font-weight: 600; }
         .back-home:hover { color: var(--accent); }
+        .back-btn {
+    display: table;        /* This makes the box only as wide as the text inside */
+    margin-left: auto;     /* Pushes from the left */
+    margin-right: auto;    /* Pushes from the right */
+    margin-top: 80px;      /* Keeps your 80px gap from the tools */
+    
+    padding: 16px 40px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+        .back-btn:hover { 
+            color: var(--primary); 
+            border-color: var(--primary); 
+            box-shadow: var(--glow);
+        }
     </style>
 </head>
 <body>
@@ -130,7 +152,7 @@
         </a>
     </div>
 
-    <a href="../index.html" class="back-home">← Back to Main Portal</a>
+    <a href="../index.html" class="back-btn">← Back to Main Portal</a>
 </div>
 </body>
-</html>
+</html>SS
