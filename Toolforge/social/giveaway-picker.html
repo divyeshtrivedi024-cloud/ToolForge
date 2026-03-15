@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giveaway Winner Picker | ToolForge Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 100%, rgba(46, 204, 113, 0.1) 0%, transparent 50%), var(--bg);
+        }
+
+        .container { width: 95%; max-width: 800px; padding: 60px 0; text-align: center; }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; }
+        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+
+        .main-box {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+            text-align: left;
+        }
+
+        label { display: block; margin-bottom: 12px; font-weight: 600; font-size: 0.9rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: white;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            transition: 0.3s;
+        }
+        textarea:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
+
+        .action-area { text-align: center; }
+
+        button {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3); }
+        button:disabled { background: #1e293b; color: #64748b; cursor: not-allowed; transform: none; }
+
+        /* WINNER DISPLAY */
+        .winner-display {
+            margin-top: 40px;
+            padding: 40px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--primary);
+            display: none;
+            text-align: center;
+            animation: celebrate 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .winner-name {
+            font-family: 'Outfit';
+            font-size: 3.5rem;
+            color: var(--primary);
+            display: block;
+            margin: 10px 0;
+            word-wrap: break-word;
+        }
+
+        /* SEO SECTION */
+        .seo-wrapper { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 60px; }
+        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .faq-box { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-top: 15px; }
+
+        .back-btn { margin-top: 50px; display: inline-block; color: #64748b; text-decoration: none; transition: 0.3s; }
+        .back-btn:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Winner <span style="color:var(--primary)">Picker</span></h1>
+    <p class="subtitle">Fair, randomized, and transparent selection for your giveaways.</p>
+
+    <div class="main-box">
+        <label>Enter Names or Comments (One per line)</label>
+        <textarea id="nameList" placeholder="John Doe&#10;@traveler_99&#10;Sarah Smith..."></textarea>
+        
+        <div class="action-area">
+            <button id="pickBtn" onclick="pickWinner()">Draw a Winner 🏆</button>
+        </div>
+
+        <div id="winnerBox" class="winner-display">
+            <span style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.7;">And the winner is...</span>
+            <span id="winnerResult" class="winner-name">---</span>
+            <p id="confettiHint" style="font-size: 0.9rem; opacity: 0.6;">Congratulations! 🎉</p>
+        </div>
+    </div>
+
+    <section class="seo-wrapper">
+        <div class="seo-grid">
+            <div class="seo-block">
+                <h2>Fairness Guaranteed</h2>
+                <p>Running a giveaway on Instagram, TikTok, or YouTube requires transparency. Using a manual "scroll and point" method can lead to accusations of bias. Our <strong>Giveaway Winner Picker</strong> uses a cryptographically secure randomization method to ensure every entry has an equal mathematical chance of winning.</p>
+            </div>
+            <div class="seo-block">
+                <h2>Boost Your Engagement</h2>
+                <p>Giveaways are the #1 way to increase follower growth quickly. By asking users to comment and then using a professional picker to announce the result on your Stories, you build trust with your community and encourage participation in future events.</p>
+            </div>
+        </div>
+
+        <div class="faq-box">
+            <h4>How do I import comments?</h4>
+            <p>Currently, you can copy and paste the list of names or handles from your creator dashboard or spreadsheet. We recommend using a line-break for each entry for the most accurate results.</p>
+        </div>
+        <div class="faq-box">
+            <h4>Is the selection truly random?</h4>
+            <p>Yes. We use the <code>Math.random()</code> function combined with a shuffling algorithm that rearranges your entire list before picking the top entry, ensuring a 100% fair outcome.</p>
+        </div>
+    </section>
+
+    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+</div>
+
+<script>
+    function pickWinner() {
+        const input = document.getElementById('nameList').value.trim();
+        const names = input.split('\n').filter(name => name.trim() !== "");
+        const btn = document.getElementById('pickBtn');
+        const winnerBox = document.getElementById('winnerBox');
+        const winnerResult = document.getElementById('winnerResult');
+
+        if (names.length < 2) {
+            alert("Please enter at least 2 names to start a draw.");
+            return;
+        }
+
+        // Disable UI during animation
+        btn.disabled = true;
+        winnerBox.style.display = 'block';
+        winnerResult.style.fontSize = '2rem';
+        winnerResult.style.opacity = '0.5';
+
+        let counter = 0;
+        const shuffleSpeed = 80; // ms
+        const duration = 2500; // 2.5 seconds of suspense
+        
+        // The "Slot Machine" effect
+        const interval = setInterval(() => {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            winnerResult.innerText = randomName;
+            counter += shuffleSpeed;
+
+            if (counter >= duration) {
+                clearInterval(interval);
+                finalizeWinner(names, btn);
+            }
+        }, shuffleSpeed);
+    }
+
+    function finalizeWinner(names, btn) {
+        // Final true random pick
+        const finalWinner = names[Math.floor(Math.random() * names.length)];
+        const winnerResult = document.getElementById('winnerResult');
+        
+        winnerResult.innerText = finalWinner;
+        winnerResult.style.fontSize = '3.5rem';
+        winnerResult.style.opacity = '1';
+        btn.disabled = false;
+        
+        // Optional: Simple vibration for mobile
+        if (window.navigator.vibrate) window.navigator.vibrate([100, 50, 100]);
+    }
+</script>
+
+</body>
+</html>

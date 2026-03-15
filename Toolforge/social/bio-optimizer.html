@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Bio Optimizer | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 0%, rgba(46, 204, 113, 0.15) 0%, transparent 50%);
+        }
+
+        .container { width: 90%; max-width: 850px; padding: 60px 0; text-align: center; }
+        h1 { font-family: 'Outfit'; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px; }
+        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+
+        .generator-box {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+
+        textarea:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(46, 204, 113, 0.1); }
+
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        
+        button {
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-primary { background: var(--primary); color: #000; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        
+        .bio-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .bio-tag { font-size: 0.7rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; display: block; text-transform: uppercase; }
+        .bio-text { font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px; display: block; }
+        
+        .copy-btn { font-size: 0.8rem; background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+        .copy-btn:hover { background: var(--primary); color: #000; }
+
+        /* SEO & FAQ */
+        .seo-content { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 40px; }
+        .faq-item { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+        
+        .back-btn { margin-top: 40px; display: table; margin-left: auto; margin-right: auto; color: #64748b; text-decoration: none; transition: 0.3s; }
+        .back-btn:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bio <span style="color:var(--primary)">Optimizer</span></h1>
+    <p class="subtitle">Enter your name and what you do to generate 20 professional, high-conversion bios.</p>
+
+    <div class="generator-box">
+        <textarea id="userInput" placeholder="e.g. Alex, I build minimalist web tools and love coffee..."></textarea>
+        
+        <div class="btn-group">
+            <button class="btn-primary" onclick="generateBios()">Generate 5 Bios ✨</button>
+            <button class="btn-secondary" onclick="clearInput()">Clear</button>
+        </div>
+
+        <div id="results" class="results-grid"></div>
+    </div>
+
+    <section class="seo-content">
+        <h2>Why your Social Media Bio is your Digital Billboard</h2>
+        <p>You have less than 2 seconds to convert a profile visitor into a follower. Our <strong>Bio Optimizer</strong> uses conversion-focused copywriting structures like "Problem/Solution" and "The Credibility Flex" to ensure your first impression is perfect.</p>
+        
+        <div class="faq-item">
+            <h4>What makes a bio "convert"?</h4>
+            <p>A high-converting bio needs three things: Who you are, what value you provide, and a Call to Action (CTA).</p>
+        </div>
+        <div class="faq-item">
+            <h4>Does this work for TikTok?</h4>
+            <p>Yes. TikTok has a shorter limit (80 chars), so focus on the "Minimalist" options provided by the tool.</p>
+        </div>
+    </section>
+
+    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+</div>
+
+<script>
+    function generateBios() {
+        const input = document.getElementById('userInput').value || "Creative Professional";
+        const results = document.getElementById('results');
+        results.innerHTML = "";
+
+        // The Master List of 20 Formulas
+        const masterList = [
+            `Helping people ${input} 🚀`,
+            `${input} | Join the journey 👇`,
+            `The ${input} guy/girl you need.`,
+            `Building a life through ${input} 🛠️`,
+            `${input} enthusiast. Creating daily.`,
+            `Want to ${input}? Start here ➡️`,
+            `Obsessed with ${input}. Follow for tips.`,
+            `Making ${input} simple for everyone.`,
+            `${input} | Business & Life 📈`,
+            `Turn your ${input} into reality.`,
+            `Minimalist approach to ${input} ✨`,
+            `${input} Expert. Trusted by 1k+.`,
+            `Daily doses of ${input} wisdom.`,
+            `${input} | Learn | Grow | Repeat`,
+            `Solving the ${input} problem.`,
+            `Coffee ☕ + ${input} = My life.`,
+            `${input} strategies that actually work.`,
+            `Level up your ${input} game.`,
+            `Not just another ${input} account.`,
+            `Start your ${input} era today.`
+        ];
+
+        // --- THE RANDOMIZER LOGIC ---
+        // 1. Shuffle the array
+        const shuffled = masterList.sort(() => 0.5 - Math.random());
+        
+        // 2. Take only the first 5
+        const selected = shuffled.slice(0, 5);
+
+        selected.forEach((text) => {
+            const card = document.createElement('div');
+            card.className = 'bio-card';
+            
+            card.innerHTML = `
+                <span class="bio-tag">Generated Option</span>
+                <span class="bio-text">${text}</span>
+                <button class="copy-btn" onclick="copyBio(this, '${text.replace(/'/g, "\\'")}')">Copy Bio</button>
+            `;
+            results.appendChild(card);
+        });
+    }
+
+    function copyBio(btn, text) {
+        navigator.clipboard.writeText(text);
+        const originalText = btn.innerText;
+        btn.innerText = "Copied! ✅";
+        setTimeout(() => btn.innerText = originalText, 1000);
+    }
+
+    function clearInput() {
+        document.getElementById('userInput').value = "";
+        document.getElementById('results').innerHTML = "";
+    }
+</script>
+
+</body>
+</html>

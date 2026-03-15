@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Previewer | ToolForge Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(46, 204, 113, 0.05) 0%, transparent 70%), var(--bg);
+        }
+
+        .container { width: 95%; max-width: 900px; padding: 60px 0; text-align: center; }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; }
+        .subtitle { opacity: 0.6; margin-bottom: 40px; font-size: 1.1rem; }
+
+        /* THE GRID SYSTEM */
+        .preview-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            align-items: start;
+            margin-top: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            aspect-ratio: 1/1;
+            width: 100%;
+        }
+
+        .grid-item {
+            background: #0f172a;
+            aspect-ratio: 1/1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .grid-item:hover { opacity: 0.8; }
+        .grid-item img { width: 100%; height: 100%; object-fit: cover; }
+        .grid-item .plus { font-size: 2rem; opacity: 0.2; pointer-events: none; }
+
+        /* SIDEBAR CONTROLS */
+        .controls {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            text-align: left;
+            backdrop-filter: blur(10px);
+        }
+
+        .controls h3 { margin-top: 0; font-family: 'Outfit'; color: var(--primary); }
+        .instruction { font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px; line-height: 1.5; }
+        
+        button.reset-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        button.reset-btn:hover { background: var(--primary); color: #000; }
+
+        /* SEO SECTION */
+        .seo-wrapper { margin-top: 100px; text-align: left; }
+        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .seo-block h2 { font-family: 'Outfit'; color: var(--primary); font-size: 1.8rem; }
+        .seo-block p { opacity: 0.8; line-height: 1.7; }
+
+        .faq-container { margin-top: 50px; display: grid; gap: 15px; }
+        .faq-box { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 16px; border: 1px solid var(--border); }
+        .faq-box h4 { margin: 0 0 10px 0; font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary); }
+        .faq-box p { margin: 0; font-size: 0.95rem; opacity: 0.7; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            .preview-layout { grid-template-columns: 1fr; }
+            .grid-container { max-width: 400px; margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Grid <span style="color:var(--primary)">Previewer</span></h1>
+    <p class="subtitle">Design a cohesive aesthetic before you hit publish.</p>
+
+    <div class="preview-layout">
+        <div class="grid-container" id="instaGrid">
+            </div>
+
+        <div class="controls">
+            <h3>Feed Control</h3>
+            <p class="instruction">Click any square in the grid to upload an image. Dragging images is coming soon in V2. Current images are stored only in your browser's temporary memory.</p>
+            <button class="reset-btn" onclick="resetGrid()">Clear All Images</button>
+            <input type="file" id="fileInput" hidden accept="image/*">
+        </div>
+    </div>
+
+    <section class="seo-wrapper">
+        <div class="seo-grid">
+            <div class="seo-block">
+                <h2>Plan Your Aesthetic</h2>
+                <p>The first impression of your Instagram profile is the <strong>3x3 grid</strong>. It tells a story before a single caption is read. Our Grid Previewer allows you to test color palettes, content flow, and visual balance to ensure your feed looks professional and curated.</p>
+            </div>
+            <div class="seo-block">
+                <h2>Why Grid Planning Matters</h2>
+                <p>Consistent visual branding can increase follower conversion by up to 40%. By alternating between busy photos, minimalist shots, and text-based posts, you create a <strong>rhythm</strong> that keeps users scrolling through your history.</p>
+            </div>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-box">
+                <h4>Does ToolForge save my photos?</h4>
+                <p>No. We use client-side JavaScript (FileReader API), meaning your images never touch our servers. Your privacy is 100% guaranteed as everything happens in your local browser.</p>
+            </div>
+            <div class="faq-box">
+                <h4>How do I create a checkerboard feed?</h4>
+                <p>The checkerboard style involves alternating between two types of content (e.g., a photo, then a quote). Use this previewer to ensure you haven't broken the pattern before you post.</p>
+            </div>
+            <div class="faq-box">
+                <h4>What is the best grid size?</h4>
+                <p>While some use "puzzle grids," the standard 3-column layout is the most effective for mobile users. We focus on the high-performance 3x3 layout for maximum clarity.</p>
+            </div>
+        </div>
+    </section>
+
+    <a href="index.html" style="margin-top:60px; display:inline-block; color:#64748b; text-decoration:none;">← Back to Social Suite</a>
+</div>
+
+<script>
+    const grid = document.getElementById('instaGrid');
+    const fileInput = document.getElementById('fileInput');
+    let currentTarget = null;
+
+    // Initialize 9 grid items
+    function initGrid() {
+        grid.innerHTML = '';
+        for (let i = 0; i < 9; i++) {
+            const div = document.createElement('div');
+            div.className = 'grid-item';
+            div.innerHTML = '<span class="plus">+</span>';
+            div.onclick = (e) => {
+                currentTarget = div;
+                fileInput.click();
+            };
+            grid.appendChild(div);
+        }
+    }
+
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file && currentTarget) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                currentTarget.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    function resetGrid() {
+        if(confirm("Are you sure you want to clear your preview?")) {
+            initGrid();
+        }
+    }
+
+    initGrid();
+</script>
+
+</body>
+</html>
