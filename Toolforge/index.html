@@ -137,29 +137,56 @@
             padding: 0 8% 100px;
         }
 
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(12px);
-            padding: 40px;
-            border-radius: 32px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+        /* --- ToolForge Main Hub Premium Hover --- */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 30px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%); transition: 0.6s; z-index: 1;
-        }
+/* The Icon and Title use the Theme Color (Set via inline style or class) */
+/* This is the magic part */
+.card h3 {
+    color: var(--color); /* Title starts in its theme color */
+    transition: 0.3s ease;
+}
 
-        .card:hover { transform: translateY(-12px); }
-        .card:hover::after { transform: translateX(100%); }
+.card:hover h3 {
+    color: #fff; /* Turns white on hover */
+    /* The glow now uses the specific color of that card! */
+    text-shadow: 0 0 15px var(--color), 0 0 30px var(--color);
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--color);
+    /* Subtle outer box shadow matching the theme */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--color);
+}
+
+.card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* Glass Sweep */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+    transform: translateX(-100%);
+    transition: 0.6s;
+}
+.card:hover::after { transform: translateX(100%); }
 
         /* Hub Colors */
         .generator-hub-card:hover { border-color: var(--primary); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
@@ -186,6 +213,31 @@
         .seo-item h4 { font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
 
         footer { text-align: center; padding: 60px; opacity: 0.5; font-size: 0.9rem; }
+        .locked-card {
+    pointer-events: none; /* Disables clicking */
+    filter: saturate(0.5); /* Dulls the color slightly */
+}
+
+.coming-soon-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--color);
+    color: var(--color);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Subtle Hover for Locked Cards */
+.locked-card:hover {
+    transform: none; /* No pop effect */
+    box-shadow: none;
+}
     </style>
 </head>
 <body data-theme="light">
@@ -207,46 +259,48 @@
         <div class="orb orb-2"></div>
     </div>
 
-    <nav>
-        <div class="logo">ToolForge.</div>
-        <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Mode</button>
-    </nav>
 
     <header class="hero">
         <h1>Professional Tools for <span class="shimmer">Modern Builders</span></h1>
         <p>A lightning-fast ecosystem of free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
     </header>
+    <div style="max-width: 600px; margin: 0 auto 50px auto; position: relative;">
+    <input type="text" id="toolSearch" placeholder="Search 30+ tools..." 
+    style="width: 100%; padding: 15px 25px; background: var(--glass); border: 1px solid var(--card-border); border-radius: 50px; color: var(--text); outline: none; font-size: 1rem; backdrop-filter: blur(10px);">
+</div>
 
     <main class="grid">
-        <a href="Generators/index.html" class="card generator-hub-card">
+        <a href="Generators/index.html" class="card" style="--color: #00f2ff;">
             <span class="icon">🏷️</span>
             <h3>AI Name Engines</h3>
             <p>SaaS, Gaming, and Brand name generators powered by linguistic logic.</p>
         </a>
 
-        <a href="creators/index.html" class="card content-hub-card">
+        <a href="Growth/index.html" class="card" style="--color: #ff007a;">
             <span class="icon">🎬</span>
-            <h3>Content Creator Hub</h3>
-            <p>Viral hooks, script outlines, and thumbnail optimization tools for 10x growth.</p>
+            <h3>Social & Growth Hub</h3>
+            <p>Strategize, create, and grow. Everything from viral video hooks to giveaway management.</p>
         </a>
 
-        <a href="utility-tools/index.html" class="card utility-hub-card">
+        <a href="technical/index.html" class="card" style="--color: #00f2ff;">
             <span class="icon">⚙️</span>
-            <h3>Developer Utilities</h3>
-            <p>Clean, minimal code formatters, unit converters, and regex helpers for devs.</p>
+            <h3>Dev & Webmaster Suite</h3>
+            <p>Technical precision tools for website optimization, code formatting, and developer utilities.</p>
         </a>
 
-        <a href="social/index.html" class="card social-hub-card">
-            <span class="icon">📈</span>
-            <h3>Social Growth Suite</h3>
-            <p>Bio optimizers, caption builders, and hashtag analytics for Instagram & TikTok.</p>
-        </div>
+        <a href="#" class="card locked-card" style="--color: #affc2e; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">🧠</span>
+    <h3>The AI Lab</h3>
+    <p>Smart tools for AI content detection, sentiment analysis, and prompt engineering.</p>
+</a>
 
-        <a href="seo/index.html" class="card web-hub-card">
-            <span class="icon">🌐</span>
-            <h3>Web-Master Suite</h3>
-            <p>Schema generators, robots.txt builders, and meta-tag optimization for SEO pros.</p>
-        </a>
+<a href="#" class="card locked-card" style="--color: #94a3b8; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">💼</span>
+    <h3>Business & Finance</h3>
+    <p>Professional utilities for invoice generation, tax estimation, and startup planning.</p>
+</a>
     </main>
 
     <section class="seo-section">
@@ -281,6 +335,27 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
     </script>
+    <script>
+        document.getElementById('toolSearch').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            // IMPORTANT: Make sure your tool links have class="tool-card"
+            const tools = document.querySelectorAll('.card'); 
+            
+            tools.forEach(tool => {
+                const title = tool.querySelector('h3').innerText.toLowerCase();
+                const desc = tool.querySelector('p').innerText.toLowerCase();
+                
+                if (title.includes(term) || desc.includes(term)) {
+                    tool.style.display = 'flex'; // Shows the tool
+                } else {
+                    tool.style.display = 'none'; // Hides the tool
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
     
 </body>
 </html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caption Pro | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff007f;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 10% 90%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+        }
+
+        .container { width: 90%; max-width: 850px; padding: 60px 0; text-align: center; }
+        h1 { font-family: 'Outfit'; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px; }
+        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+
+        .generator-box {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(46, 204, 113, 0.1); }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 30px;
+        }
+
+        button:hover { transform: scale(1.01); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+
+        .results-list { display: grid; gap: 15px; }
+        
+        .caption-card {
+            background: rgba(255,255,255,0.04);
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .caption-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.06); }
+
+        .style-label { 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            background: var(--primary); 
+            color: #000; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            margin-bottom: 12px; 
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .caption-text { display: block; line-height: 1.6; margin-bottom: 15px; }
+
+        .copy-link { color: var(--primary); font-size: 0.85rem; cursor: pointer; text-decoration: underline; font-weight: 600; }
+
+        /* SEO & FAQ */
+        .seo-content { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 40px; }
+        .faq-item { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+        
+        .back-btn { margin-top: 40px; display: table; margin-left: auto; margin-right: auto; color: #64748b; text-decoration: none; transition: 0.3s; }
+        .back-btn:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Caption <span style="color:var(--primary)">Pro</span></h1>
+    <p class="subtitle">Transform a simple idea into 5 viral-ready captions instantly.</p>
+
+    <div class="generator-box">
+        <input type="text" id="topicInput" placeholder="What is your post about? (e.g. My new morning routine)">
+        <button onclick="generateCaptions()">Rewrite My Caption ✨</button>
+
+        <div id="results" class="results-list"></div>
+    </div>
+
+    <section class="seo-content">
+        <h2>Stop Writing Boring Captions</h2>
+        <p>A great image gets the click, but a great caption gets the save. <strong>Caption Pro</strong> uses psychological "Micro-copy" frameworks to ensure your audience stays engaged longer, boosting your reach on the Explore page.</p>
+        
+        <div class="faq-item">
+            <h4>Do I need hashtags?</h4>
+            <p>Yes, but keep them in the first comment. Captions should focus on storytelling and value first.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What is the best caption length?</h4>
+            <p>Short for Reels (under 10 words) or long for Educational carousels (100+ words). This tool gives you both.</p>
+        </div>
+    </section>
+
+    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+</div>
+
+<script>
+    function generateCaptions() {
+        const topic = document.getElementById('topicInput').value || "this awesome content";
+        const results = document.getElementById('results');
+        results.innerHTML = "";
+
+        const masterList = [
+            { style: "Minimalist", text: `${topic}. ☕✨` },
+            { style: "Hype", text: `Unlocking the secret to ${topic}. You aren't ready for this! 🚀🔥` },
+            { style: "Educational", text: `If you want to master ${topic}, you need to stop scrolling and read this right now. 📚` },
+            { style: "Question", text: `What’s your biggest struggle with ${topic}? Let’s talk in the comments. 👇` },
+            { style: "Story", text: `I used to hate ${topic}. But after 30 days of consistency, everything changed. Here is why... 🧵` },
+            { style: "Direct", text: `Stop overcomplicating ${topic}. Do this instead. ✅` },
+            { style: "Vulnerability", text: `I’m going to be real: ${topic} wasn't easy. But it was worth it. 💯` },
+            { style: "The Hook", text: `Save this before you forget how to ${topic}. 💾` },
+            { style: "Listicle", text: `3 reasons why ${topic} is the future of your brand. 📈` },
+            { style: "Short & Punchy", text: `Big energy for ${topic}. ⚡` }
+        ];
+
+        // Randomly pick 5 unique styles
+        const shuffled = masterList.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 5);
+
+        selected.forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'caption-card';
+            
+            card.innerHTML = `
+                <span class="style-label">${item.style}</span>
+                <span class="caption-text">${item.text}</span>
+                <span class="copy-link" onclick="copyText(this, '${item.text.replace(/'/g, "\\'")}')">Copy to Clipboard</span>
+            `;
+            results.appendChild(card);
+        });
+    }
+
+    function copyText(el, text) {
+        navigator.clipboard.writeText(text);
+        el.innerText = "Copied! ✅";
+        setTimeout(() => el.innerText = "Copy to Clipboard", 1000);
+    }
+</script>
+
+</body>
+</html>

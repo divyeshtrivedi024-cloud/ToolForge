@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Stacker | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff007f;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 0% 0%, rgba(46, 204, 113, 0.1) 0%, transparent 40%);
+        }
+
+        .container { width: 90%; max-width: 850px; padding: 60px 0; text-align: center; }
+        h1 { font-family: 'Outfit'; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px; }
+        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+
+        .generator-box {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 32px;
+            text-align: left;
+        }
+
+        .input-wrapper { display: flex; gap: 10px; margin-bottom: 30px; }
+        input {
+            flex: 1;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        input:focus { border-color: var(--primary); }
+
+        button {
+            padding: 16px 32px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+
+        .stack-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .stack-category {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .category-title { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; display: block; }
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 50px; font-size: 0.9rem; border: 1px solid var(--border); }
+
+        .copy-all-btn { 
+            margin-top: 20px; width: 100%; background: transparent; 
+            border: 1px solid var(--primary); color: var(--primary); 
+            padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
+        }
+        .copy-all-btn:hover { background: var(--primary); color: #000; }
+
+        .seo-content { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 40px; }
+        .back-btn { margin-top: 40px; display: table; margin-left: auto; margin-right: auto; color: #64748b; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hashtag <span style="color:var(--primary)">Stacker</span></h1>
+    <p class="subtitle">Enter one keyword to generate a high-performance 3x3 hashtag stack.</p>
+
+    <div class="generator-box">
+        <div class="input-wrapper">
+            <input type="text" id="keyword" placeholder="e.g. Fitness, Coding, Travel...">
+            <button onclick="generateStack()">Generate Stack ✨</button>
+        </div>
+
+        <div id="results" class="stack-grid" style="display:none;">
+            <div class="stack-category">
+                <span class="category-title">Broad / High Volume (500k+ posts)</span>
+                <div id="broad-tags" class="tag-cloud"></div>
+            </div>
+            <div class="stack-category">
+                <span class="category-title">Community / Medium (100k - 500k)</span>
+                <div id="medium-tags" class="tag-cloud"></div>
+            </div>
+            <div class="stack-category">
+                <span class="category-title">Niche / Target (Under 100k)</span>
+                <div id="niche-tags" class="tag-cloud"></div>
+            </div>
+            <button class="copy-all-btn" onclick="copyAll()">Copy All Hashtags 📋</button>
+        </div>
+    </div>
+
+    <section class="seo-content">
+        <h2>The 3x3 Hashtag Strategy for 2026</h2>
+        <p>Using 30 random hashtags is dead. The algorithm now favors <strong>relevance over quantity</strong>. Our stacker helps you group tags by size, ensuring you rank in small niches first before moving up to broader categories.</p>
+    </section>
+
+    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+</div>
+
+<script>
+    function generateStack() {
+        const key = document.getElementById('keyword').value.toLowerCase().replace(/\s/g, '') || "content";
+        const results = document.getElementById('results');
+        
+        // 1. EXTENSIVE WORD BANKS
+        const broadSuffixes = [
+            "life", "tips", "trends", "world", "daily", "hub", "central", 
+            "vibes", "post", "universe", "nation", "addict", "lover", 
+            "junkie", "flow", "magic", "pro", "mastery", "basics", "101"
+        ];
+        
+        const mediumSuffixes = [
+            "goals", "community", "growth", "secrets", "hacks", "lessons", 
+            "journey", "results", "hustle", "mindset", "success", "squad", 
+            "crew", "tribe", "gang", "mentor", "coach", "inspire", "ideas", "vault"
+        ];
+        
+        const nicheSuffixes = [
+            "strategies", "forbeginners", "hack", "blueprint", "roadmap", 
+            "method", "system", "formula", "framework", "tutorial", "guide", 
+            "toolkit", "checksheet", "process", "workflow", "routine", 
+            "shortcuts", "under1k", "specialist", "niche"
+        ];
+
+        // 2. SHUFFLE AND PICK FUNCTION
+        const getRandomTags = (suffixes, count) => {
+            let shuffled = suffixes.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count).map(s => `#${key}${s}`);
+        };
+
+        // 3. GENERATE 3x3 (OR 5x5) STACK
+        const broadTags = getRandomTags(broadSuffixes, 5); // Increased to 5 for more variety
+        const mediumTags = getRandomTags(mediumSuffixes, 5);
+        const nicheTags = getRandomTags(nicheSuffixes, 5);
+
+        // 4. INJECT INTO UI
+        document.getElementById('broad-tags').innerHTML = broadTags.map(t => `<span class="tag">${t}</span>`).join('');
+        document.getElementById('medium-tags').innerHTML = mediumTags.map(t => `<span class="tag">${t}</span>`).join('');
+        document.getElementById('niche-tags').innerHTML = nicheTags.map(t => `<span class="tag">${t}</span>`).join('');
+        
+        results.style.display = 'grid';
+    }
+
+    function copyAll() {
+        const tags = Array.from(document.querySelectorAll('.tag')).map(t => t.innerText).join(' ');
+        navigator.clipboard.writeText(tags);
+        
+        // Custom feedback since we hate boring alerts
+        const btn = document.querySelector('.copy-all-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "All Tags Copied! ✅";
+        btn.style.borderColor = "#fff";
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.borderColor = "var(--primary)";
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>

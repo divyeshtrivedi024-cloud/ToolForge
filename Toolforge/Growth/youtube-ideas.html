@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Idea Brainstormer | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.1);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+        input, select { width: 100%; max-width: 500px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        input:focus, select:focus { border-color: var(--primary); }
+        
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.3); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(255, 0, 127, 0.5); }
+        
+        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 750px; margin-left: auto; margin-right: auto; }
+        .idea-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); text-align: left; animation: fadeIn 0.4s ease forwards; }
+        .idea-title { font-family: 'Outfit'; font-size: 1.4rem; color: var(--primary); display: block; margin-bottom: 10px; line-height: 1.2; }
+        .idea-desc { font-size: 0.95rem; color: #94a3b8; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
+        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
+        
+        .faq-item { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left; }
+        .faq-item strong { display: block; margin-bottom: 10px; color: #fff; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← Creator Hub</a>
+    <section class="tool-card">
+        <h1>YouTube Brainstormer</h1>
+        <p>Stuck on what to film? Let AI generate high-CTR video concepts for your channel.</p>
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="Your Niche? (e.g. Finance, Minecraft, Cooking)">
+            <select id="angle-choice">
+                <option value="educational">Educational / How-to</option>
+                <option value="entertainment">Entertainment / Challenges</option>
+                <option value="review">Product Reviews / Commentary</option>
+            </select>
+        </div>
+        <button class="gen-btn" onclick="generateIdeas()">Generate 5 Video Ideas</button>
+        <div id="result-list"></div>
+    </section>
+
+    <section class="seo-content">
+        <h2>Cracking the YouTube Algorithm</h2>
+        <div class="tips-grid">
+            <div class="tip-card"><strong>01. Think Thumbnail First</strong> Before filming, ask: 'Can I make a high-quality thumbnail for this?' If the answer is no, the idea might not work.</div>
+            <div class="tip-card"><strong>02. High Stakes</strong> People click on tension. Instead of 'My Morning Routine,' try 'I Lived Like a Billionaire for 24 Hours.'</div>
+            <div class="tip-card"><strong>03. Search vs. Browse</strong> Are people searching for this, or do they need to be tempted by a crazy title? Know your audience's intent.</div>
+        </div>
+        <h3>YouTube FAQ</h3>
+        <div class="faq-item">
+            <strong>How often should I upload?</strong>
+            Consistency is better than quantity. One high-quality video per week usually outperforms daily low-effort uploads.
+        </div>
+    </section>
+</div>
+
+<script>
+function generateIdeas() {
+    const niche = document.getElementById('userInput').value.trim() || "my niche";
+    const angle = document.getElementById('angle-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const database = {
+        educational: [
+            { t: `The ${niche} Masterclass I Wish I Had`, d: "A comprehensive guide that covers everything from basics to advanced secrets." },
+            { t: `Stop Learning ${niche} the Hard Way`, d: "Exposing the most common time-wasters in the learning process." },
+            { t: `How to Master ${niche} in 10 Minutes a Day`, d: "A micro-learning framework for busy people." },
+            { t: `3 ${niche} Tools That Feel Like Cheating`, d: "Reviewing software or hardware that gives users an unfair advantage." },
+            { t: `The Brutal Truth About ${niche} in 2026`, d: "An honest look at why most people fail and how to be the 1% who succeed." },
+            { t: `I Analyzed the Best ${niche} Experts (Here’s what I found)`, d: "Breaking down the habits of the top performers in the industry." },
+            { t: `Why You’re Not Improving at ${niche}`, d: "Identifying the 'plateau' and how to break through it scientifically." },
+            { t: `The Beginner’s Guide to ${niche} (2026 Edition)`, d: "A fresh look at starting out with modern tools and strategies." },
+            { t: `${niche} Explained to a 5-Year-Old`, d: "Simplifying a complex concept to its absolute core for maximum reach." },
+            { t: `The Only ${niche} Video You’ll Ever Need`, d: "The definitive, ultimate resource on the topic." },
+            { t: `7 ${niche} Habits That Will Change Your Life`, d: "Actionable lifestyle changes centered around your niche." },
+            { t: `How I’d Learn ${niche} if I Had to Start Over`, d: "The 'optimal' path based on your past mistakes." },
+            { t: `The Secret Science of ${niche}`, d: "Looking at the psychological or mathematical side of the topic." },
+            { t: `Stop Buying ${niche} Gear Until You Watch This`, d: "Saving your audience money by prioritizing skills over equipment." },
+            { t: `What ${niche} Professionals Don't Want You to Know`, d: "Revealing industry-insider information or cost-saving hacks." }
+        ],
+        entertainment: [
+            { t: `I Spent 100 Hours on ${niche} (Insane Results)`, d: "A high-effort documentary-style video showing massive dedication." },
+            { t: `Can a Beginner Do ${niche}? (Challenge)`, d: "Testing if a 'noob' can achieve a pro-level result in 24 hours." },
+            { t: `I Tried the Most Viral ${niche} Hack`, d: "Debunking or proving a popular TikTok/Reels trend." },
+            { t: `The ${niche} Olympics: Who Wins?`, d: "Comparing different methods or people in a competitive format." },
+            { t: `Transforming a ${niche} in Under 60 Seconds`, d: "A high-speed, satisfying makeover or build video." },
+            { t: `I Lived Like a ${niche} Pro for a Week`, d: "Adopting the extreme lifestyle and habits of a top-tier creator." },
+            { t: `Everything Wrong With This ${niche}`, d: "A playful or critical 'CinemaSins' style breakdown of a popular item/video." },
+            { t: `I Built the World's Best ${niche}`, d: "Attempting a 'world-first' or world-record style achievement." },
+            { t: `Reacting to the Worst ${niche} Fails`, d: "Commentary and advice based on community-submitted mistakes." },
+            { t: `Spending $1 vs $10,000 on ${niche}`, d: "The classic extreme budget comparison that always gets clicks." },
+            { t: `I Survived ${niche} for 24 Hours Straight`, d: "A marathon challenge that tests your physical and mental limits." },
+            { t: `Can We Save This Broken ${niche}?`, d: "A restoration or 'save the day' style narrative." },
+            { t: `Giving Away a ${niche} to a Random Stranger`, d: "Wholesome or high-stakes social experiment content." },
+            { t: `If ${niche} was a Horror Movie`, d: "A creative, high-production-value parody of your niche." },
+            { t: `My Entire ${niche} Collection Reveal`, d: "A flex/tour video showing off the gear or results of your work." }
+        ],
+        review: [
+            { t: `The Real Cost of ${niche}`, d: "Breaking down the hidden expenses and time investment needed." },
+            { t: `Is This ${niche} a Scam? (The Truth)`, d: "Investigating a controversial product or service in the space." },
+            { t: `I Tested Every ${niche} Tool So You Don't Have To`, d: "A massive comparison video that saves the viewer time." },
+            { t: `Why ${niche} is Dying in 2026`, d: "A controversial take on a declining trend or industry shift." },
+            { t: `The Perfect ${niche} Setup (Under $500)`, d: "Budget-friendly recommendations for high-quality results." },
+            { t: `My Honest Review of ${niche}: 1 Year Later`, d: "The long-term perspective that 'launch day' reviews miss." },
+            { t: `Don't Buy ${niche} Until You See This Comparison`, d: "A side-by-side battle between the two biggest competitors." },
+            { t: `The ${niche} Tier List (Best to Worst)`, d: "Ranking every popular item or strategy in your category." },
+            { t: `I Regret Buying This ${niche}...`, d: "A vulnerable, honest video about a purchase that didn't work out." },
+            { t: `Is ${niche} Still Worth It in 2026?`, d: "Revisiting a classic topic to see if it still holds up today." },
+            { t: `Ranking Your ${niche} Setup / Work`, d: "Community engagement through constructive criticism." },
+            { t: `This ${niche} Changed My Life (And it's only $20)`, d: "A high-praise review of an affordable game-changer." },
+            { t: `The Top 10 ${niche} Must-Haves`, d: "A fast-paced listicle for people looking to upgrade." },
+            { t: `A Professional's Take on ${niche}`, d: "Bringing expert authority to a casual or trending topic." },
+            { t: `What Nobody is Telling You About ${niche}`, d: "Finding the one 'missing link' in the current conversation." }
+        ]
+    };
+
+    // Shuffle and Select
+    let ideas = [...database[angle]];
+    for (let i = ideas.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [ideas[i], ideas[j]] = [ideas[j], ideas[i]];
+    }
+
+    ideas.slice(0, 5).forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'idea-card';
+        div.innerHTML = `
+            <span class="idea-title">${item.t}</span>
+            <span class="idea-desc">${item.d}</span>
+        `;
+        resultList.appendChild(div);
+    });
+}
+</script>
+</body>
+</html>

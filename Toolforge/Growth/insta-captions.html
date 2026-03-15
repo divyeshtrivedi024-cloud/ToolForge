@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Caption Crafter | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.1);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
+        
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+        input, select { width: 100%; max-width: 500px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 0, 127, 0.6); }
+        
+        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .caption-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); text-align: left; animation: fadeIn 0.4s ease forwards; white-space: pre-wrap; position: relative; }
+        .copy-hint { position: absolute; top: 10px; right: 20px; font-size: 0.7rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
+        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
+        .caption-card { 
+    cursor: pointer; 
+    transition: 0.2s; 
+}
+.caption-card:hover { 
+    background: rgba(255, 0, 127, 0.15); 
+    border-color: var(--primary); 
+}
+.caption-card:active { 
+    transform: scale(0.98); 
+}
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← Creator Hub</a>
+    <section class="tool-card">
+        <h1>Insta Caption Crafter</h1>
+        <p>Turn your photos into viral posts with AI-generated captions.</p>
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="What is in the photo? (e.g. Sunset, New Car, Coffee)">
+            <select id="vibe-choice">
+                <option value="sassy">Sassy & Bold</option>
+                <option value="minimal">Minimalist & Clean</option>
+                <option value="deep">Deep & Thoughtful</option>
+                <option value="funny">Funny & Relatable</option>
+            </select>
+        </div>
+        <button class="gen-btn" onclick="generateCaptions()">Generate 5 Captions</button>
+        <div id="result-list"></div>
+    </section>
+
+    <section class="seo-content">
+        <h2>How to Write Captions that Get Saves</h2>
+        <div class="tips-grid">
+            <div class="tip-card"><strong>01. The First Line</strong> Instagram hides the rest of your caption after two lines. Put your "Hook" right at the start.</div>
+            <div class="tip-card"><strong>02. Micro-Blogging</strong> Longer captions that tell a story actually increase "Time on Post," which the algorithm loves.</div>
+            <div class="tip-card"><strong>03. Call to Action</strong> Always ask a question! 'Left or Right?' or 'Tag a friend who needs this' doubles engagement.</div>
+        </div>
+    </section>
+</div>
+
+<script>
+function generateCaptions() {
+    const topic = document.getElementById('userInput').value.trim() || "this vibe";
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const database = {
+        sassy: [
+            `Confidence level: ${topic} with no filter. 💅✨`,
+            `I’m not high maintenance, I’m just ${topic} quality. 😉`,
+            `Keep your head high and your ${topic} higher. 👑`,
+            `They told me I couldn't, so I did ${topic} twice. ✌️🔥`,
+            `Serving looks and ${topic} today. You're welcome. 💋`,
+            `Be a billionaire in a world full of ${topic}. 💰`,
+            `My life, my rules, my ${topic}. ⚡️`,
+            `Cancel my subscription to your ${topic} drama. 💅`,
+            `I'm the main character, the ${topic} is just a side plot. 🎭`,
+            `Sweeter than honey, colder than ${topic}. ❄️`,
+            `Don't study me, you won't graduate ${topic} 101. 📚`,
+            `Limited edition ${topic}. Get it while it's hot. 🚩`,
+            `Jealousy is just love and hate at the same time. Enjoy the ${topic}. 😘`,
+            `I'm not for everyone. I'm for the ${topic} elite. 🥂`,
+            `Life isn't perfect, but my ${topic} is. ✨`
+        ],
+        minimal: [
+            `${topic}. ✨`,
+            `Less talk, more ${topic}.`,
+            `Current mood: ${topic}. ☁️`,
+            `Simply ${topic}.`,
+            `Focus on the ${topic}. 🖋️`,
+            `Pure ${topic}. 🤍`,
+            `Standard ${topic}.`,
+            `The ${topic} edit. 🎞️`,
+            `Moments in ${topic}.`,
+            `Lately: ${topic}.`,
+            `Just ${topic}, nothing else.`,
+            `Unfiltered ${topic}.`,
+            `The beauty of ${topic}.`,
+            `Quiet ${topic}. 🌊`,
+            `Note to self: ${topic}. 📝`
+        ],
+        deep: [
+            `Finding beauty in the ${topic}. 🌿`,
+            `Every ${topic} tells a story we often forget to hear. ✨`,
+            `Life is a collection of ${topic} moments.`,
+            `Soul full of sunshine and ${topic}. ☀️`,
+            `Perspective changes everything, especially ${topic}. 🌊`,
+            `In a world of noise, find your ${topic}. 💎`,
+            `The best things in life aren't things, they are ${topic}.`,
+            `Grow through what you go through. Even ${topic}. 🌱`,
+            `Collect moments, not ${topic}. 📸`,
+            `Your energy is your ${topic}. Protect it. 🧿`,
+            `Healing isn't linear, but ${topic} helps. ❤️`,
+            `Be the energy you want to attract into your ${topic}.`,
+            `Small steps in ${topic} lead to big changes.`,
+            `The ${topic} you seek is seeking you. ✨`,
+            `Stay grounded in your ${topic}. 🪵`
+        ],
+        funny: [
+            `I followed my heart and it led me to ${topic}. 🍕`,
+            `Sending this ${topic} to NASA because I'm a star. ⭐️`,
+            `Expectation: Aesthetic ${topic}. Reality: Me trying my best. 😂`,
+            `If ${topic} was an Olympic sport, I’d have the gold. 🥇`,
+            `I’m in a committed relationship with ${topic}. 💍`,
+            `I need a six-month vacation, twice a year. And more ${topic}. ✈️`,
+            `Reality called, I hung up for more ${topic}. 📞`,
+            `I’m not lazy, I’m just on ${topic} energy-saving mode. 🔋`,
+            `Adulting is 1/10 and I’m definitely ${topic}. 📉`,
+            `Maybe she's born with it, maybe it's ${topic}. 💄`,
+            `Life is short. Smile while you still have ${topic}. 😁`,
+            `I put the 'pro' in ${topic}crastination. 🏆`,
+            `Friday, my second favorite F word. My first is ${topic}. 🍟`,
+            `I don't need an inspirational quote, I need ${topic}. ☕️`,
+            `Brain: 'Work.' Me: '${topic}.' 🧠`
+        ]
+    };
+
+    const tagBase = topic.replace(/\s+/g, '').toLowerCase();
+    const hashtags = `#${tagBase} #${tagBase}Vibes #explorepage #viral #contentcreator #2026`;
+
+    let captions = [...database[vibe]];
+    captions.sort(() => Math.random() - 0.5);
+
+    captions.slice(0, 5).forEach(text => {
+        const fullContent = `${text}\n\n${hashtags}`;
+        const div = document.createElement('div');
+        div.className = 'caption-card';
+        div.onclick = function() { copyToClipboard(fullContent, this); };
+        div.innerHTML = `
+            <span class="copy-hint">One-Tap Copy</span>
+            ${text}
+            <br><br>
+            <span style="color: var(--primary); opacity: 0.8; font-size: 0.85rem;">${hashtags}</span>
+        `;
+        resultList.appendChild(div);
+    });
+}
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const hint = element.querySelector('.copy-hint');
+        const originalText = hint.innerText;
+        hint.innerText = "COPIED!";
+        hint.style.color = "#00ff88"; // Neon green for success
+        
+        setTimeout(() => {
+            hint.innerText = originalText;
+            hint.style.color = "var(--primary)";
+        }, 2000);
+    });
+}
+</script>
+</body>
+</html>

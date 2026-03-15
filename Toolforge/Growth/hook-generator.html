@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral Hook Generator | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff007f;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 40%);
+        }
+
+        .container { width: 90%; max-width: 800px; padding: 60px 0; text-align: center; }
+
+        h1 { font-family: 'Outfit'; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px; }
+        p.subtitle { opacity: 0.6; margin-bottom: 40px; }
+
+        .generator-box {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(46, 204, 113, 0.2); }
+
+        button {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        button:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(46, 204, 113, 0.4); }
+
+        .results { margin-top: 30px; display: grid; gap: 15px; }
+
+        .hook-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .hook-card:hover { border-color: var(--primary); background: rgba(46, 204, 113, 0.05); }
+
+        .hook-card::after { content: 'Click to Copy'; position: absolute; right: 20px; font-size: 0.7rem; color: var(--primary); opacity: 0; transition: 0.3s; }
+        .hook-card:hover::after { opacity: 1; }
+
+        .back-btn {
+            margin-top: 40px;
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px 24px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .back-btn:hover { color: var(--primary); }
+        .seo-content { margin-top: 80px; text-align: centre; border-top: 1px solid var(--border); padding-top: 40px; }
+    .seo-content h2 { font-family: 'Outfit'; color: var(--primary); font-size: 1.8rem; }
+    .seo-content p { opacity: 0.7; line-height: 1.8; margin-bottom: 20px; }
+    
+    .faq-section { margin-top: 40px; text-align: left; }
+    .faq-item { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+    .faq-item h4 { margin: 0 0 10px 0; color: var(--primary); }
+    .faq-item p { margin: 0; font-size: 0.9rem; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Viral <span style="color:var(--primary)">Hook</span> Generator</h1>
+    <p class="subtitle">Enter your topic to generate high-retention hooks for TikTok, Reels, and Shorts.</p>
+
+    <div class="generator-box">
+        <input type="text" id="topicInput" placeholder="e.g. Weight Loss, Coding, Stock Market...">
+        <button onclick="generateHooks()">Generate Hooks ✨</button>
+
+        <div id="results" class="results">
+            </div>
+    </div>
+
+    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+</div>
+
+<script>
+    function generateHooks() {
+        const topic = document.getElementById('topicInput').value || "this topic";
+        const results = document.getElementById('results');
+        results.innerHTML = "";
+
+        // 20 HIGH-CONVERSION TEMPLATES (The Rule)
+        const templates = [
+            `Nobody is talking about ${topic}, and it’s a problem.`,
+            `Stop doing this if you want to master ${topic}.`,
+            `I tried every ${topic} hack, but only this worked.`,
+            `3 simple steps to 10x your ${topic} in 24 hours.`,
+            `You’ve been lied to about ${topic}. Here’s the truth.`,
+            `This secret ${topic} tool feels illegal to know.`,
+            `How to ${topic} like a pro (even if you're a beginner).`,
+            `The ${topic} mistake 99% of people are making.`,
+            `Why ${topic} is the only skill you need in 2026.`,
+            `I wish I knew this about ${topic} sooner.`,
+            `The lazy way to get better at ${topic}.`,
+            `Forget everything you know about ${topic}.`,
+            `This ${topic} strategy changed my life.`,
+            `Stop scrolling! This ${topic} tip is a game changer.`,
+            `Steal my ${topic} workflow (Step-by-step).`,
+            `POV: You finally mastered ${topic}.`,
+            `Is ${topic} dead? Let's look at the data.`,
+            `Top 5 ${topic} secrets the experts won't tell you.`,
+            `How I earned my first $1k with ${topic}.`,
+            `Don't buy another ${topic} course until you see this.`
+        ];
+
+        templates.forEach(text => {
+            const card = document.createElement('div');
+            card.className = 'hook-card';
+            card.innerText = text;
+            card.onclick = () => {
+                navigator.clipboard.writeText(text);
+                const originalText = card.innerText;
+                card.innerText = "Copied to Clipboard! ✅";
+                setTimeout(() => card.innerText = originalText, 1000);
+            };
+            results.appendChild(card);
+        });
+    }
+</script>
+<section class="seo-content">
+    <h2>Master the Hook, Master the Algorithm</h2>
+    <p>In the world of short-form content like TikTok and Instagram Reels, the first 3 seconds are everything. Our <strong>Viral Hook Generator</strong> uses proven psychological triggers to stop the scroll and increase your retention rates.</p>
+    
+    <div class="faq-section">
+        <div class="faq-item">
+            <h4>What is a content hook?</h4>
+            <p>A hook is an opening statement or visual designed to grab attention immediately and entice the viewer to watch the rest of the video.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How do these hooks help with SEO?</h4>
+            <p>Better hooks lead to higher watch time. Platforms like YouTube and TikTok reward high watch time by pushing your content to more people.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Can I use these for LinkedIn?</h4>
+            <p>Yes! While designed for video, these formulas work perfectly for the first line of LinkedIn posts or Twitter threads.</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
