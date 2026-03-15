@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Clothing Brand Name Generator | ToolForge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0f1a; --card: #141a2a; --text: #f1f5f9;
+            --primary: #6366f1; --border: #1e293b; --glass: rgba(255, 255, 255, 0.03);
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+        input, select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        
+        .gen-btn { 
+    background: var(--primary); 
+    color: white; 
+    border: none; 
+    padding: 18px 0; 
+    border-radius: 14px; 
+    font-weight: 800; 
+    cursor: pointer; 
+    font-size: 1.1rem; 
+    transition: 0.3s; 
+    width: 100%; 
+    max-width: 500px; 
+    /* THIS IS THE PERMANENT GLOW */
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
+}
+
+.gen-btn:hover { 
+    transform: translateY(-3px); 
+    /* STRONGER GLOW ON HOVER */
+    box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); 
+    filter: brightness(1.1);
+}
+        
+        #result-list { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; max-width: 850px; margin-left: auto; margin-right: auto; }
+        .name-item { background: var(--glass); padding: 25px; border-radius: 16px; border: 1px solid var(--border); font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: var(--primary); text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+
+        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
+        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
+        .faq-item { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left; }
+        .faq-item strong { display: block; margin-bottom: 10px; color: #fff; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← Back to Category</a>
+    <section class="tool-card">
+        <h1>Clothing Brand Namer</h1>
+        <p>Design a high-end fashion or streetwear identity using AI.</p>
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="Theme? (e.g. Urban, Silk, Nomad)">
+            <select id="style-choice">
+                <option value="street">Streetwear / Urban</option>
+                <option value="luxury">Luxury / Atelier</option>
+                <option value="minimal">Minimalist / Basic</option>
+            </select>
+        </div>
+        <button class="gen-btn" onclick="generateBrandNames()">Generate 5 Brand Names</button>
+        <div id="result-list"></div>
+    </section>
+
+    <section class="seo-content">
+        <h2>Building a Fashion Empire</h2>
+        <div class="tips-grid">
+            <div class="tip-card"><strong>01. Phonetic Luxury</strong> Luxury brands often use short, sharp names (Gucci, Prada). Streetwear uses bold, descriptive words (Off-White, Supreme).</div>
+            <div class="tip-card"><strong>02. Visual Balance</strong> Think about how the name looks on a label. Symmetry in letters (like 'O' or 'X') can make a logo design much easier.</div>
+            <div class="tip-card"><strong>03. Cultural Resonance</strong> Ensure your name doesn't have an unintended meaning in other languages if you plan to go global.</div>
+        </div>
+        <h3>Fashion FAQ</h3>
+        <div class="faq-item">
+            <strong>Do I need to trademark my brand name?</strong>
+            Once you start selling, it is highly recommended to look into trademarking to protect your brand identity and logo.
+        </div>
+    </section>
+</div>
+
+<script>
+function generateBrandNames() {
+    const userWord = document.getElementById('userInput').value.trim();
+    const style = document.getElementById('style-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        street: ["Vandal", "District", "Rogue", "Crown", "Hype", "Sector", "Void", "Static", "Rebel", "Theory", "Shift", "Grid", "Apex", "Nova", "Flux"],
+        luxury: ["Atelier", "Maison", "Studio", "Couture", "Privé", "Aura", "Elite", "Royal", "Gilded", "Silk", "Elysian", "Monarch", "Icon", "Sovereign", "Velvet"],
+        minimal: ["Pure", "Form", "Object", "Basis", "Element", "Core", "Zen", "Standard", "Canvas", "Origin", "Unit", "Neutral", "Draft", "Linear", "Mod"]
+    };
+
+    let list = [...data[style]];
+    for (let i = list.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [list[i], list[j]] = [list[j], list[i]];
+    }
+
+    list.slice(0, 5).forEach((item, index) => {
+        let name;
+        if (userWord) {
+            name = index % 2 === 0 ? `${userWord} ${item}` : `${item} ${userWord}`;
+        } else {
+            name = index % 2 === 0 ? item : `${item} ${list[(index + 1) % list.length]}`;
+        }
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        resultList.appendChild(div);
+    });
+}
+</script>
+</body>
+</html>

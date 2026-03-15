@@ -117,20 +117,37 @@
             for(let i=0; i<amount; i++) result += loremBase + "\n\n";
         } else if (type === 'sentences') {
             const sentences = loremBase.split('. ');
-            for(let i=0; i<amount; i++) result += sentences[i % sentences.length] + ". ";
+            for(let i=0; i<amount; i++) result += sentences[i % sentences.length] + (sentences[i % sentences.length].endsWith('.') ? " " : ". ");
         } else {
             for(let i=0; i<amount; i++) result += wordsArr[i % wordsArr.length] + " ";
         }
 
         output.innerText = result.trim();
         
-        // Auto-copy to clipboard
-        navigator.clipboard.writeText(result.trim());
-        alert("Text generated and copied to clipboard!");
+        // Reset the copy button text if it was changed
+        document.getElementById('copyBtn').innerText = "Copy to Clipboard";
     }
 
-    // Run once on load
-    generateText();
+    async function copyToClipboard() {
+        const text = document.getElementById('outputArea').innerText;
+        const btn = document.getElementById('copyBtn');
+        
+        try {
+            await navigator.clipboard.writeText(text);
+            btn.innerText = "✓ Copied!";
+            btn.style.background = "#22c55e"; // Success green
+            
+            setTimeout(() => {
+                btn.innerText = "Copy to Clipboard";
+                btn.style.background = "var(--primary)";
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+
+    // Run once on load to show initial text
+    window.onload = generateText;
 </script>
 </body>
 </html>

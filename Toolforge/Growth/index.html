@@ -105,8 +105,32 @@
 .tool-card.locked:hover { transform: none; box-shadow: none; border-color: var(--border); }
 .tool-card.locked:hover::after { display: none; } /* Disable sweep on locked items */
 
-.back-home { display: block; text-align: center; margin-top: 60px; color: #94a3b8; text-decoration: none; font-weight: 600; }
-.back-home:hover { color: var(--primary); }
+/* 7. PREMIUM BACK BUTTON (Centered & Glowing) */
+.back-home { 
+    display: table;            /* Makes the button only as wide as the text */
+    margin: 120px auto 40px;   /* 120px gap from cards | auto centers it */
+    padding: 16px 45px;        /* Large touch area for mobile */
+    background: var(--glass); 
+    border: 1px solid var(--border); 
+    border-radius: 100px;      /* Perfect pill shape */
+    color: #94a3b8; 
+    text-decoration: none; 
+    font-weight: 700; 
+    font-family: 'Outfit';
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+}
+
+.back-home:hover { 
+    color: #fff; 
+    transform: translateY(-5px) scale(1.05); /* Lifts and grows slightly */
+    border-color: var(--primary); 
+    box-shadow: 0 0 30px rgba(255, 0, 127, 0.4); /* Pink neon glow */
+    background: rgba(255, 0, 127, 0.1);
+}
     </style>
 </head>
 <body>
@@ -116,57 +140,60 @@
         <h1>Content Creator Hub</h1>
         <p>Strategic AI tools to help you dominate the algorithm and grow your audience.</p>
     </div>
+    
+ <a href="../index.html" class="back-home">← Back to Main ToolForge Portal</a>
 
     <div class="grid">
-        <a href="tiktok-hooks.html" class="tool-card">
+        
+        <a href="tiktok-hook-generator.html" class="tool-card">
             <h3>TikTok Hook Gen</h3>
             <p>5 Viral opening lines to stop the scroll instantly.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="youtube-ideas.html" class="tool-card">
+        <a href="youtube-brainstormer.html" class="tool-card">
             <h3>YouTube Ideas</h3>
             <p>High-CTR video concepts based on your specific niche.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="insta-captions.html" class="tool-card">
+        <a href="insta-caption-crafter.html" class="tool-card">
             <h3>Insta Captions</h3>
             <p>Sassy, deep, and minimalist captions with auto-emojis.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="clickbait-grader.html" class="tool-card">
+        <a href="clickbait-title-grader.html" class="tool-card">
             <h3>Title Grader</h3>
             <p>Check how clickable your video titles really are.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="tweet-threads.html" class="tool-card">
+        <a href="tweet-thread-starter.html" class="tool-card">
             <h3>Thread Starter</h3>
             <p>Hook readers into your long-form X/Tweet stories.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="twitch-titles.html" class="tool-card">
+        <a href="twitch-stream-namer.html" class="tool-card">
             <h3>Twitch Stream Namer</h3>
             <p>Get more clicks on the browse page with hype titles.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="podcast-descriptions.html" class="tool-card">
+        <a href="podcast-blurb-generator.html" class="tool-card">
             <h3>Episode Blurbs</h3>
             <p>SEO-optimized descriptions for Spotify and Apple Podcasts.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="script-intros.html" class="tool-card">
+        <a href="video-script-intros.html" class="tool-card">
             <h3>Video Script Intros</h3>
             <p>Pro-level intros for your short-form or long-form videos.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="pinterest-desc.html" class="tool-card">
+        <a href="pinterest-description-generator.html" class="tool-card">
             <h3>Pinterest Desc</h3>
             <p>Keyword-rich descriptions for aesthetic pins.</p>
             <div><span class="badge">Live Now</span></div>
@@ -177,19 +204,19 @@
             <p>Professional & fun bios for your media kits and profiles.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
-        <a href="linkedin-posts.html" class="tool-card">
+        <a href="linkedin-authority-generator.html" class="tool-card">
             <h3>Linkedin posts Authority</h3>
             <p>Turn professional insights into high-engagement network posts</p>
             <div><span class="badge">Live Now</span></div>
         </a>
-        <a href="hook-generator.html" class="tool-card">
+        <a href="viral-hook-generator.html" class="tool-card">
            
             <h3>Viral Hook Generator</h3>
             <p>Craft magnetic headlines that stop the scroll on TikTok and X.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="engagement-calc.html" class="tool-card">
+        <a href="engagement-calculator.html" class="tool-card">
            
             <h3>Engagement Calculator</h3>
             <p>Analyze real interaction metrics for any social account.</p>
@@ -203,7 +230,7 @@
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="tiktok-timer.html" class="tool-card">
+        <a href="tiktok-hook-generator.html" class="tool-card">
            
             <h3>TikTok Script Timer</h3>
             <p>Get the exact duration of your video scripts in seconds.</p>
@@ -217,14 +244,14 @@
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="bio-optimizer.html" class="tool-card">
+        <a href="change hoga.html" class="tool-card">
         
             <h3>Bio Optimizer</h3>
             <p>Turn visitors into followers with high-converting bios.</p>
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="thumbnail-check.html" class="tool-card">
+        <a href="thumbnail-previewer.html" class="tool-card">
         
             <h3>Thumbnail Previewer</h3>
             <p>See how your CTR stacks up against the competition.</p>
@@ -245,7 +272,7 @@
             <div><span class="badge">Live Now</span></div>
         </a>
 
-        <a href="giveaway-picker.html" class="tool-card">
+        <a href="giveaway-winner-picker.html" class="tool-card">
         
             <h3>Giveaway Winner</h3>
             <p>A fair and transparent way to reward your community.</p>
