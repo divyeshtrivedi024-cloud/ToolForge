@@ -1,69 +1,284 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://toolforge.io/</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/growth.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/technical.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/generators.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/contact.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/privacy.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/terms.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/growth/pfp-glow-ring.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/growth/viral-hook-generator.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/technical/lorem-ipsum.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toolforge.io/technical/sitemap-generator.html</loc>
-    <lastmod>2026-03-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+<url>
+<loc>https://toolforge-official.netlify.app/</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/privacy</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/terms</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/gamer-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/saas-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/clan-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/fantasy-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/aesthetic-username-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/pet-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/podcast-name-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/discord-server-namer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/clothing-brand-namer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/generators/alias-&-persona-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/tiktok-hook-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/youtube-brainstormer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/insta-caption-crafter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/clickbait-title-grader</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/tweet-thread-starter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/twitch-stream-namer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/podcast-blurb-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/video-script-intros</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/pinterest-description-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/bio-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/linkedin-authority-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/viral-hook-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/engagement-calculator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/grid-previewer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/hashtag-stacker</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/pfp-glow-ring</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/thumbnail-previewer</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/caption-pro</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/safe-zone-checker</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/growth/giveaway-winner-picker</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/json-formatter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/px-to-rem-converter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/base64-studio</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/html-entity-studio</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/url-encoder</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/gradient-gen</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/js-minifier</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/lorem-ipsum</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/meta-tag-gen</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/color-converter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/markdown-converter</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/robots-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/xml-sitemap-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/schema-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/serp-simulator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/audit-checklist</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/canonical-tag-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/keyword-density-checker</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/redirect-generator</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://toolforge-official.netlify.app/technical/mobile-tester</loc>
+<lastmod>2026-03-17T10:18:51+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>
