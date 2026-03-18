@@ -264,18 +264,11 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
     </div>
-
-
+    <nav class="nav-container"></nav> <div class="container"></div>
     <header class="hero">
         <h1>Professional Tools for <span class="shimmer">Modern Builders</span></h1>
         <p>A lightning-fast ecosystem of free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
     </header>
-    <div id="searchWrapper" style="max-width: 600px; margin: 0 auto 50px auto; position: relative; z-index: 1000;">
-    <input type="text" id="toolSearch" placeholder="Search 50+ tools instantly..." 
-    style="width: 100%; padding: 15px 25px; background: var(--glass); border: 1px solid var(--card-border); border-radius: 50px; color: var(--text); outline: none; font-size: 1rem; backdrop-filter: blur(10px);">
-    
-    <div id="searchResults" style="position: absolute; top: 110%; left: 0; right: 0; background: #0f172a; border: 1px solid #1e293b; border-radius: 20px; max-height: 350px; overflow-y: auto; display: none; box-shadow: 0 20px 50px rgba(0,0,0,0.8);padding-bottom:50vh ;"></div>
-</div>
 
     <main class="grid">
         <a href="Generators/index.html" class="card" style="--color: #6366f1;">
@@ -322,139 +315,7 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
     </script>
-    <script>
-// THE TOOL DATABASE
-// 1. Just list your tool names here. 
-// The script will automatically turn "Viral Hook Generator" into "growth/viral-hook-generator.html"
-const categories = {
-    "growth": [
-        "Bio Generator", 
-        "Giveaway Winner Picker", 
-        "Caption Pro", 
-        "Clickbait Title Grader",
-        "Engagement Calculator",
-        "Grid Previewer",
-        "Hashtag Stacker",
-        "Insta Caption Crafter",
-        "LinkedIn Authority Generator",
-        "Pinterest Description Generator",
-        "Podcast Blurb Generator",
-        "Safe zone checker",
-        "Script timer",
-        "Thumbnail Previewer",
-        "TikTok Hook Generator",
-        "Tweet Thread Starter",
-        "Twitch Stream Namer",
-        "Video Script Intros",
-        "Viral Hook Generator",
-        "youtube brainstormer",
-        "pfp glow ring"
-    ],
-    "technical": [
-        "Audit Checklist", 
-        "Base64 Studio", 
-        "Canonical Tag Generator", 
-        "Color Converter",
-        "Gradient Gen",
-        "Html Entity Studio",
-        "Js Minifier",
-        "Json Formatter",
-        "Keyword Density Checker",
-        "Lorem Ipsum",
-        "Markdown Converter",
-        "Meta Tag Gen",
-        "Mobile Tester",
-        "Px to Rem Converter",
-        "Redirect Generator",
-        "Robots Generator",
-        "Schema Generator",
-        "SERP Simulator",
-        "URL Encoder",
-        "XML Sitemap Generator",
-    ],
-    "Generators": [
-        "SaaS Name Generator",
-        "Clan name generator",
-        "Fantasy name generator",
-        "Gamer Name generator",
-        "Aesthetic Username generator",
-        "Pet Name generator",
-        "podcast name generator",
-        "discord server namer",
-        "clothing brand namer",
-        "alias & persona generator" ,
-    ]
-};
-
-// 2. This logic "Builds" the library for you automatically
-const toolLibrary = [];
-
-Object.keys(categories).forEach(folder => {
-    categories[folder].forEach(toolName => {
-        // Creates a URL-friendly filename: "Viral Hook Generator" -> "viral-hook-generator.html"
-        const filename = toolName.toLowerCase().replace(/ /g, "-") + ".html";
-        
-        toolLibrary.push({
-            name: toolName,
-            link: `${folder}/${filename}`,
-            tags: `${folder} ${toolName.toLowerCase()}` // Auto-adds folder name as a tag
-        });
-    });
-});
-
-const searchInput = document.getElementById('toolSearch');
-const resultsBox = document.getElementById('searchResults');
-const mainGrid = document.querySelector('.grid'); // This selects your 3 category cards
-
-searchInput.addEventListener('input', (e) => {
-    const term = e.target.value.toLowerCase().trim();
     
-    if (term.length > 0) {
-        // Find matching tools
-        const matches = toolLibrary.filter(tool => {
-    const nameMatch = tool.name.toLowerCase().includes(term);
-    const tagMatch = tool.tags.toLowerCase().split(' ').some(tag => tag.startsWith(term));
-    
-    // Only return if the name actually contains the letter 
-    // OR if a tag starts exactly with that letter
-    return nameMatch || tagMatch;
-});
-
-        // Display them
-        showResults(matches);
-        resultsBox.style.display = 'block';
-        mainGrid.style.opacity = '0.1'; // Fades categories so results pop!
-        mainGrid.style.pointerEvents = 'none'; // Prevents clicking categories while searching
-    } else {
-        // Reset if empty
-        resultsBox.style.display = 'none';
-        mainGrid.style.opacity = '1';
-        mainGrid.style.pointerEvents = 'auto';
-    }
-});
-
-function showResults(matches) {
-    if (matches.length === 0) {
-        resultsBox.innerHTML = `<div style="padding: 20px; color: #64748b;">No tools found for that search...</div>`;
-    } else {
-        resultsBox.innerHTML = matches.map(tool => `
-            <a href="${tool.link}" style="display: block; padding: 15px 25px; text-decoration: none; border-bottom: 1px solid #1e293b; transition: 0.2s;">
-                <b style="color: #fff; display: block; font-size: 1.1rem;">${tool.name}</b>
-                <span style="color: #64748b; font-size: 0.8rem;">Open Tool →</span>
-            </a>
-        `).join('');
-    }
-}
-
-// Close search if user clicks away
-document.addEventListener('click', (e) => {
-    if (!document.getElementById('searchWrapper').contains(e.target)) {
-        resultsBox.style.display = 'none';
-        mainGrid.style.opacity = '1';
-        mainGrid.style.pointerEvents = 'auto';
-    }
-});
-</script>
     <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 100%; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
         
@@ -489,5 +350,6 @@ document.addEventListener('click', (e) => {
         © 2026 ToolForge Engine. All processing is 100% Client-Side.
     </div>
 </footer>
+<script src="/nav.js"></script>
 </body>
 </html>
