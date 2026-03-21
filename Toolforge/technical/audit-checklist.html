@@ -3,197 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO Audit Checklist | ToolForge 30</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00f2ff;
-            --bg: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #f1f5f9;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-        }
-
-        .container { width: 95%; max-width: 800px; padding: 60px 0; }
-        h1 { font-family: 'Outfit'; font-size: 3.5rem; text-align: center; margin-bottom: 10px; letter-spacing: -3px; }
-        
-        .score-card {
-            background: var(--primary);
-            color: #000;
-            padding: 40px;
-            border-radius: 30px;
-            text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 50px rgba(46, 204, 113, 0.3);
-        }
-        .score-num { font-size: 4rem; font-weight: 900; font-family: 'Outfit'; display: block; }
-        .score-lbl { font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
-
-        .checklist { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 20px; backdrop-filter: blur(10px); }
-        
-        .item {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .item:last-child { border-bottom: none; }
-        .item:hover { background: rgba(255,255,255,0.02); }
-
-        .checkbox {
-            width: 24px; height: 24px;
-            border: 2px solid var(--primary);
-            border-radius: 6px;
-            margin-right: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s;
-        }
-        .checked .checkbox { background: var(--primary); }
-        .checked .checkbox::after { content: '✓'; color: #000; font-weight: 900; }
-        .checked span { opacity: 0.5; text-decoration: line-through; }
-
-        .item-info h4 { margin: 0; font-size: 1.1rem; }
-        .item-info p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.6; }
-
-        .btn-export {
-            width: 100%;
-            padding: 20px;
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            border-radius: 15px;
-            margin-top: 30px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-export:hover { background: var(--primary); color: #000; }
-    </style>
+    <title>SEO Audit Checklist | ToolForge Official</title>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <nav class="nav-container"></nav> <div class="container">
-    <h1>SEO <span style="color:var(--primary)">Audit</span></h1>
-    
-    <div class="score-card">
-        <span class="score-num" id="score">0%</span>
-        <span class="score-lbl">Website Readiness Score</span>
-    </div>
+    <nav class="nav-container"></nav>
 
-    <div class="checklist" id="list">
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>Robots.txt Implemented</h4>
-                <p>Ensures search engines know which pages to crawl.</p>
+    <main class="container">
+        <section class="tool-card">
+            <h1>SEO <span style="color:var(--primary)">Audit</span></h1>
+            <p>Complete this 20-point technical check to ensure your site is search-engine ready.</p>
+            
+            <div class="score-card" style="background: var(--primary); color: #000; padding: 30px; border-radius: 24px; margin-bottom: 30px;">
+                <span id="score" style="font-family: 'Outfit'; font-size: 3rem; font-weight: 900; display: block;">0%</span>
+                <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Optimization Score</span>
             </div>
-        </div>
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>XML Sitemap Submitted</h4>
-                <p>Provides a roadmap of all your pages to Google.</p>
+
+            <div id="audit-list" style="text-align: left; display: grid; gap: 10px;">
+                </div>
+
+            <button class="gen-btn" style="margin-top: 30px;" onclick="window.print()">Export Audit Report</button>
+        </section>
+
+        <section class="seo-content">
+            <h2>Mastering Technical SEO in 2026</h2>
+            <p>A technical SEO audit is the process of checking the technical aspects of your website's SEO. It covers crawling, indexing, and website architecture. Even with great content, a site with poor technical foundations will struggle to rank.</p>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <strong>Core Web Vitals</strong>
+                    Google prioritizes "User Experience." Ensure your LCP (Largest Contentful Paint) is under 2.5 seconds.
+                </div>
+                <div class="tip-card">
+                    <strong>Index Coverage</strong>
+                    Regularly check Google Search Console for "Excluded" pages that should be indexed.
+                </div>
+                <div class="tip-card">
+                    <strong>Semantic HTML</strong>
+                    Use H1-H6 tags correctly. Never use an H2 just for styling; use it for hierarchy.
+                </div>
             </div>
-        </div>
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>Unique Meta Titles</h4>
-                <p>Every page should have a unique, descriptive title tag.</p>
+
+            <h3>Audit FAQ</h3>
+            <div class="faq-item">
+                <strong>How often should I audit my site?</strong>
+                We recommend a deep technical audit every quarter or after any major site-wide design or architecture change.
             </div>
-        </div>
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>Mobile-Responsive Design</h4>
-                <p>Your site must pass the mobile-friendly test.</p>
+            <div class="faq-item">
+                <strong>Does this tool save my data?</strong>
+                No. Like all ToolForge utilities, this checklist runs 100% in your browser. Your data never leaves your device.
             </div>
-        </div>
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>Canonical Tags Present</h4>
-                <p>Prevents duplicate content ranking issues.</p>
-            </div>
-        </div>
-        <div class="item" onclick="toggle(this)">
-            <div class="checkbox"></div>
-            <div class="item-info">
-                <h4>Open Graph Data</h4>
-                <p>Ensures links look professional when shared on social media.</p>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <button class="btn-export" onclick="window.print()">Print/Save Audit Report</button>
-    <a href="../index.html" style="margin-top: 50px; display: block; text-align: center; color: #64748b; text-decoration: none;">← Back to Suite</a>
-</div>
+    <footer></footer>
 
-<script>
-    function toggle(el) {
-        el.classList.toggle('checked');
-        updateScore();
-    }
+    <script src="/nav.js"></script>
+    <script>
+        const auditItems = [
+            { t: "Robots.txt", d: "Check for 'Disallow' lines blocking important pages." },
+            { t: "XML Sitemap", d: "Ensure sitemap is updated and submitted to GSC." },
+            { t: "SSL Certificate", d: "Verify HTTPS is active and redirecting from HTTP." },
+            { t: "Mobile Responsive", d: "Check UI scaling on small viewports." },
+            { t: "Canonical Tags", d: "Prevent duplicate content issues." },
+            { t: "Meta Titles", d: "Unique titles between 50-60 characters." },
+            { t: "Meta Descriptions", d: "Compelling snippets under 160 characters." },
+            { t: "H1 Hierarchy", d: "Only one H1 tag per page, containing main keyword." },
+            { t: "Alt Text", d: "All images must have descriptive alt attributes." },
+            { t: "Page Speed", d: "Optimize images and minify CSS/JS." },
+            { t: "Broken Links", d: "Scan for 404 errors in internal linking." },
+            { t: "Favicon", d: "Ensure brand icon is visible in browser tabs." },
+            { t: "Open Graph", d: "Check social media preview tags (OG:Title/Image)." },
+            { t: "Structured Data", d: "Use JSON-LD Schema for rich snippets." },
+            { t: "URL Structure", d: "Short, keyword-rich, and hyphen-separated URLs." }
+        ];
 
-    function updateScore() {
-        const total = document.querySelectorAll('.item').length;
-        const checked = document.querySelectorAll('.checked').length;
-        const percent = Math.round((checked / total) * 100);
-        document.getElementById('score').innerText = percent + '%';
-    }
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
+        function initAudit() {
+            const list = document.getElementById('audit-list');
+            list.innerHTML = auditItems.map((item, index) => `
+                <div class="item" onclick="toggle(this)" style="display:flex; align-items:center; padding:15px; background:var(--glass); border:1px solid var(--border); border-radius:12px; cursor:pointer; transition:0.3s;">
+                    <div class="check-box" style="width:20px; height:20px; border:2px solid var(--primary); border-radius:5px; margin-right:15px; flex-shrink:0;"></div>
+                    <div>
+                        <strong style="display:block; font-size:1rem; color:#fff;">${item.t}</strong>
+                        <span style="font-size:0.8rem; opacity:0.6;">${item.d}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
+        function toggle(el) {
+            el.classList.toggle('checked');
+            const box = el.querySelector('.check-box');
+            if(el.classList.contains('checked')) {
+                el.style.borderColor = 'var(--primary)';
+                el.style.background = 'rgba(0, 242, 255, 0.05)';
+                box.style.background = 'var(--primary)';
+                box.innerHTML = '<span style="color:#000; font-size:14px; display:block; text-align:center; font-weight:900;">✓</span>';
+            } else {
+                el.style.borderColor = 'var(--border)';
+                el.style.background = 'var(--glass)';
+                box.style.background = 'transparent';
+                box.innerHTML = '';
+            }
+            updateScore();
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
+        function updateScore() {
+            const total = auditItems.length;
+            const checked = document.querySelectorAll('.checked').length;
+            const percent = Math.round((checked / total) * 100);
+            document.getElementById('score').innerText = percent + '%';
+        }
 
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+        initAudit();
+    </script>
 </body>
 </html>

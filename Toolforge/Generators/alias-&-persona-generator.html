@@ -19,30 +19,17 @@
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
-        
-        .gen-btn { 
-    background: var(--primary); 
-    color: white; 
-    border: none; 
-    padding: 18px 0; 
-    border-radius: 14px; 
-    font-weight: 800; 
-    cursor: pointer; 
-    font-size: 1.1rem; 
-    transition: 0.3s; 
-    width: 100%; 
-    max-width: 500px; 
-    /* THIS IS THE PERMANENT GLOW */
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
-}
+        select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; cursor: pointer; }
+        select:focus { border-color: var(--primary); }
 
-.gen-btn:hover { 
-    transform: translateY(-3px); 
-    /* STRONGER GLOW ON HOVER */
-    box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); 
-    filter: brightness(1.1);
-}
+        /* SIGNATURE TOOLFORGE BUTTON */
+        .btn-draw {
+            width: 100%; max-width: 500px; padding: 20px; background: var(--primary); color: #fff; border: none;
+            border-radius: 16px; font-weight: 800; font-size: 1.1rem; cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-draw:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5); filter: brightness(1.1); }
         
         #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 600px; margin-left: auto; margin-right: auto; }
         .persona-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); text-align: left; animation: fadeIn 0.4s ease forwards; position: relative; overflow: hidden; }
@@ -65,19 +52,19 @@
 </head>
 <body>
 <div class="container">
+    <nav class="nav-container"></nav>
     <a href="index.html" class="back-btn">← Back to Category</a>
-    <nav class="nav-container"></nav> <div class="container">
     <section class="tool-card">
         <h1>Alias & Persona Generator</h1>
         <p>Create a deep, undercover identity for storytelling, security testing, or RPGs.</p>
         <div class="input-group">
             <select id="origin-choice">
-                <option value="western">Western / Urban</option>
-                <option value="eastern">Eastern / Asian</option>
-                <option value="cyber">Cyberpunk / Futuristic</option>
+                <option value="western">🇺🇸 Western / Urban</option>
+                <option value="eastern">🌏 Eastern / Asian</option>
+                <option value="cyber">⚡ Cyberpunk / Futuristic</option>
             </select>
         </div>
-        <button class="gen-btn" onclick="generatePersona()">Generate 5 New Identities</button>
+        <button class="btn-draw" onclick="generatePersona()">Generate 5 New Identities</button>
         <div id="result-list"></div>
     </section>
 
@@ -104,25 +91,26 @@ function generatePersona() {
 
     const database = {
         western: {
-            names: ["Julian Vance", "Silas Thorne", "Elena Rossi", "Clara Sterling", "Arthur Penhaligon", "Victor Graves", "Iris DuPont", "Marcus Thorne", "Leo Halloway", "Sienna Brooks", "Dominic West", "Beatrice Finch", "Gideon Vane", "Nora Quinn", "Felix Mercer", "Audrey Glass"],
-            cities: ["New Amsterdam", "Old London", "Seattle Hub", "Pacific Palisades", "Iron Ridge", "Portsmouth", "Silver City", "Dusk Valley"]
+            names: ["Julian Vance", "Silas Thorne", "Elena Rossi", "Clara Sterling", "Arthur Penhaligon", "Victor Graves", "Iris DuPont", "Marcus Thorne", "Leo Halloway", "Sienna Brooks", "Dominic West", "Beatrice Finch", "Gideon Vane", "Nora Quinn", "Felix Mercer", "Audrey Glass", "Cassian Drake", "Estelle Varma", "Xander Blackwood", "Romulus Vane", "Sloane Whitaker", "Thatcher Reed", "Genevieve Holt", "Quentin Morth", "Alaric Saint", "Florence Night", "Milo Sterling", "Helena Frost", "Jasper Vance", "Callum O'Shea", "Vesper Lyre", "Atticus Finch", "Ophelia Reed"],
+            cities: ["New Amsterdam", "Old London", "Seattle Hub", "Pacific Palisades", "Iron Ridge", "Portsmouth", "Silver City", "Dusk Valley", "Raven's Hollow", "Titan Bay", "Marble Falls", "Evergreen Terrace", "Opal Coast", "Ghost Ridge", "Vanguard City", "Stonehaven"]
         },
         eastern: {
-            names: ["Kenji Sato", "Mei Lin", "Haruto Tanaka", "Ji-Woo Park", "Sora Akamine", "Wei Chen", "Yuki Hiroshi", "Ananya Rao", "Daiki Kim", "Hina Mori", "Tenzin Dorji", "Aiko Yoshida", "Zayan Malik", "Rina Zhang", "Kaito Kurosawa", "Sunita Devi"],
-            cities: ["Neo-Tokyo", "Shanghai Central", "Seoul Sector 7", "Singapore Heights", "Kyoto District", "Mumbai Metro", "Bangkok Bay", "Taipei Tower"]
+            names: ["Kenji Sato", "Mei Lin", "Haruto Tanaka", "Ji-Woo Park", "Sora Akamine", "Wei Chen", "Yuki Hiroshi", "Ananya Rao", "Daiki Kim", "Hina Mori", "Tenzin Dorji", "Aiko Yoshida", "Zayan Malik", "Rina Zhang", "Kaito Kurosawa", "Sunita Devi", "Ren Ishida", "Li Wei", "Arjun Nair", "Choi Min-ho", "Saki Hanari", "Zheng Xiao", "Prisha Kapoor", "Yusuf Khan", "Emi Nakamura", "Tanvi Joshi", "Hiroshi Varma", "Kiran Shah", "Bao Nguyen", "Sarita Ray"],
+            cities: ["Neo-Tokyo", "Shanghai Central", "Seoul Sector 7", "Singapore Heights", "Kyoto District", "Mumbai Metro", "Bangkok Bay", "Taipei Tower", "Osaka Port", "Hong Kong Hub", "Hanoi Sector", "Bengaluru Tech-Park", "Manila Bay", "Chiba Labs", "Nagoya Gate"]
         },
         cyber: {
-            names: ["Neo-7", "Cipher X", "Echo Vane", "Static Razer", "Glitch 01", "Vector Null", "Kiro-Shift", "Pixel Ghost", "Binary Jax", "Link-Net", "Proxy V", "Data-Slayer", "Onyx Protocol", "Synapse", "Volt-Hunter", "Zero-Day"],
-            cities: ["The Sprawl", "Neon Commons", "Mainframe City", "The Void", "Grid Sector 9", "Cloud Port", "Binary Bay", "Circuit Heights"]
+            names: ["Neo-7", "Cipher X", "Echo Vane", "Static Razer", "Glitch 01", "Vector Null", "Kiro-Shift", "Pixel Ghost", "Binary Jax", "Link-Net", "Proxy V", "Data-Slayer", "Onyx Protocol", "Synapse", "Volt-Hunter", "Zero-Day", "Cortex", "Flux", "Shredder", "Mainframe", "Ghost_In_Shell", "Null-Point", "Macro-Mind", "Sub-Zero", "Neon-Pulse", "Kill-Switch", "Override", "Apex", "Bit-Crusher", "Circuit", "Ether-Walker"],
+            cities: ["The Sprawl", "Neon Commons", "Mainframe City", "The Void", "Grid Sector 9", "Cloud Port", "Binary Bay", "Circuit Heights", "The Under-Grid", "Silicon Valley 2.0", "Titan's Ring", "Plasma Alley", "The Dark Web Hub", "Neural Valley", "Buffer Zone 4"]
         },
-        jobs: ["Software Architect", "Antiques Dealer", "Freelance Courier", "Data Analyst", "Urban Explorer", "Street Photographer", "Bio-Engineer", "Night Shift Security", "Rare Book Hunter", "Cryptographic Expert", "Sound Designer", "Logistics Specialist", "Synthetic Botanist", "High-Stakes Poker Player", "Industrial Chemist", "Vintage Watch Restorer"]
+        jobs: ["Software Architect", "Antiques Dealer", "Freelance Courier", "Data Analyst", "Urban Explorer", "Street Photographer", "Bio-Engineer", "Night Shift Security", "Rare Book Hunter", "Cryptographic Expert", "Sound Designer", "Logistics Specialist", "Synthetic Botanist", "High-Stakes Poker Player", "Industrial Chemist", "Vintage Watch Restorer", "Signal Interceptor", "Neurolink Technician", "Underground Archivist", "Bounty Scripter", "Deep-Sea Salvager", "Cyber-Security Auditor", "Drone Pilot", "Propaganda Strategist", "Ghost-Writer", "Corporate Saboteur", "Memory Surgeon", "Grid-Runner", "Forensic Accountant", "Black-Market Broker"]
     };
 
-    // Shuffle Function
     function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
         }
         return array;
     }
@@ -135,24 +123,23 @@ function generatePersona() {
         const div = document.createElement('div');
         div.className = 'persona-card';
         div.innerHTML = `
-            <span class="persona-name">${shuffledNames[i]}</span>
-            <span class="persona-detail"><strong>Occupation:</strong> ${shuffledJobs[i]}</span>
-            <span class="persona-detail"><strong>Current Base:</strong> ${shuffledCities[i]}</span>
+            <span class="persona-name">${shuffledNames[i % shuffledNames.length]}</span>
+            <span class="persona-detail"><strong>Occupation:</strong> ${shuffledJobs[i % shuffledJobs.length]}</span>
+            <span class="persona-detail"><strong>Current Base:</strong> ${shuffledCities[i % shuffledCities.length]}</span>
         `;
         resultList.appendChild(div);
     }
 }
 </script>
+
 <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
             <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
                 The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
             </p>
         </div>
-
         <div>
             <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
             <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
@@ -161,17 +148,12 @@ function generatePersona() {
                 <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
             </ul>
         </div>
-
         <div>
             <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">growthdriven024@gmail.com</a>
+            </p>
         </div>
-
     </div>
     <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
         © 2026 ToolForge Engine. All processing is 100% Client-Side.

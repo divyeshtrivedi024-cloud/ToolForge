@@ -2,154 +2,152 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Encoder & Decoder | Online Link Link Fixer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>URL Encoder & Decoder | Online Link Fixer | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <meta name="description" content="Securely encode and decode URLs. Convert special characters to percent-encoding for safe web addresses. Privacy-focused developer tool.">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
-            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(90deg, #00f2ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        
-        /* Back Button */
-        .back-btn { display: inline-flex; align-items: center; text-decoration: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; transition: 0.3s; gap: 8px; }
-        .back-btn:hover { color: var(--primary); transform: translateX(-5px); }
 
         .tool-card { 
-            background: var(--card); border: 1px solid var(--border); 
-            padding: 40px; border-radius: 32px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
+            background: rgba(15, 23, 42, 0.6); 
+            border: 1px solid var(--border); 
+            padding: 40px; 
+            border-radius: 32px; 
+            backdrop-filter: blur(12px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+            margin: 40px 0 60px 0;
         }
-        h1 { font-family: 'Outfit'; font-size: 2.5rem; color: var(--primary); text-align: center; margin: 0 0 10px 0; }
-        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 35px; }
-        
+
         textarea { 
-            width: 100%; height: 160px; padding: 20px; background: #000; 
-            border: 1px solid var(--border); border-radius: 16px; color: #fff; 
-            font-family: 'Fira Code', monospace; font-size: 1rem; resize: vertical; outline: none; box-sizing: border-box;
+            width: 100%; height: 180px; padding: 20px; background: #000; 
+            border: 1px solid var(--border); border-radius: 16px; color: var(--primary); 
+            font-family: 'Fira Code', monospace; font-size: 1rem; resize: none; outline: none; box-sizing: border-box;
+            transition: 0.3s;
         }
-        textarea:focus { border-color: var(--primary); }
+        textarea:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); }
 
-        .btn-group { display: flex; gap: 10px; margin: 25px 0; }
-        button { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit'; }
+        .btn-group { display: flex; gap: 15px; margin: 25px 0; }
+        
+        .btn-action { 
+            flex: 1; padding: 16px; border-radius: 14px; border: none; 
+            font-weight: 800; cursor: pointer; transition: 0.3s; 
+            font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 1px;
+        }
         .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        
+        .btn-secondary { 
+            background: transparent; border: 1px solid var(--border); color: #94a3b8; 
+            width: 100%; padding: 12px; border-radius: 12px; cursor: pointer; transition: 0.3s;
+        }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
 
-        /* SEO & FAQ */
-        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
-        h2 { font-family: 'Outfit'; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .faq-item h3 { font-size: 1.1rem; margin-top: 0; color: #fff; margin-bottom: 10px; }
-        .faq-item p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0; }
+        /* FAQ Grid Matching ToolForge Standard */
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .faq-item { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .faq-item h3 { font-size: 1.1rem; color: var(--primary); margin-top: 0; margin-bottom: 12px; }
+        .faq-item p { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin: 0; }
+
+        @media (max-width: 600px) {
+            .btn-group { flex-direction: column; }
+            .brand-title { font-size: 2.2rem; }
+        }
     </style>
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <a href="index.html" class="back-btn"><span>←</span> Back to Dev Hub</a>
-    <nav class="nav-container"></nav> <div class="container">
+    <header class="nav-container"></header>
 
-    <section class="tool-card">
-        <h1>URL Command Center</h1>
-        <p class="subtitle">Percent-encode your links for safe data transmission.</p>
+    <main class="container" style="text-align: center;">
+        <h1 class="brand-title">URL Command Center</h1>
+        <p style="opacity:0.6; font-weight: 500;">Safe percent-encoding for professional web development.</p>
 
-        <textarea id="urlInput" placeholder="Paste your URL or text here..."></textarea>
+        <section class="tool-card">
+            <textarea id="urlInput" placeholder="Paste your URL or complex string here..."></textarea>
 
-        <div class="btn-group">
-            <button class="btn btn-primary" onclick="urlAction('encode')">Encode URL</button>
-            <button class="btn btn-primary" onclick="urlAction('decode')">Decode URL</button>
-        </div>
-        
-        <button class="btn-secondary" style="width: 100%;" onclick="copyResult()">Copy Result</button>
-    </section>
-
-    <article class="seo-content">
-        <h2>What is URL Encoding?</h2>
-        <p>URL Encoding, also known as <strong>Percent-encoding</strong>, is a mechanism for encoding information in a Uniform Resource Identifier (URI). Characters that are not allowed in a URL must be replaced by a <code>%</code> followed by their two-digit hexadecimal equivalent.</p>
-        
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Why do I need this?</h3>
-                <p>URLs can only contain a limited set of ASCII characters. If your link contains spaces, brackets, or non-English symbols, the browser might break. Encoding ensures the link is "safe" for the internet.</p>
+            <div class="btn-group">
+                <button class="btn-action btn-primary" onclick="urlAction('encode')">Encode URL</button>
+                <button class="btn-action btn-primary" onclick="urlAction('decode')">Decode URL</button>
             </div>
-            <div class="faq-item">
-                <h3>What is %20?</h3>
-                <p>The code <strong>%20</strong> is the encoded version of a standard space. You will see this often in file paths or search queries.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Is it secure?</h3>
-                <p>Yes. ToolForge processes your URLs entirely in your browser. We never track the links you encode or send them to a server.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Encoding vs Encryption?</h3>
-                <p>Encoding is NOT encryption. It is a way to reformat data so it can be read correctly by systems. It can be easily reversed by anyone using a decoder.</p>
-            </div>
-        </div>
-    </article>
-</div>
+            
+            <button class="btn-secondary" onclick="copyResult()" id="copyBtn">Copy Result to Clipboard</button>
+        </section>
 
-<script>
-    const input = document.getElementById('urlInput');
+        <article class="seo-content" style="text-align: left;">
+            <h2 style="font-family: 'Outfit'; color: var(--primary);">What is URL Encoding?</h2>
+            <p>URL Encoding, or <strong>Percent-encoding</strong>, is the standard for encoding information in a Uniform Resource Identifier (URI). Characters not allowed in a URL are replaced by a <code>%</code> followed by their hexadecimal equivalent.</p>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Why use this?</h3>
+                    <p>URLs only support a subset of ASCII. Spaces, emojis, or symbols like <code>&</code> can break links if not properly encoded for the browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Common Codes</h3>
+                    <p>The most common code is <code>%20</code> (Space). Others include <code>%21</code> (!), <code>%23</code> (#), and <code>%26</code> (&).</p>
+                </div>
+                <div class="faq-item">
+                    <h3>100% Private</h3>
+                    <p>ToolForge processes your links locally. We never see your data, and nothing is sent to our servers. Perfect for sensitive API strings.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Encoding vs Encryption</h3>
+                    <p>Encoding reformats data for system compatibility; it is not a security measure and can be easily reversed by any decoder.</p>
+                </div>
+            </div>
+        </article>
+    </main>
 
-    function urlAction(type) {
-        try {
-            if (type === 'encode') {
-                input.value = encodeURIComponent(input.value);
-            } else {
-                input.value = decodeURIComponent(input.value);
+    <footer></footer>
+
+    <script src="/nav.js"></script>
+    <script>
+        const input = document.getElementById('urlInput');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function urlAction(type) {
+            if (!input.value) return;
+            try {
+                if (type === 'encode') {
+                    input.value = encodeURIComponent(input.value);
+                } else {
+                    input.value = decodeURIComponent(input.value);
+                }
+            } catch (e) {
+                alert("Error: Malformed URL. Please check your input format.");
             }
-        } catch (e) {
-            alert("Error: Malformed URL. Please check your input.");
         }
-    }
 
-    function copyResult() {
-        if (!input.value) return;
-        input.select();
-        document.execCommand('copy');
-        alert("URL copied!");
-    }
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+        async function copyResult() {
+            if (!input.value) return;
+            try {
+                await navigator.clipboard.writeText(input.value);
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = "✓ Copied Successfully!";
+                copyBtn.style.borderColor = "var(--primary)";
+                copyBtn.style.color = "var(--primary)";
+                
+                setTimeout(() => {
+                    copyBtn.innerText = originalText;
+                    copyBtn.style.borderColor = "";
+                    copyBtn.style.color = "";
+                }, 2000);
+            } catch (err) {
+                input.select();
+                document.execCommand('copy');
+            }
+        }
+    </script>
 </body>
 </html>

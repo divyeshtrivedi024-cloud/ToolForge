@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>TOOL_NAME | ToolForge Official</title>
+    <meta name="description" content="TOOL_DESCRIPTION">
+    
+    <link rel="icon" href="/favicon.png" sizes="any">
+    <link rel="apple-touch-icon" href="/favicon.png">
+
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body>
+
+    <header class="nav-container"></header>
+
+    <main class="tool-wrapper">
+        <section class="tool-header">
+            <h1 id="dynamicTitle">TOOL_NAME</h1>
+            <p id="dynamicDesc">TOOL_DESCRIPTION</p>
+        </section>
+
+        <div class="tool-content-area">
+            </div>
+
+        <div class="global-actions">
+            <button onclick="copyToClipboard()" class="btn-primary">Copy Result</button>
+            <button onclick="resetTool()" class="btn-secondary">Reset</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 ToolForge Official. All tools are free forever.</p>
+    </footer>
+
+    <script src="/nav.js"></script>
+    <script>
+        // Placeholder for the "Copy" logic we'll build next
+        function copyToClipboard() {
+            const output = document.querySelector('.output-box'); // Standard class for all tools
+            if (output) {
+                navigator.clipboard.writeText(output.value || output.innerText);
+                alert("Copied to clipboard!");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -3,163 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Minifier | Compress & Optimize JS Code</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <meta name="description" content="Free online JavaScript Minifier. Compress your JS code to reduce file size and improve website loading speed. Secure and browser-based optimization.">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <title>JS Minifier | Compress & Optimize Code | ToolForge</title>
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
-            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
+        /* Tool-Specific Typography & Title */
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            background: linear-gradient(90deg, var(--primary), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        
-        .back-btn { display: inline-flex; align-items: center; text-decoration: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; transition: 0.3s; gap: 8px; }
-        .back-btn:hover { color: var(--primary); transform: translateX(-5px); }
 
-        .tool-card { 
-            background: var(--card); border: 1px solid var(--border); 
-            padding: 40px; border-radius: 32px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
+        /* Compression Stats Dashboard */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
         }
-        h1 { font-family: 'Outfit'; font-size: 2.5rem; color: var(--primary); text-align: center; margin: 0 0 10px 0; }
-        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 35px; }
-        
-        textarea { 
-            width: 100%; height: 250px; padding: 20px; background: #000; 
-            border: 1px solid var(--border); border-radius: 16px; color: #00f2ff; 
-            font-family: 'Fira Code', monospace; font-size: 0.9rem; outline: none; resize: vertical; box-sizing: border-box;
+
+        .stat-card { text-align: center; }
+        .stat-label { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; font-weight: 800; letter-spacing: 1px; }
+        .stat-value { display: block; font-size: 1.2rem; font-family: 'Fira Code'; color: #fff; margin-top: 5px; }
+        .stat-value.highlight { color: var(--primary); font-weight: 800; }
+
+        /* Code Editor UI */
+        .editor-wrapper {
+            position: relative;
+            margin-bottom: 25px;
         }
-        textarea:focus { border-color: var(--primary); }
 
-        .stats-bar { display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.8rem; color: #94a3b8; }
-        .stat-highlight { color: var(--primary); font-weight: 700; }
+        textarea {
+            width: 100%;
+            height: 320px;
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 25px;
+            color: var(--primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
 
-        .btn-group { display: flex; gap: 10px; margin: 25px 0; }
-        button { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit'; }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: #fff; }
+        textarea:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 242, 255, 0.05); }
 
-        /* SEO & FAQ */
-        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
-        h2 { font-family: 'Outfit'; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .btn-panel { display: flex; gap: 15px; }
+
+        @media (max-width: 600px) {
+            .btn-panel { flex-direction: column; }
+            .stats-container { grid-template-columns: 1fr; gap: 20px; }
+        }
     </style>
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <a href="index.html" class="back-btn"><span>←</span> Back to Dev Hub</a>
-    <nav class="nav-container"></nav> <div class="container">
+    <nav class="nav-container"></nav>
 
-    <section class="tool-card">
-        <h1>JS Minifier</h1>
-        <p class="subtitle">Compress your JavaScript to the absolute minimum size.</p>
+    <main class="container">
+        <section class="tool-card" style="text-align: center;">
+            <h1 class="brand-title">JS Optimizer</h1>
+            <p style="opacity:0.6; margin-bottom: 30px; font-weight: 500;">Reduce payload size and improve execution speed.</p>
 
-        <textarea id="jsInput" placeholder="Paste your JavaScript code here..."></textarea>
-        
-        <div class="stats-bar">
-            <span>Original: <span id="origSize">0</span> bytes</span>
-            <span>Minified: <span id="minSize">0</span> bytes</span>
-            <span>Savings: <span id="savings" class="stat-highlight">0%</span></span>
-        </div>
-
-        <div class="btn-group">
-            <button class="btn-primary" onclick="minifyJS()">Minify Code</button>
-            <button class="btn-secondary" onclick="copyResult()">Copy Result</button>
-        </div>
-    </section>
-
-    <article class="seo-content">
-        <h2>Why Minify Your JavaScript?</h2>
-        <p>Minification is a crucial step in the web optimization process. It removes comments, white space, and newline characters that are helpful for human developers but completely unnecessary for browsers to execute the code.</p>
-        
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Does it change the logic?</h3>
-                <p>No. Minification only changes the formatting. Your variables, functions, and logic remain identical, just packed tightly together.</p>
+            <div class="editor-wrapper">
+                <textarea id="jsInput" placeholder="// Paste your JavaScript here..."></textarea>
             </div>
-            <div class="faq-item">
-                <h3>How much speed do I gain?</h3>
-                <p>On large projects, minification can reduce file sizes by up to 60-80%, leading to faster "Time to First Byte" and better SEO rankings for your site.</p>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <span class="stat-label">Original</span>
+                    <span id="origSize" class="stat-value">0 B</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Optimized</span>
+                    <span id="minSize" class="stat-value">0 B</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Savings</span>
+                    <span id="savings" class="stat-value highlight">0%</span>
+                </div>
             </div>
-            <div class="faq-item">
-                <h3>What about security?</h3>
-                <p>Since this tool runs locally in your browser, your proprietary code never touches our servers. It is the safest way to minify sensitive logic.</p>
+
+            <div class="btn-panel">
+                <button class="gen-btn" onclick="minifyJS()">Compress Code</button>
+                <button class="gen-btn" id="copyBtn" onclick="copyCode()">Copy Minified</button>
+                <button class="gen-btn" style="background: rgba(255,0,0,0.05); color: #ff4d4d; border-color: rgba(255,0,0,0.1);" onclick="clearAll()">Clear</button>
             </div>
-        </div>
-    </article>
-</div>
+        </section>
 
-<script>
-    const input = document.getElementById('jsInput');
-    
-    function minifyJS() {
-        const original = input.value;
-        if (!original) return;
+        <article class="seo-content">
+            <h2>The Science of Minification</h2>
+            <p>JavaScript minification isn't just about making code "ugly"—it's about making it efficient for machines. By removing non-functional data, you reduce the time it takes for a mobile browser to download and parse your script.</p>
+            
+            
 
-        // Lightweight Minification Logic (Removes comments and whitespace)
-        const minified = original
-            .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1') // Remove comments
-            .replace(/\s+/g, ' ') // Collapse whitespace
-            .replace(/\{ /g, '{').replace(/ \}/g, '}')
-            .replace(/; /g, ';').replace(/, /g, ',')
-            .trim();
+            <div class="faq-grid" style="margin-top: 40px;">
+                <div class="faq-item">
+                    <h3>Impact on SEO</h3>
+                    <p>Page speed is a primary ranking factor for Google. Minifying your JS assets contributes directly to a better Core Web Vitals score.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is it Reversible?</h3>
+                    <p>Minification is a one-way street. Always keep your "pretty" source code for development and use this tool for your production builds.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Privacy First</h3>
+                    <p>ToolForge processes your code strictly in your browser's RAM. Your scripts never touch a cloud database or external API.</p>
+                </div>
+            </div>
+        </article>
+    </main>
 
-        input.value = minified;
-        updateStats(original.length, minified.length);
-    }
+    <footer></footer>
 
-    function updateStats(orig, mini) {
-        document.getElementById('origSize').innerText = orig;
-        document.getElementById('minSize').innerText = mini;
-        const saved = orig > 0 ? Math.round(((orig - mini) / orig) * 100) : 0;
-        document.getElementById('savings').innerText = saved + "%";
-    }
+    <script src="/nav.js"></script>
+    <script>
+        const input = document.getElementById('jsInput');
+        const origLabel = document.getElementById('origSize');
+        const minLabel = document.getElementById('minSize');
+        const saveLabel = document.getElementById('savings');
+        const copyBtn = document.getElementById('copyBtn');
 
-    function copyResult() {
-        input.select();
-        document.execCommand('copy');
-        alert("Minified JS Copied!");
-    }
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
+        function minifyJS() {
+            const raw = input.value;
+            if (!raw.trim()) return;
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
+            // Engine: Regex-based compression
+            const minified = raw
+                .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1') // Comments
+                .replace(/\s+/g, ' ')                                  // Whitespace
+                .replace(/\{ /g, '{').replace(/ \}/g, '}')             // Brackets
+                .replace(/; /g, ';').replace(/, /g, ',')               // Punctuation
+                .trim();
 
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+            input.value = minified;
+            
+            // Update Stats
+            const orig = new Blob([raw]).size;
+            const mini = new Blob([minified]).size;
+            const savings = Math.round(((orig - mini) / orig) * 100);
+
+            origLabel.innerText = formatBytes(orig);
+            minLabel.innerText = formatBytes(mini);
+            saveLabel.innerText = (savings > 0 ? savings : 0) + "%";
+        }
+
+        function copyCode() {
+            if (!input.value) return;
+            navigator.clipboard.writeText(input.value);
+            const original = copyBtn.innerText;
+            copyBtn.innerText = "COPIED!";
+            setTimeout(() => copyBtn.innerText = original, 1200);
+        }
+
+        function clearAll() {
+            input.value = "";
+            origLabel.innerText = "0 B";
+            minLabel.innerText = "0 B";
+            saveLabel.innerText = "0%";
+        }
+    </script>
 </body>
 </html>

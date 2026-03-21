@@ -8,45 +8,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0b0f1a; --card: #141a2a; --text: #f1f5f9;
+             --bg: #0b0f1a; --card: #141a2a; --text: #f1f5f9;
             --primary: #6366f1; --border: #1e293b; --glass: rgba(255, 255, 255, 0.03);
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        .nav-container { min-height: 70px; }
         .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
         .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
+
         .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary); }
+        input { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; text-align: center; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(245, 158, 11, 0.1); }
         
         .gen-btn { 
-    background: var(--primary); 
-    color: white; 
-    border: none; 
-    padding: 18px 0; 
-    border-radius: 14px; 
-    font-weight: 800; 
-    cursor: pointer; 
-    font-size: 1.1rem; 
-    transition: 0.3s; 
-    width: 100%; 
-    max-width: 500px; 
-    /* THIS IS THE PERMANENT GLOW */
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
-}
-
-.gen-btn:hover { 
-    transform: translateY(-3px); 
-    /* STRONGER GLOW ON HOVER */
-    box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); 
-    filter: brightness(1.1);
-}
+            background: var(--primary); color: white; border: none; padding: 20px 0; border-radius: 16px; 
+            font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); text-transform: uppercase;
+        }
+        .gen-btn:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5); filter: brightness(1.1); }
         
         #result-list { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; max-width: 850px; margin-left: auto; margin-right: auto; }
-        .name-item { background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); font-family: 'Outfit'; font-size: 1.1rem; font-weight: 700; color: var(--primary); text-align: center; animation: fadeIn 0.4s ease forwards; display: flex; align-items: center; justify-content: center; }
+        .name-item { 
+            background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); 
+            font-family: 'Outfit'; font-size: 1.1rem; font-weight: 700; color: var(--primary); 
+            text-align: center; animation: fadeIn 0.4s ease forwards; cursor: pointer; transition: 0.2s;
+        }
+        .name-item:hover { background: rgba(245, 158, 11, 0.05); border-color: var(--primary); transform: scale(1.02); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -55,15 +47,14 @@
         .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
         .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
         .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
-        
-        .faq-item { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left; }
-        .faq-item strong { display: block; margin-bottom: 10px; color: #fff; font-size: 1.1rem; }
     </style>
 </head>
 <body>
+    <nav class="nav-container"></nav>
+
 <div class="container">
     <a href="index.html" class="back-btn">← Back to Category</a>
-    <nav class="nav-container"></nav> <div class="container"></div>
+    
     <section class="tool-card">
         <h1>Podcast Name Generator</h1>
         <p>Launch your audio journey with a name that hooks listeners instantly.</p>
@@ -77,14 +68,9 @@
     <section class="seo-content">
         <h2>How to Choose a Binge-Worthy Podcast Name</h2>
         <div class="tips-grid">
-            <div class="tip-card"><strong>01. Niche Focus</strong> Be specific. 'The Tech Podcast' is boring; 'Silicon Valley Secrets' is a brand.</div>
-            <div class="tip-card"><strong>02. Availability</strong> Check if the social handles and domain are available before committing.</div>
-            <div class="tip-card"><strong>03. Audience Connection</strong> Use words that resonate with your target listener's emotions or goals.</div>
-        </div>
-        <h3>Podcast FAQ</h3>
-        <div class="faq-item">
-            <strong>Does the length of the name matter?</strong>
-            Ideally, keep it under 4 words. Long names get cut off in mobile podcast apps.
+            <div class="tip-card"><strong>01. Niche Focus</strong> Be specific. 'The Tech Podcast' is generic; 'Silicon Valley Secrets' is a brand.</div>
+            <div class="tip-card"><strong>02. Length Check</strong> Ideally, keep it under 4 words. Long names get cut off in mobile podcast apps.</div>
+            <div class="tip-card"><strong>03. Availability</strong> Always check if the social handles and domain are available before committing.</div>
         </div>
     </section>
 </div>
@@ -95,7 +81,6 @@ function generatePodcast() {
     const resultList = document.getElementById('result-list');
     resultList.innerHTML = "";
 
-    // Massive library of 30+ styles
     const templates = [
         `The ${userWord} Lab`, `${userWord} Unfiltered`, `Beyond ${userWord}`, 
         `${userWord} Chronicles`, `The ${userWord} Project`, `Decoding ${userWord}`,
@@ -109,50 +94,37 @@ function generatePodcast() {
         `Simply ${userWord}`, `The ${userWord} Experience`, `${userWord} Radio`
     ];
 
-    // Shuffle
+    // Shuffle templates
     for (let i = templates.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [templates[i], templates[j]] = [templates[j], templates[i]];
     }
 
-    // Pick top 5
     templates.slice(0, 5).forEach(title => {
         const div = document.createElement('div');
         div.className = 'name-item';
         div.innerText = title;
+        div.onclick = () => {
+            navigator.clipboard.writeText(title);
+            const original = div.innerText;
+            div.innerText = "Copied! 🎙️";
+            setTimeout(() => div.innerText = original, 800);
+        };
         resultList.appendChild(div);
     });
 }
 </script>
+
 <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">The web’s fastest utility engine. Built for the modern creator.</p>
         </div>
-
         <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem;">Contact</h4>
+            <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">growthdriven024@gmail.com</a>
         </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
     </div>
     <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
         © 2026 ToolForge Engine. All processing is 100% Client-Side.

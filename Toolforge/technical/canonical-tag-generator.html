@@ -3,165 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canonical URL Generator | ToolForge Professional</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00f2ff;
-            --bg: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #f1f5f9;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle at 100% 0%, rgba(46, 204, 113, 0.05) 0%, transparent 50%), var(--bg);
-        }
-
-        .container { width: 95%; max-width: 800px; padding: 60px 0; }
-        h1 { font-family: 'Outfit'; font-size: 3rem; text-align: center; margin-bottom: 10px; letter-spacing: -2px; }
-        .subtitle { text-align: center; opacity: 0.6; margin-bottom: 40px; }
-
-        .card {
-            background: var(--glass);
-            padding: 40px;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(15px);
-        }
-
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
-        
-        input {
-            width: 100%;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 18px;
-            color: white;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-            box-sizing: border-box;
-            margin-bottom: 30px;
-        }
-        input:focus { border-color: var(--primary); }
-
-        .output-box {
-            background: #000;
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            font-family: 'Fira Code', monospace;
-            font-size: 1rem;
-            color: #00f2ff;
-            position: relative;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .output-box:hover { border-color: var(--primary); }
-
-        .copy-hint { font-size: 0.7rem; color: #64748b; margin-top: 10px; text-align: center; }
-
-        /* SEO SECTION */
-        .seo-section { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 60px; }
-        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    </style>
+    <title>Canonical URL Generator | ToolForge Official</title>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <nav class="nav-container"></nav> <div class="container">
-    <h1>Canonical <span style="color:var(--primary)">Tag Gen</span></h1>
-    <p class="subtitle">Prevent duplicate content issues and consolidate your SEO ranking power.</p>
+    <nav class="nav-container"></nav>
 
-    <div class="card">
-        <label>Main "Official" URL</label>
-        <input type="text" id="urlInput" placeholder="https://toolforge.com/my-tool" oninput="generate()">
-        
-        <label>Your Canonical Tag</label>
-        <div class="output-box" id="output" onclick="copyCode()">
-            &lt;link rel="canonical" href="..." /&gt;
-        </div>
-        <p class="copy-hint">Click the code box to copy instantly.</p>
-    </div>
+    <main class="container">
+        <section class="tool-card">
+            <h1>Canonical <span style="color:var(--primary)">Tag Gen</span></h1>
+            <p>Prevent duplicate content issues and consolidate your SEO ranking power instantly.</p>
 
-    <section class="seo-section">
-        <div class="seo-grid">
-            <div>
-                <h2 style="font-family:'Outfit'; color:var(--primary);">The SEO Power of Rel="Canonical"</h2>
-                <p>Duplicate content is one of the most common reasons websites lose their rankings. When Google finds the same content on multiple URLs, it doesn't know which one to show, so it often penalizes both. A <strong>Canonical Tag</strong> acts as a "source of truth," ensuring all "link juice" goes to the correct page.</p>
+            <div style="text-align: left; margin-top: 30px;">
+                <label style="display:block; margin-bottom:8px; font-weight:700; font-size:0.85rem; text-transform:uppercase; color:var(--primary);">Target URL</label>
+                <input type="url" id="urlInput" class="output-box" 
+                       style="width:100%; margin-bottom: 20px; background: rgba(0,0,0,0.2);" 
+                       placeholder="https://example.com/your-page" oninput="generate()">
+
+                <label style="display:block; margin-bottom:8px; font-weight:700; font-size:0.85rem; text-transform:uppercase; color:var(--primary);">Generated Tag</label>
+                <div id="output" class="output-box" 
+                     style="font-family: 'Fira Code', monospace; color: var(--primary); background: #000; cursor: pointer; min-height: 60px; display: flex; align-items: center; justify-content: center; text-align: center;" 
+                     onclick="copyCode()">
+                    &lt;link rel="canonical" href="..." /&gt;
+                </div>
+                <p style="font-size: 0.75rem; text-align: center; margin-top: 10px; opacity: 0.5;">Click the code box to copy instantly.</p>
             </div>
-            <div>
-                <h2 style="font-family:'Outfit'; color:var(--primary);">When to use it?</h2>
-                <p>You should use this on every page of your site. It is especially important if you have tracking parameters (like <code>?utm_source=facebook</code>) at the end of your URLs, as these create "new" URLs in Google's eyes that need to be pointed back to the original.</p>
+        </section>
+
+        <section class="seo-content">
+            <h2>Why Canonical Tags are Vital for SEO</h2>
+            <p>A canonical tag (rel="canonical") is a snippet of HTML code that defines the main version for duplicate, near-duplicate, and similar pages. In other words, if you have the same content under different URLs, canonical tags tell search engines which URL is the "master" version.</p>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <strong>Consolidate Link Juice</strong>
+                    Ensure that all backlinks pointing to different URL variations (like tracking IDs) credit the original page.
+                </div>
+                <div class="tip-card">
+                    <strong>Avoid Penalties</strong>
+                    Google may de-rank sites with significant duplicate content. Canonicalization prevents this confusion.
+                </div>
+                <div class="tip-card">
+                    <strong>Self-Canonicalization</strong>
+                    It is a best practice for every page to have a canonical tag pointing to itself to prevent scrapers from outranking you.
+                </div>
             </div>
-        </div>
-    </section>
 
-    <a href="index.html" style="margin-top: 50px; display: block; text-align: center; color: #64748b; text-decoration: none;">← Back to SEO Suite</a>
-</div>
+            <h3>Implementation FAQ</h3>
+            <div class="faq-item">
+                <strong>Where do I put this tag?</strong>
+                Copy and paste the generated code into the <code>&lt;head&gt;</code> section of your HTML document.
+            </div>
+            <div class="faq-item">
+                <strong>Should I use absolute or relative URLs?</strong>
+                Always use <strong>absolute URLs</strong> (including https://). Search engines can get confused by relative paths in canonical tags.
+            </div>
+        </section>
+    </main>
 
-<script>
-    function generate() {
-        const url = document.getElementById('urlInput').value.trim() || "https://example.com/page";
-        const output = document.getElementById('output');
-        output.innerText = `<link rel="canonical" href="${url}" />`;
-    }
+    <footer></footer>
 
-    function copyCode() {
-        const text = document.getElementById('output').innerText;
-        navigator.clipboard.writeText(text);
-        const box = document.getElementById('output');
-        box.style.borderColor = "#2ecc71";
-        setTimeout(() => box.style.borderColor = "rgba(255,255,255,0.1)", 1000);
-    }
+    <script src="/nav.js"></script>
+    <script>
+        function generate() {
+            const input = document.getElementById('urlInput').value.trim();
+            const output = document.getElementById('output');
+            
+            // Default placeholder if empty
+            const url = input || "https://example.com/page";
+            
+            // Ensure visual formatting
+            output.innerText = `<link rel="canonical" href="${url}" />`;
+            
+            // Simple validation check
+            if (input && !input.startsWith('http')) {
+                output.style.color = "#ffb700"; // Warning color
+            } else {
+                output.style.color = "var(--primary)";
+            }
+        }
 
-    generate();
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
+        function copyCode() {
+            const text = document.getElementById('output').innerText;
+            if (text.includes("...")) return;
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
+            navigator.clipboard.writeText(text);
+            
+            const box = document.getElementById('output');
+            const originalColor = box.style.borderColor;
+            
+            box.style.borderColor = "var(--primary)";
+            box.style.boxShadow = "0 0 20px var(--glow)";
+            
+            // Quick visual feedback
+            const originalText = box.innerText;
+            box.innerText = "COPIED TO CLIPBOARD!";
+            
+            setTimeout(() => {
+                box.style.borderColor = originalColor;
+                box.style.boxShadow = "none";
+                box.innerText = originalText;
+            }, 1000);
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+        // Initialize
+        generate();
+    </script>
 </body>
 </html>

@@ -1,11 +1,12 @@
-/* TOOLFORGE OMNI-NAV - Bulletproof Version */
+/* TOOLFORGE OMNI-NAV - Master Controller */
 
 const categories = {
     "growth": ["Bio Generator", "Giveaway Winner Picker", "Caption Pro", "Clickbait Title Grader", "Engagement Calculator", "Grid Previewer", "Hashtag Stacker", "Insta Caption Crafter", "LinkedIn Authority Generator", "Pinterest Description Generator", "Podcast Blurb Generator", "Safe zone checker", "Script timer", "Thumbnail Previewer", "TikTok Hook Generator", "Tweet Thread Starter", "Twitch Stream Namer", "Video Script Intros", "Viral Hook Generator", "youtube brainstormer", "pfp glow ring"],
     "technical": ["Audit Checklist", "Base64 Studio", "Canonical Tag Generator", "Color Converter", "Gradient Gen", "Html Entity Studio", "Js Minifier", "Json Formatter", "Keyword Density Checker", "Lorem Ipsum", "Markdown Converter", "Meta Tag Gen", "Mobile Tester", "Px to Rem Converter", "Redirect Generator", "Robots Generator", "Schema Generator", "SERP Simulator", "URL Encoder", "XML Sitemap Generator"],
-    "Generators": ["SaaS Name Generator", "Clan name generator", "Fantasy name generator", "Gamer Name generator", "Aesthetic Username generator", "Pet Name generator", "podcast name generator", "discord server namer", "clothing brand namer", "alias & persona generator"]
+    "generators": ["SaaS Name Generator", "Clan name generator", "Fantasy name generator", "Gamer Name generator", "Aesthetic Username generator", "Pet Name generator", "podcast name generator", "discord server namer", "clothing brand namer", "alias & persona generator"]
 };
 
+// 1. DATA PREP
 const toolLibrary = [];
 Object.keys(categories).forEach(folder => {
     categories[folder].forEach(name => {
@@ -14,161 +15,196 @@ Object.keys(categories).forEach(folder => {
     });
 });
 
-const searchUI = `
-<div id="searchWrapper">
-    <input type="text" id="toolSearch" placeholder="Search 50+ tools..." autocomplete="off">
-    <div id="searchResults"></div>
-</div>
+const globalUI = `
 <style>
-    #searchWrapper { width: 90%; max-width: 550px; margin: 20px auto; position: relative; z-index: 10000; }
-    #toolSearch { 
-        width: 100%; padding: 15px 25px; background: rgba(15, 23, 42, 0.7); 
-        border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px;
-        color: #fff; outline: none; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-        transition: 0.4s ease; font-size: 16px; box-sizing: border-box;
+    /* 1. NORMALIZE HEADER & CONTAINER */
+    .tf-header { 
+        display: flex; justify-content: space-between; align-items: center; 
+        padding: 15px 40px; max-width: 1300px; margin: 0 auto; gap: 30px;
+        box-sizing: border-box;
     }
-    #toolSearch:focus { border-color: #6366f1; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); background: rgba(15, 23, 42, 0.9); }
-    #searchResults { 
-        position: absolute; top: calc(100% + 12px); left: 0; right: 0; 
-        background: #0f172a; border: 1px solid #1e293b; border-radius: 50px; 
-        max-height: 400px; overflow-y: auto; display: none; 
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7); z-index: 10001; overflow-y: overlay;
-        scrollbar-width: thin;
-        scrollbar-color: #334155 transparent;
-    }
-        #searchResults::-webkit-scrollbar { 
-        width: 8px; /* Keep it thin and subtle */
+    
+    .logo { 
+        font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: #fff; 
+        text-decoration: none; letter-spacing: -1.2px; flex-shrink: 0;
     }
 
-    #searchResults::-webkit-scrollbar-track { 
-        background: transparent; /* Makes the track invisible so the corners stay clean */
-        margin: 15px; /* Crucial: Stops the scrollbar from hitting the rounded top/bottom */
-    }
-
-    #searchResults::-webkit-scrollbar-thumb { 
-        background: rgba(99, 102, 241, 0.3); /* Uses your primary theme color with transparency */
-        border-radius: 50px; /* Makes the actual scroll handle a pill shape */
-        border: 2px solid #0f172a; /* Adds "padding" around the handle to make it look floating */
-    }
-
-    #searchResults::-webkit-scrollbar-thumb:hover { 
-        background: rgba(99, 102, 241, 0.6); /* Brightens on hover */
-    }
-    .search-item { display: block; padding: 16px 24px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.03); border-radius: 12px; margin: 4px; transition: 0.2s; }
-    .search-item:hover { background: rgba(99, 102, 241, 0.1); padding-left: 32px; }
-    .search-item b { color: #fff; display: block; font-size: 1rem; }
-    .search-item span { color: #6366f1; font-size: 0.7rem; text-transform: uppercase; font-weight: 700; }
-    .search-focus-mode { opacity: 0.1 !important; filter: blur(8px); pointer-events: none; transition: 0.4s; }
-    .search-item:active {
-    background: rgba(99, 102, 241, 0.2);
-    transform: scale(0.98);}
-    @media (max-width: 600px) {
+    /* 2. THE STEALTH SEARCH BOX (Apple Style) */
     #searchWrapper { 
-        width: 95%; /* Give it more horizontal space on small screens */
-        margin: 15px auto; 
+        position: relative; 
+        width: 100%; 
+        max-width: 420px; /* Slimmer, consistent width */
+        height: 42px;    /* Fixed height for precision */
+        z-index: 10000; 
+        margin: 0; 
+    }
+    
+    /* THE CHAMELEON SEARCH BOX */
+    #toolSearch { 
+        width: 100%; 
+        height: 100%;
+        background: #05070a; 
+        /* The border now takes a 20% opacity version of the page's primary color */
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        border-radius: 50px; 
+        color: #f1f5f9; 
+        padding: 0 15px 0 40px; 
+        font-size: 0.9rem; 
+        font-family: 'Inter'; 
+        outline: none; 
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-sizing: border-box;
     }
 
-    #toolSearch {
-        padding: 12px 20px; /* Slightly slimmer for mobile height */
-        font-size: 15px; /* Prevents iOS from auto-zooming on the input */
+    /* Adaptive Focus: Blends with Pink, Blue, or Amber automatically */
+    #toolSearch:focus { 
+        border-color: var(--primary); 
+        background: #000; 
+        /* Adds a very subtle "aura" of the category color */
+        box-shadow: 0 0 20px -5px var(--primary); 
     }
 
-    #searchResults {
-        width: 100%;
-        border-radius: 20px; /* Slightly tighter radius for smaller screens */
-        max-height: 60vh; /* Allow it to take up more vertical space on a phone */
+    /* Icon also matches the theme */
+    #searchWrapper::before {
+        content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+        width: 14px; height: 14px;
+        /* Using currentColor or masking to let the icon match the theme */
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat center;
+        opacity: 0.4; 
+        filter: drop-shadow(0 0 2px var(--primary)); /* Subtle glow on the icon */
+        pointer-events: none;
+    }
+    
+    .search-item span { 
+        color: var(--primary); /* Category labels in search results now match the theme */
+        font-size: 0.6rem; 
+        text-transform: uppercase; 
+        font-weight: 900; 
     }
 
-    .search-item {
-        padding: 14px 18px; /* Bigger tap target for thumbs */
-        margin: 6px; /* Space them out so you don't accidental-click the wrong tool */
+    /* Minimalist Search Icon (SVG for sharpness) */
+    #searchWrapper::before {
+        content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+        width: 14px; height: 14px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat center;
+        opacity: 0.6; pointer-events: none;
     }
 
-    .search-item b {
-        font-size: 0.95rem; /* Stop text from wrapping too early */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis; /* Adds "..." if the tool name is too long */
+    /* 3. PREMIUM RESULTS DROPDOWN */
+    #searchResults { 
+        position: absolute; top: calc(100% + 8px); left: 0; right: 0; 
+        background: #05070a; border: 1px solid #1e293b; border-radius: 20px; 
+        max-height: 450px; overflow-y: auto; display: none; 
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6); z-index: 10001;
+        animation: premiumFade 0.2s ease-out;
     }
-}
+
+    @keyframes premiumFade {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-item { 
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 20px; text-decoration: none; 
+        border-bottom: 1px solid #0f172a; transition: 0.2s; 
+    }
+    .search-item:hover { background: #0f172a; }
+    .search-item b { color: #f1f5f9; font-size: 0.9rem; font-weight: 500; }
+    .search-item span { color: var(--primary); font-size: 0.6rem; text-transform: uppercase; font-weight: 900; }
+
+    /* Clean scrollbar */
+    #searchResults::-webkit-scrollbar { width: 4px; }
+    #searchResults::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+
+    @media (max-width: 600px) {
+        .tf-header { flex-direction: column; padding: 20px; }
+        #searchWrapper { max-width: 100%; }
+    }
 </style>
+
+<header class="tf-header">
+    <a href="/index.html" class="logo">ToolForge</a>
+    <div id="searchWrapper">
+        <input type="text" id="toolSearch" placeholder="Find a tool..." autocomplete="off">
+        <div id="searchResults"></div>
+    </div>
+</header>
 `;
 
-function initOmniSearch() {
-    console.log("ToolForge Search: Initializing...");
-    
-    // Attempt to find the container
-    const nav = document.querySelector('.nav-container') || document.body;
-    
-    if (nav) {
-        const container = document.createElement('div');
-        container.innerHTML = searchUI;
-        nav.prepend(container);
-        console.log("ToolForge Search: Successfully injected into", nav.tagName);
-    } else {
-        console.error("ToolForge Search: Could not find .nav-container or body!");
-        return;
-    }
+const footerUI = `
+<footer class="tf-footer">
+    <div class="footer-content">
+        <div>
+            <h3 style="color:var(--primary); font-family:'Outfit'">ToolForge</h3>
+            <p>The web’s fastest utility engine. Built for performance.</p>
+        </div>
+        <div>
+            <h4 style="color:#fff">Platform</h4>
+            <p><a href="/privacy.html" style="color:inherit; text-decoration:none">Privacy Policy</a></p>
+        </div>
+        <div>
+            <h4 style="color:#fff">Contact</h4>
+            <p><a href="mailto:growthdriven024@gmail.com" style="color:var(--primary); text-decoration:none">growthdriven024@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 ToolForge Engine. All processing is 100% Client-Side.</div>
+</footer>
+`;
 
+// 3. INITIALIZATION
+function initToolForge() {
+    // Inject Header & Search into .nav-container
+    const nav = document.querySelector('.nav-container');
+    if (nav) nav.innerHTML = globalUI;
+
+    // Inject Footer into footer tag
+    const footerTag = document.querySelector('footer');
+    if (footerTag) footerTag.innerHTML = footerUI;
+
+    setupSearchLogic();
+}
+
+// 4. SEARCH LOGIC (Keeping your original logic)
+function setupSearchLogic() {
     const input = document.getElementById('toolSearch');
     const results = document.getElementById('searchResults');
-    const contentToFade = document.querySelector('.grid') || document.querySelector('.tool-card');
+    const contentToFade = document.querySelector('.tool-card');
+
+    if(!input) return;
 
     input.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase().trim();
-        
         if (term.length > 0) {
-            const matches = toolLibrary
-    .filter(t => {
-        const name = t.name.toLowerCase();
-        // Exact match OR typo match (Distance <= 2)
-        return name.includes(term) || getFuzzyMatch(term, name.substring(0, term.length + 2)) <= 2;
-    })
-    .slice(0, 8);
+            const matches = toolLibrary.filter(t => {
+                const name = t.name.toLowerCase();
+                return name.includes(term) || getFuzzyMatch(term, name.substring(0, term.length + 2)) <= 2;
+            }).slice(0, 8);
 
-            if (matches.length > 0) {
-                // Show matching tools
-                results.innerHTML = matches.map(t => `
-                    <a href="${t.link}" class="search-item">
-                        <b>${t.name}</b>
-                        <span>${t.folder} →</span>
-                    </a>`).join('');
-            } else {
-                // THE "NO RESULTS" STATE
-                results.innerHTML = `
-                    <div style="padding: 30px 20px; text-align: center; color: #94a3b8;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🔍</div>
-                        <p style="margin: 0; font-size: 0.9rem;">No tools found for "<b>${term}</b>"</p>
-                        <p style="margin-top: 5px; font-size: 0.75rem; opacity: 0.6;">Try a different keyword or category.</p>
-                    </div>
-                `;
-            }
+            results.innerHTML = matches.length > 0 ? 
+                matches.map(t => `<a href="${t.link}" class="search-item"><b>${t.name}</b><span>${t.folder} →</span></a>`).join('') :
+                `<div style="padding:20px; text-align:center">No tools found</div>`;
             
             results.style.display = 'block';
-            if(contentToFade) contentToFade.classList.add('search-focus-mode');
+            if(contentToFade) contentToFade.style.opacity = "0.2";
         } else {
             results.style.display = 'none';
-            if(contentToFade) contentToFade.classList.remove('search-focus-mode');
+            if(contentToFade) contentToFade.style.opacity = "1";
         }
     });
 
+    // Close results on outside click
     document.addEventListener('click', (e) => {
         if (!document.getElementById('searchWrapper').contains(e.target)) {
             results.style.display = 'none';
-            if(contentToFade) contentToFade.classList.remove('search-focus-mode');
+            if(contentToFade) contentToFade.style.opacity = "1";
         }
     });
 }
 
-// THIS IS THE FIX: Wait for everything to be ready
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initOmniSearch);
-} else {
-    initOmniSearch();
-}
+// FUZZY MATCH LOGIC (Your exact function)
 function getFuzzyMatch(s1, s2) {
-    s1 = s1.toLowerCase();
-    s2 = s2.toLowerCase();
+    s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
     let costs = new Array();
     for (let i = 0; i <= s1.length; i++) {
         let lastValue = i;
@@ -186,3 +222,5 @@ function getFuzzyMatch(s1, s2) {
     }
     return costs[s2.length];
 }
+
+document.addEventListener("DOMContentLoaded", initToolForge);

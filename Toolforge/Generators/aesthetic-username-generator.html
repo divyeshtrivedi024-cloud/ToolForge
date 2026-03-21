@@ -12,34 +12,93 @@
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
         .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
         .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; }
+        
+        .tool-card { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            padding: 60px 40px; 
+            border-radius: 32px; 
+            text-align: center; 
+            margin-bottom: 80px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent);
+        }
+
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input, select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
-       .gen-btn { 
-    background: var(--primary); 
-    color: white; 
-    border: none; 
-    padding: 18px 0; 
-    border-radius: 14px; 
-    font-weight: 800; 
-    cursor: pointer; 
-    font-size: 1.1rem; 
-    transition: 0.3s; 
-    width: 100%; 
-    max-width: 500px; 
-    /* THIS IS THE PERMANENT GLOW */
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
+        input, select { 
+            width: 100%; 
+            max-width: 500px; 
+            background: #05070a; 
+            border: 1px solid var(--border); 
+            padding: 18px; 
+            border-radius: 14px; 
+            color: white; 
+            font-size: 1.1rem; 
+            outline: none; 
+            transition: 0.3s; 
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(99, 102, 241, 0.1); }
+
+        /* TOOLFORGE SIGNATURE BUTTON */
+.btn-draw {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    background: var(--primary); /* Ensure --primary is #6366f1 */
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin: 0 auto;
 }
 
-.gen-btn:hover { 
-    transform: translateY(-3px); 
-    /* STRONGER GLOW ON HOVER */
-    box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); 
+.btn-draw:hover { 
+    transform: translateY(-4px) scale(1.02); 
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5); 
     filter: brightness(1.1);
 }
-        #result-list { margin-top: 50px; display: grid; gap: 15px; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .name-item { background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); font-family: 'Outfit'; font-size: 1.5rem; font-weight: 800; color: var(--primary); text-align: center; }
+
+.btn-draw:active { 
+    transform: translateY(0) scale(0.98); 
+}
+
+        #result-list { 
+            margin-top: 50px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 15px; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .name-item { 
+            background: var(--glass); 
+            padding: 20px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            font-family: 'Outfit'; 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.2s; 
+        }
+        .name-item:hover { 
+            border-color: var(--primary); 
+            background: rgba(99, 102, 241, 0.1); 
+            transform: scale(1.03);
+        }
+
         .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
         .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
         .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
@@ -47,23 +106,23 @@
         .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
     </style>
 </head>
-<body>
+<body data-theme="technical">
 <div class="container">
+    <nav class="nav-container"></nav>
     <a href="index.html" class="back-btn">← Back to Category</a>
-    <nav class="nav-container"></nav> <div class="container">
     <section class="tool-card">
         <h1>Aesthetic Username Gen</h1>
         <p>Find the perfect soft, trendy, or vintage name for IG and TikTok.</p>
         <div class="input-group">
             <input type="text" id="userInput" placeholder="Your name or favorite word">
             <select id="vibe-choice">
-                <option value="soft">Soft & Airy</option>
-                <option value="vintage">Vintage / Retro</option>
-                <option value="cyber">Cyber / Neon</option>
-                <option value="indie">Indie / Earthy</option>
+                <option value="soft">☁️ Soft & Airy (Coquette/Cottagecore)</option>
+                <option value="vintage">📸 Vintage & Retro (90s/Film)</option>
+                <option value="cyber">🤖 Cyber & Neon (Glitch/Tech)</option>
+                <option value="indie">🌿 Indie & Earthy (Grunge/Nature)</option>
             </select>
         </div>
-        <button class="gen-btn" onclick="generateAesthetic()">Manifest Names</button>
+        <button class="btn-draw" onclick="generateAesthetic()">Manifest 5 Names</button>
         <div id="result-list"></div>
     </section>
 
@@ -86,35 +145,71 @@ function generateAesthetic() {
     resultList.innerHTML = "";
 
     const data = {
-        soft: { pre: ["cloudy", "pale", "milky", "soft", "angel", "silk", "dreamy"], post: ["baby", "core", "days", "glow", "mist", "lunar"] },
-        vintage: { pre: ["retro", "film", "grainy", "analog", "vinyl", "sepia"], post: ["archive", "studio", "tapes", "90s", "classic"] },
-        cyber: { pre: ["neon", "glitch", "pixel", "data", "cyber", "system"], post: ["exe", "void", "zero", "node", "wire"] },
-        indie: { pre: ["flora", "earthy", "moss", "wild", "honey", "fern"], post: ["child", "bloom", "roots", "soul", "wood"] }
+        soft: { 
+            pre: ["cloudy", "pale", "milky", "soft", "angel", "silk", "dreamy", "ethereal", "aura", "sugar", "honey", "moon", "lilac", "peachy", "velvet", "ivory", "misty", "opal", "fairy", "pure", "blossom", "dainty", "lullaby", "petal", "serene", "cosmic", "saturn", "venus", "dove", "luna", "starry", "haze", "pearl", "glow", "bliss", "cute", "bby", "sweet", "lavender", "minty", "soften", "cherish", "divine", "musing"], 
+            post: ["baby", "core", "days", "glow", "mist", "lunar", "dust", "spirit", "dream", "cloud", "angel", "muse", "pixie", "berry", "fluff", "wish", "haven", "doll", "rain", "sun", "sky", "blue", "pink", "white", "soft", "light", "petal", "vibe", "lyric", "bloom", "heart", "peace", "softly", "belle"] 
+        },
+        vintage: { 
+            pre: ["retro", "film", "grainy", "analog", "vinyl", "sepia", "classic", "antique", "old", "polaroid", "archive", "noir", "disco", "90s", "80s", "aesthetic", "faded", "vogue", "cinema", "silent", "radio", "tape", "crackle", "mellow", "nostalgic", "urban", "thrifty", "soul", "jazz", "gold", "velvet", "timeless", "denim", "bronze", "cozy"], 
+            post: ["archive", "studio", "tapes", "90s", "classic", "record", "shot", "vision", "gallery", "print", "clique", "era", "museum", "club", "house", "project", "label", "files", "journal", "vault", "press", "media", "edition", "set", "production", "works", "captures", "stills"] 
+        },
+        cyber: { 
+            pre: ["neon", "glitch", "pixel", "data", "cyber", "system", "void", "zero", "node", "wire", "static", "digital", "neural", "binary", "vector", "proxy", "tech", "bit", "hack", "code", "phantom", "mecha", "circuit", "flux", "logic", "pulse", "grid", "hyper", "meta", "crypto", "synth", "chrome", "plasma", "optic", "cyberic", "nano", "macro"], 
+            post: ["exe", "void", "zero", "node", "wire", "link", "core", "disk", "chip", "port", "unit", "sync", "run", "space", "host", "root", "web", "online", "mode", "bot", "interface", "drive", "os", "crack", "soft", "ware", "net", "stream", "buffer", "scan"] 
+        },
+        indie: { 
+            pre: ["flora", "earthy", "moss", "wild", "honey", "fern", "sage", "forest", "wood", "ocean", "river", "stone", "bloom", "green", "clover", "leaf", "herbal", "root", "natural", "raw", "canyon", "peak", "valley", "dune", "tide", "coast", "cedar", "pine", "ivy", "oak", "willow", "meadow", "rain", "storm", "thunder", "clay", "sumac", "birch"], 
+            post: ["child", "bloom", "roots", "soul", "wood", "born", "spirit", "earth", "world", "state", "land", "life", "grown", "wild", "wander", "roam", "free", "vibe", "folk", "tales", "natural", "field", "garden", "flower", "grove", "branch", "bark", "bound", "drift"] 
+        }
     };
 
-    for (let i = 0; i < 6; i++) {
+    const separators = [".", "_", "", "__", ".."];
+
+    for (let i = 0; i < 5; i++) {
         const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
         const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
-        let name = `${pre}.${userWord.toLowerCase()}`;
-        if(Math.random() > 0.5) name = `${userWord.toLowerCase()}_${post}`;
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        const word = userWord.toLowerCase();
         
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.33) {
+            name = `${pre}${sep}${word}`;
+        } else if (r < 0.66) {
+            name = `${word}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${word}${sep}${post}`;
+        }
+
+        if (name.length > 25) name = `${pre}${sep}${word}`;
+
         const div = document.createElement('div');
         div.className = 'name-item';
         div.innerText = name;
+        div.onclick = () => {
+            navigator.clipboard.writeText(name);
+            const originalText = div.innerText;
+            div.innerText = "COPIED!";
+            div.style.color = "#fff";
+            setTimeout(() => {
+                div.innerText = originalText;
+                div.style.color = "var(--primary)";
+            }, 800);
+        };
         resultList.appendChild(div);
     }
 }
 </script>
+
 <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
             <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
                 The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
             </p>
         </div>
-
         <div>
             <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
             <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
@@ -123,17 +218,15 @@ function generateAesthetic() {
                 <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
             </ul>
         </div>
-
         <div>
             <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
         </div>
-
     </div>
     <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
         © 2026 ToolForge Engine. All processing is 100% Client-Side.

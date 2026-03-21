@@ -3,180 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder & Decoder | Secure Online Developer Tool</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <meta name="description" content="Free, secure, and privacy-focused Base64 encoder and decoder. Convert text to Base64 or decode strings instantly in your browser.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
-            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        
-        /* Tool Section */
-        .tool-card { 
-            background: var(--card); border: 1px solid var(--border); 
-            padding: 40px; border-radius: 32px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
-        }
-        h1 { font-family: 'Outfit'; font-size: 2.5rem; color: var(--primary); text-align: center; margin-bottom: 10px; }
-        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 35px; }
-        
-        textarea { 
-            width: 100%; height: 160px; padding: 20px; background: #000; 
-            border: 1px solid var(--border); border-radius: 16px; color: #fff; 
-            font-family: 'monospace'; font-size: 1rem; resize: none; outline: none; box-sizing: border-box;
-        }
-        textarea:focus { border-color: var(--primary); }
-
-        .controls { display: flex; gap: 10px; justify-content: center; margin: 25px 0; }
-        button { padding: 12px 25px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit'; }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--primary); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: #fff; }
-        a[href="index.html"]:hover {
-    color: var(--primary) !important;
-    transform: translateX(-5px);
-}
-
-        /* SEO & FAQ Section */
-        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
-        h2 { font-family: 'Outfit'; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .faq-item h3 { font-size: 1.1rem; margin-top: 0; color: #fff; }
-        .faq-item p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0; }
-
-        .copy-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; padding: 10px 20px; border-radius: 50px; font-weight: 800; display: none; }
-    </style>
+    <title>Base64 Encoder & Decoder | ToolForge Official</title>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <nav class="nav-container"></nav> <div class="container">
-    <section class="tool-card">
-        <a href="index.html" style="
-    display: inline-flex; 
-    align-items: center; 
-    text-decoration: none; 
-    color: #94a3b8; 
-    font-size: 0.9rem; 
-    font-weight: 600; 
-    margin-bottom: 20px; 
-    transition: 0.3s;
-    gap: 8px;
-">
-    <span style="font-size: 1.2rem;">←</span> Back to Dev Hub
-</a>
-        <h1>Base64 Studio</h1>
-        <p class="subtitle">Securely encode and decode text using Base64 logic.</p>
+    <nav class="nav-container"></nav>
 
-        <label style="display:block; margin-bottom:10px; font-weight:600;">Input Content</label>
-        <textarea id="inputText" placeholder="Paste text or Base64 code here..."></textarea>
+    <main class="container">
+        <section class="tool-card">
+            <h1>Base64 <span style="color:var(--primary)">Studio</span></h1>
+            <p>Convert text to Base64 strings or decode them instantly. 100% Client-side privacy.</p>
 
-        <div class="controls">
-            <button class="btn-primary" onclick="handleAction('encode')">Encode</button>
-            <button class="btn-primary" onclick="handleAction('decode')">Decode</button>
-            <button class="btn-secondary" onclick="clearAll()">Clear</button>
-        </div>
+            <div style="display: grid; gap: 20px; text-align: left; margin-top: 30px;">
+                <div>
+                    <label style="display:block; margin-bottom:8px; font-weight:700; font-size:0.85rem; text-transform:uppercase; color:var(--primary);">Input Source</label>
+                    <textarea id="inputText" class="output-box" style="height: 140px; width:100%; resize:none; border: 1px solid var(--border); background: rgba(0,0,0,0.2);" placeholder="Paste text or Base64 here..."></textarea>
+                </div>
 
-        <label style="display:block; margin-bottom:10px; font-weight:600;">Result</label>
-        <textarea id="outputText" readonly placeholder="Output will appear here..."></textarea>
-        
-        <button class="btn-secondary" style="width: 100%; margin-top:15px;" onclick="copyOutput()">Copy Result</button>
-    </section>
+                <div class="controls" style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="gen-btn" style="flex:1;" onclick="process('encode')">Encode</button>
+                    <button class="gen-btn" style="flex:1; background:transparent; border: 2px solid var(--primary); color:var(--primary);" onclick="process('decode')">Decode</button>
+                    <button class="gen-btn" style="width: auto; padding: 0 20px; background: #1e293b;" onclick="clearAll()">Clear</button>
+                </div>
 
-    <article class="seo-content">
-        <h2>Understanding Base64 Encoding</h2>
-        <p>Base64 is a group of binary-to-text encoding schemes that represent binary data in an ASCII string format. It is widely used when there is a need to encode binary data that needs to be stored and transferred over media that are designed to deal with textual data.</p>
-        
-        <div class="faq-grid">
+                <div>
+                    <label style="display:block; margin-bottom:8px; font-weight:700; font-size:0.85rem; text-transform:uppercase; color:var(--primary);">Output Result</label>
+                    <textarea id="outputText" class="output-box" style="height: 140px; width:100%; resize:none; border: 1px solid var(--border); background: rgba(0,0,0,0.4);" readonly placeholder="Resulting code..."></textarea>
+                </div>
+
+                <button class="gen-btn" style="background: var(--glow); color: #fff;" onclick="copyOutput()">Copy to Clipboard</button>
+            </div>
+        </section>
+
+        <section class="seo-content">
+            <h2>What is Base64 Encoding?</h2>
+            <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. By translating binary data into a radix-64 representation, Base64 ensures that data remains intact without modification during transport through text-based systems like email or HTML.</p>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <strong>Data Integrity</strong>
+                    Base64 is not encryption; it is an encoding. It makes data readable by machines, not hidden from humans.
+                </div>
+                <div class="tip-card">
+                    <strong>Efficiency</strong>
+                    Base64 encoding increases the data size by roughly 33% compared to the original binary data.
+                </div>
+                <div class="tip-card">
+                    <strong>Developer Use</strong>
+                    Commonly used for Data URIs (embedding images in CSS) and basic authentication headers in APIs.
+                </div>
+            </div>
+
+            <h3>Base64 FAQ</h3>
             <div class="faq-item">
-                <h3>Is this tool secure?</h3>
-                <p>Yes. ToolForge processes all data locally in your browser. Your text or data is never sent to our servers, making it 100% private.</p>
+                <strong>Does this tool support special characters?</strong>
+                Yes. We use a robust URI-component handling method to ensure emojis and special UTF-8 characters encode and decode without "Malformed URI" errors.
             </div>
             <div class="faq-item">
-                <h3>When should I use Base64?</h3>
-                <p>It's perfect for embedding small images in CSS, sending data via APIs, or obfuscating simple strings that shouldn't be read by the naked eye immediately.</p>
+                <strong>Is my data stored on ToolForge?</strong>
+                Never. The conversion happens strictly in your browser's memory using JavaScript. As soon as you close the tab, the data is gone.
             </div>
-            <div class="faq-item">
-                <h3>Does it support UTF-8?</h3>
-                <p>Absolutely. Our encoder is optimized to handle special characters and emojis that standard Base64 tools often struggle with.</p>
-            </div>
-            <div class="faq-item">
-                <h3>What is the character set?</h3>
-                <p>Base64 uses 64 characters: A-Z, a-z, 0-9, and the "+" and "/" symbols, with "=" used as padding.</p>
-            </div>
-        </div>
-    </article>
-</div>
+        </section>
+    </main>
 
-<div id="toast" class="copy-toast">Copied!</div>
+    <footer></footer>
 
-<script>
-    function handleAction(type) {
-        const input = document.getElementById('inputText').value;
-        const output = document.getElementById('outputText');
-        try {
-            if (type === 'encode') {
-                output.value = btoa(unescape(encodeURIComponent(input)));
-            } else {
-                output.value = decodeURIComponent(escape(atob(input)));
+    <script src="/nav.js"></script>
+    <script>
+        function process(type) {
+            const input = document.getElementById('inputText').value;
+            const output = document.getElementById('outputText');
+            
+            if (!input) return;
+
+            try {
+                if (type === 'encode') {
+                    // Optimized for UTF-8 Support
+                    output.value = btoa(encodeURIComponent(input).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+                        return String.fromCharCode('0x' + p1);
+                    }));
+                } else {
+                    // Optimized for UTF-8 Support
+                    output.value = decodeURIComponent(Array.prototype.map.call(atob(input), (c) => {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                }
+            } catch (e) {
+                output.value = "Error: This string is not a valid Base64 format.";
+                output.style.borderColor = "#ff4444";
             }
-        } catch (e) {
-            output.value = "Error: Invalid input for " + type;
         }
-    }
-    function clearAll() {
-        document.getElementById('inputText').value = '';
-        document.getElementById('outputText').value = '';
-    }
-    function copyOutput() {
-        const output = document.getElementById('outputText');
-        if (!output.value) return;
-        output.select();
-        document.execCommand('copy');
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2000);
-    }
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+            document.getElementById('outputText').style.borderColor = 'var(--border)';
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+        function copyOutput() {
+            const output = document.getElementById('outputText');
+            if (!output.value || output.value.startsWith("Error")) return;
+            
+            navigator.clipboard.writeText(output.value);
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "✓ Copied!";
+            setTimeout(() => btn.innerText = originalText, 2000);
+        }
+    </script>
 </body>
 </html>

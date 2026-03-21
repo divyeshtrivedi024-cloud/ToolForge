@@ -13,78 +13,71 @@
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* SEARCH NETWORK HOOK */
+        .nav-container { min-height: 80px; margin-bottom: 20px; }
+
         .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
         .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
+        
         .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input, select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
-        
-        .gen-btn { 
-    background: var(--primary); 
-    color: white; 
-    border: none; 
-    padding: 18px 0; 
-    border-radius: 14px; 
-    font-weight: 800; 
-    cursor: pointer; 
-    font-size: 1.1rem; 
-    transition: 0.3s; 
-    width: 100%; 
-    max-width: 500px; 
-    /* THIS IS THE PERMANENT GLOW */
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
-}
+        input, select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        input:focus, select:focus { border-color: var(--primary); }
 
-.gen-btn:hover { 
-    transform: translateY(-3px); 
-    /* STRONGER GLOW ON HOVER */
-    box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); 
-    filter: brightness(1.1);
-}
+        /* SIGNATURE TOOLFORGE BUTTON */
+        .btn-draw {
+            width: 100%; max-width: 500px; padding: 20px; background: var(--primary); color: #fff; border: none;
+            border-radius: 16px; font-weight: 800; font-size: 1.1rem; cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-draw:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 0 35px rgba(99, 102, 241, 0.6); filter: brightness(1.1); }
         
         #result-list { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; max-width: 850px; margin-left: auto; margin-right: auto; }
-        .name-item { background: var(--glass); padding: 25px; border-radius: 16px; border: 1px solid var(--border); font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: var(--primary); text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+        .name-item { 
+            background: var(--glass); padding: 25px; border-radius: 16px; border: 1px solid var(--border); 
+            font-family: 'Outfit'; font-size: 1.2rem; font-weight: 800; color: var(--primary); 
+            text-align: center; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.2s;
+        }
+        .name-item:hover { transform: scale(1.05); border-color: var(--primary); background: rgba(99, 102, 241, 0.1); }
 
         .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
         .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
         .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
         .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
         .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
-        .faq-item { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left; }
-        .faq-item strong { display: block; margin-bottom: 10px; color: #fff; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 <div class="container">
+    <nav class="nav-container"></nav>
     <a href="index.html" class="back-btn">← Back to Category</a>
+    
     <section class="tool-card">
         <h1>Clothing Brand Namer</h1>
         <p>Design a high-end fashion or streetwear identity using AI.</p>
         <div class="input-group">
             <input type="text" id="userInput" placeholder="Theme? (e.g. Urban, Silk, Nomad)">
             <select id="style-choice">
-                <option value="street">Streetwear / Urban</option>
-                <option value="luxury">Luxury / Atelier</option>
-                <option value="minimal">Minimalist / Basic</option>
+                <option value="street">👟 Streetwear / Urban</option>
+                <option value="luxury">💎 Luxury / Atelier</option>
+                <option value="minimal">⚖️ Minimalist / Basic</option>
+                <option value="vintage">🎞️ Vintage / Heritage</option>
             </select>
         </div>
-        <button class="gen-btn" onclick="generateBrandNames()">Generate 5 Brand Names</button>
+        <button class="btn-draw" onclick="generateBrandNames()">Generate 5 New Names</button>
         <div id="result-list"></div>
     </section>
 
     <section class="seo-content">
         <h2>Building a Fashion Empire</h2>
         <div class="tips-grid">
-            <div class="tip-card"><strong>01. Phonetic Luxury</strong> Luxury brands often use short, sharp names (Gucci, Prada). Streetwear uses bold, descriptive words (Off-White, Supreme).</div>
-            <div class="tip-card"><strong>02. Visual Balance</strong> Think about how the name looks on a label. Symmetry in letters (like 'O' or 'X') can make a logo design much easier.</div>
-            <div class="tip-card"><strong>03. Cultural Resonance</strong> Ensure your name doesn't have an unintended meaning in other languages if you plan to go global.</div>
-        </div>
-        <h3>Fashion FAQ</h3>
-        <div class="faq-item">
-            <strong>Do I need to trademark my brand name?</strong>
-            Once you start selling, it is highly recommended to look into trademarking to protect your brand identity and logo.
+            <div class="tip-card"><strong>01. Phonetic Luxury</strong> Luxury brands often use short, sharp names. Streetwear uses bold, descriptive words.</div>
+            <div class="tip-card"><strong>02. Visual Balance</strong> Symmetry in letters (like 'O', 'X', or 'A') makes logo design significantly easier.</div>
+            <div class="tip-card"><strong>03. Group Synergy</strong> Ensure the name matches the textile quality (e.g., 'Canvas' for basics, 'Velvet' for luxury).</div>
         </div>
     </section>
 </div>
@@ -97,9 +90,10 @@ function generateBrandNames() {
     resultList.innerHTML = "";
 
     const data = {
-        street: ["Vandal", "District", "Rogue", "Crown", "Hype", "Sector", "Void", "Static", "Rebel", "Theory", "Shift", "Grid", "Apex", "Nova", "Flux"],
-        luxury: ["Atelier", "Maison", "Studio", "Couture", "Privé", "Aura", "Elite", "Royal", "Gilded", "Silk", "Elysian", "Monarch", "Icon", "Sovereign", "Velvet"],
-        minimal: ["Pure", "Form", "Object", "Basis", "Element", "Core", "Zen", "Standard", "Canvas", "Origin", "Unit", "Neutral", "Draft", "Linear", "Mod"]
+        street: ["Vandal", "District", "Rogue", "Crown", "Hype", "Sector", "Void", "Static", "Rebel", "Theory", "Shift", "Grid", "Apex", "Nova", "Flux", "Vault", "Outlaw", "Bastion", "Protocol", "Kinetics"],
+        luxury: ["Atelier", "Maison", "Studio", "Couture", "Privé", "Aura", "Elite", "Royal", "Gilded", "Silk", "Elysian", "Monarch", "Icon", "Sovereign", "Velvet", "Opal", "Ivory", "Luxe", "Satin", "Regent"],
+        minimal: ["Pure", "Form", "Object", "Basis", "Element", "Core", "Zen", "Standard", "Canvas", "Origin", "Unit", "Neutral", "Draft", "Linear", "Mod", "Aspect", "Mono", "Frame", "Axis", "Base"],
+        vintage: ["Heritage", "Old-Soul", "Legacy", "Classic", "Foundry", "Archive", "Guild", "Noble", "Retros", "Timeless", "Patina", "Legend", "Est.", "Tweed", "Indigo", "Denim", "Iron-Works"]
     };
 
     let list = [...data[style]];
@@ -108,55 +102,45 @@ function generateBrandNames() {
         [list[i], list[j]] = [list[j], list[i]];
     }
 
-    list.slice(0, 5).forEach((item, index) => {
+    for (let i = 0; i < 5; i++) {
         let name;
+        const randomItem = list[i % list.length];
         if (userWord) {
-            name = index % 2 === 0 ? `${userWord} ${item}` : `${item} ${userWord}`;
+            const capitalized = userWord.charAt(0).toUpperCase() + userWord.slice(1);
+            name = i % 2 === 0 ? `${capitalized} ${randomItem}` : `${randomItem} ${capitalized}`;
         } else {
-            name = index % 2 === 0 ? item : `${item} ${list[(index + 1) % list.length]}`;
+            const secondary = list[(i + 5) % list.length];
+            name = i % 3 === 0 ? randomItem : `${randomItem} ${secondary}`;
         }
+        
         const div = document.createElement('div');
         div.className = 'name-item';
         div.innerText = name;
+        div.onclick = () => {
+            navigator.clipboard.writeText(name);
+            const oldText = div.innerText;
+            div.innerText = "COPIED";
+            setTimeout(() => div.innerText = oldText, 800);
+        };
         resultList.appendChild(div);
-    });
+    }
 }
 </script>
 <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
+            <p style="color: #94a3b8; font-size: 0.9rem;">The web’s fastest utility engine. Built for performance and privacy.</p>
         </div>
-
         <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem;">Contact</h4>
+            <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">growthdriven024@gmail.com</a>
         </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
     </div>
     <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
         © 2026 ToolForge Engine. All processing is 100% Client-Side.
     </div>
 </footer>
 <script src="../nav.js"></script>
-<script>initGlobalSearch('globalSearch', 'globalResults');</script>
 </body>
 </html>

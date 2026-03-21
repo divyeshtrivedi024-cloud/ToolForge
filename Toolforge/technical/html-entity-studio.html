@@ -3,169 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Entity Encoder & Decoder | Secure Web Tool</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
-    <meta name="description" content="Convert special characters to HTML entities instantly. Escape symbols like <, >, and & for safe web display. Fast, secure, and browser-based.">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <title>HTML Entity Studio | Encode & Decode Special Characters | ToolForge</title>
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #020617; --card: #0f172a; --text: #f1f5f9;
-            --primary: #00f2ff; --border: #1e293b; --glass: rgba(0, 242, 255, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
-        
-        /* Back Button Style */
-        .back-btn { display: inline-flex; align-items: center; text-decoration: none; color: #94a3b8; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; transition: 0.3s; gap: 8px; }
-        .back-btn:hover { color: var(--primary); transform: translateX(-5px); }
-
-        .tool-card { 
-            background: var(--card); border: 1px solid var(--border); 
-            padding: 40px; border-radius: 32px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5); margin-bottom: 60px;
-        }
-        h1 { font-family: 'Outfit'; font-size: 2.5rem; color: var(--primary); text-align: center; margin: 0 0 10px 0; }
-        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 35px; }
-        
-        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; color: var(--primary); }
-        textarea { 
-            width: 100%; height: 140px; padding: 15px; background: #000; 
-            border: 1px solid var(--border); border-radius: 12px; color: #fff; 
-            font-family: 'Fira Code', monospace; font-size: 0.95rem; outline: none; resize: vertical; box-sizing: border-box;
-        }
-        textarea:focus { border-color: var(--primary); }
-
-        .preview-box {
-            margin-top: 20px; padding: 20px; background: var(--glass); 
-            border-radius: 12px; border: 1px dashed var(--border); min-height: 50px;
+        /* Tool-Specific Layout */
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            background: linear-gradient(90deg, var(--primary), #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
         }
 
-        .btn-group { display: flex; gap: 10px; margin: 25px 0; }
-        button { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Outfit'; }
-        .btn-primary { background: var(--primary); color: #000; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: #fff; }
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
 
-        /* SEO & FAQ */
-        .seo-content { margin-top: 80px; border-top: 1px solid var(--border); padding-top: 60px; }
-        h2 { font-family: 'Outfit'; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .faq-item { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .faq-item h3 { font-size: 1.1rem; margin-top: 0; color: #fff; margin-bottom: 10px; }
-        .faq-item p { font-size: 0.95rem; color: #94a3b8; margin-bottom: 0; }
+        @media (max-width: 800px) {
+            .editor-container { grid-template-columns: 1fr; }
+        }
+
+        .input-area, .preview-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* The "Premium" Code Editor Feel */
+        textarea {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .live-preview {
+            width: 100%;
+            height: 300px;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            font-family: 'Inter', sans-serif;
+            color: #94a3b8;
+        }
+
+        .btn-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 500px) {
+            .btn-panel { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
-<body>
+<body data-theme="technical">
 
-<div class="container">
-    <a href="index.html" class="back-btn"><span>←</span> Back to Dev Hub</a>
-    <nav class="nav-container"></nav> <div class="container"></div>
+    <nav class="nav-container"></nav>
 
-    <section class="tool-card">
-        <h1>HTML Entity Studio</h1>
-        <p class="subtitle">Escape or unescape special characters for safe HTML rendering.</p>
+    <main class="container">
+        <section class="tool-card" style="text-align: center;">
+            <h1 class="brand-title">Entity Studio</h1>
+            <p style="opacity:0.6; font-weight: 500;">Sanitize and transform HTML characters for safe web display.</p>
 
-        <label>Input Text / Code</label>
-        <textarea id="htmlInput" placeholder="Enter characters like < > & ' '..." oninput="updatePreview()"></textarea>
+            <div class="editor-container">
+                <div class="input-area">
+                    <label style="font-size:0.7rem; font-weight:800; color:var(--primary); text-transform:uppercase; text-align:left; letter-spacing:1px;">Source Input</label>
+                    <textarea id="mainInput" placeholder="Paste your code or characters here..." oninput="syncPreview()"></textarea>
+                </div>
 
-        <div class="btn-group">
-            <button class="btn btn-primary" onclick="process('encode')">Encode Entities</button>
-            <button class="btn btn-primary" onclick="process('decode')">Decode Entities</button>
-            <button class="btn-secondary" onclick="copyResult()">Copy Result</button>
-        </div>
-
-        <label>Live Browser Preview</label>
-        <div id="preview" class="preview-box">Preview will appear here...</div>
-    </section>
-
-    <article class="seo-content">
-        <h2>What are HTML Entities?</h2>
-        <p>HTML Entities are strings of text used to represent reserved characters or invisible symbols in HTML. For example, the browser interprets the <strong><</strong> symbol as the start of a tag. To display it as text, you must use its entity equivalent: <code>&amp;lt;</code>.</p>
-        
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Why escape HTML?</h3>
-                <p>Escaping code prevents "Cross-Site Scripting" (XSS) attacks and ensures that your browser renders code snippets as text rather than trying to run them as active elements.</p>
+                <div class="preview-area">
+                    <label style="font-size:0.7rem; font-weight:800; color:var(--primary); text-transform:uppercase; text-align:left; letter-spacing:1px;">Browser Rendering</label>
+                    <div id="renderPreview" class="live-preview">Rendered output will appear here...</div>
+                </div>
             </div>
-            <div class="faq-item">
-                <h3>Common Entities</h3>
-                <p>The most common are: <strong>&amp;lt;</strong> (<), <strong>&amp;gt;</strong> (>), <strong>&amp;amp;</strong> (&), and <strong>&amp;quot;</strong> (").</p>
-            </div>
-            <div class="faq-item">
-                <h3>Is this tool offline?</h3>
-                <p>Yes. Like all ToolForge utilities, this processing happens entirely in your browser. No data is sent to a server.</p>
-            </div>
-            <div class="faq-item">
-                <h3>What is "Unescaping"?</h3>
-                <p>Unescaping is the process of turning entities back into their original symbols. This is useful when you are reading raw source code from a database.</p>
-            </div>
-        </div>
-    </article>
-</div>
 
-<script>
-    const input = document.getElementById('htmlInput');
-    const preview = document.getElementById('preview');
+            <div class="btn-panel">
+                <button class="gen-btn" onclick="transform('encode')">Encode Code</button>
+                <button class="gen-btn" onclick="transform('decode')">Decode Entities</button>
+                <button class="gen-btn" id="copyBtn" onclick="copyContent()">Copy Output</button>
+            </div>
+        </section>
 
-    function process(type) {
-        if (type === 'encode') {
+        <article class="seo-content">
+            <h2>Understanding HTML Encoding</h2>
+            <p>HTML encoding ensures that the browser treats specific characters as literal text rather than functional code. This is vital for security and for displaying code examples on technical blogs.</p>
+            
+            
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is XSS Protection?</h3>
+                    <p>By encoding characters like <code>&lt;</code> and <code>&gt;</code>, you prevent malicious scripts from being executed in a user's browser, a core step in preventing Cross-Site Scripting (XSS).</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Common Entities</h3>
+                    <p>The standard set includes <code>&amp;amp;</code> (&), <code>&amp;lt;</code> (<), <code>&amp;gt;</code> (>), and <code>&amp;quot;</code> (").</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Privacy Guaranteed</h3>
+                    <p>As with all ToolForge tools, your data never leaves your computer. All encoding and decoding happen locally in your browser's memory.</p>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer></footer>
+
+    <script src="/nav.js"></script>
+    <script>
+        const input = document.getElementById('mainInput');
+        const preview = document.getElementById('renderPreview');
+        const copyBtn = document.getElementById('copyBtn');
+
+        function transform(mode) {
             const div = document.createElement('div');
-            div.textContent = input.value;
-            input.value = div.innerHTML;
-        } else {
-            const div = document.createElement('div');
-            div.innerHTML = input.value;
-            input.value = div.textContent;
+            if (mode === 'encode') {
+                div.textContent = input.value;
+                input.value = div.innerHTML;
+            } else {
+                div.innerHTML = input.value;
+                input.value = div.textContent;
+            }
+            syncPreview();
         }
-        updatePreview();
-    }
 
-    function updatePreview() {
-        // We set the innerHTML of the preview to the raw input. 
-        // If it's encoded, it will look like symbols.
-        preview.innerHTML = input.value || "Preview will appear here...";
-    }
+        function syncPreview() {
+            if (input.value.trim() === "") {
+                preview.innerHTML = "Rendered output will appear here...";
+                preview.style.opacity = "0.4";
+            } else {
+                preview.innerHTML = input.value;
+                preview.style.opacity = "1";
+            }
+        }
 
-    function copyResult() {
-        input.select();
-        document.execCommand('copy');
-        alert("Copied to clipboard!");
-    }
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
+        function copyContent() {
+            navigator.clipboard.writeText(input.value);
+            const original = copyBtn.innerText;
+            copyBtn.innerText = "COPIED!";
+            setTimeout(() => copyBtn.innerText = original, 1200);
+        }
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
+        // Initialize empty state
+        syncPreview();
+    </script>
 </body>
 </html>
