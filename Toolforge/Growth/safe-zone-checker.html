@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safe Zone Checker | ToolForge Professional</title>
+    <title>Safe Zone Checker | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff007f;
-            --bg: #020617;
+            --bg: #0d0208;
+            --card: #1a0514;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --border: #3d0a2b;
             --text: #f1f5f9;
         }
 
@@ -20,146 +21,139 @@
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle at 50% 0%, rgba(46, 204, 113, 0.05) 0%, transparent 50%), var(--bg);
+            line-height: 1.6;
         }
 
-        .container { width: 95%; max-width: 1000px; padding: 60px 0; text-align: center; }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; }
-        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
+        
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
 
         .checker-layout {
             display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 40px;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
             text-align: left;
-            align-items: start;
+            align-items: center;
+            background: var(--card);
+            padding: 60px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
         }
 
         /* PHONE FRAME VIEW */
         .phone-mockup {
-            width: 350px;
-            height: 700px;
+            width: 320px;
+            height: 640px;
             background: #000;
-            border-radius: 40px;
-            border: 8px solid #1e293b;
+            border-radius: 45px;
+            border: 12px solid #1a1a1a;
             position: relative;
             margin: 0 auto;
             overflow: hidden;
-            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.7);
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.1), 0 50px 100px rgba(0,0,0,0.5);
+            transition: 0.5s;
         }
+        .phone-mockup.active { border-color: #222; box-shadow: 0 0 60px rgba(255, 0, 127, 0.2); }
 
-        #userUpload {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
+        #userUpload { width: 100%; height: 100%; object-fit: cover; display: none; }
 
         /* OVERLAY ELEMENTS */
-        .safe-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            display: none;
-        }
-
-        .ui-element { position: absolute; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border-radius: 4px; }
+        .safe-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: none; }
+        .ui-element { position: absolute; background: rgba(255, 0, 127, 0.1); backdrop-filter: blur(2px); border: 1px dashed var(--primary); }
         
-        /* Simulated TikTok/Reels UI */
-        .side-bar { right: 10px; bottom: 150px; width: 50px; height: 300px; border: 1px dashed rgba(255,255,255,0.5); }
-        .bottom-bar { bottom: 0; left: 0; width: 100%; height: 120px; border-top: 1px dashed rgba(255,255,255,0.5); }
-        .top-bar { top: 0; left: 0; width: 100%; height: 80px; border-bottom: 1px dashed rgba(255,255,255,0.5); }
+        .side-bar { right: 0; bottom: 120px; width: 65px; height: 320px; border-radius: 20px 0 0 20px; }
+        .bottom-bar { bottom: 0; left: 0; width: 100%; height: 140px; }
+        .top-bar { top: 0; left: 0; width: 100%; height: 90px; }
         
         .label-tag { 
-            position: absolute; font-size: 10px; background: #ff4757; color: white; 
-            padding: 2px 5px; font-weight: bold; text-transform: uppercase; 
+            position: absolute; font-size: 9px; background: var(--primary); color: white; 
+            padding: 3px 7px; font-weight: 900; text-transform: uppercase; border-radius: 4px;
         }
 
         /* CONTROLS */
-        .controls {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-        }
-
+        .controls { display: flex; flex-direction: column; gap: 25px; }
         .upload-area {
+            background: rgba(0,0,0,0.3);
             border: 2px dashed var(--border);
-            padding: 40px 20px;
-            border-radius: 16px;
+            padding: 50px 20px;
+            border-radius: 24px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
-            margin-bottom: 30px;
         }
-        .upload-area:hover { border-color: var(--primary); background: rgba(46, 204, 113, 0.05); }
+        .upload-area:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.05); }
 
-        .toggle-group { display: flex; flex-direction: column; gap: 15px; }
-        
         .switch-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; background: rgba(255,255,255,0.02);
+            border-radius: 18px; border: 1px solid var(--border);
         }
+
+        /* CUSTOM CHECKBOX */
+        .tgl { appearance: none; width: 45px; height: 24px; background: #333; border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; }
+        .tgl:checked { background: var(--primary); }
+        .tgl::before { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: 0.3s; }
+        .tgl:checked::before { left: 24px; }
 
         /* SEO & FAQ */
-        .seo-wrapper { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 60px; }
-        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .faq-box { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-top: 15px; }
+        .seo-wrapper { margin-top: 100px; text-align: left; }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; }
+        .info-card h3 { color: var(--primary); font-family: 'Outfit'; margin-top: 0; }
+        .info-card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 0; }
 
-        @media (max-width: 850px) {
-            .checker-layout { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .checker-layout { grid-template-columns: 1fr; padding: 40px 20px; }
             .phone-mockup { width: 280px; height: 560px; }
         }
     </style>
 </head>
 <body>
 
+<nav class="nav-container"></nav> 
+
 <div class="container">
-    <nav class="nav-container"></nav> <div class="container"></div>
+    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Hub</a>
+    
     <h1>Safe Zone <span style="color:var(--primary)">Checker</span></h1>
-    <p class="subtitle">Ensure your captions and faces aren't hidden by app interfaces.</p>
+    <p class="subtitle">Simulate the TikTok & Reels UI before you hit publish.</p>
 
     <div class="checker-layout">
         <div class="preview-side">
-            <div class="phone-mockup">
+            <div class="phone-mockup" id="mockup">
                 <img id="userUpload" src="" alt="Video Frame">
-                
                 <div id="overlay" class="safe-overlay">
-                    <div class="ui-element top-bar"><span class="label-tag">Following / For You</span></div>
-                    <div class="ui-element side-bar"><span class="label-tag">Buttons</span></div>
-                    <div class="ui-element bottom-bar"><span class="label-tag">Caption & Audio</span></div>
+                    <div class="ui-element top-bar"><span class="label-tag" style="top:40px; left:50%; transform:translateX(-50%)">Header UI</span></div>
+                    <div class="ui-element side-bar"><span class="label-tag" style="top:20px; right:10px">Interaction</span></div>
+                    <div class="ui-element bottom-bar"><span class="label-tag" style="bottom:20px; left:20px">Caption Zone</span></div>
                 </div>
-                
-                <p id="placeholder" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.3; text-align:center; width:80%;">
-                    Upload a screenshot of your video
-                </p>
+                <div id="placeholder" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.3; text-align:center; width:80%;">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 10px;">📱</span>
+                    Drop frame here
+                </div>
             </div>
         </div>
 
         <div class="controls">
             <div class="upload-area" onclick="document.getElementById('fileIn').click()">
-                <span style="font-size: 2rem;">🖼️</span>
-                <p style="margin: 10px 0 0 0; font-weight: 600;">Click to Upload Frame</p>
+                <p style="margin: 0; font-weight: 700; color: #fff;">Upload Video Screenshot</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.8rem; opacity: 0.5;">Supports PNG, JPG, WEBP</p>
                 <input type="file" id="fileIn" hidden accept="image/*">
             </div>
 
-            <div class="toggle-group">
-                <div class="switch-box">
-                    <span>Show UI Overlay</span>
-                    <input type="checkbox" id="overlayToggle" onchange="toggleOverlay()" style="width:20px; height:20px; cursor:pointer;">
+            <div class="switch-box">
+                <div>
+                    <span style="display:block; font-weight:600;">Interface Overlay</span>
+                    <span style="font-size: 0.75rem; opacity: 0.5;">Toggle TikTok/Reels UI visibility</span>
                 </div>
-                <p style="font-size: 0.8rem; opacity:0.5; line-height: 1.4;">
-                    The red zones indicate where TikTok and Instagram Reels place their native buttons and text.
+                <input type="checkbox" id="overlayToggle" class="tgl" onchange="toggleOverlay()">
+            </div>
+
+            <div style="background: rgba(255, 0, 127, 0.05); padding: 20px; border-radius: 18px; border: 1px solid rgba(255, 0, 127, 0.1);">
+                <p style="font-size: 0.85rem; margin: 0; color: #ff80bf;">
+                    <strong>Pro Tip:</strong> Keep your main text and faces inside the center clear area to ensure maximum visibility on all devices.
                 </p>
             </div>
         </div>
@@ -167,28 +161,20 @@
 
     <section class="seo-wrapper">
         <div class="seo-grid">
-            <div class="seo-block">
-                <h2>Why Safe Zones Matter</h2>
-                <p>There is nothing more frustrating than a high-quality video where the main text is covered by a "Share" button or the user's name. Our <strong>Safe Zone Checker</strong> provides a 1:1 simulation of the TikTok and Instagram Reels interface, allowing you to optimize your composition before you export from CapCut or Premiere Pro.</p>
+            <div class="info-card">
+                <h3>Composition Matters</h3>
+                <p>Modern short-form video is highly cluttered. Using a <strong>Safe Zone Checker</strong> ensures that your subtitles aren't blocked by the "Like" button or the automatic caption generation on mobile apps.</p>
             </div>
-            <div class="seo-block">
-                <h2>The "Dead Zone" Rule</h2>
-                <p>The bottom 20% and the right 15% of your video are considered "Dead Zones." Important visual information like faces, product names, or subtitles should never be placed here. Use our tool to find the "Visual Center" of your content for maximum engagement.</p>
+            <div class="info-card">
+                <h3>Aspect Ratio Guide</h3>
+                <p>While the standard is 9:16 (1080x1920), many devices have different notches. Always keep your essential elements within the "Middle 60%" for the best results.</p>
             </div>
-        </div>
-
-        <div class="faq-box">
-            <h4>Does this work for both iPhone and Android?</h4>
-            <p>Yes. While screen ratios vary slightly, the "Safe Zone" areas are standardized across platforms to ensure the UI doesn't interfere with the viewing experience.</p>
-        </div>
-        <div class="faq-box">
-            <h4>What is the best resolution for short-form video?</h4>
-            <p>Always export in 1080 x 1920 pixels. This ensures high clarity while maintaining the 9:16 aspect ratio required for the full-screen experience.</p>
         </div>
     </section>
-
-    <a href="index.html" style="margin-top: 50px; display: inline-block; color: #64748b; text-decoration: none;">← Back to Social Suite</a>
 </div>
+
+<footer>
+    </footer>
 
 <script>
     const fileIn = document.getElementById('fileIn');
@@ -196,6 +182,7 @@
     const overlay = document.getElementById('overlay');
     const placeholder = document.getElementById('placeholder');
     const overlayToggle = document.getElementById('overlayToggle');
+    const mockup = document.getElementById('mockup');
 
     fileIn.onchange = (e) => {
         const file = e.target.files[0];
@@ -205,8 +192,8 @@
                 userUpload.src = event.target.result;
                 userUpload.style.display = 'block';
                 placeholder.style.display = 'none';
+                mockup.classList.add('active');
                 
-                // Auto-enable overlay on upload for better UX
                 overlayToggle.checked = true;
                 toggleOverlay();
             };
@@ -218,40 +205,6 @@
         overlay.style.display = overlayToggle.checked ? 'block' : 'none';
     }
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
 <script src="../nav.js"></script>
 </body>
 </html>

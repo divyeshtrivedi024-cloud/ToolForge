@@ -9,180 +9,253 @@
     <style>
         :root {
             --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.1);
+            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .nav-container { min-height: 70px; }
+        
         .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
         .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
         
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 20px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
+        input { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; box-sizing: border-box; transition: 0.3s; }
         input:focus { border-color: var(--primary); }
         
-        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
-        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 0, 127, 0.6); }
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.4); }
         
+        /* THE PREMIUM SLIM RESULTS */
         #analysis-result { margin-top: 50px; display: none; animation: fadeIn 0.4s ease forwards; }
-        .score-circle { width: 120px; height: 120px; border-radius: 50%; border: 8px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-family: 'Outfit'; font-weight: 800; margin: 0 auto 20px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.3); }
+        .score-circle { width: 100px; height: 100px; border-radius: 50%; border: 6px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-family: 'Outfit'; font-weight: 800; margin: 0 auto 25px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.2); }
         
-        .grading-grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 700px; margin: 30px auto; }
-        .grade-item { background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); text-align: left; position: relative; cursor: pointer; }
-        .grade-item strong { color: var(--primary); display: block; margin-bottom: 5px; }
-        .copy-hint { position: absolute; top: 10px; right: 20px; font-size: 0.7rem; color: var(--primary); font-weight: 700; }
+        .grading-grid { display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+        
+        .grade-item { 
+            background: var(--glass); 
+            padding: 15px 22px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border); 
+            text-align: left; 
+            position: relative; 
+            cursor: pointer; 
+            transition: 0.3s;
+            width: 100%;
+            max-width: 500px; /* Locked slim width */
+            box-sizing: border-box;
+        }
+        .grade-item:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: scale(1.01); }
+        .grade-item strong { color: var(--primary); display: block; margin-bottom: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .copy-hint { position: absolute; top: 12px; right: 20px; font-size: 0.65rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
         .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
         .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
+        .tip-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        .tip-card strong { color: #fff; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+        .tip-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
     </style>
 </head>
 <body>
-<div class="container">
-    <a href="index.html" class="back-btn">← Creator Hub</a>
-   <nav class="nav-container"></nav> <div class="container">
-    <section class="tool-card">
-        <h1>Clickbait Title Grader</h1>
-        <p>Analyze your title's potential or get 5 viral alternatives.</p>
-        <div class="input-group">
-            <input type="text" id="titleInput" placeholder="Enter your video title (e.g. How to make money)">
-        </div>
-        <button class="gen-btn" onclick="gradeTitle()">Grade & Improve Title</button>
+    <nav class="nav-container"></nav> 
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Creator Hub</a>
         
-        <div id="analysis-result">
-            <div class="score-circle" id="scoreDisplay">0</div>
-            <p id="feedbackText" style="font-weight: 600;"></p>
-            <div class="grading-grid" id="suggestionList"></div>
-        </div>
-    </section>
+        <section class="tool-card">
+            <h1>Clickbait Title Grader</h1>
+            <p>Analyze your title's potential or get 5 viral alternatives.</p>
+            <div class="input-group">
+                <input type="text" id="titleInput" placeholder="Enter your video title (e.g. How to make money)">
+            </div>
+            <button class="gen-btn" onclick="gradeTitle()">Grade & Improve Title</button>
+            
+            <div id="analysis-result">
+                <div class="score-circle" id="scoreDisplay">0</div>
+                <p id="feedbackText" style="font-weight: 600; margin-bottom: 30px; color: #94a3b8;">Potential Viral Score</p>
+                <div class="grading-grid" id="suggestionList"></div>
+            </div>
+        </section>
 
-    <section class="seo-content">
-        <h2>The Anatomy of a 10/10 Title</h2>
-        <div class="tips-grid">
-            <div class="tip-card"><strong>01. Emotional Triggers</strong> Words like 'Shocking', 'Insane', or 'Mistake' trigger an immediate dopamine response.</div>
-            <div class="tip-card"><strong>02. Length Matters</strong> Keep titles under 50 characters to ensure they don't get cut off on mobile devices.</div>
-            <div class="tip-card"><strong>03. Numbers & Lists</strong> Odd numbers (7, 11, 13) tend to outperform even numbers in CTR tests.</div>
-        </div>
-    </section>
-</div>
-
-<script>
-function gradeTitle() {
-    let title = document.getElementById('titleInput').value.trim();
-    if (!title) return;
-
-    // 1. SMART CLEANING 
-    // This strips out "fluff" phrases to find the core subject for the templates
-    let coreTopic = title
-        .replace(/teaching you things about/gi, "")
-        .replace(/how to/gi, "")
-        .replace(/learning about/gi, "")
-        .replace(/things you never knew about/gi, "")
-        .replace(/everything about/gi, "")
-        .replace(/my guide to/gi, "")
-        .trim();
-
-    // Capitalize first letter for a clean look
-    coreTopic = coreTopic.charAt(0).toUpperCase() + coreTopic.slice(1);
-
-    const resultArea = document.getElementById('analysis-result');
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const suggestionList = document.getElementById('suggestionList');
-    
-    resultArea.style.display = "block";
-    suggestionList.innerHTML = "";
-
-    // 2. SCORING LOGIC
-    let score = 35; 
-    if (title.length > 15 && title.length < 60) score += 20;
-    if (/[0-9]/.test(title)) score += 15;
-    if (/[!?]/.test(title)) score += 10;
-    const powerWords = ["secret", "illegal", "truth", "shocking", "stop", "never", "scam", "master", "ultimate"];
-    powerWords.forEach(w => { if(title.toLowerCase().includes(w)) score += 15; });
-    score = Math.min(score, 99);
-    scoreDisplay.innerText = score;
-
-    // 3. EXPANDED SMART TEMPLATES (15 VARIATIONS)
-    const templates = [
-        // Mystery & Secrets
-        `10 ${coreTopic} Secrets That Feel Illegal to Know`,
-        `The Brutal Truth About ${coreTopic} (2026 Edition)`,
-        `What Nobody Tells You About ${coreTopic}`,
-        `The "Missing Link" in Your ${coreTopic} Strategy`,
-        
-        // Negative / Warning (High CTR)
-        `Stop Doing ${coreTopic} Until You Watch This`,
-        `Why Everything You Know About ${coreTopic} is a Lie`,
-        `Don't Make This Massive ${coreTopic} Mistake`,
-        `Is ${coreTopic} Actually a Scam? (My Honest Opinion)`,
-        
-        // Mastery & Authority
-        `Finally: The Ultimate ${coreTopic} Masterclass`,
-        `How I Mastered ${coreTopic} in Just 30 Days`,
-        `The Only ${coreTopic} Checklist You'll Ever Need`,
-        `I Analyzed the World's Best ${coreTopic} Experts`,
-        
-        // Numbers & Results
-        `7 ${coreTopic} Hacks I Wish I Knew Sooner`,
-        `I Tried ${coreTopic} for 100 Hours (SHOCKING Result)`,
-        `Zero to Pro: My ${coreTopic} Roadmap Revealed`
-    ];
-
-    // Shuffle and pick 5 to keep the tool fresh every time they click
-    templates.sort(() => Math.random() - 0.5).slice(0, 5).forEach(alt => {
-        const div = document.createElement('div');
-        div.className = 'grade-item';
-        div.onclick = function() { copyToClipboard(alt, this); };
-        div.innerHTML = `
-            <span class="copy-hint">One-Tap Copy</span>
-            <strong>Viral Suggestion:</strong>
-            ${alt}
-        `;
-        suggestionList.appendChild(div);
-    });
-}
-</script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
+        <section class="seo-content">
+            <h2>The Anatomy of a 10/10 Title</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <strong>01. Emotional Triggers</strong>
+                    <p>Words like 'Shocking' or 'Mistake' trigger a psychological response that demands a click.</p>
+                </div>
+                <div class="tip-card">
+                    <strong>02. Length Matters</strong>
+                    <p>Keep titles under 50 characters to ensure they don't get cut off on mobile screens.</p>
+                </div>
+                <div class="tip-card">
+                    <strong>03. Numbers & Lists</strong>
+                    <p>Odd numbers (7, 11, 13) tend to outperform even numbers in CTR tests.</p>
+                </div>
+            </div>
+        </section>
     </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
-<script src="../nav.js"></script>
 
+    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+            <div>
+                <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
+                <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                    The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+                </p>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                    <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                    <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+                <p style="color: #94a3b8; font-size: 0.9rem;">
+                    Questions or feedback? <br>
+                    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                        growthdriven024@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+            © 2026 ToolForge Engine. All processing is 100% Client-Side.
+        </div>
+    </footer>
+
+    <script>
+    function gradeTitle() {
+        let title = document.getElementById('titleInput').value.trim();
+        if (!title) return;
+
+        // --- 1. THE CONTEXTUAL TRANSFORMER ---
+        let clean = title.toLowerCase()
+            .replace(/how to/g, "")
+            .replace(/learning/g, "")
+            .replace(/a /g, "")
+            .replace(/an /g, "")
+            .replace(/the /g, "")
+            .trim();
+
+        const grammarMap = {
+            "make": "Making",
+            "get": "Getting",
+            "build": "Building",
+            "start": "Starting",
+            "learn": "Mastering",
+            "lose": "Losing",
+            "stop": "Stopping",
+            "save": "Saving",
+            "write": "Writing",
+            "create": "Creating"
+        };
+
+        let words = clean.split(" ");
+        let firstWord = words[0];
+        let coreTopic;
+        if (grammarMap[firstWord]) {
+            words[0] = grammarMap[firstWord];
+            coreTopic = words.join(" ");
+        } else {
+            coreTopic = clean.charAt(0).toUpperCase() + clean.slice(1);
+        }
+
+        // --- 2. THE SCORING LOGIC (Missing in your last snippet) ---
+        let score = 40; 
+        if (title.length > 20 && title.length < 55) score += 20;
+        if (/[0-9]/.test(title)) score += 15;
+        if (title.includes("!") || title.includes("?")) score += 10;
+        const powerWords = ["secret", "money", "illegal", "truth", "shocking", "stop", "scam"];
+        powerWords.forEach(w => { if(title.toLowerCase().includes(w)) score += 15; });
+
+        // --- 3. UI RENDER ---
+        const resultArea = document.getElementById('analysis-result');
+        const suggestionList = document.getElementById('suggestionList'); // ID FIXED HERE
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        
+        resultArea.style.display = "block";
+        scoreDisplay.innerText = Math.min(score, 99);
+        suggestionList.innerHTML = "";
+
+        // --- THE MEGA-TEMPLATE LIBRARY (40+ VARIATIONS) ---
+const templates = [
+    // 1. CURIOSITY & MYSTERY (The "Gap" Theory)
+    `The Brutal Truth About ${coreTopic} in 2026`,
+    `What Nobody Tells You About ${coreTopic}`,
+    `The Hidden Psychology Behind ${coreTopic} Revealed`,
+    `The "Missing Link" in Your ${coreTopic} Strategy`,
+    `10 ${coreTopic} Secrets That Feel Illegal to Know`,
+    `Is ${coreTopic} Actually Dead? (My Honest Thoughts)`,
+    `I Analyzed 1,000 ${coreTopic} Experts. Here’s What I Found.`,
+    `The Secret Source of ${coreTopic} Nobody is Using`,
+
+    // 2. FEAR & URGENCY (The "Stop" Trigger)
+    `Stop Struggling With ${coreTopic}: The 3-Step Blueprint`,
+    `Don't Make This Massive ${coreTopic} Mistake`,
+    `Why 99% of People Fail at ${coreTopic} (And How to Win)`,
+    `Stop Doing ${coreTopic} Until You Watch This`,
+    `Why Everything You Know About ${coreTopic} is a Lie`,
+    `Is ${coreTopic} a Scam? (The Brutal Reality)`,
+    `The Terrifying Truth About ${coreTopic} in 2026`,
+    `Your ${coreTopic} is Breaking. Here is Why.`,
+
+    // 3. AUTHORITY & MASTERY (The "Expert" Trigger)
+    `Finally: The Ultimate ${coreTopic} Masterclass`,
+    `The Only ${coreTopic} Checklist You'll Ever Need`,
+    `How to Master ${coreTopic} Without Losing Your Mind`,
+    `How I Mastered ${coreTopic} in Just 30 Days`,
+    `The "Lazy" Person's Guide to ${coreTopic} Fast`,
+    `Zero to Pro: My ${coreTopic} Roadmap Revealed`,
+    `The Advanced Guide to ${coreTopic} (Not for Beginners)`,
+    `How to Rank #1 for ${coreTopic} Every Single Time`,
+
+    // 4. RESULTS & PROOF (The "Social" Trigger)
+    `I Tried ${coreTopic} for 100 Hours. Here is the Result.`,
+    `How ${coreTopic} Changed My Life in 6 Months`,
+    `I Spent $10,000 on ${coreTopic} So You Don't Have To`,
+    `7 ${coreTopic} Hacks I Wish I Knew Sooner`,
+    `The ${coreTopic} Results Speak for Themselves (SHOCKING)`,
+    `From $0 to $10k with ${coreTopic} (Full Case Study)`,
+    `I Followed ${coreTopic} Advice for a Week. I Regret It.`,
+    `This Simple ${coreTopic} Shift Doubled My Results`,
+
+    // 5. TRENDING & FUTURE (The "FOMO" Trigger)
+    `${coreTopic} is Changing Forever. Are You Ready?`,
+    `Why 2026 is the Year of ${coreTopic}`,
+    `The Future of ${coreTopic}: My 5 Bold Predictions`,
+    `Why You're Being Lied To About ${coreTopic}`,
+    `The New Rules of ${coreTopic} for 2026`,
+    `Is it Too Late to Start ${coreTopic}?`,
+    `The ${coreTopic} Trend You Can't Afford to Ignore`,
+    `Why ${coreTopic} is the Best Skill to Have in 2026`
+];
+        templates.sort(() => Math.random() - 0.5).slice(0, 5).forEach(alt => {
+            const div = document.createElement('div');
+            div.className = 'grade-item';
+            div.onclick = function() {
+                navigator.clipboard.writeText(alt);
+                const hint = this.querySelector('.copy-hint');
+                hint.innerText = "COPIED!";
+                setTimeout(() => hint.innerText = "One-Tap Copy", 1500);
+            };
+            div.innerHTML = `
+                <span class="copy-hint">One-Tap Copy</span>
+                <strong>Viral Variation</strong>
+                ${alt}
+            `;
+            suggestionList.appendChild(div);
+        });
+    }
+    </script>
+    <script src="../nav.js"></script>
 </body>
 </html>

@@ -10,72 +10,123 @@
         :root {
             --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
             --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
+            --success: #00ff88;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        
+        /* Layout */
         .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+        .nav-container { min-height: 70px; } /* Anchor for nav.js */
+
+        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.8rem; margin-bottom: 40px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
         
         .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 60px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
         h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        /* Input Styling */
         .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input, select { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
-        input:focus { border-color: var(--primary); }
+        input, select { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 0, 127, 0.1); }
         
-        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.4); }
-        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 35px rgba(255, 0, 127, 0.6); }
+        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 0, 127, 0.4); }
         
+        /* Output Cards */
         #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .li-card { background: var(--glass); padding: 30px; border-radius: 24px; border: 1px solid var(--border); text-align: left; white-space: pre-wrap; position: relative; cursor: pointer; transition: 0.3s; }
-        .li-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); }
-        .copy-hint { position: absolute; top: 15px; right: 20px; font-size: 0.7rem; color: var(--primary); font-weight: 700; text-transform: uppercase; }
+        .li-card { background: var(--glass); padding: 30px; border-radius: 24px; border: 1px solid var(--border); text-align: left; white-space: pre-wrap; position: relative; cursor: pointer; transition: 0.3s; animation: fadeIn 0.5s ease forwards; }
+        .li-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.08); }
+        .copy-hint { position: absolute; top: 15px; right: 20px; font-size: 0.65rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Strategy Info */
         .info-header { text-align: left; margin: 80px 0 30px; }
-        .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin: 0; }
+        .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: #fff; margin: 0; }
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
-        .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; transition: 0.3s; }
-        .info-card strong { color: #fff; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+        .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+        .info-card strong { color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem; }
         .info-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
+
+        /* Footer */
+        footer { margin-top: 100px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: left; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; }
+        .footer-brand h3 { font-family: 'Outfit'; color: var(--primary); margin: 0 0 15px 0; font-size: 1.5rem; }
+        .footer-brand p { color: #94a3b8; font-size: 0.85rem; line-height: 1.6; }
+        .footer-links h4 { color: #fff; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #64748b; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
     </style>
 </head>
 <body>
+
+<nav class="nav-container"></nav>
+
 <div class="container">
     <a href="index.html" class="back-btn">← Creator Hub</a>
-    <nav class="nav-container"></nav> <div class="container">
+    
     <section class="tool-card">
         <h1>LinkedIn Authority Gen</h1>
-        <p>Turn professional insights into high-engagement network posts.</p>
+        <p style="opacity: 0.6; margin-bottom: 30px;">Professional storytelling for modern network growth.</p>
         <div class="input-group">
-            <input type="text" id="topicInput" placeholder="Topic (e.g. Remote Work, Fast Loading Speed, Career Advice)">
+            <input type="text" id="topicInput" placeholder="Topic (e.g. Remote Work, Fast Loading Speed)">
             <select id="vibeInput">
                 <option value="insight">Industry Insight (The Expert)</option>
                 <option value="story">Personal Story (The Human)</option>
                 <option value="list">The 5-Step List (The Teacher)</option>
             </select>
         </div>
-        <button class="gen-btn" onclick="generateLinkedIn()">Generate 3 Pro Posts</button>
+        <button class="gen-btn" onclick="generateLinkedIn()">Generate Authority Posts ✨</button>
         <div id="result-list"></div>
     </section>
 
     <div class="info-header">
-        <h2>LinkedIn Growth Strategy</h2>
+        <h2>Growth Strategy</h2>
     </div>
     <div class="info-grid">
         <div class="info-card">
-            <strong>The 'Hook' Line</strong>
-            <p>Your first sentence must stop the scroll. Use a controversial take or a strong result. LinkedIn cuts off text after 3 lines.</p>
+            <strong>The 3-Line Hook</strong>
+            <p>LinkedIn truncates your post. Your most explosive sentence must be in the first two lines to force the "See More" click.</p>
         </div>
         <div class="info-card">
-            <strong>Formatting is Key</strong>
-            <p>Avoid walls of text. Use 1-2 sentences per paragraph. White space makes your post "breathable" and easier to read on mobile.</p>
+            <strong>Vertical Rhythm</strong>
+            <p>Mobile users scan. Single-sentence paragraphs create a vertical rhythm that keeps users scrolling to the bottom.</p>
         </div>
         <div class="info-card">
-            <strong>When to Post?</strong>
-            <p>Tuesday, Wednesday, and Thursday between 9 AM and 11 AM usually see the highest engagement from professional networks.</p>
+            <strong>The 2026 Shift</strong>
+            <p>Corporate-speak is out. Authenticity and "Building in Public" are the highest performing content types right now.</p>
         </div>
     </div>
 </div>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>ToolForge</h3>
+            <p>The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <ul>
+                <li><a href="/contact.html">Contact Support</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color:var(--primary); text-decoration:none; font-weight:700;">growthdriven024@gmail.com</a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 60px; color: #334155; font-size: 0.75rem; border-top: 1px solid #0f172a; padding-top: 30px;">
+        © 2026 ToolForge Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
 
 <script>
 function generateLinkedIn() {
@@ -84,25 +135,20 @@ function generateLinkedIn() {
     const resultList = document.getElementById('result-list');
     resultList.innerHTML = "";
 
-    // Smart Cleaning
     topic = topic.replace(/my thoughts on/gi, "").replace(/working as/gi, "").trim();
     topic = topic.charAt(0).toUpperCase() + topic.slice(1);
 
     const database = {
         insight: [
             `Unpopular opinion: Most people are overthinking ${topic}.\n\nIn 2026, the real winners aren't the ones with the biggest budgets.\n\nThey're the ones with the most efficient systems.\n\nAfter years in the industry, I've realized that ${topic} success comes down to one thing: consistency over intensity.\n\nAgree or disagree? Let's discuss in the comments.\n\n#BusinessStrategy #Leadership #${topic.replace(/\s+/g, '')}`,
-            `The "Standard Playbook" for ${topic} is officially dead.\n\nIf you're still following advice from 2023, you're already behind.\n\nThe industry is shifting toward transparency and raw value.\n\nHere is how I'm approaching ${topic} this quarter:\n\n1. Prioritize speed.\n2. Focus on organic growth.\n3. Build in public.\n\nAdapt or get left behind.\n\n#ProfessionalGrowth #Innovation #Career`,
-            `Stop waiting for the "perfect time" to master ${topic}.\n\nThe market doesn't care about your timing. It cares about your execution.\n\nI’ve seen too many talented people sit on the sidelines while others take their spot.\n\nMastering ${topic} is a choice. Make it today.\n\n#Motivation #Execution #${topic.replace(/\s+/g, '')}`
+            `The "Standard Playbook" for ${topic} is officially dead.\n\nIf you're still following advice from 2023, you're already behind.\n\nThe industry is shifting toward transparency and raw value.\n\nHere is how I'm approaching ${topic} this quarter:\n\n1. Prioritize speed.\n2. Focus on organic growth.\n3. Build in public.\n\nAdapt or get left behind.\n\n#ProfessionalGrowth #Innovation #Career`
         ],
         story: [
             `I failed at ${topic} so you don't have to.\n\nTwo years ago, I thought I had it all figured out. I was wrong.\n\nI lost time, money, and sleep trying to force a system that didn't work.\n\nBut that failure was the best thing that ever happened to me.\n\nIt taught me that ${topic} isn't about the destination—it's about the process.\n\nDon't fear the pivot. Embrace it.\n\n#Entrepreneurship #Mindset #LessonsLearned`,
-            `A conversation I had yesterday changed my perspective on ${topic}.\n\nI was talking to a mentor who told me: "Complexity is the enemy of progress."\n\nI realized I was making ${topic} much harder than it needed to be.\n\nWe stripped away the fluff and focused on the core mission.\n\nThe result? 10x more clarity in 24 hours.\n\nSimplicity wins every time.\n\n#WorkSmarter #PersonalGrowth #Leadership`,
-            `5 years ago, I knew nothing about ${topic}.\n\nI was terrified to even start. I felt like an imposter.\n\nToday, it's the core of my professional identity.\n\nThe difference? I stopped asking for permission and started taking action.\n\nIf you're waiting for a sign to start with ${topic}, this is it.\n\n#CareerJourney #Success #Inspiration`
+            `A conversation I had yesterday changed my perspective on ${topic}.\n\nI was talking to a mentor who told me: "Complexity is the enemy of progress."\n\nI realized I was making ${topic} much harder than it needed to be.\n\nWe stripped away the fluff and focused on the core mission.\n\nThe result? 10x more clarity in 24 hours.\n\nSimplicity wins every time.\n\n#WorkSmarter #PersonalGrowth #Leadership`
         ],
         list: [
-            `How to dominate ${topic} in 2026 (The 5-Step Framework):\n\n1️⃣ Analyze the current landscape.\n2️⃣ Identify the "Pain Points".\n3️⃣ Implement a high-speed solution.\n4️⃣ Iterate based on real data.\n5️⃣ Scale what works; kill what doesn't.\n\nMost people fail because they skip Step 4.\n\nDon't be most people.\n\n#Efficiency #Systems #${topic.replace(/\s+/g, '')}`,
-            `3 Hard Truths about ${topic} that no one wants to hear:\n\n1. It takes longer than you think.\n2. Most of your initial efforts will go unnoticed.\n3. Skill is secondary to discipline.\n\nIf you can survive the "Boring Middle," you'll win the long game.\n\n#Discipline #HardWork #CareerAdvice`,
-            `The ${topic} Starter Pack for 2026:\n\n✅ A high-performance mindset.\n✅ A network of like-minded peers.\n✅ A willingness to fail fast.\n\nIf you have these three, you're already ahead of 90% of the competition.\n\nWhat would you add to this list?\n\n#Networking #FutureOfWork #Productivity`
+            `How to dominate ${topic} in 2026 (The 5-Step Framework):\n\n1️⃣ Analyze the current landscape.\n2️⃣ Identify the "Pain Points".\n3️⃣ Implement a high-speed solution.\n4️⃣ Iterate based on real data.\n5️⃣ Scale what works; kill what doesn't.\n\nMost people fail because they skip Step 4.\n\nDon't be most people.\n\n#Efficiency #Systems #${topic.replace(/\s+/g, '')}`
         ]
     };
 
@@ -122,45 +168,11 @@ function copyToClipboard(text, element) {
     navigator.clipboard.writeText(text).then(() => {
         const hint = element.querySelector('.copy-hint');
         hint.innerText = "COPIED!";
-        hint.style.color = "#00ff88";
+        hint.style.color = "var(--success)";
         setTimeout(() => { hint.innerText = "One-Tap Copy"; hint.style.color = "var(--primary)"; }, 2000);
     });
 }
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
 <script src="../nav.js"></script>
 
 </body>

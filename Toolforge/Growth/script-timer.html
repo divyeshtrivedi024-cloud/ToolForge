@@ -3,236 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Script Timer | ToolForge Professional</title>
+    <title>Script Timer | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff007f;
-            --bg: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #f1f5f9;
-            --accent: #00f2ff;
+            --primary: #ff007f; --bg: #0d0208; --card: #1a0514;
+            --glass: rgba(255, 255, 255, 0.03); --border: #3d0a2b;
+            --text: #f1f5f9; --accent: #00f2ff;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle at 10% 10%, rgba(0, 242, 255, 0.05) 0%, transparent 50%), var(--bg);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
 
-        .container { width: 95%; max-width: 900px; padding: 60px 0; text-align: center; }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; }
-        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+        .container { width: 95%; max-width: 1000px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
+        
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
 
         .timer-layout {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 30px;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
             text-align: left;
-        }
-
-        .editor-side {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 24px;
+            background: var(--card);
+            padding: 40px;
+            border-radius: 32px;
             border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
         }
 
+        /* EDITOR STYLING */
+        .editor-side { position: relative; }
         textarea {
             width: 100%;
-            height: 300px;
-            background: rgba(0,0,0,0.2);
+            height: 350px;
+            background: rgba(0,0,0,0.4);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             color: white;
-            padding: 20px;
+            padding: 25px;
             font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            line-height: 1.7;
             resize: none;
             outline: none;
             box-sizing: border-box;
             transition: 0.3s;
         }
+        textarea:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 0, 127, 0.1); }
 
-        textarea:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); }
+        .speed-selector {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            padding: 15px;
+            border-radius: 14px;
+        }
+        select {
+            background: #000;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            outline: none;
+        }
 
+        /* STATS STYLING */
         .stats-side { display: flex; flex-direction: column; gap: 20px; }
-
         .stat-card {
-            background: var(--glass);
+            background: rgba(255,255,255,0.02);
             padding: 25px;
             border-radius: 20px;
             border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .stat-val { font-size: 2.5rem; font-weight: 800; color: var(--primary); font-family: 'Outfit'; display: block; }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.5; letter-spacing: 1px; }
-
-        .pace-meter {
-            height: 8px;
-            background: #1e293b;
-            border-radius: 10px;
-            margin-top: 15px;
+            position: relative;
             overflow: hidden;
         }
+        .stat-val { font-size: 2.8rem; font-weight: 800; color: #fff; font-family: 'Outfit'; display: block; line-height: 1; margin-top: 5px; }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--primary); font-weight: 700; letter-spacing: 1px; }
 
-        #paceFill { width: 0%; height: 100%; background: var(--primary); transition: 0.5s; }
+        .pace-meter { height: 6px; background: #000; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        #paceFill { width: 0%; height: 100%; background: var(--accent); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        /* SEO & FAQ */
-        .seo-wrapper { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 60px; }
-        .seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .seo-block h2 { font-family: 'Outfit'; color: var(--primary); }
-        .faq-container { margin-top: 40px; display: grid; gap: 15px; }
-        .faq-box { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
-        .faq-box h4 { margin: 0 0 8px 0; color: var(--primary); }
-        
-        .back-btn { margin-top: 40px; display: table; margin-left: auto; margin-right: auto; color: #64748b; text-decoration: none; }
+        /* SEO SECTION */
+        .seo-wrapper { margin-top: 100px; text-align: left; }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; }
+        .info-card h3 { color: var(--primary); font-family: 'Outfit'; margin-top: 0; }
+        .info-card p { color: #94a3b8; font-size: 0.95rem; }
 
-        @media (max-width: 768px) {
-            .timer-layout { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .timer-layout { grid-template-columns: 1fr; padding: 25px; }
+            textarea { height: 250px; }
         }
     </style>
 </head>
 <body>
 
+<nav class="nav-container"></nav> 
+
 <div class="container">
-    <nav class="nav-container"></nav> <div class="container">
+    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Hub</a>
+    
     <h1>Script <span style="color:var(--primary)">Timer</span></h1>
-    <p class="subtitle">Write your video script and see exactly how long it will take to speak.</p>
+    <p class="subtitle">Precision timing for TikTok, Reels, and YouTube Shorts.</p>
 
     <div class="timer-layout">
         <div class="editor-side">
-            <textarea id="scriptInput" placeholder="Paste or type your TikTok script here..." oninput="updateTimer()"></textarea>
+            <textarea id="scriptInput" placeholder="Paste your script here to start timing..." oninput="updateTimer()"></textarea>
+            
+            <div class="speed-selector">
+                <span style="font-size: 0.85rem; font-weight: 600; opacity: 0.7;">Voiceover Pace:</span>
+                <select id="wpmSelect" onchange="updateTimer()">
+                    <option value="130">Slow (Educational)</option>
+                    <option value="145" selected>Natural (Standard)</option>
+                    <option value="165">Fast (High Energy)</option>
+                    <option value="180">Hyper (Rapid Fire)</option>
+                </select>
+            </div>
         </div>
 
         <div class="stats-side">
             <div class="stat-card">
-                <span class="stat-label">Estimated Time</span>
+                <span class="stat-label">Total Duration</span>
                 <span class="stat-val" id="timeVal">0:00s</span>
             </div>
+            
             <div class="stat-card">
                 <span class="stat-label">Word Count</span>
                 <span class="stat-val" id="wordVal" style="color: var(--accent);">0</span>
             </div>
+
             <div class="stat-card">
-                <span class="stat-label">Recommended Pace</span>
-                <div id="paceText" style="font-weight: 600; margin-top: 5px;">Natural Speaking</div>
-                <div class="pace-meter"><div id="paceFill"></div></div>
+                <span class="stat-label">Energy Level</span>
+                <div id="paceText" style="font-weight: 700; font-size: 0.9rem; margin-top: 10px;">Awaiting Input...</div>
+                <div class="pace-meter">
+                    <div id="paceFill"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <section class="seo-wrapper">
         <div class="seo-grid">
-            <div class="seo-block">
-                <h2>Timing is Everything</h2>
-                <p>On social platforms, every second counts. If your script is too long, the algorithm might cut off your Call to Action. Our <strong>TikTok Script Timer</strong> uses a high-accuracy WPM (Words Per Minute) calculation to ensure your message fits perfectly within the 15, 60, or 180-second windows.</p>
+            <div class="info-card">
+                <h3>Retention is King</h3>
+                <p>On TikTok, the "hook" needs to happen in the first 3 seconds. Our <strong>Script Timer</strong> helps you identify exactly how many words you have before the viewer decides to stay or swipe.</p>
             </div>
-            <div class="seo-block">
-                <h2>Optimize for Retention</h2>
-                <p>The average speaker talks at 130–150 words per minute. For high-energy videos, you might want to hit 160 WPM. This tool helps you trim the "fluff" so you can maintain a fast-paced, engaging delivery that keeps viewers from swiping away.</p>
-            </div>
-        </div>
-
-        <div class="faq-container">
-            <div class="faq-box">
-                <h4>What WPM does this tool use?</h4>
-                <p>We calculate based on 145 WPM, which is the "Sweet Spot" for educational and entertaining social media content. It’s fast enough to be engaging but slow enough to be understood.</p>
-            </div>
-            <div class="faq-box">
-                <h4>How do I shorten my script?</h4>
-                <p>Look for filler words like "actually," "basically," or "just." Removing these can often shave 2–3 seconds off a script without losing any meaning.</p>
-            </div>
-            <div class="faq-box">
-                <h4>Can I use this for YouTube Shorts?</h4>
-                <p>Absolutely. YouTube Shorts has a strict 60-second limit. We recommend keeping your script under 140 words to ensure you have time for a strong intro and outro.</p>
+            <div class="info-card">
+                <h3>The WPM Formula</h3>
+                <p>We use an adaptive Words Per Minute (WPM) calculation. Professional creators usually target 145-155 WPM to maintain a balance between clarity and fast-paced engagement.</p>
             </div>
         </div>
     </section>
-
-    <a href="index.html" class="back-btn">← Back to Social Suite</a>
 </div>
+
+<footer></footer>
 
 <script>
     function updateTimer() {
         const text = document.getElementById('scriptInput').value.trim();
-        const words = text ? text.split(/\s+/).length : 0;
+        const words = text ? text.split(/\s+/).filter(w => w.length > 0).length : 0;
         
-        // Standard WPM for Social Media is roughly 145
-        const wpm = 145;
-        const totalSeconds = Math.round((words / wpm) * 60);
+        const wpm = parseInt(document.getElementById('wpmSelect').value);
+        const totalSeconds = (words / wpm) * 60;
         
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = Math.floor(totalSeconds % 60);
         
-        document.getElementById('timeVal').innerText = `${minutes}:${seconds.toString().padStart(2, '0')}s`;
+        document.getElementById('timeVal').innerText = `${mins}:${secs.toString().padStart(2, '0')}s`;
         document.getElementById('wordVal').innerText = words;
 
-        // Pace Meter Logic
         const paceFill = document.getElementById('paceFill');
         const paceText = document.getElementById('paceText');
         
-        // Let's assume 150 words is a "Full" meter for a 1-minute video
-        const percentage = Math.min((words / 150) * 100, 100);
+        // Progress bar based on a standard 60s short
+        const percentage = Math.min((totalSeconds / 60) * 100, 100);
         paceFill.style.width = percentage + '%';
 
-        if (words < 40) {
-            paceText.innerText = "Short & Punchy";
+        if (words === 0) {
+            paceText.innerText = "Awaiting Input...";
+            paceFill.style.background = "var(--border)";
+        } else if (totalSeconds < 15) {
+            paceText.innerText = "Short & Punchy ⚡";
             paceFill.style.background = "var(--accent)";
-        } else if (words < 130) {
-            paceText.innerText = "Natural Delivery";
-            paceFill.style.background = "var(--primary)";
+        } else if (totalSeconds < 58) {
+            paceText.innerText = "Perfect for Shorts ✅";
+            paceFill.style.background = "#00ff88";
         } else {
-            paceText.innerText = "Fast-Paced / Trimming Needed";
-            paceFill.style.background = "#f43f5e"; // Red alert
+            paceText.innerText = "Long-form / Trim Needed ⚠️";
+            paceFill.style.background = "var(--primary)";
         }
     }
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
 <script src="../nav.js"></script>
 </body>
 </html>

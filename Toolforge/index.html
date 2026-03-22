@@ -9,44 +9,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg: #fdfdfd;
-            --glass: rgba(255, 255, 255, 0.7);
-            --text: #0f172a;
-            --primary: #6366f1; 
-            --secondary: #06b6d4; 
-            --accent: #f43f5e; 
-            --card-border: #e2e8f0;
-            --orb-1: rgba(99, 102, 241, 0.1);
-            --orb-2: rgba(6, 182, 212, 0.1);
-        }
+    :root {
+        /* This is your Master Black - used by both themes initially */
+        --bg: #05070a; 
+        --glass: rgba(17, 24, 39, 0.7);
+        --text: #f1f5f9;
+        --primary: #6366f1; 
+        --secondary: #06b6d4; 
+        --accent: #f43f5e; 
+        --card-border: #1f2937;
+        /* Keep orbs subtle so they don't wash out the black */
+        --orb-1: rgba(99, 102, 241, 0.08); 
+        --orb-2: rgba(255, 0, 127, 0.05);
+    }
 
-        [data-theme="dark"] {
-            --bg: #030712;
-            --glass: rgba(17, 24, 39, 0.7);
-            --text: #f1f5f9;
-            --card-border: #1f2937;
-            --orb-1: rgba(99, 102, 241, 0.15);
-            --orb-2: rgba(255, 0, 127, 0.1);
-        }
+    /* Keep Light Theme distinct, but let's keep Dark Theme matching the root */
+    [data-theme="light"] {
+        --bg: #fdfdfd;
+        --glass: rgba(255, 255, 255, 0.7);
+        --text: #0f172a;
+        --card-border: #e2e8f0;
+        --orb-1: rgba(99, 102, 241, 0.1);
+        --orb-2: rgba(6, 182, 212, 0.1);
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            transition: background 0.5s ease;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    /* IMPORTANT: We removed the [data-theme="dark"] block. 
+       Since :root is already dark/black, we don't need to redefine it. 
+    */
 
-        /* --- AMBIENT BACKGROUND GLOWS --- */
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+        transition: background 0.5s ease;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    /* --- AMBIENT BACKGROUND GLOWS --- */
+    .bg-glow {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        /* Ensure the fixed background is pure black to prevent light leaks */
+        background: #05070a; 
+    }
         .orb {
             position: absolute;
             border-radius: 50%;
@@ -62,16 +71,6 @@
         }
 
         /* --- Navigation --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--card-border);
-            position: sticky; top: 0; z-index: 1000;
-        }
 
         .logo {
             font-family: 'Outfit', sans-serif;
@@ -265,9 +264,9 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
     </div>
-    <nav class="nav-container"></nav> <div class="container"></div>
+    <nav class="nav-container"></nav> 
     <header class="hero">
-        <h1>Professional Tools for <span class="shimmer">Modern Builders</span></h1>
+        <h1>Professional Tools for <span class="shimmer">Modern Builders and Creators</span></h1>
         <p>A lightning-fast ecosystem of free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
     </header>
 
@@ -322,7 +321,7 @@
         
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+            <p style="color: #ffffff; font-size: 0.9rem; line-height: 1.6;">
                 The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
             </p>
         </div>
@@ -330,9 +329,9 @@
         <div>
             <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
             <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #ffffff; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #ffffff; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #ffffff; text-decoration: none;">Terms of Service</a></li>
             </ul>
         </div>
 

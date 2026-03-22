@@ -5,217 +5,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caption Pro | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff007f;
-            --bg: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #f1f5f9;
-        }
+    :root {
+        --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+        --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .nav-container { min-height: 70px; }
+    .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
+    .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
+    
+    /* Reduced padding slightly to prevent inner-squish */
+    .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 20px; border-radius: 32px; text-align: center; margin-bottom: 60px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
+    h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+    input { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; box-sizing: border-box; }
+    input:focus { border-color: var(--primary); }
+    
+    .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); }
+    .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.4); }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background-image: radial-gradient(circle at 10% 90%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
-        }
+    /* THE BULLETPROOF SLIM FIX */
+    #result-list { 
+        margin-top: 50px; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 20px; 
+        width: 100%;
+    }
 
-        .container { width: 90%; max-width: 850px; padding: 60px 0; text-align: center; }
-        h1 { font-family: 'Outfit'; font-size: 3rem; margin-bottom: 10px; letter-spacing: -2px; }
-        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+    .caption-card { 
+    background: var(--glass); 
+    padding: 15px 22px;   /* Reduced top/bottom padding from 25px to 15px */
+    border-radius: 16px;  /* Slightly tighter corners for a sleeker look */
+    border: 1px solid var(--border); 
+    text-align: left; 
+    white-space: pre-wrap; 
+    position: relative; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    width: 100%;
+    max-width: 500px; 
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-size: 0.95rem;   /* Slightly smaller text reduces overall box height */
+    line-height: 0.9;     /* Tightened line spacing from 1.6 to 1.4 */
+}
+    
+    .caption-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: scale(1.01); }
+    .style-tag { 
+    font-size: 0.6rem;    /* Smaller tag */
+    font-weight: 900; 
+    background: var(--primary); 
+    color: #fff; 
+    padding: 2px 8px;     /* Much thinner padding for the tag */
+    border-radius: 4px; 
+    margin-bottom: 8px;   /* Less space between tag and text */
+    display: inline-block; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
 
-        .generator-box {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 32px;
-            text-align: left;
-        }
-
-        input {
-            width: 100%;
-            padding: 18px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            outline: none;
-            transition: 0.3s;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-
-        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(46, 204, 113, 0.1); }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 30px;
-        }
-
-        button:hover { transform: scale(1.01); box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
-
-        .results-list { display: grid; gap: 15px; }
-        
-        .caption-card {
-            background: rgba(255,255,255,0.04);
-            padding: 25px;
-            border-radius: 18px;
-            border: 1px solid var(--border);
-            transition: 0.3s;
-        }
-
-        .caption-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.06); }
-
-        .style-label { 
-            font-size: 0.7rem; 
-            font-weight: 800; 
-            background: var(--primary); 
-            color: #000; 
-            padding: 3px 8px; 
-            border-radius: 4px; 
-            margin-bottom: 12px; 
-            display: inline-block;
-            text-transform: uppercase;
-        }
-
-        .caption-text { display: block; line-height: 1.6; margin-bottom: 15px; }
-
-        .copy-link { color: var(--primary); font-size: 0.85rem; cursor: pointer; text-decoration: underline; font-weight: 600; }
-
-        /* SEO & FAQ */
-        .seo-content { margin-top: 80px; text-align: left; border-top: 1px solid var(--border); padding-top: 40px; }
-        .faq-item { background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
-        
-        .back-btn { margin-top: 40px; display: table; margin-left: auto; margin-right: auto; color: #64748b; text-decoration: none; transition: 0.3s; }
-        .back-btn:hover { color: var(--primary); }
-    </style>
+.copy-hint { 
+    position: absolute; 
+    top: 12px;            /* Adjusted for the smaller padding */
+    right: 20px; 
+    font-size: 0.65rem; 
+    color: var(--primary); 
+    font-weight: 700; 
+    text-transform: uppercase; 
+}
+    .info-header { text-align: left; margin: 80px 0 30px; }
+    .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin: 0; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
+    .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
+    .info-card strong { color: #fff; display: block; margin-bottom: 10px; font-size: 1.1rem; }
+    .info-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
+</style>
 </head>
 <body>
+    <nav class="nav-container"></nav>
 
 <div class="container">
-    <nav class="nav-container"></nav> <div class="container"></div>
-    <h1>Caption <span style="color:var(--primary)">Pro</span></h1>
-    <p class="subtitle">Transform a simple idea into 5 viral-ready captions instantly.</p>
-
-    <div class="generator-box">
-        <input type="text" id="topicInput" placeholder="What is your post about? (e.g. My new morning routine)">
-        <button onclick="generateCaptions()">Rewrite My Caption ✨</button>
-
-        <div id="results" class="results-list"></div>
-    </div>
-
-    <section class="seo-content">
-        <h2>Stop Writing Boring Captions</h2>
-        <p>A great image gets the click, but a great caption gets the save. <strong>Caption Pro</strong> uses psychological "Micro-copy" frameworks to ensure your audience stays engaged longer, boosting your reach on the Explore page.</p>
+    <a href="index.html" class="back-btn">← Growth Suite</a>
+    
+    <section class="tool-card">
+        <h1>Caption Pro</h1>
+        <p>Turn one sentence into 5 high-converting captions for any platform.</p>
+        <div class="input-group">
+            <input type="text" id="topicInput" placeholder="What is your post about? (e.g. My home office setup)">
+        </div>
+        <button class="gen-btn" onclick="generateCaptions()">Rewrite My Caption ✨</button>
         
-        <div class="faq-item">
-            <h4>Do I need hashtags?</h4>
-            <p>Yes, but keep them in the first comment. Captions should focus on storytelling and value first.</p>
-        </div>
-        <div class="faq-item">
-            <h4>What is the best caption length?</h4>
-            <p>Short for Reels (under 10 words) or long for Educational carousels (100+ words). This tool gives you both.</p>
-        </div>
+        <div id="result-list"></div>
     </section>
 
-    <a href="index.html" class="back-btn">← Back to Social Suite</a>
+    <div class="info-header">
+        <h2>Caption Strategy FAQ</h2>
+    </div>
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>The First 3 Words</strong>
+            <p>On most platforms, users only see the first 3 words before the 'more' button. Start with a hook, not an emoji.</p>
+        </div>
+        <div class="info-card">
+            <strong>Whitespace Matters</strong>
+            <p>Break up large chunks of text. "Airy" captions are easier to skim and keep users on your post longer.</p>
+        </div>
+        <div class="info-card">
+            <strong>Engagement Triggers</strong>
+            <p>Ending with a question increases comments by up to 40%. Always ask for your audience's opinion.</p>
+        </div>
+    </div>
 </div>
 
 <script>
-    function generateCaptions() {
-        const topic = document.getElementById('topicInput').value || "this awesome content";
-        const results = document.getElementById('results');
-        results.innerHTML = "";
+// (Database and JS logic remain exactly as you have them)
+const database = {
+    viral: [
+        "Unlocking the secret to {topic}. You aren't ready for this! 🚀🔥",
+        "Save this before you forget how to handle {topic}. 💾",
+        "3 reasons why {topic} is the future of your brand. 📈",
+        "If you aren't doing {topic} in 2026, you're falling behind. ⚠️",
+        "The {topic} roadmap I wish I had 2 years ago. 🗺️"
+    ],
+    story: [
+        "I used to struggle with {topic}. But after 30 days of consistency, everything changed. 🧵",
+        "I’m going to be real: {topic} wasn't easy. But it was worth it. 💯",
+        "The truth about {topic} that nobody tells you. 🤫",
+        "My morning starts with {topic}. Here’s the routine. ☕",
+        "Unfiltered thoughts on {topic}. Let's get honest. ✨"
+    ],
+    expert: [
+        "If you want to master {topic}, you need to stop scrolling and read this. 📚",
+        "Stop overcomplicating {topic}. Do this instead. ✅",
+        "How to scale your {topic} without losing your mind. 🧠",
+        "The only guide to {topic} you’ll ever need. Period. 🏆",
+        "Mastering {topic} is 10% talent and 90% systems. ⚙️"
+    ],
+    community: [
+        "What’s your biggest struggle with {topic}? Let’s talk below. 👇",
+        "Unpopular opinion: {topic} is overrated. Agree or disagree? 💭",
+        "Tag a friend who needs to hear this about {topic}. 🏷️",
+        "Drop a 'YES' if you're focusing on {topic} this week! 🙌",
+        "Poll: Which is harder? {topic} or staying consistent? 🗳️"
+    ]
+};
 
-        const masterList = [
-            { style: "Minimalist", text: `${topic}. ☕✨` },
-            { style: "Hype", text: `Unlocking the secret to ${topic}. You aren't ready for this! 🚀🔥` },
-            { style: "Educational", text: `If you want to master ${topic}, you need to stop scrolling and read this right now. 📚` },
-            { style: "Question", text: `What’s your biggest struggle with ${topic}? Let’s talk in the comments. 👇` },
-            { style: "Story", text: `I used to hate ${topic}. But after 30 days of consistency, everything changed. Here is why... 🧵` },
-            { style: "Direct", text: `Stop overcomplicating ${topic}. Do this instead. ✅` },
-            { style: "Vulnerability", text: `I’m going to be real: ${topic} wasn't easy. But it was worth it. 💯` },
-            { style: "The Hook", text: `Save this before you forget how to ${topic}. 💾` },
-            { style: "Listicle", text: `3 reasons why ${topic} is the future of your brand. 📈` },
-            { style: "Short & Punchy", text: `Big energy for ${topic}. ⚡` }
-        ];
+function generateCaptions() {
+    let topic = document.getElementById('topicInput').value.trim() || "creating content";
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
 
-        // Randomly pick 5 unique styles
-        const shuffled = masterList.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 5);
+    let selected = [];
+    const categories = Object.keys(database);
+    
+    categories.forEach(cat => {
+        let text = database[cat][Math.floor(Math.random() * database[cat].length)];
+        selected.push({ style: cat, text: text.replace(/{topic}/g, topic) });
+    });
+    
+    let extraCat = categories[Math.floor(Math.random() * categories.length)];
+    let extraText = database[extraCat][Math.floor(Math.random() * database[extraCat].length)];
+    selected.push({ style: "wildcard", text: extraText.replace(/{topic}/g, topic) });
 
-        selected.forEach((item) => {
-            const card = document.createElement('div');
-            card.className = 'caption-card';
-            
-            card.innerHTML = `
-                <span class="style-label">${item.style}</span>
-                <span class="caption-text">${item.text}</span>
-                <span class="copy-link" onclick="copyText(this, '${item.text.replace(/'/g, "\\'")}')">Copy to Clipboard</span>
-            `;
-            results.appendChild(card);
-        });
-    }
+    selected.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'caption-card';
+        div.onclick = function() { copyToClipboard(item.text, this); };
+        div.innerHTML = `
+            <span class="style-tag">${item.style}</span>
+            <span class="copy-hint">Tap to Copy</span>
+            <div>${item.text}</div>
+        `;
+        resultList.appendChild(div);
+    });
+}
 
-    function copyText(el, text) {
-        navigator.clipboard.writeText(text);
-        el.innerText = "Copied! ✅";
-        setTimeout(() => el.innerText = "Copy to Clipboard", 1000);
-    }
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const hint = element.querySelector('.copy-hint');
+        hint.innerText = "COPIED!";
+        hint.style.color = "#00ff88";
+        setTimeout(() => { 
+            hint.innerText = "Tap to Copy"; 
+            hint.style.color = "var(--primary)"; 
+        }, 1500);
+    });
+}
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 ToolForge Engine. All processing is 100% Client-Side.
 </footer>
 <script src="../nav.js"></script>
-
 </body>
 </html>

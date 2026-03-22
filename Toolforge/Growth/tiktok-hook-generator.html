@@ -5,192 +5,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok Hook Generator | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.1);
+            --primary: #ff007f; --bg: #0d0208; --card: #1a0514;
+            --glass: rgba(255, 255, 255, 0.03); --border: #3d0a2b;
+            --text: #f1f5f9;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
         
-        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input { width: 100%; max-width: 500px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; }
-        input:focus { border-color: var(--primary); }
+        /* Layout matching Thumbnail Previewer */
+        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
         
-        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 500px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.3); }
-        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(255, 0, 127, 0.5); }
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
+
+        .workspace {
+            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
+            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+        }
+
+        /* Results Area */
+        .results-area {
+            background: #000; border-radius: 16px; border: 1px solid var(--border);
+            min-height: 450px; display: flex; flex-direction: column; gap: 12px; padding: 25px;
+            overflow-y: auto; max-height: 600px;
+        }
+
+        .hook-item {
+            background: var(--glass); padding: 22px; border-radius: 14px; border: 1px solid var(--border);
+            font-family: 'Outfit'; font-size: 1.15rem; color: #fff; display: flex; 
+            justify-content: space-between; align-items: center; gap: 15px;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .hook-item:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.05); }
+
+        /* Controls */
+        .control-panel { display: flex; flex-direction: column; gap: 20px; }
+        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
+        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+
+        input[type="text"] { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
         
-        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 700px; margin-left: auto; margin-right: auto; }
-        .hook-item { background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); font-family: 'Outfit'; font-size: 1.2rem; font-weight: 700; color: #fff; text-align: left; animation: fadeIn 0.4s ease forwards; border-left: 5px solid var(--primary); }
+        .gen-btn {
+            display: block; width: 100%; padding: 18px; background: #fff; color: #000;
+            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s;
+        }
+        .gen-btn:hover { background: var(--primary); color: #fff; }
+
+        .copy-btn { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
-        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
-        
-        .faq-item { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; text-align: left; }
-        .faq-item strong { display: block; margin-bottom: 10px; color: #fff; font-size: 1.1rem; }
+        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-<div class="container">
-    <a href="index.html" class="back-btn">← Category Hub</a>
-    <nav class="nav-container"></nav> <div class="container">
-    <section class="tool-card">
-        <h1>TikTok Hook Gen</h1>
-        <p>The first 3 seconds are everything. Get hooks that force people to watch.</p>
-        <div class="input-group">
-            <input type="text" id="userInput" placeholder="Your video topic? (e.g. Life hacks, Coding, Travel)">
-        </div>
-        <button class="gen-btn" onclick="generateHooks()">Generate 5 Viral Hooks</button>
-        <div id="result-list"></div>
-    </section>
 
-    <section class="seo-content">
-        <h2>The Science of Social Hooks</h2>
-        <div class="tips-grid">
-            <div class="tip-card"><strong>01. Negative Constraint</strong> Hooks that warn users about what they are doing wrong perform 40% better than positive ones.</div>
-            <div class="tip-card"><strong>02. Curiosity Gaps</strong> Start a story but don't finish it. 'The one thing you're missing...' makes people wait for the payoff.</div>
-            <div class="tip-card"><strong>03. Speed is Key</strong> Deliver the hook immediately. Don't say 'Hi guys'—start with the value!</div>
+<nav class="nav-container"></nav> 
+
+<div class="container">
+    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Hub</a>
+    
+    <h1>Hook <span style="color:var(--primary)">Generator</span></h1>
+    <p class="subtitle">2026 High-retention openings for short-form content.</p>
+
+    <div class="workspace">
+        <div class="results-area" id="hookContainer">
+            <div style="margin: auto; text-align: center; opacity: 0.2;">
+                <p style="font-size: 1.5rem; font-family: 'Outfit';">AWAITING TOPIC</p>
+                <p>Generated hooks will appear here.</p>
+            </div>
         </div>
-        <h3>Hook FAQ</h3>
-        <div class="faq-item">
-            <strong>Do these work for Instagram Reels?</strong>
-            Absolutely. The psychology of short-form video is the same across TikTok, Reels, and YouTube Shorts.
+
+        <div class="control-panel">
+            <div class="control-group">
+                <label>Video Topic</label>
+                <input type="text" id="topicInput" placeholder="e.g. Life Hacks, Coding, One Piece" onkeypress="if(event.key==='Enter') generate()">
+            </div>
+            <button class="gen-btn" onclick="generate()">GENERATE 10 HOOKS</button>
+            
+            <div class="control-group">
+                <label>Pro Hint</label>
+                <p style="font-size: 0.75rem; opacity: 0.6; margin: 0;">Click 'Copy' to grab a hook. All processing is 100% local for speed.</p>
+            </div>
         </div>
-    </section>
+    </div>
 </div>
 
+<footer id="footer-container"></footer>
+
 <script>
-function generateHooks() {
-    const topic = document.getElementById('userInput').value.trim() || "this niche";
-    const resultList = document.getElementById('result-list');
-    resultList.innerHTML = "";
-
     const database = [
-        // --- THE NEGATIVE/WARNING TRIGGER (High CTR) ---
-        `Stop doing ${topic} the wrong way. Do this instead.`,
-        `You’re probably failing at ${topic} because of this one mistake.`,
-        `Everything you know about ${topic} is actually wrong.`,
-        `Don't start ${topic} until you watch this video.`,
-        `I’m going to be honest, most people suck at ${topic}.`,
-        `Stop scrolling if you’re still struggling with ${topic}.`,
-        `The ${topic} industry is lying to you about this.`,
-        `Is ${topic} actually a scam? Let's talk about it.`,
-        `I wish I knew this before I started ${topic}.`,
-        `Please stop making this ${topic} mistake in 2026.`,
-        
-        // --- THE "SECRET/EXPOSURE" TRIGGER ---
-        `3 secrets about ${topic} that no one is telling you.`,
-        `The ${topic} hack that feels illegal to know.`,
-        `I found a shortcut for ${topic} and it’s actually insane.`,
-        `This is the ultimate cheat code for ${topic}.`,
-        `How I mastered ${topic} in just 7 days.`,
-        `The secret to ${topic} is finally out.`,
-        `I’m exposing the truth behind ${topic}.`,
-        `This is why your ${topic} isn't working.`,
-        `The only ${topic} tutorial you’ll ever need to watch.`,
-        `Hidden ${topic} features you didn't know existed.`,
-
-        // --- THE "POV/STORY" TRIGGER ---
-        `POV: You just discovered the best way to do ${topic}.`,
-        `How I went from zero to expert in ${topic}.`,
-        `Watch me transform this ${topic} in 30 seconds.`,
-        `I tried ${topic} for 30 days so you don't have to.`,
-        `I spent $1,000 on ${topic} so you can save your money.`,
-        `This ${topic} result actually shocked me.`,
-        `My life changed after I started doing ${topic} like this.`,
-        `You won't believe what happened when I tried ${topic}.`,
-        `The day I realized I was doing ${topic} all wrong.`,
-        `Day 1 of showing you how to dominate ${topic}.`,
-
-        // --- THE "VALUE/LIST" TRIGGER ---
-        `3 ${topic} tools that are actually free and life-changing.`,
-        `The top 5 ${topic} accounts you need to follow right now.`,
-        `Ranking the best ${topic} strategies of 2026.`,
-        `Here is my exact blueprint for ${topic}.`,
-        `The 3-step framework for perfect ${topic}.`,
-        `The easiest ${topic} routine for beginners.`,
-        `Unboxing the most viral ${topic} products.`,
-        `5 ${topic} websites you’ve never heard of.`,
-        `The ${topic} checklist you need to save immediately.`,
-        `Best ${topic} advice I ever received.`,
-
-        // --- THE "CONTROVERSIAL/BOLD" TRIGGER ---
-        `Why ${topic} is actually overrated.`,
-        `Nobody wants to hear this, but ${topic} is dying.`,
-        `If you like ${topic}, we can't be friends.`,
-        `The most controversial ${topic} opinion you'll hear today.`,
-        `I’m about to lose followers for saying this about ${topic}.`,
-        `Is ${topic} actually worth the hype?`,
-        `The dark side of ${topic} that people ignore.`,
-        `Stop buying ${topic} products until you see this.`,
-        `Why I’m quitting ${topic} (well, almost).`,
-        `The brutal truth about ${topic} in 2026.`
+        "Stop doing [topic] the wrong way. Do this.",
+        "You're failing at [topic] because of this one mistake.",
+        "Everything you know about [topic] is actually wrong.",
+        "Don't start [topic] until you watch this video.",
+        "I’m going to be honest, most people suck at [topic].",
+        "Please stop making this [topic] mistake in 2026.",
+        "The [topic] industry is lying to you about this.",
+        "Is [topic] actually a scam? Let's talk.",
+        "The [topic] hack that feels illegal to know.",
+        "3 secrets about [topic] no one is telling you.",
+        "This is the ultimate cheat code for [topic].",
+        "I found a shortcut for [topic] and it's insane.",
+        "How I mastered [topic] in just 7 days.",
+        "The only [topic] checklist you'll ever need.",
+        "POV: You just discovered the best way to do [topic].",
+        "How I went from zero to expert in [topic].",
+        "Watch me transform this [topic] in 30 seconds.",
+        "My life changed after I started doing [topic] like this.",
+        "I tried [topic] for 30 days and here's what happened.",
+        "Why [topic] is actually overrated.",
+        "Nobody wants to hear this, but [topic] is dying.",
+        "The most controversial [topic] opinion you'll hear today.",
+        "I'm about to lose followers for saying this about [topic].",
+        "Is [topic] actually worth the hype?",
+        "The dark side of [topic] people ignore.",
+        "Stop buying [topic] products until you see this.",
+        "I wish I knew this before I started [topic].",
+        "This [topic] result actually shocked me.",
+        "The day I realized I was doing [topic] all wrong.",
+        "Day 1 of showing you how to dominate [topic]."
     ];
 
-    // Shuffle Function (Fisher-Yates)
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
+    function generate() {
+        const topic = document.getElementById('topicInput').value.trim() || "this niche";
+        const container = document.getElementById('hookContainer');
+        container.innerHTML = "";
+
+        const shuffled = database.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+        shuffled.forEach((template, i) => {
+            const hookText = template.replace(/\[topic\]/g, topic);
+            const item = document.createElement('div');
+            item.className = 'hook-item';
+            item.style.animationDelay = `${i * 0.05}s`;
+            item.innerHTML = `<span>${hookText}</span><button class="copy-btn" onclick="copyHook(this, '${hookText.replace(/'/g, "\\'")}')">COPY</button>`;
+            container.appendChild(item);
+        });
     }
 
-    const shuffled = shuffle([...database]);
-
-    // Generate 5 Hooks
-    shuffled.slice(0, 5).forEach(hook => {
-        const div = document.createElement('div');
-        div.className = 'hook-item';
-        div.innerText = hook;
-        resultList.appendChild(div);
-    });
-}
+    function copyHook(btn, text) {
+        navigator.clipboard.writeText(text);
+        const originalText = btn.innerText;
+        btn.innerText = "COPIED";
+        btn.style.background = "#fff";
+        btn.style.color = "#000";
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = "var(--primary)";
+            btn.style.color = "#fff";
+        }, 2000);
+    }
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
 
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
 <script src="../nav.js"></script>
+<script src="../footer.js"></script>
 </body>
 </html>

@@ -17,42 +17,74 @@ Object.keys(categories).forEach(folder => {
 
 const globalUI = `
 <style>
-    /* 1. NORMALIZE HEADER & CONTAINER */
-    .tf-header { 
-        display: flex; justify-content: space-between; align-items: center; 
-        padding: 15px 40px; max-width: 1300px; margin: 0 auto; gap: 30px;
-        box-sizing: border-box;
-    }
-    
-    .logo { 
-        font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: #fff; 
-        text-decoration: none; letter-spacing: -1.2px; flex-shrink: 0;
-    }
+    /* 1. Updated Header with Hide/Reveal Logic */
+.tf-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px;
+    width: 100%; 
+    box-sizing: border-box;
+    background: #05070a; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky; 
+    top: 0; 
+    z-index: 9999;
+    transition: transform 0.3s ease-in-out; /* Smooth slide */
+}
 
+/* The class we will toggle via JS */
+.tf-header.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* 2. Gradient Logo that uses the page's --primary variable */
+.logo { 
+    font-family: 'Outfit'; 
+    font-size: 1.2rem;
+    font-weight: 800; 
+    /* This creates the blend: it starts white and fades into your category's primary color */
+    background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none; 
+    letter-spacing: -1px; 
+    flex-shrink: 0;
+}
+
+.logo:hover { 
+    /* This mimics the landing page "Bluish/Cyan" blend with the tool theme */
+    background: linear-gradient(90deg, #00f2fe, var(--primary), #4facfe);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: tf-shine 1.5s linear infinite;
+    filter: drop-shadow(0 0 12px var(--primary));
+    transform: scale(1.02);
+}
+
+@keyframes tf-shine {
+    to { background-position: 200% center; }
+}
     /* 2. THE STEALTH SEARCH BOX (Apple Style) */
     #searchWrapper { 
         position: relative; 
         width: 100%; 
-        max-width: 420px; /* Slimmer, consistent width */
-        height: 42px;    /* Fixed height for precision */
+        max-width: 250px; /* Limits search size so it fits next to logo */
+        height: 36px;    /* Slimmer height */
         z-index: 10000; 
-        margin: 0; 
     }
-    
-    /* THE CHAMELEON SEARCH BOX */
+
     #toolSearch { 
         width: 100%; 
         height: 100%;
-        background: #05070a; 
-        /* The border now takes a 20% opacity version of the page's primary color */
+        background: rgba(255, 255, 255, 0.05); 
         border: 1px solid rgba(255, 255, 255, 0.1); 
         border-radius: 50px; 
         color: #f1f5f9; 
-        padding: 0 15px 0 40px; 
-        font-size: 0.9rem; 
-        font-family: 'Inter'; 
+        padding: 0 10px 0 35px; 
+        font-size: 0.85rem; 
         outline: none; 
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-sizing: border-box;
     }
 
@@ -117,16 +149,25 @@ const globalUI = `
     #searchResults::-webkit-scrollbar { width: 4px; }
     #searchResults::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
 
+    /* 2. MOBILE OVERRIDE - Keep them side-by-side */
     @media (max-width: 600px) {
-        .tf-header { flex-direction: column; padding: 20px; }
-        #searchWrapper { max-width: 100%; }
+        .tf-header { 
+            padding: 10px 15px; /* Even tighter for small screens */
+            flex-direction: row !important; /* Forces side-by-side */
+        }
+        .logo {
+            font-size: 1.1rem; /* Tiny bit smaller to guarantee fit */
+        }
+        #searchWrapper {
+            max-width: 160px; /* Shrinks search box on small phones */
+        }
     }
 </style>
 
 <header class="tf-header">
     <a href="/index.html" class="logo">ToolForge</a>
     <div id="searchWrapper">
-        <input type="text" id="toolSearch" placeholder="Find a tool..." autocomplete="off">
+        <input type="text" id="toolSearch" placeholder="Search..." autocomplete="off">
         <div id="searchResults"></div>
     </div>
 </header>
@@ -224,3 +265,35 @@ function getFuzzyMatch(s1, s2) {
 }
 
 document.addEventListener("DOMContentLoaded", initToolForge);
+function setupSmartHeader() {
+    const header = document.querySelector('.tf-header');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+        if (!header) return;
+        
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            // Scrolling Down - Hide Header
+            header.classList.add("nav-hidden");
+        } else {
+            // Scrolling Up - Show Header
+            header.classList.remove("nav-hidden");
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+}
+
+// Update your init function to include this
+function initToolForge() {
+    const nav = document.querySelector('.nav-container');
+    if (nav) nav.innerHTML = globalUI;
+
+    const footerTag = document.querySelector('footer');
+    if (footerTag) footerTag.innerHTML = footerUI;
+
+    setupSearchLogic();
+    setupSmartHeader(); // <--- Add this line
+}

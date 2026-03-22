@@ -3,196 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thumbnail Previewer | ToolForge Professional</title>
+    <title>Thumbnail Previewer | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff007f;
-            --bg: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #ff007f; --bg: #0d0208; --card: #1a0514;
+            --glass: rgba(255, 255, 255, 0.03); --border: #3d0a2b;
             --text: #f1f5f9;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: radial-gradient(circle at 90% 90%, rgba(46, 204, 113, 0.07) 0%, transparent 50%), var(--bg);
-        }
-
-        .container { width: 95%; max-width: 1000px; padding: 60px 0; text-align: center; }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; }
-        .subtitle { opacity: 0.6; margin-bottom: 40px; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
+        
+        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
 
         .preview-workspace {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 40px;
-            text-align: left;
+            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
+            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
         }
 
         /* MAIN CANVAS */
         .canvas-area {
-            background: #000;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            border: 2px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: #000; border-radius: 16px; position: relative; overflow: hidden;
+            aspect-ratio: 16 / 9; border: 1px solid var(--border); cursor: crosshair;
         }
 
-        #bgImage { width: 100%; height: 100%; object-fit: cover; display: none; pointer-events: none; }
+        #bgImage { width: 100%; height: 100%; object-fit: cover; display: none; pointer-events: none; transition: filter 0.3s; }
         
         .overlay-text {
-            position: absolute;
-            color: white;
-            font-family: 'Outfit';
-            font-weight: 800;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.9);
-            cursor: move;
-            user-select: none;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; color: white; font-family: 'Outfit'; font-weight: 800;
+            text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            cursor: move; user-select: none; white-space: nowrap; line-height: 1;
         }
 
         /* CONTROLS */
-        .control-panel {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
-        }
+        .control-panel { display: flex; flex-direction: column; gap: 20px; }
+        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
+        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
 
-        .control-panel h3 { margin: 0 0 20px 0; color: var(--primary); font-family: 'Outfit'; }
-        
-        input[type="text"], input[type="range"], input[type="color"] {
-            width: 100%;
-            margin-bottom: 20px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            padding: 12px;
-            color: white;
-            border-radius: 8px;
-            outline: none;
-            box-sizing: border-box;
-        }
+        input[type="text"] { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; }
+        input[type="range"] { width: 100%; accent-color: var(--primary); }
 
         .upload-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
-            color: #000;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: 25px;
-            transition: 0.3s;
+            display: block; width: 100%; padding: 15px; background: #fff; color: #000;
+            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s;
         }
-        .upload-btn:hover { transform: scale(1.02); }
+        .upload-btn:hover { background: var(--primary); color: #fff; }
 
-        /* MINI PREVIEWS - Fixed Logic */
-        .mini-previews {
-            margin-top: 30px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        .mini-card { text-align: center; }
+        /* MINI PREVIEWS */
+        .mini-previews { margin-top: 30px; display: flex; gap: 20px; align-items: flex-end; }
+        .mini-card { text-align: left; }
         .mini-view-container { 
-            background: #000; 
-            border: 1px solid var(--border); 
-            border-radius: 8px; 
-            overflow: hidden; 
-            margin-bottom: 10px; 
-            position: relative;
-            transform-origin: top left;
+            background: #000; border: 1px solid var(--border); border-radius: 8px; 
+            overflow: hidden; margin-bottom: 8px; position: relative;
         }
         
-        .mobile-wrap { width: 120px; height: 67.5px; }
-        .sidebar-wrap { width: 220px; height: 123.75px; }
+        .mobile-wrap { width: 140px; height: 78.75px; }
+        .sidebar-wrap { width: 200px; height: 112.5px; }
 
         /* SEO & FAQ */
-        .seo-wrapper { margin-top: 100px; text-align: left; border-top: 1px solid var(--border); padding-top: 60px; }
-        .faq-box { background: rgba(255,255,255,0.02); padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-top: 15px; }
+        .seo-wrapper { margin-top: 100px; text-align: left; }
+        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; margin-bottom: 20px; }
+        .info-card h3 { color: var(--primary); margin-top: 0; font-family: 'Outfit'; }
 
-        @media (max-width: 900px) {
-            .preview-workspace { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 900px) { .preview-workspace { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
+<nav class="nav-container"></nav> 
+
 <div class="container">
-    <nav class="nav-container"></nav> <div class="container">
+    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Hub</a>
+    
     <h1>Thumbnail <span style="color:var(--primary)">Previewer</span></h1>
-    <p class="subtitle">Simulate CTR impact on mobile and desktop feeds.</p>
+    <p class="subtitle">See your design through the eyes of a mobile scroller.</p>
 
     <div class="preview-workspace">
-        <div>
+        <div class="main-side">
             <div class="canvas-area" id="mainCanvas">
                 <img id="bgImage" src="" alt="">
-                <div id="textLayer" class="overlay-text">YOUR TITLE</div>
+                <div id="textLayer" class="overlay-text">YOUR HOOK</div>
             </div>
             
             <div class="mini-previews">
                 <div class="mini-card">
                     <div class="mini-view-container mobile-wrap" id="mobilePreview"></div>
-                    <span style="font-size: 0.7rem; opacity: 0.5;">Mobile Feed</span>
+                    <span style="font-size: 0.7rem; font-weight: 700; opacity: 0.5;">MOBILE FEED</span>
                 </div>
                 <div class="mini-card">
                     <div class="mini-view-container sidebar-wrap" id="sidebarPreview"></div>
-                    <span style="font-size: 0.7rem; opacity: 0.5;">Desktop Sidebar</span>
+                    <span style="font-size: 0.7rem; font-weight: 700; opacity: 0.5;">UP NEXT SIDEBAR</span>
                 </div>
             </div>
         </div>
 
         <div class="control-panel">
-            <h3>Customization</h3>
             <label class="upload-btn">
-                Upload Image
+                SELECT FRAME
                 <input type="file" id="imageLoader" hidden accept="image/*">
             </label>
             
-            <label style="font-size: 0.8rem; opacity: 0.6;">Headline Text</label>
-            <input type="text" id="textInput" placeholder="Enter hook..." maxlength="40">
+            <div class="control-group">
+                <label>Headline</label>
+                <input type="text" id="textInput" placeholder="Enter hook..." maxlength="30">
+            </div>
             
-            <label style="font-size: 0.8rem; opacity: 0.6;">Font Size</label>
-            <input type="range" id="sizeSlider" min="20" max="100" value="40">
-            
-            <label style="font-size: 0.8rem; opacity: 0.6;">Brand Color</label>
-            <input type="color" id="colorPicker" value="#ffffff">
+            <div class="control-group">
+                <label>Text Scale</label>
+                <input type="range" id="sizeSlider" min="20" max="120" value="50">
+            </div>
 
-            <p style="font-size: 0.75rem; opacity: 0.4;">Move the text by dragging it directly on the main preview.</p>
+            <div class="control-group">
+                <label>Accessibility Check</label>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; opacity: 0.6;">Blur Preview (Squint Test)</span>
+                    <input type="checkbox" id="blurToggle" onchange="update()">
+                </div>
+            </div>
+
+            <p style="font-size: 0.7rem; opacity: 0.4; line-height: 1.4;">
+                *Drag text on the main preview to reposition. All processing is local.
+            </p>
         </div>
     </div>
 
     <section class="seo-wrapper">
-        <div class="faq-box">
-            <h4>How does this help my CTR?</h4>
-            <p>Click-Through Rate (CTR) is often lost because text that looks great on a 27-inch monitor is unreadable on a 6-inch phone screen. This tool forces you to see your design at "Mobile Feed" size before you commit.</p>
+        <div class="info-card">
+            <h3>The Squint Test</h3>
+            <p>Our <strong>Blur Preview</strong> feature simulates "peripheral browsing." If you can't tell what your thumbnail is about while it's blurred, a viewer scrolling fast will likely miss it too. Aim for high contrast and bold subjects.</p>
         </div>
-        <div class="faq-box">
-            <h4>Why can't I see my image?</h4>
-            <p>Make sure you are uploading a standard image format (JPG, PNG, or WebP). The image is processed locally in your browser for total privacy.</p>
+        <div class="info-card">
+            <h3>Optimize for Mobile</h3>
+            <p>Over 70% of YouTube views happen on mobile. A thumbnail that looks busy on desktop will look like a mess on a phone. Use the <strong>Mobile Feed</strong> preview to ensure your text is large enough to read at small scales.</p>
         </div>
     </section>
-
-    <a href="index.html" style="margin-top: 50px; display: inline-block; color: #64748b; text-decoration: none;">← Back to Social Suite</a>
 </div>
+
+<footer></footer>
 
 <script>
     const imageLoader = document.getElementById('imageLoader');
@@ -200,44 +151,41 @@
     const textLayer = document.getElementById('textLayer');
     const textInput = document.getElementById('textInput');
     const sizeSlider = document.getElementById('sizeSlider');
-    const colorPicker = document.getElementById('colorPicker');
-    
+    const blurToggle = document.getElementById('blurToggle');
     const mobilePreview = document.getElementById('mobilePreview');
     const sidebarPreview = document.getElementById('sidebarPreview');
 
-    // 1. Initial Position
-    let posX = 50, posY = 50;
+    let posX = 150, posY = 80;
 
     function update() {
-        const val = textInput.value || "YOUR TITLE";
+        const val = textInput.value || "YOUR HOOK";
         const size = sizeSlider.value;
-        const color = colorPicker.value;
+        const isBlurred = blurToggle.checked;
 
-        // Update Main
+        // Apply to Main
         textLayer.innerText = val;
         textLayer.style.fontSize = size + "px";
-        textLayer.style.color = color;
         textLayer.style.left = posX + "px";
         textLayer.style.top = posY + "px";
+        bgImage.style.filter = isBlurred ? 'blur(8px)' : 'none';
+        textLayer.style.filter = isBlurred ? 'blur(4px)' : 'none';
 
-        // Update Previews by cloning the Main Canvas contents safely
-        sync(mobilePreview, 0.18); // Scale down for mobile
-        sync(sidebarPreview, 0.35); // Scale down for sidebar
+        // Sync Mini Previews
+        sync(mobilePreview, 0.22);
+        sync(sidebarPreview, 0.31);
     }
 
     function sync(target, scale) {
-        // We recreate the view to avoid ID duplication issues
         target.innerHTML = `
             <div style="transform: scale(${scale}); transform-origin: top left; width: 640px; height: 360px; position: absolute;">
-                <img src="${bgImage.src}" style="width:100%; height:100%; object-fit:cover; display:${bgImage.src ? 'block' : 'none'}">
-                <div style="position:absolute; color:${colorPicker.value}; font-family:'Outfit'; font-weight:800; font-size:${sizeSlider.value}px; left:${posX}px; top:${posY}px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); text-transform:uppercase;">
-                    ${textInput.value || "YOUR TITLE"}
+                <img src="${bgImage.src}" style="width:100%; height:100%; object-fit:cover; display:${bgImage.src ? 'block' : 'none'}; filter:${bgImage.style.filter}">
+                <div style="position:absolute; color:white; font-family:'Outfit'; font-weight:800; font-size:${sizeSlider.value}px; left:${posX}px; top:${posY}px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); text-transform:uppercase; filter:${textLayer.style.filter}">
+                    ${textInput.value || "YOUR HOOK"}
                 </div>
             </div>
         `;
     }
 
-    // 2. Image Loading
     imageLoader.onchange = (e) => {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -248,9 +196,8 @@
         reader.readAsDataURL(e.target.files[0]);
     };
 
-    // 3. Dragging Logic (Refined)
     let dragging = false;
-    textLayer.onmousedown = () => dragging = true;
+    textLayer.onmousedown = (e) => { dragging = true; e.preventDefault(); };
     window.onmouseup = () => dragging = false;
     window.onmousemove = (e) => {
         if (!dragging) return;
@@ -260,46 +207,9 @@
         update();
     };
 
-    // Listeners for inputs
-    [textInput, sizeSlider, colorPicker].forEach(el => el.oninput = update);
-
-    // Initial run
+    [textInput, sizeSlider].forEach(el => el.oninput = update);
     update();
 </script>
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
-        
-        <div>
-            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
-                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
-            </p>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
-            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
-                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
-                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
-                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
-            </ul>
-        </div>
-
-        <div>
-            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
-           <p style="color: #94a3b8; font-size: 0.9rem;">
-    Questions or feedback? <br>
-    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-        growthdriven024@gmail.com
-    </a>
-</p>
-        </div>
-
-    </div>
-    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
-        © 2026 ToolForge Engine. All processing is 100% Client-Side.
-    </div>
-</footer>
 <script src="../nav.js"></script>
 </body>
 </html>
