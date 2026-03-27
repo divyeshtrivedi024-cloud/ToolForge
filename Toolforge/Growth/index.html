@@ -7,134 +7,153 @@
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
+    :root {
+        --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
+        --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+    
+    .header { text-align: center; margin-bottom: 80px; }
+    .header h1 { font-family: 'Outfit'; font-size: 3.5rem; margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header p { color: #94a3b8; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
+
+    /* LAPTOP GRID */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    
+    /* 1. RESTORED TOOL CARD BASE */
+    .tool-card { 
+        background: var(--card); 
+        border: 1px solid var(--border); 
+        padding: 35px; 
+        border-radius: 24px; 
+        text-decoration: none; 
+        color: white; 
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative; 
+        overflow: hidden;    
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between;
+        height: 100%; /* Ensures equal height in the grid */
+        box-sizing: border-box;
+    }
+
+    /* 2. THE GLASS SWEEP EFFECT (Pink Tint) */
+    .tool-card::after {
+        content: ''; 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%;
+        background: linear-gradient(45deg, transparent, rgba(255, 0, 127, 0.1), transparent);
+        transform: translateX(-100%); 
+        transition: 0.6s;
+    }
+
+    /* 3. HOVER ACTIONS */
+    .tool-card:hover { 
+        transform: translateY(-10px); 
+        border-color: var(--primary); 
+        box-shadow: 0 15px 40px rgba(255, 0, 127, 0.3); 
+    }
+
+    .tool-card:hover::after { 
+        transform: translateX(100%); 
+    }
+
+    /* 4. TEXT STYLING (Pink Glow) */
+    .tool-card h3 { 
+        font-family: 'Outfit'; 
+        font-size: 1.5rem; 
+        margin-bottom: 10px; 
+        color: var(--primary); 
+        transition: 0.3s; 
+    }
+
+    .tool-card:hover h3 { 
+        color: #fff; 
+        text-shadow: 0 0 15px var(--primary); 
+    }
+
+    .tool-card p { 
+        font-size: 0.95rem; 
+        color: #94a3b8; 
+        margin-bottom: 20px; 
+    }
+
+    /* 5. BADGE LOGIC */
+    .badge { 
+        background: var(--glass); 
+        color: var(--primary); 
+        padding: 5px 12px; 
+        border-radius: 8px; 
+        font-size: 0.75rem; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        border: 1px solid var(--border); 
+        transition: 0.3s; 
+        align-self: flex-start;
+    }
+
+    .tool-card:hover .badge { 
+        background: var(--primary); 
+        color: white; 
+        border-color: var(--primary); 
+    }
+
+    .badge.live { background: var(--primary); color: white; }
+
+    /* 6. LOCKED STATE */
+    .tool-card.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+    .tool-card.locked:hover { transform: none; box-shadow: none; border-color: var(--border); }
+    .tool-card.locked:hover::after { display: none; }
+
+    /* 7. PREMIUM BACK BUTTON */
+    .back-home { 
+        display: table; margin: 120px auto 40px; padding: 16px 45px;
+        background: var(--glass); border: 1px solid var(--border); 
+        border-radius: 100px; color: #94a3b8; text-decoration: none; 
+        font-weight: 700; font-family: 'Outfit'; text-transform: uppercase;
+        letter-spacing: 2px; font-size: 0.8rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(10px);
+    }
+    .back-home:hover { 
+        color: #fff; transform: translateY(-5px) scale(1.05);
+        border-color: var(--primary); box-shadow: 0 0 30px rgba(255, 0, 127, 0.4); 
+        background: rgba(255, 0, 127, 0.1);
+    }
+
+    /* --- MOBILE RE-ENGINEERING (The Fix) --- */
+    @media (max-width: 600px) {
+        .header h1 { font-size: 2.5rem; }
+        .grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 12px !important;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
-        
-        .header { text-align: center; margin-bottom: 80px; }
-        .header h1 { font-family: 'Outfit'; font-size: 3.5rem; margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header p { color: #94a3b8; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        
-     /* 1. UPDATED TOOL CARD BASE */
-.tool-card { 
-    background: var(--card); 
-    border: 1px solid var(--border); 
-    padding: 35px; 
-    border-radius: 24px; 
-    text-decoration: none; 
-    color: white; 
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative; /* REQUIRED for the sweep */
-    overflow: hidden;    /* REQUIRED to hide the shine outside the box */
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-between;
-}
-
-/* 2. THE GLASS SWEEP EFFECT (Pink Tint) */
-.tool-card::after {
-    content: ''; 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 0, 127, 0.1), transparent);
-    transform: translateX(-100%); 
-    transition: 0.6s;
-}
-
-/* 3. HOVER ACTIONS */
-.tool-card:hover { 
-    transform: translateY(-10px); 
-    border-color: var(--primary); 
-    box-shadow: 0 15px 40px rgba(255, 0, 127, 0.3); 
-}
-
-.tool-card:hover::after { 
-    transform: translateX(100%); 
-}
-
-/* 4. TEXT STYLING (Pink Glow) */
-.tool-card h3 { 
-    font-family: 'Outfit'; 
-    font-size: 1.5rem; 
-    margin-bottom: 10px; 
-    color: var(--primary); 
-    transition: 0.3s; 
-}
-
-.tool-card:hover h3 { 
-    color: #fff; 
-    text-shadow: 0 0 15px var(--primary); 
-}
-
-.tool-card p { 
-    font-size: 0.95rem; 
-    color: #94a3b8; 
-    margin-bottom: 20px; 
-}
-
-/* 5. BADGE LOGIC */
-.badge { 
-    background: var(--glass); 
-    color: var(--primary); 
-    padding: 5px 12px; 
-    border-radius: 8px; 
-    font-size: 0.75rem; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    border: 1px solid var(--border); 
-    transition: 0.3s; 
-}
-
-.tool-card:hover .badge { 
-    background: var(--primary); 
-    color: white; 
-    border-color: var(--primary); 
-}
-
-.badge.live { background: var(--primary); color: white; }
-
-/* 6. LOCKED STATE */
-.tool-card.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
-.tool-card.locked:hover { transform: none; box-shadow: none; border-color: var(--border); }
-.tool-card.locked:hover::after { display: none; } /* Disable sweep on locked items */
-
-/* 7. PREMIUM BACK BUTTON (Centered & Glowing) */
-.back-home { 
-    display: table;            /* Makes the button only as wide as the text */
-    margin: 120px auto 40px;   /* 120px gap from cards | auto centers it */
-    padding: 16px 45px;        /* Large touch area for mobile */
-    background: var(--glass); 
-    border: 1px solid var(--border); 
-    border-radius: 100px;      /* Perfect pill shape */
-    color: #94a3b8; 
-    text-decoration: none; 
-    font-weight: 700; 
-    font-family: 'Outfit';
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    backdrop-filter: blur(10px);
-}
-
-.back-home:hover { 
-    color: #fff; 
-    transform: translateY(-5px) scale(1.05); /* Lifts and grows slightly */
-    border-color: var(--primary); 
-    box-shadow: 0 0 30px rgba(255, 0, 127, 0.4); /* Pink neon glow */
-    background: rgba(255, 0, 127, 0.1);
-}
-    </style>
+        .tool-card {
+            padding: 20px 10px !important;
+            min-height: 160px;
+            border-radius: 16px;
+        }
+        .tool-card h3 { font-size: 0.95rem !important; }
+        .tool-card p { 
+            font-size: 0.75rem !important; 
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .badge { font-size: 0.6rem !important; padding: 3px 8px; }
+    }
+</style>
+    
 </head>
-<body>
+<body
+     data-theme="growth">
+    <nav class="nav-container"></nav>
 <div class="container">
     <div class="header">
         <div style="margin-bottom: 10px;"><span class="badge">Category 02</span></div>
@@ -283,6 +302,7 @@
 
     <a href="../index.html" class="back-home">← Back to Main ToolForge Portal</a>
 </div>
+<script src="../nav.js"></script>
 <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
     <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
         
@@ -317,5 +337,6 @@
         © 2026 ToolForge Engine. All processing is 100% Client-Side.
     </div>
 </footer>
+ 
 </body>
 </html>

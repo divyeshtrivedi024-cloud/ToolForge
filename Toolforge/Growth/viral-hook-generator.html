@@ -6,153 +6,122 @@
     <title>Viral Hook Generator | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        
-        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
-        
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
-
-        /* WORKSPACE GRID */
-        .workspace {
-            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
-            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+        /* Centering and Stacking */
+        .input-group {
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            margin: 0 auto 25px auto; /* Centers the group itself */
+            width: 100%;
+            max-width: 600px; /* Limits width to keep it looking clean */
+            align-items: center; 
         }
 
-        /* Results Area */
-        .results-area {
-            background: #000; border-radius: 16px; border: 1px solid var(--border);
-            min-height: 450px; display: flex; flex-direction: column; gap: 15px; padding: 25px;
-            overflow-y: auto; max-height: 600px;
+        /* Full width for inputs and select within that centered group */
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            text-align: center; /* Centers text inside the boxes */
         }
 
-        .hook-card {
-            background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border);
-            position: relative; cursor: pointer; transition: 0.2s; animation: fadeIn 0.4s ease forwards;
-            font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem;
+        /* Adjust select padding to ensure the text stays centered */
+        .input-group select {
+            text-align-last: center; 
         }
-        .hook-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: translateX(5px); }
-        .copy-hint { position: absolute; top: 10px; right: 20px; font-size: 0.65rem; color: var(--primary); font-weight: 800; text-transform: uppercase; }
-
-        /* Control Panel */
-        .control-panel { display: flex; flex-direction: column; gap: 20px; }
-        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-
-        input[type="text"] { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; box-sizing: border-box; font-family: 'Inter'; }
-        
-        .gen-btn {
-            display: block; width: 100%; padding: 18px; background: #fff; color: #000;
-            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s;
-        }
-        .gen-btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* SEO Strategy Sections */
-        .seo-wrapper { margin-top: 100px; text-align: left; }
-        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
-        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; }
-        .info-card h3 { color: var(--primary); margin-top: 0; font-family: 'Outfit'; font-size: 1.4rem; }
-        .info-card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 0; }
-
-        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
-
-<nav class="nav-container"></nav> 
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
 
 <div class="container">
-    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Social Suite</a>
+    <a href="index.html" class="back-btn">← Social Suite</a>
     
-    <h1>Viral <span style="color:var(--primary)">Hook</span> Generator</h1>
-    <p class="subtitle">Generate high-retention openers for TikTok, Reels, and Shorts in seconds.</p>
-
-    <div class="workspace">
-        <div class="results-area" id="result-list">
-            <div style="margin: auto; text-align: center; opacity: 0.2;">
-                <p style="font-size: 1.5rem; font-family: 'Outfit';">ENTER A TOPIC TO START</p>
-            </div>
+    <section class="tool-card">
+        <h1>Viral Hook Generator</h1>
+        <p>Generate high-retention openers for TikTok, Reels, and Shorts in seconds.</p>
+        
+        <div class="input-group">
+            <input type="text" id="topicInput" placeholder="Enter Topic (e.g. Coding, Stock Market, Fitness)" onkeypress="if(event.key==='Enter') generateHooks()">
+            <select id="vibeInput">
+                <option value="viral">Viral / Curiosity Gap</option>
+                <option value="growth">Growth / Authority</option>
+                <option value="negative">Negative / Warning</option>
+            </select>
         </div>
-
-        <div class="control-panel">
-            <div class="control-group">
-                <label>Content Topic</label>
-                <input type="text" id="topicInput" placeholder="e.g. Coding, Stock Market, Fitness" onkeypress="if(event.key==='Enter') generateHooks()">
+        
+        <button class="gen-btn" onclick="generateHooks()">Generate 5 Hooks ✨</button>
+        
+        <div id="result-list" class="grid-mode">
             </div>
+    </section>
 
-            <button class="gen-btn" onclick="generateHooks()">GENERATE HOOKS ✨</button>
-
-            <div class="control-group">
-                <label>Retention Tip</label>
-                <p style="font-size: 0.75rem; opacity: 0.6; margin: 0;">The first 3 seconds determine your video's fate. Use high-stakes language to stop the scroll.</p>
-            </div>
+    <div class="info-header">
+        <h2>Master the Algorithm</h2>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>What is a Hook?</strong>
+            <p>A hook is a psychological trigger designed to grab attention immediately. Without one, even great content gets skipped by the algorithm.</p>
+        </div>
+        <div class="info-card">
+            <strong>Platform Strategy</strong>
+            <p>While built for video, these formulas work perfectly for the first line of LinkedIn posts or the lead tweet of an X (Twitter) thread.</p>
+        </div>
+        <div class="info-card">
+            <strong>Search & Visibility</strong>
+            <p>Better hooks lead to higher watch time. High watch time tells the algorithm to push your content to a significantly wider audience.</p>
         </div>
     </div>
-
-    <section class="seo-wrapper">
-        <h2 style="font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary);">Master the Algorithm</h2>
-        <div class="faq-grid">
-            <div class="info-card">
-                <h3>What is a Hook?</h3>
-                <p>A hook is a psychological trigger designed to grab attention immediately. Without one, even great content gets skipped.</p>
-            </div>
-            <div class="info-card">
-                <h3>Platform Strategy</h3>
-                <p>While built for video, these formulas work perfectly for the first line of LinkedIn posts or X (Twitter) threads.</p>
-            </div>
-            <div class="info-card">
-                <h3>Search & Visibility</h3>
-                <p>Better hooks lead to higher watch time. High watch time tells the algorithm to push your content to a wider audience.</p>
-            </div>
-        </div>
-    </section>
 </div>
 
-<footer id="footer-container"></footer>
-
 <script>
+const database = {
+    viral: [
+        "This secret [topic] tool feels illegal to know.",
+        "I tried every [topic] hack, but only this worked.",
+        "POV: You finally mastered [topic].",
+        "The lazy way to get better at [topic].",
+        "Forget everything you know about [topic]."
+    ],
+    growth: [
+        "How to [topic] like a pro (even if you're a beginner).",
+        "3 simple steps to 10x your [topic] in 24 hours.",
+        "Why [topic] is the only skill you need in 2026.",
+        "Steal my [topic] workflow (Step-by-step).",
+        "I wish I knew this about [topic] sooner."
+    ],
+    negative: [
+        "Nobody is talking about [topic], and it’s a problem.",
+        "Stop doing this if you want to master [topic].",
+        "You’ve been lied to about [topic]. Here’s the truth.",
+        "The [topic] mistake 99% of people are making.",
+        "Don't buy another [topic] course until you see this."
+    ]
+};
+
 function generateHooks() {
-    const topic = document.getElementById('topicInput').value.trim() || "this topic";
+    const rawTopic = document.getElementById('topicInput').value.trim() || "this topic";
+    const vibe = document.getElementById('vibeInput').value;
     const resultList = document.getElementById('result-list');
     resultList.innerHTML = "";
 
-    const templates = [
-        `Nobody is talking about ${topic}, and it’s a problem.`,
-        `Stop doing this if you want to master ${topic}.`,
-        `I tried every ${topic} hack, but only this worked.`,
-        `3 simple steps to 10x your ${topic} in 24 hours.`,
-        `You’ve been lied to about ${topic}. Here’s the truth.`,
-        `This secret ${topic} tool feels illegal to know.`,
-        `How to ${topic} like a pro (even if you're a beginner).`,
-        `The ${topic} mistake 99% of people are making.`,
-        `Why ${topic} is the only skill you need in 2026.`,
-        `I wish I knew this about ${topic} sooner.`,
-        `The lazy way to get better at ${topic}.`,
-        `Forget everything you know about ${topic}.`,
-        `This ${topic} strategy changed my life.`,
-        `Stop scrolling! This ${topic} tip is a game changer.`,
-        `Steal my ${topic} workflow (Step-by-step).`,
-        `POV: You finally mastered ${topic}.`,
-        `Is ${topic} dead? Let's look at the data.`,
-        `Top 5 ${topic} secrets the experts won't tell you.`,
-        `How I earned my first $1k with ${topic}.`,
-        `Don't buy another ${topic} course until you see this.`
-    ];
+    const topic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
 
-    templates.forEach((text, i) => {
+    // Limit to 5 results
+    let selected = [...database[vibe]].sort(() => Math.random() - 0.5).slice(0, 5);
+
+    selected.forEach((text, i) => {
+        const hookText = text.replace(/\[topic\]/g, topic);
         const div = document.createElement('div');
-        div.className = 'hook-card';
+        div.className = 'name-item'; // Synced with Bio/Script Intros
         div.style.animationDelay = `${i * 0.05}s`;
-        div.onclick = function() { copyToClipboard(text, this); };
-        div.innerHTML = `<span class="copy-hint">Copy</span>${text}`;
+        div.onclick = function() { copyToClipboard(hookText, this); };
+        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${hookText}`;
         resultList.appendChild(div);
     });
 }
@@ -163,14 +132,17 @@ function copyToClipboard(text, element) {
         hint.innerText = "COPIED!";
         hint.style.color = "#00ff88";
         setTimeout(() => {
-            hint.innerText = "Copy";
+            hint.innerText = "One-Tap Copy";
             hint.style.color = "var(--primary)";
-        }, 2000);
+        }, 1500);
     });
 }
 </script>
 
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 ToolForge Engine. All processing is 100% Client-Side.
+</footer>
+
 <script src="../nav.js"></script>
-<script src="../footer.js"></script>
 </body>
 </html>

@@ -1,0 +1,924 @@
+1. nav.js
+
+
+/* TOOLFORGE OMNI-NAV - Master Controller */
+
+const categories = {
+    "growth": ["Bio Generator", "Giveaway Winner Picker", "Caption Pro", "Clickbait Title Grader", "Engagement Calculator", "Grid Previewer", "Hashtag Stacker", "Insta Caption Crafter", "LinkedIn Authority Generator", "Pinterest Description Generator", "Podcast Blurb Generator", "Safe zone checker", "Script timer", "Thumbnail Previewer", "TikTok Hook Generator", "Tweet Thread Starter", "Twitch Stream Namer", "Video Script Intros", "Viral Hook Generator", "youtube brainstormer", "pfp glow ring"],
+    "technical": ["Audit Checklist", "Base64 Studio", "Canonical Tag Generator", "Color Converter", "Gradient Gen", "Html Entity Studio", "Js Minifier", "Json Formatter", "Keyword Density Checker", "Lorem Ipsum", "Markdown Converter", "Meta Tag Gen", "Mobile Tester", "Px to Rem Converter", "Redirect Generator", "Robots Generator", "Schema Generator", "SERP Simulator", "URL Encoder", "XML Sitemap Generator"],
+    "generators": ["SaaS Name Generator", "Clan name generator", "Fantasy name generator", "Gamer Name generator", "Aesthetic Username generator", "Pet Name generator", "podcast name generator", "discord server namer", "clothing brand namer", "alias & persona generator"]
+};
+
+// 1. DATA PREP
+const toolLibrary = [];
+Object.keys(categories).forEach(folder => {
+    categories[folder].forEach(name => {
+        const slug = name.toLowerCase().replace(/ /g, "-") + ".html";
+        toolLibrary.push({ name: name, link: `/${folder}/${slug}`, folder: folder });
+    });
+});
+
+const globalUI = `
+<style>
+    /* 1. Updated Header with Hide/Reveal Logic */
+.tf-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px;
+    width: 100%; 
+    box-sizing: border-box;
+    background: #05070a; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky; 
+    top: 0; 
+    z-index: 9999;
+    transition: transform 0.3s ease-in-out; /* Smooth slide */
+}
+
+/* The class we will toggle via JS */
+.tf-header.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* 2. Gradient Logo that uses the page's --primary variable */
+.logo { 
+    font-family: 'Outfit'; 
+    font-size: 1.2rem;
+    font-weight: 800; 
+    /* This creates the blend: it starts white and fades into your category's primary color */
+    background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none; 
+    letter-spacing: -1px; 
+    flex-shrink: 0;
+}
+
+.logo:hover { 
+    /* This mimics the landing page "Bluish/Cyan" blend with the tool theme */
+    background: linear-gradient(90deg, #00f2fe, var(--primary), #4facfe);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: tf-shine 1.5s linear infinite;
+    filter: drop-shadow(0 0 12px var(--primary));
+    transform: scale(1.02);
+}
+
+@keyframes tf-shine {
+    to { background-position: 200% center; }
+}
+    /* 2. THE STEALTH SEARCH BOX (Apple Style) */
+    #searchWrapper { 
+        position: relative; 
+        width: 100%; 
+        max-width: 250px; /* Limits search size so it fits next to logo */
+        height: 36px;    /* Slimmer height */
+        z-index: 10000; 
+    }
+
+    #toolSearch { 
+        width: 100%; 
+        height: 100%;
+        background: rgba(255, 255, 255, 0.05); 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        border-radius: 50px; 
+        color: #f1f5f9; 
+        padding: 0 10px 0 35px; 
+        font-size: 0.85rem; 
+        outline: none; 
+        box-sizing: border-box;
+    }
+
+    /* Adaptive Focus: Blends with Pink, Blue, or Amber automatically */
+    #toolSearch:focus { 
+        border-color: var(--primary); 
+        background: #000; 
+        /* Adds a very subtle "aura" of the category color */
+        box-shadow: 0 0 20px -5px var(--primary); 
+    }
+
+    /* Icon also matches the theme */
+    #searchWrapper::before {
+        content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+        width: 14px; height: 14px;
+        /* Using currentColor or masking to let the icon match the theme */
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat center;
+        opacity: 0.4; 
+        filter: drop-shadow(0 0 2px var(--primary)); /* Subtle glow on the icon */
+        pointer-events: none;
+    }
+    
+    .search-item span { 
+        color: var(--primary); /* Category labels in search results now match the theme */
+        font-size: 0.6rem; 
+        text-transform: uppercase; 
+        font-weight: 900; 
+    }
+
+    /* Minimalist Search Icon (SVG for sharpness) */
+    #searchWrapper::before {
+        content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+        width: 14px; height: 14px;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2364748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat center;
+        opacity: 0.6; pointer-events: none;
+    }
+
+    /* 3. PREMIUM RESULTS DROPDOWN */
+    #searchResults { 
+        position: absolute; top: calc(100% + 8px); left: 0; right: 0; 
+        background: #05070a; border: 1px solid #1e293b; border-radius: 20px; 
+        max-height: 450px; overflow-y: auto; display: none; 
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6); z-index: 10001;
+        animation: premiumFade 0.2s ease-out;
+    }
+
+    @keyframes premiumFade {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-item { 
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 20px; text-decoration: none; 
+        border-bottom: 1px solid #0f172a; transition: 0.2s; 
+    }
+    .search-item:hover { background: #0f172a; }
+    .search-item b { color: #f1f5f9; font-size: 0.9rem; font-weight: 500; }
+    .search-item span { color: var(--primary); font-size: 0.6rem; text-transform: uppercase; font-weight: 900; }
+
+    /* Clean scrollbar */
+    #searchResults::-webkit-scrollbar { width: 4px; }
+    #searchResults::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+
+    /* 2. MOBILE OVERRIDE - Keep them side-by-side */
+    @media (max-width: 600px) {
+        .tf-header { 
+            padding: 10px 15px; /* Even tighter for small screens */
+            flex-direction: row !important; /* Forces side-by-side */
+        }
+        .logo {
+            font-size: 1.1rem; /* Tiny bit smaller to guarantee fit */
+        }
+        #searchWrapper {
+            max-width: 160px; /* Shrinks search box on small phones */
+        }
+    }
+</style>
+
+<header class="tf-header">
+    <a href="/index.html" class="logo">ToolForge</a>
+    <div id="searchWrapper">
+        <input type="text" id="toolSearch" placeholder="Search..." autocomplete="off">
+        <div id="searchResults"></div>
+    </div>
+</header>
+`;
+
+const footerUI = `
+<footer class="tf-footer">
+    <div class="footer-content">
+        <div>
+            <h3 style="color:var(--primary); font-family:'Outfit'">ToolForge</h3>
+            <p>The web’s fastest utility engine. Built for performance.</p>
+        </div>
+        <div>
+            <h4 style="color:#fff">Platform</h4>
+            <p><a href="/privacy.html" style="color:inherit; text-decoration:none">Privacy Policy</a></p>
+        </div>
+        <div>
+            <h4 style="color:#fff">Contact</h4>
+            <p><a href="mailto:growthdriven024@gmail.com" style="color:var(--primary); text-decoration:none">growthdriven024@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 ToolForge Engine. All processing is 100% Client-Side.</div>
+</footer>
+`;
+
+// 3. INITIALIZATION
+function initToolForge() {
+    // Inject Header & Search into .nav-container
+    const nav = document.querySelector('.nav-container');
+    if (nav) nav.innerHTML = globalUI;
+
+    // Inject Footer into footer tag
+    const footerTag = document.querySelector('footer');
+    if (footerTag) footerTag.innerHTML = footerUI;
+
+    setupSearchLogic();
+}
+
+// 4. SEARCH LOGIC (Keeping your original logic)
+function setupSearchLogic() {
+    const input = document.getElementById('toolSearch');
+    const results = document.getElementById('searchResults');
+    const contentToFade = document.querySelector('.tool-card');
+
+    if(!input) return;
+
+    input.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        if (term.length > 0) {
+            const matches = toolLibrary.filter(t => {
+                const name = t.name.toLowerCase();
+                return name.includes(term) || getFuzzyMatch(term, name.substring(0, term.length + 2)) <= 2;
+            }).slice(0, 8);
+
+            results.innerHTML = matches.length > 0 ? 
+                matches.map(t => `<a href="${t.link}" class="search-item"><b>${t.name}</b><span>${t.folder} →</span></a>`).join('') :
+                `<div style="padding:20px; text-align:center">No tools found</div>`;
+            
+            results.style.display = 'block';
+            if(contentToFade) contentToFade.style.opacity = "0.2";
+        } else {
+            results.style.display = 'none';
+            if(contentToFade) contentToFade.style.opacity = "1";
+        }
+    });
+
+    // Close results on outside click
+    document.addEventListener('click', (e) => {
+        if (!document.getElementById('searchWrapper').contains(e.target)) {
+            results.style.display = 'none';
+            if(contentToFade) contentToFade.style.opacity = "1";
+        }
+    });
+}
+
+// FUZZY MATCH LOGIC (Your exact function)
+function getFuzzyMatch(s1, s2) {
+    s1 = s1.toLowerCase(); s2 = s2.toLowerCase();
+    let costs = new Array();
+    for (let i = 0; i <= s1.length; i++) {
+        let lastValue = i;
+        for (let j = 0; j <= s2.length; j++) {
+            if (i == 0) costs[j] = j;
+            else if (j > 0) {
+                let newValue = costs[j - 1];
+                if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                    newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                costs[j - 1] = lastValue;
+                lastValue = newValue;
+            }
+        }
+        if (i > 0) costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+}
+
+document.addEventListener("DOMContentLoaded", initToolForge);
+function setupSmartHeader() {
+    const header = document.querySelector('.tf-header');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+        if (!header) return;
+        
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            // Scrolling Down - Hide Header
+            header.classList.add("nav-hidden");
+        } else {
+            // Scrolling Up - Show Header
+            header.classList.remove("nav-hidden");
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+}
+
+// Update your init function to include this
+function initToolForge() {
+    const nav = document.querySelector('.nav-container');
+    if (nav) nav.innerHTML = globalUI;
+
+    const footerTag = document.querySelector('footer');
+    if (footerTag) footerTag.innerHTML = footerUI;
+
+    setupSearchLogic();
+    setupSmartHeader(); // <--- Add this line
+}
+
+
+template.html 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>TOOL_NAME | ToolForge Official</title>
+    <meta name="description" content="TOOL_DESCRIPTION">
+    
+    <link rel="icon" href="/favicon.png" sizes="any">
+    <link rel="apple-touch-icon" href="/favicon.png">
+
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body>
+
+    <header class="nav-container"></header>
+    
+    <main class="tool-wrapper">
+        <section class="tool-header">
+            <h1 id="dynamicTitle">TOOL_NAME</h1>
+            <p id="dynamicDesc">TOOL_DESCRIPTION</p>
+        </section>
+
+        <div class="tool-content-area">
+            </div>
+
+        <div class="global-actions">
+            <button onclick="copyToClipboard()" class="btn-primary">Copy Result</button>
+            <button onclick="resetTool()" class="btn-secondary">Reset</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 ToolForge Official. All tools are free forever.</p>
+    </footer>
+
+    <script src="/nav.js"></script>
+    <script>
+        // Placeholder for the "Copy" logic we'll build next
+        function copyToClipboard() {
+            const output = document.querySelector('.output-box'); // Standard class for all tools
+            if (output) {
+                navigator.clipboard.writeText(output.value || output.innerText);
+                alert("Copied to clipboard!");
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+main-style.css
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap');
+
+:root {
+    --bg: #0b0f1a;
+    --card: #141a2a;
+    --text: #f1f5f9;
+    --border: #1e293b;
+    --glass: rgba(255, 255, 255, 0.03);
+    /* Default Theme (Technical) */
+    --primary: #00f2ff; 
+    --glow: rgba(0, 242, 255, 0.3);
+}
+
+/* --- THEME DEFINITIONS --- */
+[data-theme="growth"] { --primary: #ff007f; --glow: rgba(233, 18, 154, 0.3); }
+[data-theme="generators"] { --primary: #6366f1; --glow: rgba(99, 102, 241, 0.3); }
+[data-theme="technical"] { --primary: #00f2ff; --glow: rgba(26, 196, 239, 0.3); }
+[data-theme="utility"] { --primary: #f43f5e; --glow: rgba(244, 63, 94, 0.3); }
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    margin: 0; 
+    line-height: 1.6; 
+    overflow-x: hidden;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+/* --- THE TOOL CARD (PREMIUM LOOK) --- */
+.tool-card { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    padding: 60px 40px; 
+    border-radius: 32px; 
+    text-align: center; 
+    margin-bottom: 60px; 
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* The Gradient Title you liked */
+h1 { 
+    font-family: 'Outfit'; 
+    font-size: clamp(2.5rem, 5vw, 3.5rem); 
+    margin-bottom: 15px; 
+    letter-spacing: -2px; 
+    background: linear-gradient(to right, #fff, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- INTERACTIVE ELEMENTS --- */
+select, input, textarea { 
+    width: 100%; 
+    max-width: 500px; 
+    background: #05070a; 
+    border: 1px solid var(--border); 
+    padding: 18px; 
+    border-radius: 14px; 
+    color: white; 
+    font-size: 1.1rem; 
+    margin-bottom: 25px; 
+    outline: none;
+    transition: 0.3s;
+}
+
+select:focus, input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--glow); }
+
+/* Update this in your main-style.css */
+.gen-btn {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.03); /* Subtle dark matte */
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800; /* Bold & Premium */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* THE REACTIVE LOGIC: Inherits the Tool's Theme */
+.gen-btn:hover {
+    background: var(--primary); /* Changes based on Category */
+    color: #000; /* High contrast black text on hover */
+    border-color: var(--primary);
+    box-shadow: 0 0 25px var(--glow); /* Uses the category's glow variable */
+    transform: translateY(-2px);
+}
+
+.gen-btn:active {
+    transform: scale(0.97);
+}
+
+/* --- RESULT ITEMS --- */
+.name-item, .output-box { 
+    background: var(--glass); 
+    padding: 20px; 
+    border-radius: 16px; 
+    border: 1px solid var(--border); 
+    font-family: 'Outfit'; 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    color: var(--primary);
+    margin-top: 15px;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* --- MOBILE SHIT-FIXER --- */
+@media (max-width: 768px) {
+    .tool-card { padding: 40px 20px; border-radius: 20px; }
+    h1 { font-size: 2.2rem; }
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+
+index.html (main landing page)
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ToolForge | Free AI Content & Developer Tools</title>
+    <link rel="icon" href="/favicon.png" sizes="any">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+    :root {
+        /* This is your Master Black - used by both themes initially */
+        --bg: #05070a; 
+        --glass: rgba(17, 24, 39, 0.7);
+        --text: #f1f5f9;
+        --primary: #6366f1; 
+        --secondary: #06b6d4; 
+        --accent: #f43f5e; 
+        --card-border: #1f2937;
+        /* Keep orbs subtle so they don't wash out the black */
+        --orb-1: rgba(99, 102, 241, 0.08); 
+        --orb-2: rgba(255, 0, 127, 0.05);
+    }
+
+    /* Keep Light Theme distinct, but let's keep Dark Theme matching the root */
+    [data-theme="light"] {
+        --bg: #fdfdfd;
+        --glass: rgba(255, 255, 255, 0.7);
+        --text: #0f172a;
+        --card-border: #e2e8f0;
+        --orb-1: rgba(99, 102, 241, 0.1);
+        --orb-2: rgba(6, 182, 212, 0.1);
+    }
+
+    /* IMPORTANT: We removed the [data-theme="dark"] block. 
+       Since :root is already dark/black, we don't need to redefine it. 
+    */
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+        transition: background 0.5s ease;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    /* --- AMBIENT BACKGROUND GLOWS --- */
+    .bg-glow {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        /* Ensure the fixed background is pure black to prevent light leaks */
+        background: #05070a; 
+    }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--orb-1); top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: var(--orb-2); bottom: -10%; right: -10%; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 50px); }
+        }
+
+        /* --- Navigation --- */
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--text);
+            transition: 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--primary); transform: scale(1.05); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 120px 5% 80px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            margin-bottom: 25px;
+            letter-spacing: -3px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, var(--text) 0%, var(--primary) 50%, var(--text) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        /* --- Grid & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            padding: 0 8% 100px;
+        }
+
+        /* --- ToolForge Main Hub Premium Hover --- */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 30px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The Icon and Title use the Theme Color (Set via inline style or class) */
+/* This is the magic part */
+.card h3 {
+    color: var(--color); /* Title starts in its theme color */
+    transition: 0.3s ease;
+}
+
+.card:hover h3 {
+    color: #fff; /* Turns white on hover */
+    /* The glow now uses the specific color of that card! */
+    text-shadow: 0 0 15px var(--color), 0 0 30px var(--color);
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--color);
+    /* Subtle outer box shadow matching the theme */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--color);
+}
+
+.card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* Glass Sweep */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+    transform: translateX(-100%);
+    transition: 0.6s;
+}
+.card:hover::after { transform: translateX(100%); }
+
+        /* Hub Colors */
+        .generator-hub-card:hover { border-color: var(--primary); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
+        .content-hub-card:hover { border-color: #ff007f; box-shadow: 0 20px 40px rgba(255, 0, 127, 0.2); }
+        .utility-hub-card:hover { border-color: #00f2ff; box-shadow: 0 20px 40px rgba(0, 242, 255, 0.2); }
+        .social-hub-card:hover { border-color: #00ff88; box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2); }
+        .web-hub-card:hover { border-color: #f59e0b; box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
+
+        .icon { font-size: 2.8rem; margin-bottom: 20px; display: block; }
+        h3 { font-family: 'Outfit'; font-size: 1.6rem; margin: 0 0 12px 0; }
+        .card p { font-size: 1rem; color: #64748b; margin: 0; line-height: 1.5; }
+        
+        .badge {
+            position: absolute; top: 20px; right: 20px;
+            padding: 5px 12px; border-radius: 50px; font-size: 0.7rem;
+            font-weight: 800; text-transform: uppercase;
+            background: var(--card-border); color: var(--text);
+        }
+        .badge.coming { background: #334155; color: #fff; }
+
+        /* --- SEO Section --- */
+        .seo-section { padding: 100px 8%; background: var(--glass); border-top: 1px solid var(--card-border); }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; }
+        .seo-item h4 { font-family: 'Outfit'; font-size: 1.3rem; margin-bottom: 15px; color: var(--primary); }
+
+        footer { text-align: center; padding: 60px; opacity: 0.5; font-size: 0.9rem; }
+        .locked-card {
+    pointer-events: none; /* Disables clicking */
+    filter: saturate(0.5); /* Dulls the color slightly */
+}
+
+.coming-soon-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--color);
+    color: var(--color);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Subtle Hover for Locked Cards */
+.locked-card:hover {
+    transform: none; /* No pop effect */
+    box-shadow: none;
+}
+@media (max-width: 600px) {
+    .hero { padding: 80px 20px 40px; }
+    h1 { letter-spacing: -1px; text-align: center; width: 100%; }
+    .grid { grid-template-columns: 1fr; padding: 0 20px 50px; }
+}
+    </style>
+</head>
+<body class="dark-theme" style="background-color: #05070a; color: #ffffff; margin: 0; padding: 0;">
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    #globalSearch:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    }
+</style>
+
+    <div class="bg-glow">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <nav class="nav-container"></nav> 
+    <header class="hero">
+        <h1>Professional Tools for <span class="shimmer">Modern Builders and Creators</span></h1>
+        <p>A lightning-fast ecosystem of free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
+    </header>
+
+    <main class="grid">
+        <a href="Generators/index.html" class="card" style="--color: #6366f1;">
+            <span class="icon">🏷️</span>
+            <h3>AI Name Engines</h3>
+            <p>SaaS, Gaming, and Brand name generators powered by linguistic logic.</p>
+        </a>
+
+        <a href="Growth/index.html" class="card" style="--color: #ff007a;">
+            <span class="icon">🎬</span>
+            <h3>Social & Growth Hub</h3>
+            <p>Strategize, create, and grow. Everything from viral video hooks to giveaway management.</p>
+        </a>
+
+        <a href="technical/index.html" class="card" style="--color: #00f2ff;">
+            <span class="icon">⚙️</span>
+            <h3>Dev & Webmaster Suite</h3>
+            <p>Technical precision tools for website optimization, code formatting, and developer utilities.</p>
+        </a>
+
+        <a href="#" class="card locked-card" style="--color: #affc2e; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">🧠</span>
+    <h3>The AI Lab</h3>
+    <p>Smart tools for AI content detection, sentiment analysis, and prompt engineering.</p>
+</a>
+
+<a href="#" class="card locked-card" style="--color: #94a3b8; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">💼</span>
+    <h3>Business & Finance</h3>
+    <p>Professional utilities for invoice generation, tax estimation, and startup planning.</p>
+</a>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
+    
+    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 100%; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">ToolForge</h3>
+            <p style="color: #ffffff; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #ffffff; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #ffffff; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #ffffff; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+           <p style="color: #94a3b8; font-size: 0.9rem;">
+    Questions or feedback? <br>
+    <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s;" onmouseover="this.style.borderBottom='1px solid var(--primary)'" onmouseout="this.style.borderBottom='1px solid transparent'">
+        growthdriven024@gmail.com
+    </a>
+</p>
+        </div>
+
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 ToolForge Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="/nav.js"></script>
+</body>
+</html>
+
+
+full file structure (probably , did not checked)
+
+
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\404.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\favicon.png
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\files.txt
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\finance
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\index.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\logo.png
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\main-style.css
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\nav.js
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\privacy.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\robots.txt
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\sitemap.xml
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\template.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\terms.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\utility-box
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\aesthetic-username-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\alias-&-persona-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\clan-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\clothing-brand-namer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\discord-server-namer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\fantasy-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\gamer-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\index.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\pet-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\podcast-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Generators\SaaS-name-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\bio-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\caption-pro.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\clickbait-title-grader.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\engagement-calculator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\giveaway-winner-picker.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\grid-previewer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\hashtag-stacker.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\index.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\insta-caption-crafter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\linkedin-authority-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\pfp-glow-ring.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\pinterest-description-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\podcast-blurb-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\safe-zone-checker.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\script-timer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\thumbnail-previewer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\tiktok-hook-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\tweet-thread-starter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\twitch-stream-namer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\video-script-intros.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\viral-hook-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\Growth\youtube-brainstormer.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\audit-checklist.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\base64-studio.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\canonical-tag-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\color-converter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\gradient-gen.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\html-entity-studio.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\index.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\js-minifier.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\json-formatter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\keyword-density-checker.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\lorem-ipsum.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\markdown-converter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\meta-tag-gen.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\mobile-tester.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\px-to-rem-converter.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\redirect-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\robots-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\schema-generator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\serp-simulator.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\url-encoder.html
+C:\Users\divye\OneDrive\Documents\GitHub\ToolForge\Toolforge\technical\xml-sitemap-generator.html

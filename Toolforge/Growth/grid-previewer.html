@@ -6,106 +6,117 @@
     <title>Grid Previewer | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        .nav-container { min-height: 70px; }
-        
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
-        
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 50px 20px; border-radius: 32px; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { opacity: 0.6; margin-bottom: 40px; font-size: 1rem; }
+     <link rel="stylesheet" href="/main-style.css">
+     <style>
+    /* 1. GRID SPECIFIC LAYOUT - This stays in the tool file */
+    .grid-preview-area {
+    max-width: 600px !important; /* Increase this number until it looks right to you */
+    margin: 40px auto;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important; /* Slightly wider gaps look better on bigger grids */
+    background: #000;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
 
-        /* THE GRID - SLIM & CENTERED */
-        .grid-preview-area {
-            max-width: 500px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            background: #000;
-            padding: 4px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
+    .grid-item {
+        aspect-ratio: 1/1;
+        background: #111;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .grid-item {
-            aspect-ratio: 1/1;
-            background: #111;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    .grid-item:hover { background: #1a1a1a; filter: brightness(1.2); }
+    
+    .grid-item img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        animation: scaleIn 0.3s ease; 
+    }
 
-        .grid-item:hover { background: #1a1a1a; filter: brightness(1.2); }
-        .grid-item img { width: 100%; height: 100%; object-fit: cover; animation: scaleIn 0.3s ease; }
-        .grid-item .plus-icon { font-size: 1.5rem; color: var(--primary); opacity: 0.3; transition: 0.3s; }
-        .grid-item:hover .plus-icon { opacity: 1; transform: scale(1.2); }
+    .grid-item .plus-icon { 
+        font-size: 1.5rem; 
+        color: var(--primary); 
+        opacity: 0.3; 
+        transition: 0.3s; 
+    }
 
-        @keyframes scaleIn { from { transform: scale(1.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .grid-item:hover .plus-icon { opacity: 1; transform: scale(1.2); }
 
-        /* CONTROLS */
-        .control-panel { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .instruction-pill { font-size: 0.8rem; background: var(--glass); border: 1px solid var(--border); padding: 8px 20px; border-radius: 50px; color: #94a3b8; }
-        
-        .reset-btn {
-            background: transparent; border: 1px solid var(--border); color: #64748b;
-            padding: 12px 30px; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.3s;
-        }
-        .reset-btn:hover { border-color: var(--primary); color: var(--primary); }
+    @keyframes scaleIn { 
+        from { transform: scale(1.1); opacity: 0; } 
+        to { transform: scale(1); opacity: 1; } 
+    }
 
-        /* SEO SECTION */
-        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; text-align: left; }
-        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: #fff; display: block; margin-bottom: 10px; }
-        .tip-card p { color: #94a3b8; margin: 0; font-size: 0.9rem; }
-    </style>
+    /* 2. OVERRIDES - Adjusting the Main CSS card for this specific tool */
+    .tool-card { 
+        max-width: 50px; /* Slimmer card for the grid look */
+        margin: 0 auto 80px; 
+    }
+    
+    .instruction-pill { 
+        font-size: 0.8rem; 
+        background: var(--glass); 
+        border: 1px solid var(--border); 
+        padding: 8px 20px; 
+        border-radius: 50px; 
+        color: #94a3b8; 
+    }
+
+    .reset-btn {
+        background: transparent; 
+        border: 1px solid var(--border); 
+        color: #64748b;
+        padding: 12px 30px; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        font-weight: 600; 
+        font-size: 0.9rem; 
+        transition: 0.3s;
+    }
+    .reset-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .tool-card { 
+    max-width: 900px !important; /* This opens up the "room" for the grid */
+    width: 95% !important; 
+    padding: 40px 20px !important; 
+}
+
+.grid-preview-area {
+    max-width: 600px !important; /* Now this has room to actually grow */
+    width: 100% !important;
+    margin: 0 auto;
+}
+</style>
 </head>
 <body>
     <nav class="nav-container"></nav> 
-
+    <body data-theme="growth"></body>
     <div class="container">
         <a href="index.html" class="back-btn">← Creator Suite</a>
         
         <section class="tool-card">
             <h1>Grid Previewer</h1>
-            <p class="subtitle">Architect your aesthetic before you publish.</p>
+            <p class="subtitle" style="opacity: 0.6; margin-bottom: 40px;">Architect your aesthetic before you publish.</p>
             
             <div class="grid-preview-area" id="instaGrid">
                 </div>
 
             <div class="control-panel">
-                <span class="instruction-pill">Tap a square to upload a post</span>
-                <button class="reset-btn" onclick="resetGrid()">Clear Preview</button>
-            </div>
+        <button class="reset-btn" onclick="resetGrid()">Clear Preview</button>
+    </div>
             
             <input type="file" id="fileInput" hidden accept="image/*">
         </section>
-
-        <section class="seo-content">
-            <h2>The Psychology of the Grid</h2>
-            <div class="tips-grid">
-                <div class="tip-card"><strong>Visual Rhythm</strong><p>Alternate between detailed shots and "breathing space" (minimalist or text) to keep users scrolling.</p></div>
-                <div class="tip-card"><strong>Color Cohesion</strong><p>Test if your new photos clash with your existing color palette instantly.</p></div>
-                <div class="tip-card"><strong>Private Sandbox</strong><p>Plan in private. No one sees your draft feed except you. 100% browser-based.</p></div>
-            </div>
-        </section>
-    </div>
-
-    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
-        </footer>
+    </div>  
 
     <script>
         const grid = document.getElementById('instaGrid');

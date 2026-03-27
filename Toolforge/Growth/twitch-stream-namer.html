@@ -6,117 +6,77 @@
     <title>Twitch Stream Namer | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        
-        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
-        
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
-
-        /* WORKSPACE GRID: Results (Left) | Controls (Right) */
-        .workspace {
-            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
-            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+        /* Centering and Stacking */
+        .input-group {
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            margin: 0 auto 25px auto; /* Centers the group itself */
+            width: 100%;
+            max-width: 600px; /* Limits width to keep it looking clean */
+            align-items: center; 
         }
 
-        /* Results Area */
-        .results-area {
-            background: #000; border-radius: 16px; border: 1px solid var(--border);
-            min-height: 450px; display: flex; flex-direction: column; gap: 15px; padding: 25px;
-            overflow-y: auto; max-height: 600px;
+        /* Full width for inputs and select within that centered group */
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            text-align: center; /* Centers text inside the boxes */
         }
 
-        .stream-card {
-            background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border);
-            position: relative; cursor: pointer; transition: 0.2s; animation: fadeIn 0.4s ease forwards;
-            font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem;
+        /* Adjust select padding to ensure the text stays centered */
+        .input-group select {
+            text-align-last: center; 
         }
-        .stream-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: translateX(5px); }
-        .copy-hint { position: absolute; top: 10px; right: 20px; font-size: 0.65rem; color: var(--primary); font-weight: 800; text-transform: uppercase; }
-
-        /* Controls */
-        .control-panel { display: flex; flex-direction: column; gap: 20px; }
-        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-
-        input[type="text"], select { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; box-sizing: border-box; font-family: 'Inter'; }
-        
-        .gen-btn {
-            display: block; width: 100%; padding: 18px; background: #fff; color: #000;
-            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s;
-        }
-        .gen-btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* SEO Sections */
-        .seo-wrapper { margin-top: 100px; text-align: left; }
-        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; margin-bottom: 20px; }
-        .info-card h3 { color: var(--primary); margin-top: 0; font-family: 'Outfit'; }
-
-        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
-
-<nav class="nav-container"></nav> 
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
 
 <div class="container">
-    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Suite</a>
+    <a href="index.html" class="back-btn">← Creator Hub</a>
     
-    <h1>Twitch Stream <span style="color:var(--primary)">Namer</span></h1>
-    <p class="subtitle">High-CTR titles designed to stand out in the Twitch browse feed.</p>
-
-    <div class="workspace">
-        <div class="results-area" id="result-list">
-            <div style="margin: auto; text-align: center; opacity: 0.2;">
-                <p style="font-size: 1.5rem; font-family: 'Outfit';">AWAITING GAME & VIBE</p>
-            </div>
+    <section class="tool-card">
+        <h1>Twitch Stream Namer</h1>
+        <p>Generate high-CTR titles designed to stand out in the Twitch browse feed.</p>
+        
+        <div class="input-group">
+            <input type="text" id="gameInput" placeholder="Current Game (e.g. Valorant, Just Chatting)">
+            <select id="vibeInput">
+                <option value="competitive">Competitive (Ranked)</option>
+                <option value="chill">Chill (Community)</option>
+                <option value="challenge">Challenge (High Stakes)</option>
+            </select>
         </div>
+        
+        <button class="gen-btn" onclick="generateTitles()">Generate Stream Titles</button>
+        
+        <div id="result-list" class="grid-mode"></div>
+    </section>
 
-        <div class="control-panel">
-            <div class="control-group">
-                <label>Current Game/Category</label>
-                <input type="text" id="gameInput" placeholder="e.g. Valorant, Just Chatting" onkeypress="if(event.key==='Enter') generateTitles()">
-            </div>
-
-            <div class="control-group">
-                <label>Stream Vibe</label>
-                <select id="vibe-choice">
-                    <option value="competitive">Competitive / Ranked</option>
-                    <option value="chill">Chill / Community</option>
-                    <option value="challenge">Challenges / Hardcore</option>
-                </select>
-            </div>
-
-            <button class="gen-btn" onclick="generateTitles()">GENERATE TITLES</button>
-
-            <div class="control-group">
-                <label>CTR Tip</label>
-                <p style="font-size: 0.75rem; opacity: 0.6; margin: 0;">Titles with [Sub Goal] or [Viewer Games] get 40% more clicks than generic titles.</p>
-            </div>
+    <div class="info-header">
+        <h2>Stream Optimization FAQ</h2>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>Visual Hierarchy</strong>
+            <p>Twitch browse feeds are dark. Using brackets [ ] or pipes | helps break up the text, making it 20% easier for viewers to read quickly.</p>
+        </div>
+        <div class="info-card">
+            <strong>The 'Stakes' Meta</strong>
+            <p>High-stakes titles like "I lose = I gift subs" are the highest performing in 2026. They give the viewer a reason to stay.</p>
+        </div>
+        <div class="info-card">
+            <strong>Progress Tracking</strong>
+            <p>Instead of just 'Playing Valorant,' try 'Road to Radiant - Game 1/10.' Viewers love joining a journey in progress.</p>
         </div>
     </div>
-
-    <section class="seo-wrapper">
-        <div class="info-card">
-            <h3>01. Progress Attracts Viewers</h3>
-            <p>Instead of 'Playing Valorant,' try 'Road to Radiant - Game 1/10.' Viewers love to join a journey in progress rather than a static session.</p>
-        </div>
-        <div class="info-card">
-            <h3>02. Visual Hierarchy</h3>
-            <p>Capitalize one or two impact words (e.g., 'UNSTOPPABLE' or 'FINALLY') to make your title pop against the dark Twitch UI.</p>
-        </div>
-    </section>
 </div>
-
-<footer id="footer-container"></footer>
 
 <script>
 const database = {
@@ -126,9 +86,7 @@ const database = {
         "CRISP CLEAN LOCKS 🎯 | [game] Pro Gameplay",
         "Is Today The Day? | [game] High Elo Climb",
         "UNSTOPPABLE? 🏆 | [game] Win Streak Grind",
-        "LOCKING IN 🔒 | No Losses Allowed | [game]",
-        "TOP 1% PEAK? | [game] Sweat Mode On",
-        "THE FINAL BOSS 😈 | Dominating [game] Today"
+        "LOCKING IN 🔒 | No Losses Allowed | [game]"
     ],
     chill: [
         "Vibes & [game] | Come Hang Out! ✨",
@@ -136,38 +94,36 @@ const database = {
         "Comfy [game] Stream | Grab a Coffee ☕️",
         "No Stress, Just [game] | !Socials",
         "Late Night [game] Adventures | Pull Up 🌙",
-        "Is anyone actually awake? | [game] & Chill",
-        "Building a Community | [game] + Chatting",
-        "The Safest Space on Twitch | [game] Vibes"
+        "The Safest Space on Twitch | [game] & Chill"
     ],
     challenge: [
         "I LOSE = I GIFT SUBS 🎁 | [game] Challenge",
         "CAN WE SURVIVE? 💀 | Hardcore [game] Run",
         "Playing [game] but EVERY DEATH = 50 Pushups",
         "100% COMPLETION RUN | [game] Perfectionist",
-        "World Record Attempt? | [game] Speedrun",
         "If I Lose, Stream Ends | [game] High Stakes",
-        "The Hardest [game] Mod Ever | Beatable?",
-        "ONLY [Weapon/Skill] RUN | [game] Challenge"
+        "ONLY [Weapon] RUN | [game] Challenge ⚔️"
     ]
 };
 
 function generateTitles() {
-    let game = document.getElementById('gameInput').value.trim() || "Gaming";
-    const vibe = document.getElementById('vibe-choice').value;
+    let rawGame = document.getElementById('gameInput').value.trim() || "Gaming";
+    const vibe = document.getElementById('vibeInput').value;
     const resultList = document.getElementById('result-list');
     resultList.innerHTML = "";
 
-    let titles = [...database[vibe]];
-    titles.sort(() => Math.random() - 0.5);
+    // Capitalize game name
+    const game = rawGame.charAt(0).toUpperCase() + rawGame.slice(1);
 
-    titles.slice(0, 5).forEach((text, i) => {
+    let selected = [...database[vibe]];
+    selected.sort(() => Math.random() - 0.5);
+
+    selected.forEach(text => {
         const titleText = text.replace(/\[game\]/g, game);
         const div = document.createElement('div');
-        div.className = 'stream-card';
-        div.style.animationDelay = `${i * 0.08}s`;
+        div.className = 'name-item'; // Using your reference's class name for syncing
         div.onclick = function() { copyToClipboard(titleText, this); };
-        div.innerHTML = `<span class="copy-hint">Copy</span>${titleText}`;
+        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${titleText}`;
         resultList.appendChild(div);
     });
 }
@@ -177,15 +133,18 @@ function copyToClipboard(text, element) {
         const hint = element.querySelector('.copy-hint');
         hint.innerText = "COPIED!";
         hint.style.color = "#00ff88";
-        setTimeout(() => {
-            hint.innerText = "Copy";
-            hint.style.color = "var(--primary)";
-        }, 2000);
+        setTimeout(() => { 
+            hint.innerText = "One-Tap Copy"; 
+            hint.style.color = "var(--primary)"; 
+        }, 1500);
     });
 }
 </script>
 
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 ToolForge Engine. All processing is 100% Client-Side.
+</footer>
+
 <script src="../nav.js"></script>
-<script src="../footer.js"></script>
 </body>
 </html>

@@ -6,54 +6,11 @@
     <title>AI Discord Server Name Generator | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0b0f1a; --card: #141a2a; --text: #f1f5f9;
-            --primary: #6366f1; --border: #1e293b; --glass: rgba(255, 255, 255, 0.03);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* NAV HOOK */
-        .nav-container { min-height: 70px; }
-
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-        .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
-        
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input, select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; }
-        input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(99, 102, 241, 0.1); }
-        
-        /* SIGNATURE BUTTON */
-        .btn-draw {
-            width: 100%; max-width: 500px; padding: 20px; background: var(--primary); color: #fff; border: none;
-            border-radius: 16px; font-weight: 800; font-size: 1.1rem; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn-draw:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5); }
-        
-        #result-list { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 800px; margin-left: auto; margin-right: auto; }
-        .name-item { 
-            background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); 
-            font-family: 'Outfit'; font-size: 1.2rem; font-weight: 700; color: var(--primary); 
-            text-align: center; cursor: pointer; transition: 0.2s; position: relative;
-        }
-        .name-item:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.08); transform: translateY(-2px); }
-
-        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
-        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
-    </style>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
 <body>
     <nav class="nav-container"></nav>
-
+<body data-theme="generators"></body>
 <div class="container">
     <a href="index.html" class="back-btn">← Back to Category</a>
     
@@ -69,8 +26,8 @@
                 <option value="aesthetic">✨ Aesthetic & Soft</option>
             </select>
         </div>
-        <button class="btn-draw" onclick="generateDiscordNames()">Generate 5 Server Names</button>
-        <div id="result-list"></div>
+        <button class="gen-btn" onclick="generateDiscordNames()">Generate 6 Server Names</button>
+        <div id="result-list" class="grid-mode"></div>
     </section>
 
     <section class="seo-content">
@@ -105,7 +62,7 @@ function generateDiscordNames() {
         [list[i], list[j]] = [list[j], list[i]];
     }
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         let finalName;
         const item = list[i % list.length];
         const sym = decor[Math.floor(Math.random() * decor.length)];

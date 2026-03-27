@@ -6,90 +6,11 @@
     <title>Caption Pro | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-    :root {
-        --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-        --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-    }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-    .nav-container { min-height: 70px; }
-    .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-    .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
-    
-    /* Reduced padding slightly to prevent inner-squish */
-    .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 20px; border-radius: 32px; text-align: center; margin-bottom: 60px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
-    h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-    input { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; box-sizing: border-box; }
-    input:focus { border-color: var(--primary); }
-    
-    .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); }
-    .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.4); }
-
-    /* THE BULLETPROOF SLIM FIX */
-    #result-list { 
-        margin-top: 50px; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        gap: 20px; 
-        width: 100%;
-    }
-
-    .caption-card { 
-    background: var(--glass); 
-    padding: 15px 22px;   /* Reduced top/bottom padding from 25px to 15px */
-    border-radius: 16px;  /* Slightly tighter corners for a sleeker look */
-    border: 1px solid var(--border); 
-    text-align: left; 
-    white-space: pre-wrap; 
-    position: relative; 
-    cursor: pointer; 
-    transition: 0.3s; 
-    width: 100%;
-    max-width: 500px; 
-    margin: 0 auto;
-    box-sizing: border-box;
-    font-size: 0.95rem;   /* Slightly smaller text reduces overall box height */
-    line-height: 0.9;     /* Tightened line spacing from 1.6 to 1.4 */
-}
-    
-    .caption-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: scale(1.01); }
-    .style-tag { 
-    font-size: 0.6rem;    /* Smaller tag */
-    font-weight: 900; 
-    background: var(--primary); 
-    color: #fff; 
-    padding: 2px 8px;     /* Much thinner padding for the tag */
-    border-radius: 4px; 
-    margin-bottom: 8px;   /* Less space between tag and text */
-    display: inline-block; 
-    text-transform: uppercase; 
-    letter-spacing: 1px; 
-}
-
-.copy-hint { 
-    position: absolute; 
-    top: 12px;            /* Adjusted for the smaller padding */
-    right: 20px; 
-    font-size: 0.65rem; 
-    color: var(--primary); 
-    font-weight: 700; 
-    text-transform: uppercase; 
-}
-    .info-header { text-align: left; margin: 80px 0 30px; }
-    .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin: 0; }
-    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
-    .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
-    .info-card strong { color: #fff; display: block; margin-bottom: 10px; font-size: 1.1rem; }
-    .info-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
-</style>
+<link rel="stylesheet" href="/main-style.css">
 </head>
 <body>
     <nav class="nav-container"></nav>
-
+<body data-theme="growth"></body>
 <div class="container">
     <a href="index.html" class="back-btn">← Growth Suite</a>
     
@@ -101,13 +22,14 @@
         </div>
         <button class="gen-btn" onclick="generateCaptions()">Rewrite My Caption ✨</button>
         
-        <div id="result-list"></div>
+        <div id="result-list" class="grid-mode"></div>
     </section>
 
     <div class="info-header">
         <h2>Caption Strategy FAQ</h2>
     </div>
     <div class="info-grid">
+        
         <div class="info-card">
             <strong>The First 3 Words</strong>
             <p>On most platforms, users only see the first 3 words before the 'more' button. Start with a hook, not an emoji.</p>
@@ -175,7 +97,7 @@ function generateCaptions() {
 
     selected.forEach(item => {
         const div = document.createElement('div');
-        div.className = 'caption-card';
+        div.className = 'name-item';
         div.onclick = function() { copyToClipboard(item.text, this); };
         div.innerHTML = `
             <span class="style-tag">${item.style}</span>

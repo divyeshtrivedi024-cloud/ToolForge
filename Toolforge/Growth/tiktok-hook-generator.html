@@ -3,166 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Hook Generator | ToolForge</title>
+    <title>Tweet Thread Starter | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --primary: #ff007f; --bg: #0d0208; --card: #1a0514;
-            --glass: rgba(255, 255, 255, 0.03); --border: #3d0a2b;
-            --text: #f1f5f9;
+        /* Centering and Stacking */
+        .input-group {
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            margin: 0 auto 25px auto; /* Centers the group itself */
+            width: 100%;
+            max-width: 600px; /* Limits width to keep it looking clean */
+            align-items: center; 
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        
-        /* Layout matching Thumbnail Previewer */
-        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
-        
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
-
-        .workspace {
-            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
-            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+        /* Full width for inputs and select within that centered group */
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            text-align: center; /* Centers text inside the boxes */
         }
 
-        /* Results Area */
-        .results-area {
-            background: #000; border-radius: 16px; border: 1px solid var(--border);
-            min-height: 450px; display: flex; flex-direction: column; gap: 12px; padding: 25px;
-            overflow-y: auto; max-height: 600px;
+        /* Adjust select padding to ensure the text stays centered */
+        .input-group select {
+            text-align-last: center; 
         }
-
-        .hook-item {
-            background: var(--glass); padding: 22px; border-radius: 14px; border: 1px solid var(--border);
-            font-family: 'Outfit'; font-size: 1.15rem; color: #fff; display: flex; 
-            justify-content: space-between; align-items: center; gap: 15px;
-            animation: fadeIn 0.3s ease forwards;
-        }
-        .hook-item:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.05); }
-
-        /* Controls */
-        .control-panel { display: flex; flex-direction: column; gap: 20px; }
-        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-
-        input[type="text"] { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
-        
-        .gen-btn {
-            display: block; width: 100%; padding: 18px; background: #fff; color: #000;
-            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s;
-        }
-        .gen-btn:hover { background: var(--primary); color: #fff; }
-
-        .copy-btn { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; cursor: pointer; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
-
-<nav class="nav-container"></nav> 
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
 
 <div class="container">
-    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Hub</a>
+    <a href="index.html" class="back-btn">← Creator Hub</a>
     
-    <h1>Hook <span style="color:var(--primary)">Generator</span></h1>
-    <p class="subtitle">2026 High-retention openings for short-form content.</p>
-
-    <div class="workspace">
-        <div class="results-area" id="hookContainer">
-            <div style="margin: auto; text-align: center; opacity: 0.2;">
-                <p style="font-size: 1.5rem; font-family: 'Outfit';">AWAITING TOPIC</p>
-                <p>Generated hooks will appear here.</p>
-            </div>
+    <section class="tool-card">
+        <h1>Thread Starter</h1>
+        <p>Engineer the perfect X/Twitter hook to maximize impressions and retweets.</p>
+        
+        <div class="input-group">
+            <input type="text" id="topicInput" placeholder="Main Topic (e.g. Passive Income, Coding Tips, SEO)">
+            <select id="vibeInput">
+                <option value="growth">Growth & Systems</option>
+                <option value="story">Storytelling / POV</option>
+                <option value="curated">Curated Lists</option>
+            </select>
         </div>
+        
+        <button class="gen-btn" onclick="generateThreads()">Generate 5 Hooks</button>
+        
+        <div id="result-list" class="grid-mode">
+            </div>
+    </section>
 
-        <div class="control-panel">
-            <div class="control-group">
-                <label>Video Topic</label>
-                <input type="text" id="topicInput" placeholder="e.g. Life Hacks, Coding, One Piece" onkeypress="if(event.key==='Enter') generate()">
-            </div>
-            <button class="gen-btn" onclick="generate()">GENERATE 10 HOOKS</button>
-            
-            <div class="control-group">
-                <label>Pro Hint</label>
-                <p style="font-size: 0.75rem; opacity: 0.6; margin: 0;">Click 'Copy' to grab a hook. All processing is 100% local for speed.</p>
-            </div>
+    <div class="info-header">
+        <h2>The Thread Formula</h2>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>The Hook is Everything</strong>
+            <p>If the first tweet doesn't stop the scroll, the other 10 don't matter. Give them enough to be interested, but not enough to feel they've already learned the lesson.</p>
+        </div>
+        <div class="info-card">
+            <strong>Use White Space</strong>
+            <p>X is for fast reading. Avoid massive paragraphs. One sentence per line is the gold standard for high-performance threads.</p>
+        </div>
+        <div class="info-card">
+            <strong>The Curiosity Gap</strong>
+            <p>A winning hook creates a "gap" between what they know and what they want to know. Use numbers and bold claims to bridge that gap.</p>
         </div>
     </div>
 </div>
 
-<footer id="footer-container"></footer>
-
 <script>
-    const database = [
-        "Stop doing [topic] the wrong way. Do this.",
-        "You're failing at [topic] because of this one mistake.",
-        "Everything you know about [topic] is actually wrong.",
-        "Don't start [topic] until you watch this video.",
-        "I’m going to be honest, most people suck at [topic].",
-        "Please stop making this [topic] mistake in 2026.",
-        "The [topic] industry is lying to you about this.",
-        "Is [topic] actually a scam? Let's talk.",
-        "The [topic] hack that feels illegal to know.",
-        "3 secrets about [topic] no one is telling you.",
-        "This is the ultimate cheat code for [topic].",
-        "I found a shortcut for [topic] and it's insane.",
-        "How I mastered [topic] in just 7 days.",
-        "The only [topic] checklist you'll ever need.",
-        "POV: You just discovered the best way to do [topic].",
-        "How I went from zero to expert in [topic].",
-        "Watch me transform this [topic] in 30 seconds.",
-        "My life changed after I started doing [topic] like this.",
-        "I tried [topic] for 30 days and here's what happened.",
-        "Why [topic] is actually overrated.",
-        "Nobody wants to hear this, but [topic] is dying.",
-        "The most controversial [topic] opinion you'll hear today.",
-        "I'm about to lose followers for saying this about [topic].",
-        "Is [topic] actually worth the hype?",
-        "The dark side of [topic] people ignore.",
-        "Stop buying [topic] products until you see this.",
-        "I wish I knew this before I started [topic].",
-        "This [topic] result actually shocked me.",
-        "The day I realized I was doing [topic] all wrong.",
-        "Day 1 of showing you how to dominate [topic]."
-    ];
+const database = {
+    growth: [
+        "[topic] is easy.\n\nBut 99% of people overcomplicate it.\n\nIf you want to master it in 2026, follow these 5 simple steps:\n\n👇",
+        "Most people think [topic] requires luck.\n\nReality? It requires a system.\n\nHere is the exact blueprint I used to conquer [topic] from scratch:\n\n🧵",
+        "The 'Standard Advice' for [topic] is dead.\n\nIf you’re still following the 2022 playbook, you’re losing.\n\nHere is the new way to win at [topic]:",
+        "Unpopular opinion: [topic] is the most undervalued skill in 2026.\n\nIf you aren't focusing on it, you're falling behind.\n\nHere’s why (and how to start today):",
+        "If I had to start [topic] from $0 in 2026, this is exactly what I’d do.\n\nNo fluff. Just the raw strategy:\n\n👇"
+    ],
+    story: [
+        "I spent 100+ hours studying [topic] so you don't have to.\n\nHere are the 7 most valuable lessons I learned (that most people ignore): \n\n🧵 Thread",
+        "I’ve read 50+ books on [topic].\n\nSave yourself 500 hours of reading.\n\nHere are the 10 'Golden Nuggets' that will put you ahead of 90% of people:",
+        "The day I realized I was doing [topic] all wrong was the day everything changed.\n\nHere is the story (and the lesson for you):",
+        "I tried every [topic] strategy on the planet.\n\nOnly one actually worked.\n\nSteal my routine here: 🧵",
+        "Nobody talks about the dark side of [topic].\n\nI’m breaking my silence.\n\nHere’s what you actually need to know:"
+    ],
+    curated: [
+        "How to master [topic] without quitting your 9-5.\n\nI’ve perfected this 30-minute daily routine.\n\nSteal it here: 🧵",
+        "I curated the top 10 resources for [topic] so you don't have to.\n\nEverything you need to go from Zero to Hero:\n\n👇",
+        "The [topic] toolkit for 2026.\n\n7 free tools that will save you 20+ hours a week.\n\nBookmarked? Good. Let's dive in:",
+        "Stop wasting money on [topic] courses.\n\nEverything you need to know is right here for free.\n\n🧵 A Thread",
+        "The most successful people in [topic] all have one thing in common.\n\nIt’s not what you think.\n\nThread below:"
+    ]
+};
 
-    function generate() {
-        const topic = document.getElementById('topicInput').value.trim() || "this niche";
-        const container = document.getElementById('hookContainer');
-        container.innerHTML = "";
+function generateThreads() {
+    let rawTopic = document.getElementById('topicInput').value.trim() || "this niche";
+    const vibe = document.getElementById('vibeInput').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
 
-        const shuffled = database.sort(() => 0.5 - Math.random()).slice(0, 10);
+    // Formatting the topic
+    const topic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
 
-        shuffled.forEach((template, i) => {
-            const hookText = template.replace(/\[topic\]/g, topic);
-            const item = document.createElement('div');
-            item.className = 'hook-item';
-            item.style.animationDelay = `${i * 0.05}s`;
-            item.innerHTML = `<span>${hookText}</span><button class="copy-btn" onclick="copyHook(this, '${hookText.replace(/'/g, "\\'")}')">COPY</button>`;
-            container.appendChild(item);
-        });
-    }
+    // CHANGE: .slice(0, 5) ensures only 5 results appear
+    let selected = [...database[vibe]].sort(() => Math.random() - 0.5).slice(0, 5);
 
-    function copyHook(btn, text) {
-        navigator.clipboard.writeText(text);
-        const originalText = btn.innerText;
-        btn.innerText = "COPIED";
-        btn.style.background = "#fff";
-        btn.style.color = "#000";
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = "var(--primary)";
-            btn.style.color = "#fff";
-        }, 2000);
-    }
+    selected.forEach((text, i) => {
+        const threadText = text.replace(/\[topic\]/g, topic);
+        const div = document.createElement('div');
+        div.className = 'name-item'; 
+        div.style.animationDelay = `${i * 0.05}s`;
+        div.onclick = function() { copyToClipboard(threadText, this); };
+        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${threadText.replace(/\n/g, '<br>')}`;
+        resultList.appendChild(div);
+    });
+}
+
+function copyToClipboard(text, element) {
+    navigator.clipboard.writeText(text).then(() => {
+        const hint = element.querySelector('.copy-hint');
+        hint.innerText = "COPIED!";
+        hint.style.color = "#00ff88";
+        setTimeout(() => { 
+            hint.innerText = "One-Tap Copy"; 
+            hint.style.color = "var(--primary)"; 
+        }, 1500);
+    });
+}
 </script>
 
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 ToolForge Engine. All processing is 100% Client-Side.
+</footer>
+
 <script src="../nav.js"></script>
-<script src="../footer.js"></script>
 </body>
 </html>

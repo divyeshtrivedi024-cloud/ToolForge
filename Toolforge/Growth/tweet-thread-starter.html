@@ -6,141 +6,161 @@
     <title>Tweet Thread Starter | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        
-        .container { width: 95%; max-width: 1100px; margin: 0 auto; padding: 40px 0 100px; text-align: center; }
-        
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { opacity: 0.5; margin-bottom: 50px; font-size: 1.1rem; }
-
-        /* UNIFIED WORKSPACE */
-        .workspace {
-            display: grid; grid-template-columns: 1fr 360px; gap: 40px; text-align: left;
-            background: var(--card); padding: 40px; border-radius: 32px; border: 1px solid var(--border);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
+        /* Stacked centered layout with 15px gap */
+        .input-group {
+            display: flex;
+            flex-direction: column; 
+            gap: 15px; 
+            margin: 0 auto 25px auto; 
+            width: 100%;
+            max-width: 600px; 
+            align-items: center; 
         }
 
-        /* Results Hub */
-        .results-area {
-            background: #000; border-radius: 16px; border: 1px solid var(--border);
-            min-height: 450px; display: flex; flex-direction: column; gap: 20px; padding: 25px;
-            overflow-y: auto; max-height: 600px;
+        .input-group input, 
+        .input-group select {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            text-align: center;
         }
 
-        .thread-card {
-            background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);
-            position: relative; cursor: pointer; transition: 0.2s; animation: fadeIn 0.4s ease forwards;
+        /* Result styling */
+        .thread-variation {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
         }
-        .thread-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.1); transform: translateX(5px); }
-        .tweet-num { color: var(--primary); font-weight: 800; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .copy-hint { position: absolute; top: 20px; right: 25px; font-size: 0.65rem; color: var(--primary); font-weight: 800; text-transform: uppercase; }
 
-        /* Controls */
-        .control-panel { display: flex; flex-direction: column; gap: 20px; }
-        .control-group { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-
-        input[type="text"] { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: white; border-radius: 8px; outline: none; box-sizing: border-box; }
-        
-        .gen-btn {
-            display: block; width: 100%; padding: 18px; background: #fff; color: #000;
-            text-align: center; border-radius: 12px; font-weight: 800; cursor: pointer; border: none; transition: 0.2s;
+        .thread-variation:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
         }
-        .gen-btn:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .copy-tag {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-        /* Tips Section */
-        .seo-wrapper { margin-top: 100px; text-align: left; }
-        .info-card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; margin-bottom: 20px; }
-        .info-card h3 { color: var(--primary); margin-top: 0; font-family: 'Outfit'; }
-
-        @media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } }
+        /* THE MISSING PIECE: The Entry Animation */
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body>
-
-<nav class="nav-container"></nav> 
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
 
 <div class="container">
-    <a href="index.html" style="display: inline-block; margin-bottom: 30px; color: #64748b; text-decoration: none; font-size: 0.9rem;">← Creator Suite</a>
+    <a href="index.html" class="back-btn">← Creator Suite</a>
     
-    <h1>Thread <span style="color:var(--primary)">Starter</span></h1>
-    <p class="subtitle">Engineer the perfect X/Twitter hook to maximize impressions.</p>
-
-    <div class="workspace">
-        <div class="results-area" id="result-list">
-            <div style="margin: auto; text-align: center; opacity: 0.2;">
-                <p style="font-size: 1.5rem; font-family: 'Outfit';">AWAITING TOPIC</p>
-            </div>
+    <section class="tool-card" style="text-align: center;">
+        <h1>Thread Starter</h1>
+        <p>Engineer the perfect X/Twitter hook to maximize impressions and retention.</p>
+        
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="Main Topic (e.g. Passive Income, Coding Tips)" onkeypress="if(event.key==='Enter') generateThread()">
+            <select id="vibeInput">
+                <option value="authority">Authority / Educational</option>
+                <option value="story">Story / Personal Journey</option>
+                <option value="contrarian">Contrarian / Hot Take</option>
+            </select>
         </div>
-
-        <div class="control-panel">
-            <div class="control-group">
-                <label>Main Topic</label>
-                <input type="text" id="userInput" placeholder="e.g. Passive Income, Coding Tips" onkeypress="if(event.key==='Enter') generateThread()">
+        
+        <button class="gen-btn" style="margin: 0 auto;" onclick="generateThread()">Generate 5 Hooks ✨</button>
+        
+        <div id="result-list" class="grid-mode"">
             </div>
+    </section>
 
-            <button class="gen-btn" onclick="generateThread()">GENERATE HOOKS</button>
-
-            <div class="control-group">
-                <label>The Thread Formula</label>
-                <p style="font-size: 0.75rem; opacity: 0.6; margin: 0;">Hook + Value + Curiosity Gap = Viral growth. Use white space between every line.</p>
-            </div>
+    <div class="info-header">
+        <h2>The Thread Formula</h2>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-card">
+            <strong>Hook is Everything</strong>
+            <p>If the first tweet doesn't stop the scroll, the other 10 don't matter. Use a 'Curiosity Gap' to drive clicks.</p>
+        </div>
+        <div class="info-card">
+            <strong>Use White Space</strong>
+            <p>X is for fast reading. Avoid massive paragraphs. One sentence per line is the gold standard.</p>
+        </div>
+        <div class="info-card">
+            <strong>The Value Loop</strong>
+            <p>Hook them with a promise, deliver value, and use a CTA at the end to build your following.</p>
         </div>
     </div>
-
-    <section class="seo-wrapper">
-        <div class="info-card">
-            <h3>01. The Hook is Everything</h3>
-            <p>If the first tweet doesn't stop the scroll, the other 10 tweets don't matter. Use a <strong>'Curiosity Gap'</strong>—give them enough to be interested, but not enough to feel they've already learned the lesson.</p>
-        </div>
-        <div class="info-card">
-            <h3>02. Use White Space</h3>
-            <p>X is for fast reading. Avoid massive paragraphs. One sentence per line is the gold standard for high-performance threads.</p>
-        </div>
-    </section>
 </div>
 
-<footer id="footer-container"></footer>
-
 <script>
-const database = [
-    "I spent 100+ hours studying [topic] so you don't have to.\n\nHere are the 7 most valuable lessons I learned (that most people ignore): \n\n🧵 Thread",
-    "[topic] is easy.\n\nBut 99% of people overcomplicate it.\n\nIf you want to master it in 2026, follow these 5 simple steps:\n\n👇",
-    "Most people think [topic] requires luck.\n\nReality? It requires a system.\n\nHere is the exact blueprint I used to conquer [topic] from scratch:\n\n🧵",
-    "Unpopular opinion: [topic] is the most undervalued skill in 2026.\n\nIf you aren't focusing on it, you're falling behind.\n\nHere’s why (and how to start today):",
-    "I’ve read 50+ books on [topic].\n\nSave yourself 500 hours of reading.\n\nHere are the 10 'Golden Nuggets' that will put you ahead of 90% of people:",
-    "If I had to start [topic] from $0 in 2026, this is exactly what I’d do.\n\nNo fluff. Just the raw strategy:\n\n👇",
-    "The 'Standard Advice' for [topic] is dead.\n\nIf you’re still following the 2022 playbook, you’re losing.\n\nHere is the new way to win at [topic]:",
-    "How to master [topic] without quitting your 9-5.\n\nI’ve perfected this 30-minute daily routine.\n\nSteal it here: 🧵"
-];
+const database = {
+    authority: [
+        "I spent 100+ hours studying [topic] so you don't have to.\n\nHere are the 7 most valuable lessons I learned:\n\n🧵 Thread",
+        "[topic] is easy.\n\nBut 99% of people overcomplicate it.\n\nIf you want to master it in 2026, follow these 5 simple steps:\n\n👇",
+        "I’ve read 50+ books on [topic].\n\nSave yourself 500 hours of reading.\n\nHere are the 10 'Golden Nuggets' that will put you ahead of 90% of people:",
+        "Unpopular opinion: [topic] is the most undervalued skill in 2026.\n\nIf you aren't focusing on it, you're falling behind.\n\nHere’s why:",
+        "The 'Standard Advice' for [topic] is dead.\n\nIf you’re still following the 2022 playbook, you’re losing.\n\nHere is the new way to win:"
+    ],
+    story: [
+        "If I had to start [topic] from $0 in 2026, this is exactly what I’d do.\n\nNo fluff. Just the raw strategy:\n\n👇",
+        "How to master [topic] without quitting your 9-5.\n\nI’ve perfected this 30-minute daily routine.\n\nSteal it here: 🧵",
+        "I tried every [topic] hack on the internet.\n\n90% were garbage. 10% changed my life.\n\nHere is the 10% that actually works:",
+        "Most people think [topic] requires luck.\n\nReality? It requires a system.\n\nHere is the exact blueprint I used to conquer it from scratch:",
+        "I failed at [topic] for 3 years straight.\n\nThen I made one tiny shift.\n\nSince then, everything changed. Here is the secret:"
+    ],
+    contrarian: [
+        "Stop learning [topic].\n\nIt's a waste of time unless you understand this ONE principle.\n\nThread below: 👇",
+        "Most people are teaching [topic] completely wrong.\n\nThey want you to stay stuck.\n\nHere’s the truth they aren't telling you:",
+        "[topic] gurus are lying to you.\n\nYou don't need a $2,000 course.\n\nYou just need these 5 free resources:",
+        "Everything you know about [topic] is a lie.\n\nThe algorithm changed. The market moved.\n\nHere is the 2026 reality check:",
+        "I'm going to get cancelled for saying this about [topic].\n\nBut someone has to be honest.\n\nHere is why the 'experts' are failing:"
+    ]
+};
 
 function generateThread() {
-    let topic = document.getElementById('userInput').value.trim() || "this topic";
-    topic = topic.replace(/learning about/gi, "").replace(/how to/gi, "").trim();
-    topic = topic.charAt(0).toUpperCase() + topic.slice(1);
-
+    const rawTopic = document.getElementById('userInput').value.trim() || "this topic";
+    const vibe = document.getElementById('vibeInput').value;
     const resultList = document.getElementById('result-list');
+    
+    // Clear previous results
     resultList.innerHTML = "";
 
-    const shuffled = database.sort(() => 0.5 - Math.random()).slice(0, 3);
+    const topic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
+    
+    // Shuffle and pick 5
+    let selected = [...database[vibe]].sort(() => Math.random() - 0.5);
 
-    shuffled.forEach((template, index) => {
-        const hookText = template.replace(/\[topic\]/g, topic);
+    selected.forEach((text, i) => {
+        const hookText = text.replace(/\[topic\]/g, topic);
         const div = document.createElement('div');
-        div.className = 'thread-card';
-        div.style.animationDelay = `${index * 0.1}s`;
+        div.className = 'thread-variation';
+        
+        // Link to the CSS keyframe
+        div.style.animation = `cardIn 0.5s ease forwards ${i * 0.1}s`;
+        div.style.opacity = "0";
+        
         div.onclick = function() { copyToClipboard(hookText, this); };
+        
         div.innerHTML = `
-            <span class="copy-hint">Tap to Copy</span>
-            <span class="tweet-num">Variation 0${index + 1}</span>
-            <p style="margin:0; font-family:'Outfit'; font-weight:700;">${hookText.replace(/\n/g, '<br>')}</p>
+            <span class="copy-tag">One-Tap Copy</span>
+            <p style="margin:0; font-family:'Inter'; line-height:1.6; color:#f1f5f9; white-space: pre-wrap;">${hookText}</p>
         `;
         resultList.appendChild(div);
     });
@@ -148,17 +168,22 @@ function generateThread() {
 
 function copyToClipboard(text, element) {
     navigator.clipboard.writeText(text).then(() => {
-        const hint = element.querySelector('.copy-hint');
-        hint.innerText = "COPIED!";
-        hint.style.color = "#00ff88";
+        const tag = element.querySelector('.copy-tag');
+        const originalText = tag.innerText;
+        tag.innerText = "COPIED!";
+        tag.style.color = "#00ff88";
         setTimeout(() => {
-            hint.innerText = "Tap to Copy";
-            hint.style.color = "var(--primary)";
-        }, 2000);
+            tag.innerText = originalText;
+            tag.style.color = "var(--primary)";
+        }, 1500);
     });
 }
 </script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 ToolForge Engine. All processing is 100% Client-Side.
+</footer>
+
 <script src="../nav.js"></script>
-<script src="../footer.js"></script>
 </body>
 </html>

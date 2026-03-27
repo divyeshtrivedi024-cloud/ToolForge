@@ -6,60 +6,11 @@
     <title>Engagement Calculator | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .nav-container { min-height: 70px; }
-        
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
-        
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 20px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 10px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .input-group { display: flex; flex-direction: column; gap: 8px; align-items: center; margin-bottom: 20px; }
-        label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--primary); letter-spacing: 1px; width: 100%; max-width: 600px; text-align: left; }
-        input { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; box-sizing: border-box; transition: 0.3s; }
-        input:focus { border-color: var(--primary); }
-        
-        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); margin-top: 10px; }
-        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.4); }
-        
-        /* PREMIUM SLIM RESULT CARD */
-        #analysis-result { margin-top: 50px; display: none; animation: fadeIn 0.4s ease forwards; }
-        .result-card { 
-            background: var(--glass); 
-            padding: 30px 25px; 
-            border-radius: 20px; 
-            border: 1px solid var(--border); 
-            max-width: 500px; 
-            margin: 0 auto; 
-            text-align: center;
-        }
-        
-        .rate-val { font-family: 'Outfit'; font-size: 4rem; font-weight: 800; color: #fff; margin: 0; line-height: 1; }
-        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 6px; font-weight: 900; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 15px; color: #fff; }
-        
-        .progress-container { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 25px 0; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
-        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: #fff; display: block; margin-bottom: 10px; }
-        .tip-card p { color: #94a3b8; margin: 0; font-size: 0.9rem; }
-    </style>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
 <body>
     <nav class="nav-container"></nav> 
-
+    <body data-theme="growth"></body>
     <div class="container">
         <a href="index.html" class="back-btn">← Creator Hub</a>
         

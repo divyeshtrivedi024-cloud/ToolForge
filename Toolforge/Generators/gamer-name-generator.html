@@ -6,50 +6,11 @@
     <title>AI Gamer Name Generator | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0b0f1a; --card: #141a2a; --text: #f1f5f9;
-            --primary: #6366f1; --border: #1e293b; --glass: rgba(255, 255, 255, 0.03);
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* NAV HOOK */
-        .nav-container { min-height: 70px; }
-
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.9rem; margin-bottom: 40px; transition: 0.3s; }
-        .back-btn:hover { background: rgba(255,255,255,0.1); transform: translateX(-5px); border-color: var(--primary); }
-
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 80px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        select { width: 100%; max-width: 500px; background: #05070a; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; margin-bottom: 25px; outline: none; cursor: pointer; }
-        
-        .gen-btn { 
-            background: var(--primary); color: white; border: none; padding: 20px 0; border-radius: 16px; 
-            font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3); text-transform: uppercase;
-        }
-        .gen-btn:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5); filter: brightness(1.1); }
-
-        #result-list { margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; max-width: 800px; margin-left: auto; margin-right: auto; }
-        .name-item { 
-            background: var(--glass); padding: 20px; border-radius: 16px; border: 1px solid var(--border); 
-            font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: var(--primary); 
-            text-align: center; cursor: pointer; transition: 0.2s; position: relative;
-        }
-        .name-item:hover { transform: scale(1.05); border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
-
-        .seo-content { border-top: 1px solid var(--border); padding-top: 80px; }
-        .seo-content h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
-        .tip-card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
-        .tip-card strong { color: var(--primary); display: block; margin-bottom: 10px; }
-    </style>
+    <link rel="stylesheet" href="/main-style.css">
 </head>
 <body>
     <nav class="nav-container"></nav>
-
+<body data-theme="generators"></body>
 <div class="container">
     <a href="index.html" class="back-btn">← Back to Category</a>
     
@@ -64,9 +25,9 @@
             <option value="funny">🤡 Funny / Troll</option>
         </select>
         <br>
-        <button class="gen-btn" onclick="generateNames()">Generate 5 Pro Tags</button>
+        <button class="gen-btn" onclick="generateNames()">Generate 6 Pro Tags</button>
 
-        <div id="result-list"></div>
+        <div id="result-list" class="grid-mode"></div>
     </section>
 
     <section class="seo-content">
@@ -92,7 +53,7 @@ function generateNames() {
         funny: { pre: ["Captain", "Uncle", "Noob", "Potato", "Glitch", "Major", "Sir", "Dank", "Salty", "Cheesy", "Gummy", "Bongo"], post: ["Salad", "Feet", "Master", "Box", "Nugget", "Waffle", "Bread", "Juice", "Muffin", "Pants", "Whale", "Toaster"] }
     };
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         const pre = library[style].pre[Math.floor(Math.random() * library[style].pre.length)];
         const post = library[style].post[Math.floor(Math.random() * library[style].post.length)];
         

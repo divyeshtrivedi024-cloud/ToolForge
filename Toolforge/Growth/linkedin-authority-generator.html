@@ -6,68 +6,80 @@
     <title>LinkedIn Authority Gen | ToolForge</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
     <style>
-        :root {
-            --bg: #0d0208; --card: #1a0514; --text: #f1f5f9;
-            --primary: #ff007f; --border: #3d0a2b; --glass: rgba(255, 0, 127, 0.05);
-            --success: #00ff88;
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
-        
-        /* Layout */
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .nav-container { min-height: 70px; } /* Anchor for nav.js */
+    /* 1. INPUT & LAYOUT ALIGNMENT */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 30px;
+    }
 
-        .back-btn { display: inline-flex; align-items: center; padding: 10px 20px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; color: var(--text); text-decoration: none; font-size: 0.8rem; margin-bottom: 40px; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .back-btn:hover { background: rgba(255,0,127,0.2); transform: translateX(-5px); border-color: var(--primary); }
-        
-        .tool-card { background: var(--card); border: 1px solid var(--border); padding: 60px 40px; border-radius: 32px; text-align: center; margin-bottom: 60px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); }
-        h1 { font-family: 'Outfit'; font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 15px; letter-spacing: -2px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Input Styling */
-        .input-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
-        input, select { width: 100%; max-width: 600px; background: #000; border: 1px solid var(--border); padding: 18px; border-radius: 14px; color: white; font-size: 1.1rem; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(255, 0, 127, 0.1); }
-        
-        .gen-btn { background: var(--primary); color: white; border: none; padding: 18px 0; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s; width: 100%; max-width: 600px; box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2); }
-        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 0, 127, 0.4); }
-        
-        /* Output Cards */
-        #result-list { margin-top: 50px; display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .li-card { background: var(--glass); padding: 30px; border-radius: 24px; border: 1px solid var(--border); text-align: left; white-space: pre-wrap; position: relative; cursor: pointer; transition: 0.3s; animation: fadeIn 0.5s ease forwards; }
-        .li-card:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.08); }
-        .copy-hint { position: absolute; top: 15px; right: 20px; font-size: 0.65rem; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    /* 2. LINKEDIN CARD STYLING */
+    #result-list {
+        width: 100%;
+        max-width: 650px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 40px;
+    }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .li-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        padding: 30px;
+        border-radius: 16px;
+        text-align: left;
+        white-space: pre-wrap; /* Keeps the line breaks from the JS */
+        cursor: pointer;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        position: relative;
+        transition: 0.3s;
+        animation: slideUp 0.4s ease forwards;
+    }
 
-        /* Strategy Info */
-        .info-header { text-align: left; margin: 80px 0 30px; }
-        .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: #fff; margin: 0; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 80px; }
-        .info-card { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 20px; }
-        .info-card strong { color: var(--primary); display: block; margin-bottom: 10px; font-size: 1.1rem; }
-        .info-card p { color: #94a3b8; margin: 0; font-size: 0.95rem; }
+    .li-card:hover {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.03);
+        transform: translateY(-3px);
+    }
 
-        /* Footer */
-        footer { margin-top: 100px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: left; }
-        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; }
-        .footer-brand h3 { font-family: 'Outfit'; color: var(--primary); margin: 0 0 15px 0; font-size: 1.5rem; }
-        .footer-brand p { color: #94a3b8; font-size: 0.85rem; line-height: 1.6; }
-        .footer-links h4 { color: #fff; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
-        .footer-links ul { list-style: none; padding: 0; margin: 0; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #64748b; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-        .footer-links a:hover { color: var(--primary); }
-    </style>
+    .copy-hint {
+        display: block;
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    /* 3. STRATEGY SECTION FIX (Matches your main SEO style) */
+    .info-header { border-top: 1px solid var(--border); padding-top: 80px; text-align: left; }
+    .info-header h2 { font-family: 'Outfit'; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+    .info-card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); text-align: left; }
+    .info-card strong { color: #fff; display: block; margin-bottom: 10px; }
+    .info-card p { color: #94a3b8; margin: 0; font-size: 0.9rem; }
+
+    /* 4. UTILS */
+    [data-theme="growth"] { --success: #00ff88; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body>
+<body data-theme="growth">
+    <nav class="nav-container"></nav> 
 
-<nav class="nav-container"></nav>
-
-<div class="container">
-    <a href="index.html" class="back-btn">← Creator Hub</a>
-    
-    <section class="tool-card">
+    <div class="container">
+        <a href="index.html" class="back-btn">← Creator Hub</a>
+        
+        <section class="tool-card">
         <h1>LinkedIn Authority Gen</h1>
         <p style="opacity: 0.6; margin-bottom: 30px;">Professional storytelling for modern network growth.</p>
         <div class="input-group">
@@ -79,7 +91,7 @@
             </select>
         </div>
         <button class="gen-btn" onclick="generateLinkedIn()">Generate Authority Posts ✨</button>
-        <div id="result-list"></div>
+        <div id="result-list" class="grid-mode"></div>
     </section>
 
     <div class="info-header">
@@ -139,18 +151,24 @@ function generateLinkedIn() {
     topic = topic.charAt(0).toUpperCase() + topic.slice(1);
 
     const database = {
-        insight: [
-            `Unpopular opinion: Most people are overthinking ${topic}.\n\nIn 2026, the real winners aren't the ones with the biggest budgets.\n\nThey're the ones with the most efficient systems.\n\nAfter years in the industry, I've realized that ${topic} success comes down to one thing: consistency over intensity.\n\nAgree or disagree? Let's discuss in the comments.\n\n#BusinessStrategy #Leadership #${topic.replace(/\s+/g, '')}`,
-            `The "Standard Playbook" for ${topic} is officially dead.\n\nIf you're still following advice from 2023, you're already behind.\n\nThe industry is shifting toward transparency and raw value.\n\nHere is how I'm approaching ${topic} this quarter:\n\n1. Prioritize speed.\n2. Focus on organic growth.\n3. Build in public.\n\nAdapt or get left behind.\n\n#ProfessionalGrowth #Innovation #Career`
-        ],
-        story: [
-            `I failed at ${topic} so you don't have to.\n\nTwo years ago, I thought I had it all figured out. I was wrong.\n\nI lost time, money, and sleep trying to force a system that didn't work.\n\nBut that failure was the best thing that ever happened to me.\n\nIt taught me that ${topic} isn't about the destination—it's about the process.\n\nDon't fear the pivot. Embrace it.\n\n#Entrepreneurship #Mindset #LessonsLearned`,
-            `A conversation I had yesterday changed my perspective on ${topic}.\n\nI was talking to a mentor who told me: "Complexity is the enemy of progress."\n\nI realized I was making ${topic} much harder than it needed to be.\n\nWe stripped away the fluff and focused on the core mission.\n\nThe result? 10x more clarity in 24 hours.\n\nSimplicity wins every time.\n\n#WorkSmarter #PersonalGrowth #Leadership`
-        ],
-        list: [
-            `How to dominate ${topic} in 2026 (The 5-Step Framework):\n\n1️⃣ Analyze the current landscape.\n2️⃣ Identify the "Pain Points".\n3️⃣ Implement a high-speed solution.\n4️⃣ Iterate based on real data.\n5️⃣ Scale what works; kill what doesn't.\n\nMost people fail because they skip Step 4.\n\nDon't be most people.\n\n#Efficiency #Systems #${topic.replace(/\s+/g, '')}`
-        ]
-    };
+    insight: [
+        `Unpopular opinion: Most people are overthinking ${topic}.\n\nIn 2026, the real winners aren't the ones with the biggest budgets.\n\nThey're the ones with the most efficient systems.\n\nAfter years in the industry, I've realized that ${topic} success comes down to one thing: consistency over intensity.\n\nAgree or disagree? Let's discuss in the comments.\n\n#BusinessStrategy #Leadership #${topic.replace(/\s+/g, '')}`,
+        `The "Standard Playbook" for ${topic} is officially dead.\n\nIf you're still following advice from 2023, you're already behind.\n\nThe industry is shifting toward transparency and raw value.\n\nHere is how I'm approaching ${topic} this quarter:\n\n1. Prioritize speed.\n2. Focus on organic growth.\n3. Build in public.\n\nAdapt or get left behind.\n\n#ProfessionalGrowth #Innovation #Career`,
+        `90% of ${topic} advice is just noise.\n\nI spent the last 6 months cutting through the fluff.\n\nThe result? A system that actually scales without burning you out.\n\nStop looking for "hacks" and start building foundations.\n\n#SystemsThinking #GrowthMode #Strategy`,
+        `Is ${topic} getting harder, or are you just using old tools?\n\nThe barrier to entry is lower than ever, but the barrier to *retention* is at an all-time high.\n\nYou don't need more leads. You need better architecture.\n\n#FutureOfWork #Efficiency #Scale`
+    ],
+    story: [
+        `I failed at ${topic} so you don't have to.\n\nTwo years ago, I thought I had it all figured out. I was wrong.\n\nI lost time, money, and sleep trying to force a system that didn't work.\n\nBut that failure was the best thing that ever happened to me.\n\nIt taught me that ${topic} isn't about the destination—it's about the process.\n\nDon't fear the pivot. Embrace it.\n\n#Entrepreneurship #Mindset #LessonsLearned`,
+        `A conversation I had yesterday changed my perspective on ${topic}.\n\nI was talking to a mentor who told me: "Complexity is the enemy of progress."\n\nI realized I was making ${topic} much harder than it needed to be.\n\nWe stripped away the fluff and focused on the core mission.\n\nThe result? 10x more clarity in 24 hours.\n\nSimplicity wins every time.\n\n#WorkSmarter #PersonalGrowth #Leadership`,
+        `I almost quit ${topic} last year.\n\nThe pressure to perform was outweighing the passion for the craft.\n\nThen I realized: I was playing someone else's game.\n\nI stopped comparing my Day 1 to someone else's Day 1000.\n\nFocus on your own lane. The rest is just static.\n\n#MentalHealth #CareerJourney #Authenticity`,
+        `The biggest lesson I learned from 10 years of ${topic}:\n\nYour network isn't just your net worth.\n\nIt's your safety net.\n\nIn a world of AI, human connection is the only "unfair advantage" left.\n\n#Networking #HumanElement #Leadership`
+    ],
+    list: [
+        `How to dominate ${topic} in 2026 (The 5-Step Framework):\n\n1️⃣ Analyze the current landscape.\n2️⃣ Identify the "Pain Points".\n3️⃣ Implement a high-speed solution.\n4️⃣ Iterate based on real data.\n5️⃣ Scale what works; kill what doesn't.\n\nMost people fail because they skip Step 4.\n\nDon't be most people.\n\n#Efficiency #Systems #${topic.replace(/\s+/g, '')}`,
+        `The 3-Step ${topic} Audit you need to run today:\n\n🚀 Speed: Is your process lagging?\n💎 Value: Are you solving a real problem?\n📈 Feedback: Are you actually listening to the data?\n\nIf you can't answer "Yes" to all three, you're leaving money on the table.\n\n#Audit #BusinessGrowth #Optimization`,
+        `Stop making these 3 mistakes with ${topic}:\n\n❌ Chasing trends instead of core values.\n❌ Over-complicating the tech stack.\n❌ Ignoring the "First Principles" of the industry.\n\nGet back to basics. That's where the profit is.\n\n#BackToBasics #ProfessionalAdvice #Strategy`
+    ]
+};
 
     let selected = [...database[vibe]];
     selected.sort(() => Math.random() - 0.5);
