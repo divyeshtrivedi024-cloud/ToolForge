@@ -171,7 +171,7 @@ const globalUI = `
 </style>
 
 <header class="tf-header">
-    <a href="/index.html" class="logo">ToolForge</a>
+    <a href="/" class="logo">ToolForge</a>
     <div id="searchWrapper">
         <input type="text" id="toolSearch" placeholder="Search..." autocomplete="off">
         <div id="searchResults"></div>
@@ -197,6 +197,66 @@ const footerUI = `
     <div class="footer-bottom" style="text-align: center; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; opacity: 0.5;">© 2026 ToolForge Engine. All processing is 100% Client-Side.</div>
 </footer>`;
 
+
+const seoUI = `
+<section class="seo-authority-section" style="max-width: 1000px; margin: 100px auto 40px; padding: 60px 20px; border-top: 1px solid #1e293b; color: #94a3b8; line-height: 1.8; font-size: 0.95rem;">
+    
+    <div style="margin-bottom: 50px;">
+        <h2 style="font-family: 'Outfit'; color: #fff; font-size: 2.2rem; margin-bottom: 25px; letter-spacing: -1px;">
+            The Architecture of <span style="color: var(--primary);">High-Performance Web Utilities</span>
+        </h2>
+        <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 20px;">
+            In the modern digital landscape, the tools we use define the speed of our innovation. <strong>ToolForge</strong> was conceived as a response to the bloated, ad-heavy utility sites of the past decade. We provide a streamlined, <strong>privacy-centric infrastructure</strong> for developers, digital marketers, and creative entrepreneurs who require precision without compromise.
+        </p>
+        <p>
+            Unlike traditional platforms that rely on server-side processing—which introduces latency and potential security vulnerabilities—the ToolForge engine operates on a <strong>decentralized execution model</strong>. By leveraging the power of modern browser APIs and ES6+ JavaScript, every calculation, formatting task, and generation happens locally on your hardware. This "Client-Side First" philosophy ensures that your sensitive data—from proprietary source code to brand-new startup identities—never leaves the safety of your local environment.
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 50px;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); font-size: 1.3rem; margin-bottom: 15px;">Why Data Sovereignty Matters</h3>
+            <p style="font-size: 0.9rem;">
+                Every time you paste code or text into a standard online tool, you risk your data being logged, analyzed, or sold. ToolForge eliminates this risk entirely. Our <strong>Zero-Log Policy</strong> isn't just a promise; it's a technical reality enforced by our architecture. Because there is no back-end database receiving your inputs, your intellectual property remains 100% yours. This makes ToolForge the gold standard for enterprise-level developers and privacy-conscious creators.
+            </p>
+        </div>
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); font-size: 1.3rem; margin-bottom: 15px;">Optimized for Digital Agility</h3>
+            <p style="font-size: 0.9rem;">
+                Speed is the ultimate feature. By stripping away heavy frameworks and tracking scripts, we’ve achieved <strong>near-instantaneous load times</strong>. Our tools are designed with a "Gen Z" aesthetic—minimalist, high-contrast, and mobile-responsive—ensuring that your workflow isn't interrupted, whether you're at a desktop workstation or optimizing on the go. ToolForge isn't just a website; it's a productivity multiplier designed for the fast-paced 2026 web ecosystem.
+            </p>
+        </div>
+    </div>
+
+    <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid #1e293b; padding: 40px; border-radius: 24px; margin-bottom: 40px;">
+        <h3 style="font-family: 'Outfit'; color: #fff; margin-bottom: 20px; font-size: 1.4rem;">The ToolForge Technical Edge</h3>
+        <p style="margin-bottom: 20px; font-size: 0.9rem;">
+            Our suite is divided into three specialized hubs to cater to every facet of the digital journey:
+        </p>
+        <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; font-size: 0.85rem;">
+            <li style="display: flex; flex-direction: column; gap: 5px;">
+                <strong style="color: var(--primary);">Technical Hub:</strong>
+                <span>Advanced JSON formatting, CSS minification, and SEO audit tools for hardened development workflows.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 5px;">
+                <strong style="color: var(--primary);">Growth Hub:</strong>
+                <span>Strategic social media content generators, engagement calculators, and viral hook engines for modern marketers.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 5px;">
+                <strong style="color: var(--primary);">Generator Hub:</strong>
+                <span>AI-powered naming utilities for SaaS startups, gaming personas, and brand identities.</span>
+            </li>
+        </ul>
+    </div>
+
+    <p style="text-align: center; color: #475569; font-size: 0.85rem; max-width: 700px; margin: 0 auto;">
+        By choosing ToolForge, you are supporting a faster, more private, and more beautiful internet. We are constantly expanding our library of tools to meet the evolving needs of the global creator community. 
+        <strong>100% Free. 100% Secure. 100% Client-Side.</strong>
+    </p>
+
+</section>`;
+
+
 function initToolForge() {
     // 1. Header & Footer Injection
     const navContainer = document.querySelector('.nav-container') || document.querySelector('header');
@@ -204,6 +264,14 @@ function initToolForge() {
 
     const footerTag = document.querySelector('footer');
     if (footerTag) footerTag.innerHTML = footerUI;
+
+    // 2. SEO SECTION INJECTION (The big text block)
+    if (footerTag) {
+        footerTag.insertAdjacentHTML('beforebegin', seoUI);
+    }
+
+    // 3. META TAG INJECTION (The "Invisible" SEO)
+    injectSmartSEO();
 
     // 2. SAFE SPLIT-NAV INJECTION
     const container = document.querySelector('.container');
@@ -213,15 +281,15 @@ function initToolForge() {
         if (existingNav) existingNav.remove();
 
         const path = window.location.pathname;
-        
-        // Skip injection if we are on the main home page
-        if (path !== "/index.html" && path !== "/") {
-            let hubDest = "/index.html";
-            let hubLabel = "All Tools";
+       
+        // Replace the old hubDest logic with this:
+        if (path !== "/" && path !== "/index.html" && path.length > 1) {
+let hubDest = "/"; // Default to root
+let hubLabel = "All Tools";
 
-            if (path.includes('/growth/')) { hubDest = "/growth/index.html"; hubLabel = "Growth Hub"; }
-            else if (path.includes('/technical/')) { hubDest = "/technical/index.html"; hubLabel = "Technical Hub"; }
-            else if (path.includes('/generators/')) { hubDest = "/generators/index.html"; hubLabel = "Generator Hub"; }
+if (path.includes('/growth/')) { hubDest = "/growth/"; hubLabel = "Growth Hub"; }
+else if (path.includes('/technical/')) { hubDest = "/technical/"; hubLabel = "Technical Hub"; }
+else if (path.includes('/generators/')) { hubDest = "/generators/"; hubLabel = "Generator Hub"; }
 
             const splitNavHTML = `
                 <div id="omni-nav-trigger" class="omni-nav-bar">
@@ -229,7 +297,7 @@ function initToolForge() {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>${hubLabel}</span>
                     </a>
-                    <a href="/index.html" class="omni-link omni-home">
+                    <a href="/" class="omni-link omni-home">
                         <span>Home</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     </a>
@@ -240,6 +308,9 @@ function initToolForge() {
         }
     }
 
+    if (footerTag) {
+        footerTag.insertAdjacentHTML('beforebegin', seoUI);
+    }
     setupSearchLogic();
     setupSmartHeader();
     applyThemeDetection();
@@ -315,4 +386,48 @@ function getFuzzyMatch(s1, s2) {
     return costs[s2.length];
 }
 
+function injectSmartSEO() {
+    const pageTitle = document.title;
+    const currentUrl = window.location.href;
+    const toolName = pageTitle.split('|')[0].trim();
+    
+    // Detect Category based on Folder
+    let categoryVerb = "Utility"; // Default
+    if (currentUrl.includes('/generators/')) categoryVerb = "Generator";
+    if (currentUrl.includes('/technical/')) categoryVerb = "Developer Tool";
+    if (currentUrl.includes('/growth/')) categoryVerb = "Growth Engine";
+
+    // 1. Dynamic Meta Description
+    if (!document.querySelector('meta[name="description"]')) {
+        const meta = document.createElement('meta');
+        meta.name = "description";
+        // This creates: "Use the JSON Formatter on ToolForge. A premium, private Developer Tool..."
+        meta.content = `Use the ${toolName} on ToolForge. A premium, 100% private ${categoryVerb} built for speed and data sovereignty. No data leaves your browser.`;
+        document.head.appendChild(meta);
+    }
+
+    // 2. Canonical Tag (Crucial for avoiding "Dead Weight" duplicate content)
+    if (!document.querySelector('link[rel="canonical"]')) {
+        const canonical = document.createElement('link');
+        canonical.rel = "canonical";
+        canonical.href = currentUrl.split('?')[0].split('#')[0]; // Cleans URLs
+        document.head.appendChild(canonical);
+    }
+
+    // 3. Social Media Tags (Open Graph)
+    const ogData = {
+        'og:title': `${toolName} | ToolForge`,
+        'og:description': `Fast, private ${categoryVerb} for modern creators.`,
+        'og:url': currentUrl
+    };
+
+    Object.entries(ogData).forEach(([prop, content]) => {
+        if (!document.querySelector(`meta[property="${prop}"]`)) {
+            const m = document.createElement('meta');
+            m.setAttribute('property', prop);
+            m.content = content;
+            document.head.appendChild(m);
+        }
+    });
+}
 document.addEventListener("DOMContentLoaded", initToolForge);
