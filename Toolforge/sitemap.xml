@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://toolforge-official.netlify.app/</loc>
+    <loc>https://brixe.netlify.app/</loc>
     <lastmod>2026-03-28</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://toolforge-official.netlify.app/generators/</loc>
+    <loc>https://brixe.netlify.app/generators/</loc>
     <lastmod>2026-03-28</lastmod>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://toolforge-official.netlify.app/growth/</loc>
+    <loc>https://brixe.netlify.app/growth/</loc>
     <lastmod>2026-03-28</lastmod>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://toolforge-official.netlify.app/technical/</loc>
+    <loc>https://brixe.netlify.app/technical/</loc>
     <lastmod>2026-03-28</lastmod>
     <priority>0.90</priority>
   </url>
 
-  <url><loc>https://toolforge-official.netlify.app/generators/saas-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/clan-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/fantasy-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/gamer-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/aesthetic-username-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/pet-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/podcast-name-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/discord-server-namer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/clothing-brand-namer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/generators/alias-&amp;amp;-persona-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/saas-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/clan-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/fantasy-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/gamer-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/aesthetic-username-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/pet-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/podcast-name-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/discord-server-namer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/clothing-brand-namer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/generators/alias-&amp;amp;-persona-generator.html</loc><priority>0.70</priority></url>
 
-  <url><loc>https://toolforge-official.netlify.app/growth/bio-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/giveaway-winner-picker.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/caption-pro.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/clickbait-title-grader.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/engagement-calculator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/grid-previewer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/hashtag-stacker.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/insta-caption-crafter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/linkedin-authority-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/pinterest-description-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/podcast-blurb-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/safe-zone-checker.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/script-timer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/thumbnail-previewer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/tiktok-hook-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/tweet-thread-starter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/twitch-stream-namer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/video-script-intros.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/viral-hook-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/youtube-brainstormer.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/growth/pfp-glow-ring.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/bio-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/giveaway-winner-picker.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/caption-pro.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/clickbait-title-grader.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/engagement-calculator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/grid-previewer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/hashtag-stacker.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/insta-caption-crafter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/linkedin-authority-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/pinterest-description-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/podcast-blurb-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/safe-zone-checker.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/script-timer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/thumbnail-previewer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/tiktok-hook-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/tweet-thread-starter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/twitch-stream-namer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/video-script-intros.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/viral-hook-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/youtube-brainstormer.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/growth/pfp-glow-ring.html</loc><priority>0.70</priority></url>
 
-  <url><loc>https://toolforge-official.netlify.app/technical/audit-checklist.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/base64-studio.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/canonical-tag-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/color-converter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/gradient-gen.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/html-entity-studio.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/js-minifier.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/json-formatter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/keyword-density-checker.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/lorem-ipsum.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/markdown-converter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/meta-tag-gen.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/mobile-tester.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/px-to-rem-converter.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/redirect-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/robots-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/schema-generator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/serp-simulator.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/url-encoder.html</loc><priority>0.70</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/technical/xml-sitemap-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/audit-checklist.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/base64-studio.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/canonical-tag-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/color-converter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/gradient-gen.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/html-entity-studio.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/js-minifier.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/json-formatter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/keyword-density-checker.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/lorem-ipsum.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/markdown-converter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/meta-tag-gen.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/mobile-tester.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/px-to-rem-converter.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/redirect-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/robots-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/schema-generator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/serp-simulator.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/url-encoder.html</loc><priority>0.70</priority></url>
+  <url><loc>https://brixe.netlify.app/technical/xml-sitemap-generator.html</loc><priority>0.70</priority></url>
 
-  <url><loc>https://toolforge-official.netlify.app/privacy.html</loc><priority>0.30</priority></url>
-  <url><loc>https://toolforge-official.netlify.app/terms.html</loc><priority>0.30</priority></url>
+  <url><loc>https://brixe.netlify.app/privacy.html</loc><priority>0.30</priority></url>
+  <url><loc>https://brixe.netlify.app/terms.html</loc><priority>0.30</priority></url>
 </urlset>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Code Converter | HEX, RGB, HSL | ToolForge</title>
+    <title>Color Code Converter | HEX, RGB, HSL | Brixe</title>
     <link rel="stylesheet" href="/main-style.css">
 </head>
 <body data-theme="technical">
@@ -121,7 +121,7 @@
         }
 
         function copyCSS() {
-            const css = `/* ToolForge Color Export */\n--color-hex: ${hexInput.value};\n--color-rgb: ${rgbInput.value};\n--color-hsl: ${hslInput.value};`;
+            const css = `/* Brixe Color Export */\n--color-hex: ${hexInput.value};\n--color-rgb: ${rgbInput.value};\n--color-hsl: ${hslInput.value};`;
             navigator.clipboard.writeText(css);
             const btn = event.target;
             btn.innerText = "✓ CSS COPIED";

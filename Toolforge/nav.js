@@ -1,4 +1,4 @@
-/* TOOLFORGE OMNI-NAV - Master Controller (RESTORED PRESET) */
+/* Brixe OMNI-NAV - Master Controller (RESTORED PRESET) */
 
 const categories = {
     "growth": ["Bio Generator", "Giveaway Winner Picker", "Caption Pro", "Clickbait Title Grader", "Engagement Calculator", "Grid Previewer", "Hashtag Stacker", "Insta Caption Crafter", "LinkedIn Authority Generator", "Pinterest Description Generator", "Podcast Blurb Generator", "Safe zone checker", "Script timer", "Thumbnail Previewer", "TikTok Hook Generator", "Tweet Thread Starter", "Twitch Stream Namer", "Video Script Intros", "Viral Hook Generator", "youtube brainstormer", "pfp glow ring"],
@@ -171,7 +171,7 @@ const globalUI = `
 </style>
 
 <header class="tf-header">
-    <a href="/" class="logo">ToolForge</a>
+    <a href="/" class="logo">Brixe</a>
     <div id="searchWrapper">
         <input type="text" id="toolSearch" placeholder="Search..." autocomplete="off">
         <div id="searchResults"></div>
@@ -182,7 +182,7 @@ const footerUI = `
 <footer class="tf-footer">
     <div class="footer-content" style="display: flex; justify-content: space-between; padding: 40px 20px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 30px;">
         <div>
-            <h3 style="color:var(--primary); font-family:'Outfit'; margin-bottom: 10px;">ToolForge</h3>
+            <h3 style="color:var(--primary); font-family:'Outfit'; margin-bottom: 10px;">Brixe</h3>
             <p style="opacity: 0.7; font-size: 0.9rem;">The web’s fastest utility engine. Built for performance.</p>
         </div>
         <div>
@@ -194,7 +194,7 @@ const footerUI = `
             <p><a href="mailto:growthdriven024@gmail.com" style="color:var(--primary); text-decoration:none; font-weight: 700;">growthdriven024@gmail.com</a></p>
         </div>
     </div>
-    <div class="footer-bottom" style="text-align: center; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; opacity: 0.5;">© 2026 ToolForge Engine. All processing is 100% Client-Side.</div>
+    <div class="footer-bottom" style="text-align: center; padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; opacity: 0.5;">© 2026 Brixe Engine. All processing is 100% Client-Side.</div>
 </footer>`;
 
 
@@ -206,10 +206,10 @@ const seoUI = `
             The Architecture of <span style="color: var(--primary);">High-Performance Web Utilities</span>
         </h2>
         <p style="font-size: 1.1rem; color: #cbd5e1; margin-bottom: 20px;">
-            In the modern digital landscape, the tools we use define the speed of our innovation. <strong>ToolForge</strong> was conceived as a response to the bloated, ad-heavy utility sites of the past decade. We provide a streamlined, <strong>privacy-centric infrastructure</strong> for developers, digital marketers, and creative entrepreneurs who require precision without compromise.
+            In the modern digital landscape, the tools we use define the speed of our innovation. <strong>Brixe</strong> was conceived as a response to the bloated, ad-heavy utility sites of the past decade. We provide a streamlined, <strong>privacy-centric infrastructure</strong> for developers, digital marketers, and creative entrepreneurs who require precision without compromise.
         </p>
         <p>
-            Unlike traditional platforms that rely on server-side processing—which introduces latency and potential security vulnerabilities—the ToolForge engine operates on a <strong>decentralized execution model</strong>. By leveraging the power of modern browser APIs and ES6+ JavaScript, every calculation, formatting task, and generation happens locally on your hardware. This "Client-Side First" philosophy ensures that your sensitive data—from proprietary source code to brand-new startup identities—never leaves the safety of your local environment.
+            Unlike traditional platforms that rely on server-side processing—which introduces latency and potential security vulnerabilities—the Brixe engine operates on a <strong>decentralized execution model</strong>. By leveraging the power of modern browser APIs and ES6+ JavaScript, every calculation, formatting task, and generation happens locally on your hardware. This "Client-Side First" philosophy ensures that your sensitive data—from proprietary source code to brand-new startup identities—never leaves the safety of your local environment.
         </p>
     </div>
 
@@ -217,19 +217,19 @@ const seoUI = `
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); font-size: 1.3rem; margin-bottom: 15px;">Why Data Sovereignty Matters</h3>
             <p style="font-size: 0.9rem;">
-                Every time you paste code or text into a standard online tool, you risk your data being logged, analyzed, or sold. ToolForge eliminates this risk entirely. Our <strong>Zero-Log Policy</strong> isn't just a promise; it's a technical reality enforced by our architecture. Because there is no back-end database receiving your inputs, your intellectual property remains 100% yours. This makes ToolForge the gold standard for enterprise-level developers and privacy-conscious creators.
+                Every time you paste code or text into a standard online tool, you risk your data being logged, analyzed, or sold. Brixe eliminates this risk entirely. Our <strong>Zero-Log Policy</strong> isn't just a promise; it's a technical reality enforced by our architecture. Because there is no back-end database receiving your inputs, your intellectual property remains 100% yours. This makes Brixe the gold standard for enterprise-level developers and privacy-conscious creators.
             </p>
         </div>
         <div>
             <h3 style="font-family: 'Outfit'; color: var(--primary); font-size: 1.3rem; margin-bottom: 15px;">Optimized for Digital Agility</h3>
             <p style="font-size: 0.9rem;">
-                Speed is the ultimate feature. By stripping away heavy frameworks and tracking scripts, we’ve achieved <strong>near-instantaneous load times</strong>. Our tools are designed with a "Gen Z" aesthetic—minimalist, high-contrast, and mobile-responsive—ensuring that your workflow isn't interrupted, whether you're at a desktop workstation or optimizing on the go. ToolForge isn't just a website; it's a productivity multiplier designed for the fast-paced 2026 web ecosystem.
+                Speed is the ultimate feature. By stripping away heavy frameworks and tracking scripts, we’ve achieved <strong>near-instantaneous load times</strong>. Our tools are designed with a "Gen Z" aesthetic—minimalist, high-contrast, and mobile-responsive—ensuring that your workflow isn't interrupted, whether you're at a desktop workstation or optimizing on the go. Brixe isn't just a website; it's a productivity multiplier designed for the fast-paced 2026 web ecosystem.
             </p>
         </div>
     </div>
 
     <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid #1e293b; padding: 40px; border-radius: 24px; margin-bottom: 40px;">
-        <h3 style="font-family: 'Outfit'; color: #fff; margin-bottom: 20px; font-size: 1.4rem;">The ToolForge Technical Edge</h3>
+        <h3 style="font-family: 'Outfit'; color: #fff; margin-bottom: 20px; font-size: 1.4rem;">The Brixe Technical Edge</h3>
         <p style="margin-bottom: 20px; font-size: 0.9rem;">
             Our suite is divided into three specialized hubs to cater to every facet of the digital journey:
         </p>
@@ -250,14 +250,14 @@ const seoUI = `
     </div>
 
     <p style="text-align: center; color: #475569; font-size: 0.85rem; max-width: 700px; margin: 0 auto;">
-        By choosing ToolForge, you are supporting a faster, more private, and more beautiful internet. We are constantly expanding our library of tools to meet the evolving needs of the global creator community. 
+        By choosing Brixe, you are supporting a faster, more private, and more beautiful internet. We are constantly expanding our library of tools to meet the evolving needs of the global creator community. 
         <strong>100% Free. 100% Secure. 100% Client-Side.</strong>
     </p>
 
 </section>`;
 
 
-function initToolForge() {
+function initBrixe() {
     // 1. Header & Footer Injection
     const navContainer = document.querySelector('.nav-container') || document.querySelector('header');
     if (navContainer) navContainer.innerHTML = globalUI;
@@ -308,9 +308,6 @@ else if (path.includes('/generators/')) { hubDest = "/generators/"; hubLabel = "
         }
     }
 
-    if (footerTag) {
-        footerTag.insertAdjacentHTML('beforebegin', seoUI);
-    }
     setupSearchLogic();
     setupSmartHeader();
     applyThemeDetection();
@@ -401,8 +398,8 @@ function injectSmartSEO() {
     if (!document.querySelector('meta[name="description"]')) {
         const meta = document.createElement('meta');
         meta.name = "description";
-        // This creates: "Use the JSON Formatter on ToolForge. A premium, private Developer Tool..."
-        meta.content = `Use the ${toolName} on ToolForge. A premium, 100% private ${categoryVerb} built for speed and data sovereignty. No data leaves your browser.`;
+        // This creates: "Use the JSON Formatter on Brixe. A premium, private Developer Tool..."
+        meta.content = `Use the ${toolName} on Brixe. A premium, 100% private ${categoryVerb} built for speed and data sovereignty. No data leaves your browser.`;
         document.head.appendChild(meta);
     }
 
@@ -416,7 +413,7 @@ function injectSmartSEO() {
 
     // 3. Social Media Tags (Open Graph)
     const ogData = {
-        'og:title': `${toolName} | ToolForge`,
+        'og:title': `${toolName} | Brixe`,
         'og:description': `Fast, private ${categoryVerb} for modern creators.`,
         'og:url': currentUrl
     };
@@ -430,4 +427,4 @@ function injectSmartSEO() {
         }
     });
 }
-document.addEventListener("DOMContentLoaded", initToolForge);
+document.addEventListener("DOMContentLoaded", initBrixe);

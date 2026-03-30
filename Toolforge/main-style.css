@@ -1,4 +1,4 @@
-/* --- TOOLFORGE MASTER SYSTEM: NEON MODERN --- */
+/* --- Brixe MASTER SYSTEM: NEON MODERN --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap');
 
 :root {
@@ -377,7 +377,7 @@ textarea:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--glow);
     padding: 25px;
 }
 
-/* --- THE MODERN GRID SYSTEM --- */
+/* --- THE MODERN GRID SYSTEM --- */s
 
 /* LAPTOP VIEW (The Default) */
 #result-list.grid-mode, .grid {

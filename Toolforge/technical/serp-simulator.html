@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Google SERP Simulator | SEO Preview Tool | ToolForge</title>
+    <title>Google SERP Simulator | SEO Preview Tool | Brixe</title>
     <meta name="description" content="Preview and optimize your website's appearance on Google. Real-time character counters and pixel-width validation for titles and meta descriptions.">
     <link rel="stylesheet" href="/main-style.css">
     <style>
@@ -107,7 +107,7 @@
             <div class="config-card">
                 <div class="input-group">
                     <label>SEO Title <span id="titleCount" class="counter">0 / 60</span></label>
-                    <input type="text" id="titleIn" placeholder="ToolForge | Fast Utility Engine" oninput="update()">
+                    <input type="text" id="titleIn" placeholder="Brixe | Fast Utility Engine" oninput="update()">
                 </div>
 
                 <div class="input-group">
@@ -117,7 +117,7 @@
 
                 <div class="input-group">
                     <label>Slug/URL</label>
-                    <input type="text" id="urlIn" placeholder="https://toolforge.com/serp-preview" oninput="update()">
+                    <input type="text" id="urlIn" placeholder="https://Brixe.com/serp-preview" oninput="update()">
                 </div>
             </div>
 
@@ -126,9 +126,9 @@
                 <div class="serp-preview">
                     <div class="google-header">
                         <div class="google-icon"></div>
-                        <span class="google-url" id="pUrl">toolforge.com › serp-preview</span>
+                        <span class="google-url" id="pUrl">Brixe.com › serp-preview</span>
                     </div>
-                    <span class="google-title" id="pTitle">ToolForge | SERP Simulator Preview</span>
+                    <span class="google-title" id="pTitle">Brixe | SERP Simulator Preview</span>
                     <span class="google-desc" id="pDesc">This is how your site will look. Ensure your keywords are within the first 120 characters to maximize impact and avoid truncation.</span>
                 </div>
             </div>
@@ -156,9 +156,9 @@
     <script src="/nav.js"></script>
     <script>
         function update() {
-            const title = document.getElementById('titleIn').value || "ToolForge | SERP Simulator Preview";
+            const title = document.getElementById('titleIn').value || "Brixe | SERP Simulator Preview";
             const desc = document.getElementById('descIn').value || "This is how your site will look. Ensure your keywords are within the first 120 characters to maximize impact and avoid truncation.";
-            const url = document.getElementById('urlIn').value || "toolforge.com › serp-preview";
+            const url = document.getElementById('urlIn').value || "Brixe.com › serp-preview";
 
             // Update Preview
             document.getElementById('pTitle').innerText = title;
