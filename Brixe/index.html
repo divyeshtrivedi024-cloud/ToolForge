@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Brixe | Free AI Content & Developer Tools</title>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Brixe",
+  "alternateName": "Brixe Utility Engine",
+  "url": "https://brixe.netlify.app/",
+  "description": "A high-performance hub of 500+ web utility tools and generators built for speed."
+}
+</script>
+    <link rel="icon" href="https://brixe.netlify.app/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="https://brixe.netlify.app/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+    :root {
+        /* This is your Master Black - used by both themes initially */
+        --bg: #05070a; 
+        --glass: rgba(17, 24, 39, 0.7);
+        --text: #f1f5f9;
+        --primary: #6366f1; 
+        --secondary: #06b6d4; 
+        --accent: #f43f5e; 
+        --card-border: #1f2937;
+        /* Keep orbs subtle so they don't wash out the black */
+        --orb-1: rgba(99, 102, 241, 0.08); 
+        --orb-2: rgba(255, 0, 127, 0.05);
+    }
+
+    /* Keep Light Theme distinct, but let's keep Dark Theme matching the root */
+    [data-theme="light"] {
+        --bg: #fdfdfd;
+        --glass: rgba(255, 255, 255, 0.7);
+        --text: #0f172a;
+        --card-border: #e2e8f0;
+        --orb-1: rgba(99, 102, 241, 0.1);
+        --orb-2: rgba(6, 182, 212, 0.1);
+    }
+
+    /* IMPORTANT: We removed the [data-theme="dark"] block. 
+       Since :root is already dark/black, we don't need to redefine it. 
+    */
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+        transition: background 0.5s ease;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    /* --- AMBIENT BACKGROUND GLOWS --- */
+    .bg-glow {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        /* Ensure the fixed background is pure black to prevent light leaks */
+        background: #05070a; 
+    }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--orb-1); top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: var(--orb-2); bottom: -10%; right: -10%; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 50px); }
+        }
+
+        /* --- Navigation --- */
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: var(--glass);
+            border: 1px solid var(--card-border);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--text);
+            transition: 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--primary); transform: scale(1.05); }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 120px 5% 80px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            margin-bottom: 25px;
+            letter-spacing: -3px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, var(--text) 0%, var(--primary) 50%, var(--text) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        /* --- Grid & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            padding: 0 8% 100px;
+        }
+
+        /* --- Brixe Main Hub Premium Hover --- */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 30px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The Icon and Title use the Theme Color (Set via inline style or class) */
+/* This is the magic part */
+.card h3 {
+    color: var(--color); /* Title starts in its theme color */
+    transition: 0.3s ease;
+}
+
+.card:hover h3 {
+    color: #fff; /* Turns white on hover */
+    /* The glow now uses the specific color of that card! */
+    text-shadow: 0 0 15px var(--color), 0 0 30px var(--color);
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: var(--color);
+    /* Subtle outer box shadow matching the theme */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px var(--color);
+}
+
+.card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+/* Glass Sweep */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+    transform: translateX(-100%);
+    transition: 0.6s;
+}
+.card:hover::after { transform: translateX(100%); }
+
+        /* Hub Colors */
+        .generator-hub-card:hover { border-color: var(--primary); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2); }
+        .content-hub-card:hover { border-color: #ff007f; box-shadow: 0 20px 40px rgba(255, 0, 127, 0.2); }
+        .utility-hub-card:hover { border-color: #00f2ff; box-shadow: 0 20px 40px rgba(0, 242, 255, 0.2); }
+        .social-hub-card:hover { border-color: #00ff88; box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2); }
+        .web-hub-card:hover { border-color: #f59e0b; box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
+
+        .icon { font-size: 2.8rem; margin-bottom: 20px; display: block; }
+        h3 { font-family: 'Outfit'; font-size: 1.6rem; margin: 0 0 12px 0; }
+        .card p { font-size: 1rem; color: #64748b; margin: 0; line-height: 1.5; }
+        
+        .badge {
+            position: absolute; top: 20px; right: 20px;
+            padding: 5px 12px; border-radius: 50px; font-size: 0.7rem;
+            font-weight: 800; text-transform: uppercase;
+            background: var(--card-border); color: var(--text);
+        }
+        .badge.coming { background: #334155; color: #fff; 
+
+        
+}
+
+.coming-soon-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--color);
+    color: var(--color);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Subtle Hover for Locked Cards */
+.locked-card:hover {
+    transform: none; /* No pop effect */
+    box-shadow: none;
+}
+@media (max-width: 600px) {
+    .hero { padding: 80px 20px 40px; }
+    h1 { letter-spacing: -1px; text-align: center; width: 100%; }
+    .grid { grid-template-columns: 1fr; padding: 0 20px 50px; }
+}
+    </style>
+</head>
+<body class="dark-theme" style="background-color: #05070a; color: #ffffff; margin: 0; padding: 0;">
+
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    #globalSearch:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    }
+    
+</style>
+
+    <div class="bg-glow">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <nav class="nav-container"></nav> 
+    <header class="hero">
+        <h1>Professional Tools for <span class="shimmer">Modern Builders and Creators</span></h1>
+        <p>A lightning-fast ecosystem of free tools for developers, creators, and entrepreneurs. Built for performance. Optimized for results.</p>
+        
+    </header>
+
+    <main class="grid">
+        <a href="Generators/index.html" class="card" style="--color: #6366f1;">
+            <span class="icon">🏷️</span>
+            <h3>AI Name Engines</h3>
+            <p>SaaS, Gaming, and Brand name generators powered by linguistic logic.</p>
+        </a>
+
+        <a href="Growth/index.html" class="card" style="--color: #ff007a;">
+            <span class="icon">🎬</span>
+            <h3>Social & Growth Hub</h3>
+            <p>Strategize, create, and grow. Everything from viral video hooks to giveaway management.</p>
+        </a>
+
+        <a href="technical/index.html" class="card" style="--color: #00f2ff;">
+            <span class="icon">⚙️</span>
+            <h3>Dev & Webmaster Suite</h3>
+            <p>Technical precision tools for website optimization, code formatting, and developer utilities.</p>
+        </a>
+
+        <a href="#" class="card locked-card" style="--color: #affc2e; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">🧠</span>
+    <h3>The AI Lab</h3>
+    <p>Smart tools for AI content detection, sentiment analysis, and prompt engineering.</p>
+</a>
+
+<a href="#" class="card locked-card" style="--color: #94a3b8; cursor: not-allowed; opacity: 0.7;">
+    <div class="coming-soon-badge">Coming Soon</div>
+    <span class="icon" style="filter: grayscale(1);">💼</span>
+    <h3>Business & Finance</h3>
+    <p>Professional utilities for invoice generation, tax estimation, and startup planning.</p>
+</a>
+    </main>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
+    
+    <footer></footer>
+<script src="/nav.js"></script>
+</body>
+</html>

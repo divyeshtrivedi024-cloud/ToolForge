@@ -428,3 +428,68 @@ function injectSmartSEO() {
     });
 }
 document.addEventListener("DOMContentLoaded", initBrixe);
+
+function injectMeta() {
+    const meta = `
+        <meta property="og:title" content="Brixe | 50+ Premium Web Utilities">
+        <meta property="og:description" content="A lightning-fast ecosystem for modern builders.">
+        <meta property="og:image" content="https://brixe.netlify.app/logo.png">
+        <meta property="og:url" content="https://brixe.netlify.app/">
+    `;
+    document.head.insertAdjacentHTML('beforeend', meta);
+}
+injectMeta();
+
+// Add this to the top or bottom of your nav.js
+function injectMobileMeta() {
+    // 1. The Black Address Bar (Mobile Chrome/Safari/Samsung)
+    const themeMeta = document.createElement('meta');
+    themeMeta.name = "theme-color";
+    themeMeta.content = "#05070a"; // Matches your --bg variable
+    document.head.appendChild(themeMeta);
+
+    // 2. The Apple Status Bar (Specific for iPhones)
+    const appleMeta = document.createElement('meta');
+    appleMeta.name = "apple-mobile-web-app-status-bar-style";
+    appleMeta.content = "black-translucent";
+    document.head.appendChild(appleMeta);
+}
+
+// Run the function
+injectMobileMeta();
+
+function brixeSystemInit() {
+    const siteUrl = "https://brixe.netlify.app";
+    
+    // 1. Define the tags we need
+    const tags = [
+        { rel: 'icon', href: `${siteUrl}/favicon.png`, sizes: '48x48' },
+        { rel: 'apple-touch-icon', href: `${siteUrl}/favicon.png` },
+        { name: 'theme-color', content: '#05070a' }
+    ];
+
+    tags.forEach(tag => {
+        // Check if the tag already exists to prevent collisions
+        let element = tag.rel 
+            ? document.querySelector(`link[rel="${tag.rel}"]`)
+            : document.querySelector(`meta[name="${tag.name}"]`);
+
+        if (!element) {
+            // If it doesn't exist, create it
+            element = document.createElement(tag.rel ? 'link' : 'meta');
+            document.head.appendChild(element);
+        }
+
+        // Apply/Override the attributes to ensure Brixe branding is forced
+        if (tag.rel) element.rel = tag.rel;
+        if (tag.name) element.name = tag.name;
+        if (tag.href) element.href = tag.href;
+        if (tag.sizes) element.sizes = tag.sizes;
+        if (tag.content) element.content = tag.content;
+    });
+
+    console.log("Brixe System: Branding & SEO injected successfully.");
+}
+
+// Initialize on load
+brixeSystemInit();
