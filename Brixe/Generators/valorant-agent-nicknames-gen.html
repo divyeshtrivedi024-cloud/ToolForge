@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant Agent Nickname Generator | Brixe</title>
+    <meta name="description" content="Generate aesthetic and tactical Valorant nicknames inspired by Agent abilities and lore. Create unique Riot IDs for Duelists, Controllers, Initiators, and Sentinels.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Valorant Nickname Gen</h1>
+            <p>Sync your Riot ID with your main Agent's utility and lore. Precise, tactical, and clean.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'Jett', 'Omen', 'Viper'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="duelist">💥 Duelist (Entry/Frag/Aggro)</option>
+                    <option value="controller">☁️ Controller (Smoke/Vision/Void)</option>
+                    <option value="initiator">🏹 Initiator (Intel/Hunt/Flash)</option>
+                    <option value="sentinel">🛡️ Sentinel (Trap/Anchor/Heal)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateValName()">Calibrate Identity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Mastering the Tactical Aesthetic</h2>
+            <p>In Valorant, your name often signals your playstyle before the barriers even drop. High-rank players typically favor "Clean" or "Aesthetic" mononyms that reference Agent utility—like 'Paranoia' for Omen mains or 'Tailwind' for Jett enthusiasts. Our generator bridges the gap between lore-inspired terminology and the minimalist Riot ID trends found in Radiant-tier lobbies.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Ability Puns</strong> Subtly referencing an ability (e.g., 'OffAngle' or 'Fakeout') shows high game-sense and builds an immediate brand around your "Main."</div>
+                <div class="tip-card"><strong>02. Clean Mononyms</strong> Valorant culture prizes single-word names. If your desired name is taken, try removing vowels or using specific suffixes like '-v2' or '-null'.</div>
+                <div class="tip-card"><strong>03. Tag Synergy</strong> Use your Riot ID #Tag to complete the vibe. A name like 'OneTap' with the tag '#Lurk' creates a cohesive profile.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Valorant Agent-Inspired Nickname Generator
+ * 100% Client-Side | Privacy-First
+ */
+function generateValName() {
+    // 1. Strict Input Sanitization
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '') || "Agent";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. Comprehensive 40-50 word database for Agent archetypes
+    const data = {
+        duelist: { 
+            pre: ["dash", "drift", "surge", "blaze", "entry", "flash", "ace", "frag", "limit", "peak", "snap", "flick", "swift", "rebel", "wild", "fury", "neon", "bolt", "dash", "vandal", "wraith", "phantom", "dual", "solo", "rush", "strike", "blast", "nova", "flare", "ignite", "scout", "rogue", "jinx", "zero", "null", "pure", "raw", "static", "vivid", "apex"], 
+            post: ["frag", "diff", "entry", "v3", "main", "ace", "solo", "clutch", "drift", "dash", "surge", "limit", "test", "one", "zero", "point", "flick", "aim", "snap", "shot"] 
+        },
+        controller: { 
+            pre: ["void", "smoke", "haze", "mist", "veil", "dark", "noir", "phantom", "ghost", "omen", "abyss", "null", "static", "glitch", "silent", "hush", "echo", "lost", "faded", "shadow", "deep", "tide", "wave", "flow", "drift", "orbit", "celestial", "astral", "star", "lunar", "gravity", "nebula", "cosmic", "hidden", "secret", "masked", "unknown", "rare", "candid", "quiet"], 
+            post: ["void", "smoke", "veil", "haze", "omen", "null", "core", "logic", "sync", "mode", "run", "node", "wire", "chip", "data", "flow", "wave", "freq", "vision", "optic"] 
+        },
+        initiator: { 
+            pre: ["hunt", "seek", "trace", "scan", "intel", "scout", "pulse", "flash", "blind", "daze", "stun", "trail", "wolf", "hawk", "owl", "eye", "vision", "optic", "focus", "sharp", "smart", "quick", "fast", "swift", "snap", "dash", "bolt", "signal", "freq", "wave", "neural", "binary", "logic", "sync", "flux", "vector", "proxy", "node", "data", "link"], 
+            post: ["hunt", "scout", "intel", "scan", "trace", "view", "vision", "optic", "eye", "sight", "scope", "pulse", "flash", "blind", "daze", "stun", "target", "mark", "link", "node"] 
+        },
+        sentinel: { 
+            pre: ["guard", "anchor", "lock", "hold", "wall", "gate", "path", "bridge", "fort", "keep", "tower", "shield", "safe", "pure", "holy", "divine", "ancient", "royal", "noble", "grand", "mythic", "iron", "steel", "clay", "stone", "root", "amber", "bloom", "petal", "rose", "lily", "healing", "bliss", "serene", "calm", "quiet", "silent", "stable", "prime", "base"], 
+            post: ["guard", "anchor", "lock", "hold", "wall", "gate", "path", "base", "core", "shield", "safe", "pure", "holy", "stone", "root", "amber", "bloom", "bliss", "serene", "calm"] 
+        }
+    };
+
+    const separators = ["", " ", ".", "i", "v"];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.4) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.8) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Riot ID character limit is 16 characters
+        if (name.length > 16) {
+            name = name.replace(/\s/g, '').substring(0, 16);
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // 4. Clipboard Promise + CSS Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Plant failed', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

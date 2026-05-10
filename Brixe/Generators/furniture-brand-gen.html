@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Brand Namer | Brixe</title>
+    <meta name="description" content="Generate high-end, modern, and artisanal furniture brand names. Perfect for interior design studios, woodworking shops, and home decor startups.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Fraunces', serif;">Furniture Brand Namer</h1>
+            <p>Structure, comfort, and soul. Generate names that evoke Scandinavian minimalism, mid-century modern aesthetics, or rugged artisanal craftsmanship.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional material (e.g. 'Oak', 'Steel')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="scandi">❄️ Nordic Minimal (Clean/Functional)</option>
+                    <option value="industrial">🏗️ Industrial Loft (Raw/Modern)</option>
+                    <option value="heritage">🌲 Heritage Wood (Artisanal/Timeless)</option>
+                    <option value="luxury">🛋️ Velvet & Marble (Curated/Elite)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateFurnitureName()">Construct Brand</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Designing the Brand Foundation</h2>
+            <p>In the furniture industry, a name must communicate durability and style simultaneously. Whether you're targeting small-space urban living or expansive luxury estates, your brand name acts as the "architecture" of your identity. Our generator uses a mix of structural nouns, geometric terms, and material-focused adjectives to ensure your business feels like a permanent fixture in the market.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Geometric Gravity</strong> Words like "Axis," "Frame," "Angle," or "Base" create a sense of structural integrity and modern design precision.</div>
+                <div class="tip-card"><strong>02. Material Honesty</strong> If your brand focuses on specific materials (Wood, Metal, Stone), incorporating their textures into the name—like "Grain," "Forge," or "Slate"—builds immediate trust.</div>
+                <div class="tip-card"><strong>03. The Amperand Appeal</strong> High-end furniture often uses the "X & Y" format (e.g., "Oak & Iron") to suggest a curated marriage of different elements and craftsmanship.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Furniture Brand Namer
+ * 100% Client-Side | Interior Design & Architecture Database
+ */
+function generateFurnitureName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        scandi: {
+            pre: ["Nord", "Fjord", "Lykke", "Hygge", "Stark", "Halla", "Sven", "Vinter", "Klar", "Olsen", "Lund", "Skog", "Boda", "Nen", "Hjem", "Dansk", "Modu", "Pure", "Fjord", "Aura"],
+            suff: ["Home", "Living", "Studio", "House", "Design", "Form", "Space", "Minimal", "Craft", "Base"]
+        },
+        industrial: {
+            pre: ["Forge", "Iron", "Steel", "Basalt", "Foundry", "Alloy", "Carbon", "Riveted", "Heavy", "Urban", "Metro", "Grid", "Axis", "Frame", "Vault", "Cinder", "Grit", "Brick", "Pipe", "Welded"],
+            suff: ["Works", "Co.", "Lab", "Supply", "Industries", "Atelier", "Workshop", "Collective", "Unit", "Forge"]
+        },
+        heritage: {
+            pre: ["Old", "Grain", "Timber", "Heart", "Willow", "Ash", "Cedar", "Root", "Skilled", "Custom", "Rustic", "Stable", "Noble", "Craft", "Woven", "Sawyer", "Hand", "Heirloom", "Wood", "Ancient"],
+            suff: ["& Son", "Guild", "Makers", "Workshop", "Tradition", "Joinery", "Handmade", "Goods", "Cabinetry", "Woodworks"]
+        },
+        luxury: {
+            pre: ["Velvet", "Onyx", "Gilded", "Royal", "Satin", "Marble", "Elite", "Curated", "Manor", "Luxe", "Sovereign", "Avenue", "Modus", "Vogue", "Elegance", "Prime", "Maison", "Atelier", "Imperial", "Gold"],
+            suff: ["Collection", "Signature", "Interiors", "Gallery", "Selection", "Boutique", "Private", "Estate", "Studio", "Edition"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalBrand = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalBrand = `${userWord} & ${pre}`;
+            else if (r < 0.7) finalBrand = `${pre} ${userWord}`;
+            else finalBrand = `${userWord} ${suff}`;
+        } else {
+            if (r < 0.3) {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                finalBrand = (pre !== pre2) ? `${pre} & ${pre2}` : `${pre} ${suff}`;
+            } else if (r < 0.6) {
+                finalBrand = `${pre}${suff.toLowerCase()}`;
+            } else {
+                finalBrand = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.1rem; letter-spacing: 0.5px; font-family: 'Fraunces', serif;">${finalBrand}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary);">Curated Furnishings • 2026</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalBrand).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>BRAND SECURED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The foundation for your digital brand empire. Fast, private, and client-side only.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Make yourself at home.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

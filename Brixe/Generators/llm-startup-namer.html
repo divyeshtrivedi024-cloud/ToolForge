@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Startup Namer | Brixe</title>
+    <meta name="description" content="Generate cutting-edge names for AI and LLM startups. Create unique brand identities for tech ventures, neural networks, and AI agents with an expanded industry database.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">LLM Startup Namer</h1>
+            <p>Define the next era of intelligence. Forge names for AI labs, language model platforms, and neural-powered agents.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional focus (e.g. 'Flow', 'Nexus')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="modern">🚀 Silicon Valley (Clean/Abstract)</option>
+                    <option value="technical">⚙️ Deep Tech (Neural/Scientific)</option>
+                    <option value="future">🔮 Cybernetic (Futuristic/Bionic)</option>
+                    <option value="friendly">👋 Human-Centric (Approachable/AI Agent)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateStartup()">Incept Venture</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Branding the Singularity</h2>
+            <p>In the rapidly evolving AI landscape, a startup name needs to balance technical authority with brandable simplicity. While names like "OpenAI" or "Anthropic" lean into philosophical and technical roots, modern SaaS AI often uses short, punchy, "dot-ai" ready titles. Our generator leverages an expanded database of neural network terminology, linguistic roots, and modern tech naming conventions to give your venture a venture-capital-ready identity.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Phonetic Suffixes</strong> Common modern AI suffixes like "-ly," "-ify," and "-ic" help create recognizable, trademark-friendly brand names.</div>
+                <div class="tip-card"><strong>02. Latent Concepts</strong> Use words that imply underlying meaning or connection, such as "Context," "Embed," "Synapse," or "Prompt."</div>
+                <div class="tip-card"><strong>03. Domain Readiness</strong> Most successful AI startups favor names that work well as a .ai or .io domain—keep it under three syllables for maximum impact.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * LLM Startup Namer
+ * 100% Client-Side | Modern Tech Database
+ */
+function generateStartup() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        modern: {
+            pre: ["Cerebro", "Nova", "Loom", "Vellum", "Scalar", "Vertex", "Flux", "Oasis", "Prism", "Echo", "Aura", "Kinetics", "Logic", "Synthetix", "Pattern", "Insight", "Layer", "Node", "Vector", "Canvas"],
+            suff: ["ly", "ify", "base", "flow", "grid", "labs", "ai", "io", "core", "point", "stack", "hub", "mind", "works", "sphere", "cloud"]
+        },
+        technical: {
+            pre: ["Neural", "Latent", "Turing", "Deep", "Synapse", "Cogni", "Tensor", "Parity", "Schema", "Binary", "Quantum", "Logic", "Metric", "Paradigm", "Heuristic", "Algor", "Cipher", "Matrix", "Code", "Data"],
+            suff: ["Net", "Flow", "Logic", "Scale", "System", "Tech", "Graph", "Compute", "Engine", "Array", "Nexus", "Link", "Sync", "Parse", "Process"]
+        },
+        future: {
+            pre: ["Xenon", "Cyber", "Bionic", "Neo", "Hyper", "Meta", "Omni", "Void", "Aether", "Chronos", "Titan", "Rift", "Stellar", "Plasma", "Axiom", "Zenith", "Omega", "Ultima", "Nano", "Glitch"],
+            suff: ["Space", "World", "Verse", "Pulse", "Shift", "Wave", "Ray", "Gate", "Port", "Zone", "Path", "Track", "Orbit", "Drift", "Sight"]
+        },
+        friendly: {
+            pre: ["Hello", "Buddy", "Ask", "Easy", "Simple", "Smart", "Bright", "Clear", "Daily", "Kind", "Soft", "Fluent", "Quick", "Help", "Guide", "Ally", "Friend", "Mate", "Companion", "Sidekick"],
+            suff: ["Bot", "Pal", "Chat", "Agent", "Talk", "Speak", "Know", "Wise", "Mind", "Brain", "Sense", "Care", "Ways", "Step", "Path"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let brandName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) brandName = `${userWord}${suff}`;
+            else if (r < 0.6) brandName = `${pre}${userWord}`;
+            else brandName = `${userWord} AI`;
+        } else {
+            if (r < 0.5) brandName = `${pre}${suff}`;
+            else brandName = `${pre} ${suff.charAt(0).toUpperCase() + suff.slice(1)}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.2rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.1rem; letter-spacing: 0.5px;">${brandName}</div>
+            <div style="opacity: 0.4; font-size: 0.6rem; margin-top: 6px; letter-spacing: 2px;">VENTURE READY</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(brandName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800;'>BRAND SECURED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The entrepreneur's choice for zero-log, high-performance brand generation.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Reach Out</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

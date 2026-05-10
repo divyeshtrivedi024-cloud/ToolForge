@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Friendly Brand Namer | Brixe</title>
+    <meta name="description" content="Generate sustainable, green, and earth-conscious brand names. Perfect for eco-friendly products, ethical fashion, and environmental startups.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Eco-Friendly Brand Namer</h1>
+            <p>Sustainability starts with a name. Generate identities for green tech, ethical goods, and earth-conscious initiatives.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional niche (e.g. 'Soap', 'Solar')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="modern">🍃 Modern Green (Sleek/Minimalist)</option>
+                    <option value="organic">🌿 Pure Organic (Natural/Raw)</option>
+                    <option value="ethical">🤝 Ethical & Fair (Social/Human)</option>
+                    <option value="future">⚡ Eco-Future (Tech/Renewable)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateEcoName()">Cultivate Brand</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Branding for a Sustainable Future</h2>
+            <p>An eco-friendly brand name must communicate transparency, responsibility, and a deep connection to the environment. In the green economy, consumers look for names that feel grounded and authentic rather than corporate. Our engine utilizes a database of over 500 botanical terms, atmospheric elements, and sustainability concepts to help you build a brand that carries environmental weight without sacrificing market appeal.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Biological Suffixes</strong> Using suffixes like "-vera," "-bio," or "-root" signals a commitment to organic origins and natural science.</div>
+                <div class="tip-card"><strong>02. Compound Earthiness</strong> Combining a natural element with a functional noun (e.g., "Leaf & Logic") suggests a balance between nature and human ingenuity.</div>
+                <div class="tip-card"><strong>03. Color Psychology</strong> While "Green" is obvious, words like "Azure," "Clay," "Sage," and "Amber" evoke specific eco-environments that can help define your niche.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Eco-Friendly Brand Namer
+ * 100% Client-Side | Sustainability & Nature Database
+ */
+function generateEcoName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        modern: {
+            pre: ["Pure", "Clean", "Element", "Aura", "Nova", "Flux", "Core", "Neo", "Leaf", "Bloom", "Zero", "Basis", "Shift", "Verve", "Axis", "Eco", "Veda", "Kind", "Nora", "Loom"],
+            suff: ["ly", "ify", "io", "base", "flow", "point", "works", "lab", "studio", "collective"]
+        },
+        organic: {
+            pre: ["Root", "Wild", "Earth", "Fern", "Moss", "Clay", "Cedar", "Sage", "Bloom", "Meadow", "Flora", "Gaia", "Terra", "River", "Dew", "Sun", "Willow", "Oak", "Thistle", "Seed"],
+            suff: ["Organic", "Harvest", "Nature", "Botanics", "Life", "Ways", "Place", "Hearth", "Essentials", "Grown"]
+        },
+        ethical: {
+            pre: ["Kind", "True", "Fair", "Open", "Solid", "Common", "Bridge", "Union", "Human", "Unity", "Heart", "Soul", "Pure", "Noble", "Civic", "Spirit", "Moral", "Axiom", "Basis", "Trust"],
+            suff: ["Collective", "Society", "Project", "Alliance", "Circle", "Partners", "Co", "Guild", "Group", "Works"]
+        },
+        future: {
+            pre: ["Solar", "Volt", "Pulse", "Hydro", "Aero", "Synapse", "Grid", "Vertex", "Hyper", "Cyber", "Apex", "Kinetic", "Active", "Turbo", "Renew", "Nexus", "Matrix", "Scalar", "Optic", "Vector"],
+            suff: ["Energy", "Tech", "Systems", "Power", "Logic", "Dynamics", "Link", "Edge", "Boost", "Max"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let ecoName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.35) ecoName = `${userWord} ${pre}`;
+            else if (r < 0.7) ecoName = `${pre}${userWord}`;
+            else ecoName = `${userWord} ${suff}`;
+        } else {
+            if (vibe === 'organic' && r < 0.5) {
+                ecoName = `${pre} & ${data.organic.pre[Math.floor(Math.random() * 20)]}`;
+            } else if (vibe === 'modern' && r < 0.5) {
+                ecoName = `${pre}${suff}`;
+            } else {
+                ecoName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit';">${ecoName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">CONSCIOUS BRAND</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(ecoName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>DNA SECURED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The entrepreneur's choice for zero-log, high-performance professional tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

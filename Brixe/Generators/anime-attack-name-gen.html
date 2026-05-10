@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Attack Name Generator | Brixe</title>
+    <meta name="description" content="Generate explosive and iconic anime attack names. Create unique combat techniques for Shonen, Seinen, and Magical Girl genres with zero-log privacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Anime Attack Namer</h1>
+            <p>Channel your spirit energy. Generate a signature technique that defines your combat style.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional element (e.g. 'Flame', 'Void')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="shonen">🔥 Shonen Spirit (Explosive/Power)</option>
+                    <option value="arcane">🔮 Arcane Arts (Magic/Complex)</option>
+                    <option value="katana">⚔️ Blade Style (Sword/Samurai)</option>
+                    <option value="cosmic">🌌 Cosmic/Final Form (Ultimate/Reality)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateAttack()">Unleash Technique</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Language of Battle</h2>
+            <p>In anime, an attack name is more than a label—it's a manifestation of the character's soul. From the rhythmic chanting of "Kido" to the high-impact kanji translations of "Breathing Styles," names must sound powerful when shouted. Our generator prioritizes dramatic imagery, high-energy verbs, and celestial descriptors to ensure your technique sounds legendary.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Numerical Scales</strong> Many iconic attacks use "Forms" or "Types" (e.g., "First Form" or "Zero Type") to imply a vast hidden repertoire of skills.</div>
+                <div class="tip-card"><strong>02. Combined Elements</strong> Don't just use fire; use "Nebula Flame" or "Frost-Bite Void." Combining opposing or abstract concepts creates a more unique identity.</div>
+                <div class="tip-card"><strong>03. Phonetic Punch</strong> Use words with sharp sounds like "Strike," "Burst," and "Slash" to give the name a physical impact.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Anime Attack Name Generator
+ * 100% Client-Side | Explosive Database
+ */
+function generateAttack() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        shonen: {
+            pre: ["Dragon", "Tiger", "Lion", "God", "Spirit", "Hyper", "Mega", "Ultra", "Sonic", "Burst", "Blast", "Impact", "Maximum", "Smasher", "Infinite", "Rising", "Falling", "Thunder", "Blaze", "Iron", "Steel", "Savage", "Gory", "Heavenly", "Hell", "Doom", "Meteor", "Titan", "Great", "Apex"],
+            post: ["Punch", "Kick", "Strike", "Impact", "Cannon", "Burst", "Smasher", "Flash", "Drive", "Break", "Crush", "Rush", "Wave", "Beam", "Fist", "Claw", "Fang", "Howl", "Roar", "Rage"]
+        },
+        arcane: {
+            pre: ["Abyssal", "Celestial", "Astral", "Spirit", "Ethereal", "Void", "Null", "Chrono", "Aero", "Hydro", "Pyro", "Geo", "Stellar", "Lunar", "Solar", "Forbidden", "Ancient", "Sacred", "Divine", "Wicked", "Dark", "Light", "Crystal", "Prism", "Mirror", "Shadow", "Ghost", "Seraph", "Demon", "Rune"],
+            post: ["Chant", "Seal", "Gate", "Vortex", "Aura", "Sphere", "Ray", "Tide", "Storm", "Prism", "Echo", "Whisper", "Gaze", "Touch", "Breath", "Calamity", "Judgment", "Requiem", "Overture", "Hex"]
+        },
+        katana: {
+            pre: ["First", "Second", "Third", "Final", "Secret", "Hidden", "Silent", "Crimson", "Azure", "Golden", "White", "Black", "Dancing", "Flowing", "Still", "Furious", "Noble", "Deadly", "Swift", "Sharp", "Twin", "Single", "Cursed", "Blessed", "Ancient", "Spirit", "Storm", "Mist", "Cloud", "Shadow"],
+            post: ["Form", "Slash", "Draw", "Sting", "Pierce", "Cut", "Edge", "Blade", "Dance", "Strike", "Thrust", "Style", "Technique", "Art", "Moon", "Sun", "Petal", "Leaf", "Wind", "Steel"]
+        },
+        cosmic: {
+            pre: ["Galactic", "Universal", "Absolute", "Eternal", "Infinite", "Omega", "Alpha", "Zero", "Final", "Ultimate", "Cosmic", "Reality", "Dimension", "Space", "Time", "Stellar", "Nova", "Super", "Hyper", "True", "Original", "World", "Heaven", "Hell", "Existence", "Creation", "Destruction", "Void", "Axiom", "Logic"],
+            post: ["Erasure", "Collapse", "Explosion", "End", "Beginning", "Singularity", "Horizon", "Nebula", "Star", "Pulsar", "Quasar", "Event", "Order", "Chaos", "Verdict", "Execution", "Genesis", "Revelation", "Annihilation", "Eternity"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        
+        let name = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) name = `${userWord} ${post}`;
+            else if (r < 0.6) name = `${pre} ${userWord}`;
+            else name = `${pre}: ${userWord} ${post}`;
+        } else {
+            if (r < 0.5) name = `${pre} ${post}`;
+            else if (r < 0.8) name = `${pre} STYLE: ${post}`;
+            else name = `Art of the ${pre} ${post}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name.toUpperCase();
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name.toUpperCase()).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "CRITICAL HIT!";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Engineered for speed. Built for the web. 100% Client-Side privacy.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Company</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Support</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

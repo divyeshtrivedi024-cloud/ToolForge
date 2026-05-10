@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Previewer | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --bg: #05070a; --card: #0f172a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 320px; gap: 30px; margin-top: 20px; }
+
+        .mock-container { display: flex; flex-direction: column; gap: 30px; }
+        .mock-label { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
+
+        /* 1. Browser Tabs Mock */
+        .browser-chrome {
+            background: #202124; border-radius: 12px 12px 0 0; padding: 8px 10px 0;
+            display: flex; gap: 4px; border: 1px solid var(--border);
+        }
+        .tab {
+            background: #35363a; color: #9aa0a6; padding: 8px 15px; border-radius: 8px 8px 0 0;
+            font-size: 11px; display: flex; align-items: center; gap: 8px; width: 160px;
+        }
+        .tab.active { background: #05070a; color: white; border: 1px solid var(--border); border-bottom: none; }
+        .tab-icon { width: 16px; height: 16px; object-fit: contain; }
+
+        /* 2. Google Search Result Mock */
+        .search-result { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 16px; }
+        .search-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .search-fav-circle {
+            width: 28px; height: 28px; background: #f1f3f4; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .search-url { color: #bdc1c6; font-size: 12px; }
+        .search-title { color: #8ab4f8; font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+
+        /* 3. iOS Home Screen Mock */
+        .ios-grid {
+            display: flex; gap: 20px; justify-content: center; 
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000&auto=format&fit=crop');
+            padding: 40px; border-radius: 30px; background-size: cover; background-position: center;
+        }
+        .ios-app { text-align: center; width: 70px; }
+        .ios-icon { width: 60px; height: 60px; border-radius: 14px; margin-bottom: 5px; object-fit: cover; display: block; margin: 0 auto 5px; }
+        .ios-label { font-size: 10px; color: white; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+
+        /* Sidebar Controls */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .control-card { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .btn-main { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; }
+
+        @media (max-width: 850px) { .layout-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+        <header style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.5rem;">Favicon Previewer</h1>
+            <p style="color: #64748b;">Verify your brand's visual footprint across the web.</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="mock-container">
+                
+                <div>
+                    <div class="mock-label">Desktop Browser View</div>
+                    <div class="browser-chrome">
+                        <div class="tab">
+                            <img src="https://www.google.com/favicon.ico" class="tab-icon">
+                            <span>Google Search</span>
+                        </div>
+                        <div class="tab active">
+                            <img src="" class="tab-icon fav-target" style="display:none;">
+                            <span id="siteTitle">Your Awesome Site</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mock-label">Google Search (Mobile)</div>
+                    <div class="search-result">
+                        <div class="search-header">
+                            <div class="search-fav-circle">
+                                <img src="" class="fav-target" style="width: 18px; height: 18px; object-fit: contain; display:none;">
+                            </div>
+                            <div>
+                                <div class="search-url">brixe.io > products</div>
+                            </div>
+                        </div>
+                        <div class="search-title">Brixe: 100+ Automation Tools</div>
+                        <div style="font-size: 13px; color: #bdc1c6;">SEO and Identity tools for the modern web.</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mock-label">iOS Home Screen Simulation</div>
+                    <div class="ios-grid">
+                        <div class="ios-app">
+                            <img src="" class="ios-icon fav-target" style="background: white; display:none;">
+                            <div class="ios-label">Brixe</div>
+                        </div>
+                        <div class="ios-app">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCI+CjxwYXRoIGQ9Ik0gMTYgMyBDIDguODMwMDgwMyAzIDMgOC44MzAwODAzIDMgMTYgTCAzIDM0IEMgMyA0MS4xNjk5MiA4LjgzMDA4MDMgNDcgMTYgNDcgTCAzNCA0NyBDIDQxLjE2OTkyIDQ3IDQ3IDQxLjE2OTkyIDQ3IDM0IEwgNDcgMTYgQyA0NyA4LjgzMDA4MDMgNDEuMTY5OTIgMyAzNCAzIEwgMTYgMyB6IE0gMzcgMTEgQyAzOC4xMDQ1NjkgMTEgMzkgMTEuODk1NDMxIDM5IDEzIEMgMzkgMTQuMTA0NTY5IDM4LjEwNDU2OSAxNSAzNyAxNSBDIDM1Ljg5NTQzMSAxNSAzNSAxNC4xMDQ1NjkgMzUgMTMgQyAzNSAxMS44OTU0MzEgMzUuODk1NDMxIDExIDM3IDExIHogTSAyNSAxNCBDIDMxLjA3NTE0MiAxNCAzNiAxOC45MjQ4NTggMzYgMjUgQyAzNiAzMS4wNzUxNDIgMzEuMDc1MTQyIDM2IDI1IDM2IEMgMTguOTI0ODU4IDM2IDE0IDMxLjA3NTE0MiAxNCAyNSBDIDE0IDE4LjkyNDg1OCAxOC45MjQ4NTggMTQgMjUgMTQgeiBNIDI1IDE4IEMgMjEuMTM0Mzc1IDE4IDE4IDIxLjEzNDM3NSAxOCAyNSBDIDE4IDI4Ljg2NTYyNSAyMS4xMzQzNzUgMzIgMjUgMzIgQyAyOC44NjU2MjUgMzIgMzIgMjguODY1NjI1IDMyIDI1IEMgMzIgMjEuMTM0Mzc1IDI4Ljg2NTYyNSAxOCAyNSAxOCB6Ij48L3BhdGg+Cjwvc3ZnPg==" class="ios-icon" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
+                            <div class="ios-label">Instagram</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>Upload Asset</h3>
+                    <div id="dropZone" style="border: 2px dashed var(--border); padding: 30px; text-align: center; border-radius: 12px; cursor: pointer;" onclick="document.getElementById('favIn').click()">
+                        <span style="font-size: 2rem;">⚡</span>
+                        <p style="font-size: 0.75rem; margin-top: 10px; color: #94a3b8;">PNG or JPG</p>
+                    </div>
+                    <input type="file" id="favIn" hidden accept="image/*" onchange="updateFavicons(this)">
+                </div>
+
+                <div class="control-card">
+                    <h3>Dynamic Settings</h3>
+                    <label>App Name</label>
+                    <input type="text" placeholder="Brixe Engine" oninput="document.getElementById('siteTitle').innerText = this.value; document.querySelectorAll('.ios-label')[0].innerText = this.value" style="width:100%; background:#05070a; border:1px solid var(--border); color:white; padding:10px; border-radius:8px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 80px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit';">Brixe Engine</h3>
+            <p style="font-size: 0.8rem;">Vibe Coding Excellence 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateFavicons(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const targets = document.querySelectorAll('.fav-target');
+                targets.forEach(img => {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

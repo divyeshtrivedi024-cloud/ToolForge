@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Text Generator | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; }
+
+        .input-container { width: 100%; max-width: 600px; margin: 0 auto 40px auto; }
+
+        #userInput {
+            width: 100%; background: var(--glass); border: 2px solid var(--border);
+            color: white; padding: 20px; border-radius: 15px; font-family: 'Inter';
+            font-size: 1.2rem; text-align: center; outline: none; transition: 0.3s;
+        }
+        #userInput:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 0, 127, 0.2); }
+
+        .vibe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .vibe-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 18px; padding: 20px; cursor: pointer; transition: 0.3s;
+            position: relative;
+        }
+        .vibe-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.02); }
+
+        .vibe-label {
+            font-family: 'Outfit'; font-size: 0.75rem; color: #64748b;
+            text-transform: uppercase; margin-bottom: 10px; display: block;
+        }
+
+        .vibe-output { font-size: 1.4rem; word-break: break-all; color: white; min-height: 1.5em; }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+        
+        <section class="tool-card">
+            <h1>Gen Z Aesthetic Text</h1>
+            <p>Type below to see the viral fonts.</p>
+
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="chilling..." oninput="generateVibes()">
+            </div>
+
+            <div class="vibe-grid" id="vibeGrid"></div>
+        </section>
+    </div>
+
+    <script>
+        // High-fidelity offsets for Unicode blocks
+        const offsetMap = {
+            "Bold Sans": { upper: 0x1D5D4, lower: 0x1D5EE },
+            "Script": { upper: 0x1D49C, lower: 0x1D4B6 },
+            "Double Struck": { upper: 0x1D538, lower: 0x1D552 },
+            "Gothic": { upper: 0x1D504, lower: 0x1D51E },
+            "Mono": { upper: 0x1D670, lower: 0x1D68A }
+        };
+
+        function convertToUnicode(text, style) {
+    if (style === "Spaced") return text.split("").join(" ");
+    
+    // Legacy mapping for Script letters that live in "Letterlike Symbols"
+    const scriptExceptions = {
+        'B': 0x212C, 'E': 0x2130, 'F': 0x2131, 'H': 0x210B, 'I': 0x2110, 
+        'L': 0x2112, 'M': 0x2133, 'R': 0x211B, 'g': 0x210A, 'o': 0x2134
+    };
+
+    const offsets = offsetMap[style];
+
+    return text.split("").map(char => {
+        // Fix for the Script "Missing Glyph" issue
+        if (style === "Script" && scriptExceptions[char]) {
+            return String.fromCodePoint(scriptExceptions[char]);
+        }
+
+        const code = char.charCodeAt(0);
+        // Uppercase A-Z
+        if (code >= 65 && code <= 90) {
+            return String.fromCodePoint(offsets.upper + (code - 65));
+        }
+        // Lowercase a-z
+        if (code >= 97 && code <= 122) {
+            // Note: The Script block has a weird gap at 'g' 
+            // but our exceptions list above handles it.
+            return String.fromCodePoint(offsets.lower + (code - 97));
+        }
+        return char;
+    }).join("");
+}
+
+        function generateVibes() {
+            const input = document.getElementById('userInput').value || "chilling";
+            const grid = document.getElementById('vibeGrid');
+            grid.innerHTML = "";
+
+            const styles = ["Bold Sans", "Script", "Double Struck", "Gothic", "Mono", "Spaced"];
+
+            styles.forEach(style => {
+                const outputText = convertToUnicode(input, style);
+                const card = document.createElement('div');
+                card.className = "vibe-card";
+                card.onclick = () => {
+                    navigator.clipboard.writeText(outputText);
+                    alert("Copied: " + outputText);
+                };
+                card.innerHTML = `
+                    <span class="vibe-label">${style}</span>
+                    <div class="vibe-output">${outputText}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize with "chilling"
+        generateVibes();
+    </script>
+    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+    © 2026 Brixe Engine. All processing is 100% Client-Side.
+</footer>
+    <script src="../nav.js"></script>
+</body>
+</html>

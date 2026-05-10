@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail & Drink Namer | Brixe</title>
+    <meta name="description" content="Generate sophisticated, punchy, and creative names for your custom cocktails and mocktails. Perfect for bar menus, parties, and mixology enthusiasts.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Playfair Display', serif;">Cocktail & Drink Namer</h1>
+            <p>From speakeasies to rooftop bars. Generate names that capture the flavor, spirit, and mood of your latest liquid creation.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Main ingredient (e.g. 'Gin', 'Berry')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="speakeasy">🕴️ Speakeasy (Classic/Noir)</option>
+                    <option value="tropical">🏝️ Tropical Heat (Bright/Exotic)</option>
+                    <option value="botanical">🌿 Botanical Garden (Herbal/Fresh)</option>
+                    <option value="mystical">🔮 Mystical Brew (Dark/Whimsical)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateDrinkName()">Mix a Title</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Art of Liquid Branding</h2>
+            <p>A great cocktail is 50% ingredients and 50% presentation—and the name is the first part of that presentation. Whether you are crafting a menu for a professional lounge or naming a signature drink for a wedding, the name sets the expectation for the flavor profile. Our generator analyzes mixology trends to provide titles ranging from the historically inspired to the modern and experimental.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Alliterative Appeal</strong> Alliteration (e.g., "Midnight Mule," "Basil Bliss") makes a name more memorable and pleasing to say when ordering.</div>
+                <div class="tip-card"><strong>02. Mood Association</strong> Use the time of day or atmosphere as inspiration. "Morning Mist" implies something light, while "Eclipse" suggests depth and potency.</div>
+                <div class="tip-card"><strong>03. Technical Teasers</strong> Including a hint of the garnish or method (e.g., "Smoked," "Infused," "Spiced") helps guests understand the complexity of the drink.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Cocktail & Drink Namer
+ * 100% Client-Side | Mixology & Lifestyle Database
+ */
+function generateDrinkName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        speakeasy: {
+            pre: ["Midnight", "Silent", "Gilded", "Velvet", "Old", "Copper", "Smoke", "Blind", "Proper", "Ritz", "Noble", "Sterling", "Empire", "Secret", "Vintage", "Bourbon", "Silk", "Dapper", "Brass", "Ace"],
+            suff: ["Lounge", "Club", "Fashioned", "Punch", "Sling", "Hour", "Martini", "Crest", "Draft", "Social"]
+        },
+        tropical: {
+            pre: ["Sunset", "Island", "Tiki", "Coral", "Solar", "Ocean", "Lagoon", "Lush", "Electric", "Neon", "Samba", "Azure", "Citrus", "Mango", "Passion", "Wave", "Breeze", "Palms", "Gold", "Zest"],
+            suff: ["Splash", "Tide", "Fever", "Twist", "Cooler", "Punch", "Flow", "Zest", "Paradise", "Mist"]
+        },
+        botanical: {
+            pre: ["Wild", "Garden", "Herbal", "Elderflower", "Mint", "Basil", "Lavender", "Rosemary", "Meadow", "Bloom", "Green", "Earth", "Flora", "Thyme", "Sage", "Verdant", "Petal", "Dew", "Fresh", "Juniper"],
+            suff: ["Spritz", "Tonic", "Reviver", "Glow", "Infusion", "Harmony", "Garden", "Bloom", "Sip", "Fizz"]
+        },
+        mystical: {
+            pre: ["Lunar", "Witch", "Voodoo", "Shadow", "Magic", "Ether", "Cosmic", "Dark", "Raven", "Poison", "Forbidden", "Ghost", "Starlight", "Onyx", "Elixir", "Spell", "Aura", "Nebula", "Crystal", "Haze"],
+            suff: ["Potion", "Elixir", "Soul", "Bane", "Mist", "Spirit", "Draught", "Brew", "Cauldron", "Charm"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let drinkName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) drinkName = `${userWord} ${suff}`;
+            else if (r < 0.7) drinkName = `${pre} ${userWord}`;
+            else drinkName = `The ${userWord} ${pre}`;
+        } else {
+            if (r < 0.5) {
+                drinkName = `${pre} ${suff}`;
+            } else {
+                drinkName = `The ${pre}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.15rem; letter-spacing: 1px; font-family: 'Playfair Display', serif; font-style: italic;">${drinkName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">Signature Blend</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(drinkName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>SHAKEN & COPIED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Helping you craft the perfect experience with fast, private, and client-side tools. Cheers!
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Please drink responsibly.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Network Namer | Brixe</title>
+    <meta name="description" content="Secure your signal with style. Generate funny, creative, or professional WiFi network names (SSIDs) to make your home network stand out.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">WiFi Network Namer</h1>
+            <p>Claim your digital airspace. From pun-heavy jokes to sleek professional identifiers, find the perfect SSID for your router.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional keyword (e.g. 'Guest', '5G')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="funny">😂 Funny & Puns (Witty/Humor)</option>
+                    <option value="creative">🎨 Creative & Sci-Fi (Geeky/Abstract)</option>
+                    <option value="serious">💼 Professional & Clean (Sleek/Corporate)</option>
+                    <option value="cryptic">🕵️ Hidden & Cryptic (Security-ish/Stealth)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateWifiName()">Broadcast Name</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Art of the SSID</h2>
+            <p>Your WiFi name (SSID) is the digital porch light of your home. It’s the first thing neighbors and guests see when they open their settings. While "Router_2.4G" is functional, a custom name adds personality and can even act as a subtle deterrent. Our generator balances humor with utility, providing names that are easy to find in a list while expressing your unique vibe.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Avoid Personal Info</strong> Never include your full name, address, or phone number in your SSID. It’s better to be funny or abstract than to give away your identity to passersby.</div>
+                <div class="tip-card"><strong>02. Keep it Short</strong> Most routers have character limits, and shorter names are easier for guests to type correctly when searching for your network.</div>
+                <div class="tip-card"><strong>03. Separate 2.4/5GHz</strong> If your router doesn't auto-switch, use a naming convention like "Airstream" and "Airstream_Pro" to help you quickly identify the faster band.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * WiFi Network Namer
+ * 100% Client-Side | Tech & Humor Database
+ */
+function generateWifiName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        funny: [
+            "Tell My WiFi Love Her", "Pretty Fly For A WiFi", "Bill Wi The Science Fi", "It Burns When IP", 
+            "Wi-Fight The Feeling", "Winternet Is Coming", "Wu Tang Lan", "Nacho WiFi", 
+            "Abraham Linksys", "The LAN Before Time", "Martin Router King", "Drop It Like It's Hotspot",
+            "Loading...", "Connecting...", "Friendly Neighborhood Spider-LAN", "Get Off My LAN"
+        ],
+        creative: [
+            "Event Horizon", "Matrix Uplink", "Cyberdyne Systems", "Black Hole", "Neuralink Node", 
+            "Nebula Core", "The Grid", "Digital Oasis", "Data Stream Alpha", "Signal Sanctuary",
+            "Aether Net", "Void Walker", "Frequency Hub", "Binary Sunset", "Prism Point", "Omni-Network"
+        ],
+        serious: [
+            "Airstream", "Velocity", "Core-Fiber", "Main-Node", "Primary-Uplink", 
+            "SkyNet_Secure", "Horizon-Net", "Quantum-5G", "Titan-Gateway", "Vanguard-Broadband",
+            "Optic-Flow", "Vector-Wireless", "Summit-Connect", "Apex-Link", "Broadband-HQ", "Direct-Access"
+        ],
+        cryptic: [
+            "404 Not Found", "Unsecured Network", "Virus_Distribution_Hub", "FBI Surveillance Van #4", 
+            "Hidden_Node_7", "Scanning...", "Encrypted_Null", "System_Internal", "Null_Pointer", 
+            "Shadow_Log", "No Signal", "Static_Void", "Unknown_Host", "Proxy_Relay_00", "Dark_Fiber"
+        ]
+    };
+
+    const names = data[vibe];
+    const shuffled = names.sort(() => 0.5 - Math.random());
+
+    for (let i = 0; i < 6; i++) {
+        let finalName = shuffled[i % shuffled.length];
+        
+        if (userWord) {
+            const r = Math.random();
+            if (r < 0.5) finalName = `${userWord}_${finalName.replace(/\s+/g, '_')}`;
+            else finalName = `${finalName.replace(/\s+/g, '_')}_${userWord}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1rem; letter-spacing: 0.5px; font-family: 'Space Mono', monospace;">${finalName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">Network SSID</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COPIED TO CLIPBOARD</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Broadcasting high-performance, private tools since 2024.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Stay connected.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

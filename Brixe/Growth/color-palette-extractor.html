@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Extractor | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* THE BRIXE CORE RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --pitch-black: #05070a;
+            --soft-gray: #1e293b;
+            --accent: #ff007f;
+            --border: #334155;
+        }
+
+        body { background: var(--pitch-black); color: white; font-family: 'Inter', sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        .uploader-zone {
+            width: 100%; max-width: 600px; margin: 0 auto 40px auto;
+            border: 2px dashed var(--border); background: rgba(30, 41, 59, 0.4);
+            border-radius: 24px; padding: 60px 20px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .uploader-zone:hover { border-color: var(--accent); background: rgba(255, 0, 127, 0.05); }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+
+        .img-preview-container {
+            background: #111; border-radius: 20px; padding: 15px;
+            border: 1px solid var(--border); overflow: hidden;
+        }
+        #imgPreview { width: 100%; border-radius: 12px; display: none; }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .color-swatch {
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        .color-swatch:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .color-swatch span { font-family: 'Outfit'; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+
+        .copy-tag { font-size: 0.6rem; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; color: white; opacity: 0.7; }
+
+        .info-header { font-family: 'Outfit'; font-size: 1.2rem; margin-bottom: 20px; color: var(--accent); }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+       
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.8rem;">Color Palette Extractor</h1>
+            <p style="color: #64748b;">Upload an image to pull its dominant viral aesthetic colors.</p>
+        </header>
+
+        <div class="uploader-zone" onclick="document.getElementById('imgIn').click()">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🎨</div>
+            <strong id="status">Drop Image to Sample</strong>
+            <input type="file" id="imgIn" hidden accept="image/*" onchange="extractPalette(this)">
+        </div>
+
+        <div class="workspace" id="workspace" style="display: none;">
+            <div class="img-preview-container">
+                <img id="imgPreview" src="">
+                <canvas id="canvas" style="display:none;"></canvas>
+            </div>
+
+            <div>
+                <div class="info-header">Generated Palette</div>
+                <div class="palette-grid" id="paletteGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">The Aesthetic Analysis Suite v1.4</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. Fast, private, browser-only processing.</p>
+        </div>
+    </footer>
+
+    <script>
+        function extractPalette(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.getElementById('imgPreview');
+                img.src = e.target.result;
+                img.style.display = 'block';
+                document.getElementById('workspace').style.display = 'grid';
+                document.getElementById('status').innerText = "Colors Extracted";
+                
+                img.onload = () => sampleColors(img);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function sampleColors(img) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            // Sample pixels in a grid to get dominant colors
+            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            const colorCounts = {};
+            const step = Math.floor(pixels.length / 4000) * 4; // Sample ~1000 pixels
+
+            for (let i = 0; i < pixels.length; i += step) {
+                const r = pixels[i];
+                const g = pixels[i+1];
+                const b = pixels[i+2];
+                // Simplify color to reduce noise (group similar shades)
+                const key = `${Math.round(r/10)*10},${Math.round(g/10)*10},${Math.round(b/10)*10}`;
+                colorCounts[key] = (colorCounts[key] || 0) + 1;
+            }
+
+            const sortedColors = Object.entries(colorCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 6)
+                .map(c => {
+                    const [r,g,b] = c[0].split(',');
+                    return rgbToHex(parseInt(r), parseInt(g), parseInt(b));
+                });
+
+            renderPalette(sortedColors);
+        }
+
+        function rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join("");
+        }
+
+        function renderPalette(colors) {
+            const grid = document.getElementById('paletteGrid');
+            grid.innerHTML = "";
+            colors.forEach(hex => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.style.backgroundColor = hex;
+                swatch.onclick = () => copyHex(hex, swatch);
+                swatch.innerHTML = `<span>${hex}</span><div class="copy-tag">Click to Copy</div>`;
+                grid.appendChild(swatch);
+            });
+        }
+
+        function copyHex(hex, el) {
+            navigator.clipboard.writeText(hex);
+            const tag = el.querySelector('.copy-tag');
+            tag.innerText = "COPIED!";
+            tag.style.background = "white";
+            tag.style.color = "black";
+            setTimeout(() => {
+                tag.innerText = "Click to Copy";
+                tag.style.background = "rgba(0,0,0,0.5)";
+                tag.style.color = "white";
+            }, 1000);
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

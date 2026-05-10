@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir Detective Agency Namer | Brixe</title>
+    <meta name="description" content="Generate gritty, hardboiled, and atmospheric detective agency names. Perfect for noir novels, RPGs, and mystery worldbuilding.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Special+Elite&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Playfair Display', serif; font-style: italic; color: #e2e8f0; border-bottom: 2px solid #475569; display: inline-block; padding-bottom: 5px;">Noir Agency Namer</h1>
+            <p>Smoke, shadows, and secrets. Generate names for rain-slicked offices and hardboiled investigators. Featuring a triple-distilled database of gritty tropes.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional Name/Location (e.g. 'Marlowe', 'Bay')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="hardboiled">🥃 Hardboiled (Gritty/Cynical)</option>
+                    <option value="classic">🕵️ Classic Private Eye (1940s/Formal)</option>
+                    <option value="shadowy">🌑 Shadow & Fog (Mysterious/Vague)</option>
+                    <option value="modern">🚬 Neo-Noir (Cynical/Corporate)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%); border: 1px solid #64748b;" onclick="generateNoirName()">Open the Case</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Art of the Hardboiled Hook</h2>
+            <p>In Noir storytelling, a detective agency name shouldn't promise justice—it should promise the truth, no matter how ugly. Most agencies in the genre are either named after a cynical individual or a cold, geographical landmark. Our expanded database focuses on <strong>Low-Key Brutalism</strong>: using words that imply weariness, rain, and the persistent grey areas of the law.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The Surname Strategy</strong> Using a sharp, single-syllable surname (e.g., "Steel," "Vance," "Stone") suggests a protagonist who is as tough as the streets they walk.</div>
+                <div class="tip-card"><strong>02. Urban Melancholy</strong> Words like "Midnight," "Alley," "Rain," and "Neon" evoke a sensory atmosphere before the reader even meets the characters.</div>
+                <div class="tip-card"><strong>03. Functional Vagueness</strong> Sometimes the most effective names are overly formal, like "The Bureau" or "Standard Inquiries," suggesting a level of secrecy that borders on the illegal.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Noir Detective Agency Namer (Mega-Database v1.0)
+ * 100% Client-Side | Hardboiled & Mystery Database
+ */
+function generateNoirName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9 ]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        hardboiled: {
+            pre: ["Last", "Broken", "Cold", "Gritty", "Blood", "Bitter", "Rough", "Hard", "Midnight", "Steel", "Iron", "Street", "Alley", "Asphalt", "Concrete", "Rusty", "Dirty", "Empty", "Final", "Cheap", "Bullet", "Smoky", "Deadly", "Ugly", "Sinister", "Vengeance", "Night", "Grey", "Black", "Silent", "Lone", "Tough", "Grim", "Sharp", "Jagged", "Hollow", "Fallen", "Shattered", "Dark", "Deep"],
+            suff: ["Inquiries", "Investigations", "Solutions", "Tactics", "Justice", "Truth", "Agency", "Office", "Shield", "Eye", "Watch", "Hand", "Shadow", "Patrol", "Trace", "Hunt", "Verity", "Records", "Resolutions", "Cases"]
+        },
+        classic: {
+            pre: ["Continental", "Metropolitan", "Empire", "Federal", "Standard", "Reliable", "Confidential", "Elite", "Premier", "Regal", "Sovereign", "Central", "Pacific", "Atlantic", "Northern", "National", "Public", "Official", "Private", "District", "Grand", "Urban", "Classic", "Vintage", "Civic", "Heritage", "Beacon", "Pillar", "Foundry", "Agency", "Archer", "Spade", "Wolfe", "Hammer", "Drake", "Vance", "Marlowe", "Gittes", "Chan", "Mason"],
+            suff: ["Bureau", "Agency", "Association", "Firm", "Partners", "Inquiry", "Consultants", "Detectives", "Investigators", "Services", "Practice", "Offices", "Chambers", "Group", "Syndicate", "Institute", "Trust", "Council", "Bureau", "Station"]
+        },
+        shadowy: {
+            pre: ["Blind", "Veiled", "Hidden", "Obscure", "Fog", "Mist", "Rain", "Neon", "Shadow", "Ghost", "Phantom", "Whisper", "Silent", "Echo", "Muffled", "Cloud", "Dark", "Dim", "Shaded", "Secret", "Clandestine", "Under", "Covert", "Stealth", "Grey", "Silver", "Mirror", "Glass", "Static", "Vague", "Murky", "Night", "Twilight", "Vesper", "Nocturnal", "Masked", "Ink", "Void", "Lost", "Nameless"],
+            suff: ["Eye", "Shadow", "Presence", "Agency", "Link", "Trace", "Vapor", "Aura", "Scope", "Vision", "Horizon", "Cowl", "Veil", "Smoke", "Spirit", "Network", "Source", "Point", "Key", "Cipher"]
+        },
+        modern: {
+            pre: ["Vector", "Apex", "Zenith", "Logic", "Prism", "Signal", "Nexus", "Global", "Data", "Binary", "Neural", "Pulse", "Synthetix", "Zero", "Core", "Optic", "Quartz", "Silicon", "Cyber", "Void", "City", "Metro", "Prime", "Alpha", "Active", "Direct", "Linear", "Clean", "Cold", "Modern", "System", "Protocol", "Framework", "Structure", "Integration", "Flow", "Shift", "Grid", "Matrix", "Code"],
+            suff: ["Solutions", "Dynamics", "Consulting", "Strategies", "Operations", "Intelligence", "Analytics", "Security", "Risk", "Mitigation", "Response", "Assurance", "Systems", "Tactics", "Group", "Collective", "Unit", "Interface", "Link", "Hub"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalName = `${userWord} & ${pre}`;
+            else if (r < 0.7) finalName = `${userWord} ${suff}`;
+            else finalName = `The ${userWord} ${vibe === 'classic' ? 'Bureau' : 'Inquiry'}`;
+        } else {
+            if (r < 0.3) {
+                finalName = `The ${pre} ${suff}`;
+            } else if (r < 0.6) {
+                const name2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                finalName = (pre !== name2) ? `${pre} & ${name2}` : `${pre} ${suff}`;
+            } else {
+                finalName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.background = '#0f172a';
+        div.style.border = '1px solid #334155';
+        div.style.boxShadow = '5px 5px 0px var(--primary)';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 0.9rem; font-family: 'Special Elite', cursive; letter-spacing: 1px;">${finalName.toUpperCase()}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 2px; color: var(--primary); border-top: 1px dashed #334155; padding-top: 8px;">PRIVATE INVESTIGATIONS • 24 HOURS</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: #64748b; font-weight: 800; letter-spacing: 1px; font-family: Special Elite;'>CASE CLOSED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Building the narrative foundation for digital architects. High-performance, high-flavor creative tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Sector</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="creative-universe.html" style="color: #64748b; text-decoration: none;">Creative Universe</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Keep walking.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

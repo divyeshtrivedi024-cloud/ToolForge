@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosplay Stage Namer | Brixe</title>
+    <meta name="description" content="Generate catchy, aesthetic, and professional cosplay stage names. From J-Pop idols to grim fantasy warriors.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Bungee&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass" >
+            <h1 class="tool-title" style="font-family: 'Bungee', cursive; color: #fff; -webkit-text-fill-color: transparent;">Cosplay Stage Namer</h1>
+            <p>Ready for the masquerade? Generate a professional alias that sticks. Whether you're a prop-maker, a competitive performer, or an idol, find your digital identity here.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional keyword (e.g. 'Rune', 'Pink')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="idol">✨ J-Idol / Kawaii (Cute/Energetic)</option>
+                    <option value="artisan">🛠️ Artisan / Prop-Maker (Technical/Cool)</option>
+                    <option value="fantasy">⚔️ Grim & Fantasy (Epic/Lore-heavy)</option>
+                    <option value="aesthetic">🎀 Soft Aesthetic (Flowery/Vibey)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" style="background: linear-gradient(135deg, #1d3da5 0%, #173673 100%); color: #000; font-weight: 900;" onclick="generateCosplayName()">Enter the Spotlight</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Building a Cosplay Brand</h2>
+            <p>In the global cosplay community, your stage name is your calling card for conventions, social media, and guest appearances. A great name needs to be <strong>Searchable</strong> and <strong>Evocative</strong>. Our mega-database combines linguistic roots from Japanese pop culture, high-fantasy literature, and modern streetwear aesthetics to help you find an alias that sounds as good as your craftsmanship looks.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The 'Cos' Suffix</strong> Adding "Cos" or "Cosplay" to a unique word (e.g., "NebulaCos") is a classic way to ensure people know exactly what your page is about at a glance.</div>
+                <div class="tip-card"><strong>02. Dual-Language Harmony</strong> Mixing English nouns with Japanese phonetics (e.g., "Kitsune Heart" or "Yuki Blade") creates a cross-cultural appeal perfect for the anime circuit.</div>
+                <div class="tip-card"><strong>03. Craft-Focused Naming</strong> If you specialize in armor or electronics, use "Forge," "Lab," "Works," or "Circuits" to position yourself as a technical expert in the community.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Cosplay Stage Namer (Triple-Expanded Database)
+ * 100% Client-Side | Digital Identity & Subculture Database
+ */
+function generateCosplayName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9 ]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        idol: {
+            pre: ["Mochi", "Choco", "Berry", "Sweet", "Sugar", "Lulu", "Mimi", "Kiki", "Nyan", "Pika", "Star", "Sparkle", "Candy", "Milky", "Honey", "Bubbles", "Pink", "Ribbon", "Gummy", "Peach", "Yuki", "Hana", "Aiko", "Rini", "Momo", "Sora", "Umi", "Koko", "Nana", "Yume", "Magic", "Idol", "Pop", "Melody", "Note", "Harmony", "Shine", "Glitter", "Twinkle", "Sunny"],
+            suff: ["-chan", "-tan", "-rin", "Idol", "Heart", "Star", "Berry", "Bunny", "Kitty", "Pop", "Sparkle", "Magic", "Dreams", "Chu", "Kiss", "Beat", "Music", "Melody", "Hime", "Doll"]
+        },
+        artisan: {
+            pre: ["Iron", "Steel", "Chrome", "Gear", "Bolt", "Workshop", "Forge", "Alloy", "Carbon", "Prop", "Craft", "Master", "Apex", "Vector", "Circuit", "Fabric", "Stitch", "Needle", "Thread", "Pattern", "Armor", "Shield", "Lab", "Studio", "Works", "Project", "Build", "Custom", "Prime", "Alpha", "Mech", "Tech", "Cos", "Play", "Design", "Art", "Manual", "Direct", "Shift", "Core"],
+            suff: ["Works", "Forge", "Lab", "Studio", "Crafts", "Prop-Shop", "Armory", "Creations", "Art", "Design", "Customs", "Cos", "Play", "Makers", "Foundry", "Vault", "Hangar", "Archives", "Systems", "Gear"]
+        },
+        fantasy: {
+            pre: ["Rune", "Mythic", "Legend", "Epic", "Fallen", "Shattered", "Golden", "Shadow", "Void", "Ethereal", "Ancient", "Grim", "Blood", "Soul", "Spirit", "Ghost", "Phantom", "Silver", "Lunar", "Solar", "Onyx", "Ivory", "Marble", "Stone", "Frost", "Flame", "Storm", "Thunder", "Wind", "Aether", "Dragon", "Kitsune", "Wolf", "Raven", "Crow", "Blade", "Shield", "Vesper", "Arcane", "Cursed"],
+            suff: ["Cosplay", "Knight", "Mage", "Thief", "Brave", "Walker", "Stalker", "Hunter", "Seeker", "Legacy", "Chronicle", "Echo", "Whisper", "Oracle", "Sovereign", "Paladin", "Warrior", "Shadow", "Mist", "Veil"]
+        },
+        aesthetic: {
+            pre: ["Cloud", "Mist", "Pale", "Soft", "Velvet", "Silk", "Lace", "Floral", "Lavender", "Rose", "Petal", "Willow", "Moss", "Fern", "Quiet", "Still", "Faint", "Vapor", "Glass", "Opal", "Pearl", "Ivory", "Dream", "Sleepy", "Cozy", "Warm", "Gentle", "Light", "Airy", "Lush", "Hazel", "Ivy", "Sage", "Dusk", "Dawn", "Twilight", "Ember", "Glow", "Aura", "Pure"],
+            suff: ["Aesthetic", "Vibes", "Clouds", "Dreams", "Petals", "Bloom", "Sway", "Echo", "Shimmer", "Glint", "Whisper", "Mood", "Haze", "Garden", "Cove", "Nook", "Haven", "Soul", "Heart", "End"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalName = `${userWord} ${suff}`;
+            else if (r < 0.7) finalName = `${pre}${userWord}`;
+            else finalName = `${userWord}Cos`;
+        } else {
+            if (r < 0.3) {
+                finalName = `${pre}${suff}`;
+            } else if (r < 0.6) {
+                finalName = `${pre} ${suff}`;
+            } else {
+                finalName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.background = 'rgba(20, 20, 20, 0.8)';
+        div.style.border = '1px solid rgba(255, 0, 255, 0.2)';
+        div.style.borderRadius = '12px';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1rem; font-family: 'Outfit', sans-serif;">${finalName}</div>
+            <div style="opacity: 0.6; font-size: 0.55rem; margin-top: 10px; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">CONVENTION READY • 2026 EDITION</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: #fff; font-weight: 800; letter-spacing: 1px;'>PHOTO READY!</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The massive-scale engine for digital creators and subculture pioneers. Performance-optimized creativity.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Sector</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="creative-universe.html" style="color: #64748b; text-decoration: none;">Creative Universe</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Work that stage.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

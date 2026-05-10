@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm & Homestead Namer | Brixe</title>
+    <meta name="description" content="Generate rustic, traditional, and fruitful names for your farm, homestead, or ranch. Find the perfect identity for your land and legacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Fraunces:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Fraunces', serif;">Farm & Homestead Namer</h1>
+            <p>Rooted in the earth. Generate names for family farms, sustainable homesteads, sprawling ranches, and fruit orchards.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional crop or feature (e.g. 'Apple', 'Brook')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="traditional">🚜 Traditional Farm (Heritage/Working)</option>
+                    <option value="homestead">🏡 Cozy Homestead (Small-scale/Quiet)</option>
+                    <option value="ranch">🐎 Rugged Ranch (Wide-open/Strong)</option>
+                    <option value="orchard">🍎 Orchard & Grove (Fruitful/Lush)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateFarmName()">Cultivate a Name</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Naming Your Piece of Earth</h2>
+            <p>A farm name is more than a label; it’s a commitment to the land. Whether you are operating a multi-generational cattle ranch or starting a sustainable urban homestead, the right name communicates your values and the character of your soil. Our generator combines geological features, heritage livestock breeds, and traditional agrarian suffixes to create names that feel as sturdy as an old oak fence.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Landmark Legacies</strong> Use the specific geography of your land. Terms like "Hollow," "Ridge," "Bottoms," and "Flat" give the name immediate physical context.</div>
+                <div class="tip-card"><strong>02. Flora & Fauna</strong> Mentioning what you raise or grow (e.g., "Clover," "Bramble," "Honey," "Willow") creates an instant association with your farm's primary output.</div>
+                <div class="tip-card"><strong>03. Old English Suffixes</strong> Suffixes like "Acre," "Croft," "Grange," and "Stead" carry a sense of history and permanent settlement.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Farm & Homestead Namer
+ * 100% Client-Side | Agrarian & Heritage Database
+ */
+function generateFarmName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        traditional: {
+            pre: ["Heritage", "Old", "Golden", "Sunny", "Green", "Plow", "Harvest", "Meadow", "Fertile", "Stable", "Miller", "Cooper", "Baker", "Smith", "Stone", "Iron", "Valley", "Plains", "Field", "Brook"],
+            suff: ["Farms", "Grange", "Acres", "Plains", "Fields", "Valley", "Crest", "Bottoms", "Manor", "Estate"]
+        },
+        homestead: {
+            pre: ["Little", "Quiet", "Simple", "Wildflower", "Bramble", "Honey", "Clover", "Mossy", "Humble", "Rustic", "Fern", "Willow", "Hazel", "Sweet", "Misty", "Hearth", "Ember", "Morning", "Evening", "Dew"],
+            suff: ["Homestead", "Croft", "Nook", "Stead", "Patch", "Hollow", "Lane", "Corner", "Snug", "Haven"]
+        },
+        ranch: {
+            pre: ["Dusty", "Lone", "Copper", "Iron", "Red", "Black", "Broken", "Swift", "Wild", "Canyon", "Summit", "Ridge", "Talon", "Bronco", "Bison", "Cactus", "Sage", "Trail", "Outpost", "Desert"],
+            suff: ["Ranch", "Cattle Co.", "Outpost", "Range", "Springs", "Ridge", "Bluff", "Station", "Basin", "Cross"]
+        },
+        orchard: {
+            pre: ["Apple", "Cherry", "Peach", "Pear", "Plum", "Berry", "Cider", "Bloom", "Petal", "Sugar", "Autumn", "Harvest", "Orchard", "Flora", "Golden", "Sweet", "Crisp", "Dewy", "Sun", "Vine"],
+            suff: ["Orchard", "Grove", "Gardens", "Vines", "Way", "Hill", "Breeze", "Valley", "Arbor", "Root"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let farmName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) farmName = `${userWord} ${suff}`;
+            else if (r < 0.7) farmName = `${pre} ${userWord}`;
+            else farmName = `${userWord} & ${pre} ${suff}`;
+        } else {
+            if (r < 0.5) {
+                farmName = `${pre} ${suff}`;
+            } else {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * 20)];
+                farmName = (pre !== pre2) ? `${pre} & ${pre2} ${suff}` : `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Fraunces', serif;">${farmName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">Land & Legacy Verified</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(farmName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>STAKED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Helping you name your dreams and your land. Private, fast, and 100% client-side.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Rooted in performance.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

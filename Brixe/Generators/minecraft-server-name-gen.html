@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Name Generator | Brixe</title>
+    <meta name="description" content="Generate high-performance Minecraft server names. Create unique identities for Factions, Skyblock, SMP, and Anarchy servers with zero-log privacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Minecraft Server Namer</h1>
+            <p>Construct a legendary brand for your network and dominate the server lists.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'Craft', 'Block', 'Mine'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="competitive">⚔️ Competitive (Factions/HCF/Prison)</option>
+                    <option value="community">🌍 Community (SMP/Vanilla/Creative)</option>
+                    <option value="fantasy">🔮 Fantasy (RPG/Skyblock/Magic)</option>
+                    <option value="modern">🛰️ Modern & Tech (Anarchy/Modded/Network)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateMCServer()">Generate Server Names</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Building a Block-Based Empire</h2>
+            <p>In the saturated world of Minecraft multiplayer, your server's name is your primary marketing tool. It needs to convey the gameplay style instantly—whether that's high-stakes raiding or a cozy survival experience. Our generator combines "Power Suffixes" with community-proven prefixes to ensure your brand sounds established, professional, and invite-worthy from the first click.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Domain Availability</strong> Always check if the .com or .net is available. Professional networks like Hypixel or Wynncraft rely on clean, memorable URLs.</div>
+                <div class="tip-card"><strong>02. Avoid Clichés</strong> While "Craft" is a classic, combining it with abstract words like "Aether" or "Obsidian" makes your server stand out in crowded server lists.</div>
+                <div class="tip-card"><strong>03. Phonetic Punch</strong> Short, two-syllable names are easier for players to type into their multiplayer tab. Aim for names that roll off the tongue during Discord calls.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Minecraft Server Name Generator Logic
+ * 100% Client-Side | Privacy-First
+ */
+function generateMCServer() {
+    // 1. Strict Input Sanitization
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '') || "Craft";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. Comprehensive 40-50 word database for "AI-generated" variety
+    const data = {
+        competitive: { 
+            pre: ["apex", "vortex", "venom", "cobra", "titan", "omega", "alpha", "fury", "raid", "siege", "battle", "war", "blood", "iron", "steel", "valor", "legend", "mythic", "ruthless", "hcf", "prison", "hardcore", "rival", "clash", "strike", "force", "prime", "zenith", "apex", "summit", "vanguard", "legion", "order", "chaos", "anarchy", "void", "abyss", "purgatory", "wild", "savage"], 
+            post: ["hcf", "pvp", "factions", "prison", "wars", "clash", "raid", "siege", "valor", "rivals", "hq", "network", "realm", "central", "united", "hub", "battles", "combat", "arena", "games"] 
+        },
+        community: { 
+            pre: ["pixel", "bloom", "haven", "oasis", "meadow", "valley", "grove", "forest", "river", "coast", "tide", "sun", "moon", "star", "earth", "nature", "wild", "free", "pure", "soft", "cozy", "warm", "daily", "fresh", "mellow", "vivid", "bright", "unity", "native", "local", "home", "life", "chill", "vibe", "peace", "serene", "bliss", "opal", "cloud", "mist"], 
+            post: ["smp", "vanilla", "creative", "survival", "towny", "life", "world", "earth", "craft", "haven", "oasis", "park", "garden", "meadow", "valley", "plaza", "avenue", "village", "town", "community"] 
+        },
+        fantasy: { 
+            pre: ["aether", "celestial", "astral", "mythic", "divine", "arcane", "mystic", "ancient", "eternal", "dragon", "knight", "mage", "sage", "oracle", "elven", "nymph", "siren", "fae", "druid", "shadow", "frost", "flame", "storm", "thunder", "clay", "sumac", "birch", "root", "amber", "obsidian", "emerald", "crystal", "rune", "sigil", "spirit", "wraith", "relic", "hidden", "lost", "fabled"], 
+            post: ["skyblock", "rpg", "magic", "quest", "legends", "tales", "lore", "realms", "kingdom", "empire", "throne", "crown", "gate", "path", "bridge", "tower", "keep", "castle", "fortress", "bastion"] 
+        },
+        modern: { 
+            pre: ["sync", "flux", "node", "byte", "pixel", "grid", "pulse", "flow", "drift", "mode", "zero", "logic", "neural", "meta", "hyper", "cyber", "smart", "quick", "fast", "swift", "snap", "dash", "bolt", "prime", "neo", "future", "vivid", "sonic", "ultra", "mega", "nano", "macro", "vector", "optic", "data", "cloud", "core", "base", "link", "port", "signal", "freq", "wave"], 
+            post: ["network", "hub", "labs", "systems", "tech", "digital", "online", "mode", "sync", "run", "logic", "core", "point", "box", "kit", "tools", "pad", "dash", "proxy", "server"] 
+        }
+    };
+
+    const separators = [" ", "", "-", ""];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        // Randomize word order for professional variety
+        if (r < 0.4) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.8) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Minecraft Server Lists usually truncate at 20-25 chars for mobile
+        if (name.length > 25) {
+            name = name.substring(0, 22) + "...";
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // 4. Clipboard Promise + CSS Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Copy failed', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

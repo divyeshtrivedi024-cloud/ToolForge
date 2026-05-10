@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Group & Library Namer | Brixe</title>
+    <meta name="description" content="Generate professional Steam group names and library collection aliases. Create unique identities for gaming communities, curator pages, and organized libraries.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Steam Group & Library Namer</h1>
+            <p>Establish a community hub or organize your massive backlog with high-impact aliases.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'Backlog', 'Elite', 'Vibe'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="community">👥 Community & Clan (Social/Steam Group)</option>
+                    <option value="curator">📝 Curator & Review (Authority/Press)</option>
+                    <option value="library">📁 Library & Backlog (Organization/Shelf)</option>
+                    <option value="aesthetic">🌌 Abstract & Minimal (Aesthetic/Rare)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateSteamName()">Generate Steam Aliases</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Architecture of a Steam Brand</h2>
+            <p>Whether you're creating a massive community for thousands of players or simply trying to categorize 500+ games in your library, the right name provides structure. A Steam Group name is permanent and dictates your URL—making it the most important branding decision for a curator or gaming clan. For library collections, we focus on "Status Tags" that help you actually finish your games.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. URL Availability</strong> Steam group URLs are unique. If your name is common, our generator suggests "Power Suffixes" to help you secure a clean, short URL.</div>
+                <div class="tip-card"><strong>02. Library Emojis</strong> For Library collections, Steam supports UTF-8 icons. Including a small symbol (e.g., ⚡ or 📁) helps your categories stand out in the side nav.</div>
+                <div class="tip-card"><strong>03. Abbreviation Potential</strong> Steam groups show a 3-4 letter abbreviation in-game (tags). Choose a name that shortens into a recognizable and punchy tag.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Steam Group & Library Namer Logic
+ * 100% Client-Side | Privacy-First
+ */
+function generateSteamName() {
+    // 1. Strict Input Sanitization
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9 ]/g, '') || "Gamer";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. Specialized word database for Steam ecosystems
+    const data = {
+        community: { 
+            pre: ["global", "united", "alliance", "syndicate", "legion", "order", "zenith", "prime", "omega", "alpha", "delta", "iron", "steel", "vanguard", "elite", "pro", "master", "grand", "royal", "noble", "ancient", "eternal", "mythic", "astral", "solar", "lunar", "arctic", "storm", "blaze", "venom", "viper", "dragon", "knight", "valkyrie", "shadow", "phantom", "ghost", "wraith", "void", "null"], 
+            post: ["clan", "syndicate", "empire", "legion", "order", "alliance", "collective", "network", "hub", "central", "hq", "base", "squad", "crew", "gang", "unity", "global", "unlimited", "synergy", "force"] 
+        },
+        curator: { 
+            pre: ["the", "pure", "raw", "candid", "quiet", "honest", "sharp", "clear", "urban", "global", "modern", "classic", "vantage", "logic", "neural", "binary", "digital", "analog", "indie", "retro", "hidden", "lost", "found", "prime", "first", "next", "open", "deep", "brief", "quick", "daily", "weekly", "standard", "expert", "pro", "master", "select", "choice", "gold", "silver"], 
+            post: ["reviews", "reports", "insights", "journal", "digest", "brief", "chronicle", "monitor", "standard", "gazette", "observer", "press", "media", "critique", "perspective", "lens", "archive", "vault", "notes", "dispatch"] 
+        },
+        library: { 
+            pre: ["01", "02", "active", "finished", "current", "next", "backlog", "replay", "unplayed", "favorite", "mastered", "platinum", "gold", "endless", "short", "long", "story", "ranked", "chill", "hard", "indie", "aaa", "classic", "hidden", "gem", "broken", "glitch", "retro", "modern", "digital", "cloud", "local", "installed", "ready", "set", "go", "done", "keep", "shelf", "pile"], 
+            post: ["collection", "backlog", "pile", "shelf", "archive", "vault", "bin", "folder", "list", "stack", "deck", "rack", "bay", "dock", "hub", "zone", "area", "spot", "tier", "grade"] 
+        },
+        aesthetic: { 
+            pre: ["void", "null", "zero", "static", "glitch", "phantom", "ghost", "noir", "ivory", "pearl", "opal", "velvet", "silk", "soft", "serene", "bliss", "luna", "stellar", "celestial", "vivid", "bloom", "petal", "rose", "lily", "violet", "haze", "mist", "pure", "rare", "limited", "exclusive", "lost", "found", "youth", "rebel", "wild", "faded", "neon", "pulse", "echo", "aura"], 
+            post: ["vibe", "mood", "glow", "mist", "haze", "flow", "wave", "sky", "rain", "sun", "wind", "root", "stone", "soul", "mind", "life", "heart", "dream", "vault", "files", "archives"] 
+        }
+    };
+
+    const separators = [" ", "", "-", " | "];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.4) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.8) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Steam group names are long, but 35 chars is safe for UI
+        if (name.length > 35) {
+            name = name.substring(0, 32) + "...";
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // 4. Clipboard Promise + CSS Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Failed to sync Steam identity', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

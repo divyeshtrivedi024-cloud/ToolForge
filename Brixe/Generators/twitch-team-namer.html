@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Team Namer | Brixe</title>
+    <meta name="description" content="Generate high-impact, professional Twitch team names. Build your streamer collective with unique, high-energy group aliases optimized for Twitch Communities.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Twitch Team Namer</h1>
+            <p>Unite your collective with a name that commands attention in the sidebar.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'elite', 'chaos', 'pixel'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="esports">🏆 Esports & Competitive (Orgs/Squads)</option>
+                    <option value="social">🤝 Social & Variety (Fam/Collab)</option>
+                    <option value="dark">🌑 Underground & Dark (Void/Synapse)</option>
+                    <option value="neon">⚡ High-Energy & Neon (Pulse/Vibe)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateTeamName()">Forge Team Name</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Building a Streamer Collective</h2>
+            <p>A Twitch Team is more than just a list of channels; it's a unified brand that helps smaller streamers grow through cross-promotion. Your team name should be scalable—professional enough for potential sponsors but unique enough to stand out in a viewer's "Following" list. Our engine focuses on "Power Words" that resonate with gaming and live-streaming culture.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Tag Potential</strong> Consider how the name looks as a prefix tag (e.g., [TEAM]). Short, punchy names work best for in-game clan tags.</div>
+                <div class="tip-card"><strong>02. Community Identity</strong> The best team names allow fans to call themselves something (e.g., "The Nexus" fans being "Navigators").</div>
+                <div class="tip-card"><strong>03. SEO Availability</strong> Before finalizing, check if the "Twitch.tv/team/name" URL is available. Consistency across social media handles is vital for discoverability.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Twitch Team Namer Logic
+ * 100% Client-Side | Privacy-First
+ */
+function generateTeamName() {
+    // 1. Strict Input Sanitization (Letters and Numbers only for Team URLs)
+    const rawInput = document.getElementById('userInput').value.trim().toLowerCase();
+    const userWord = rawInput.replace(/[^a-z0-9]/g, '') || "squad";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. 40-50 word database for authentic variety
+    const data = {
+        esports: { 
+            pre: ["apex", "vertex", "alpha", "omega", "prime", "titan", "zenith", "quantum", "delta", "sigma", "ultra", "proven", "elite", "rogue", "vanguard", "legion", "united", "global", "summit", "iron", "steel", "force", "major", "pro", "master", "grand", "noble", "royal", "kinetic", "vector", "optic", "sonic", "hyper", "mega", "meta", "core", "base", "origin", "final", "victory"], 
+            post: ["gaming", "esports", "org", "squad", "legion", "clan", "alliance", "syndicate", "collective", "empire", "unit", "force", "team", "club", "gaming", "pro", "central", "hq", "lab", "works", "media", "competitive", "athletics", "league", "circuit"] 
+        },
+        social: { 
+            pre: ["chill", "vibey", "social", "local", "homies", "faded", "mellow", "wild", "native", "friendly", "open", "shared", "unity", "house", "garden", "lounge", "club", "hub", "family", "crew", "gang", "cozy", "warm", "bright", "sunny", "cloudy", "rainy", "stormy", "daily", "weekend", "night", "early", "late", "always", "together", "infinite", "vivid", "bloom", "kind"], 
+            post: ["fam", "friends", "crew", "collective", "house", "lounge", "hangout", "hub", "circle", "square", "spot", "place", "base", "corner", "street", "vibe", "zone", "area", "network", "community", "world", "space", "room", "loft", "cabin"] 
+        },
+        dark: { 
+            pre: ["void", "null", "zero", "static", "glitch", "phantom", "ghost", "wraith", "shadow", "dark", "noir", "silent", "hush", "echo", "lost", "broken", "grim", "doom", "cryptic", "hidden", "secret", "masked", "unknown", "rare", "faded", "raw", "digital", "analog", "obsolete", "error", "vandal", "riot", "chaos", "anarchy", "wicked", "dead", "cold", "ash", "smoke", "bones"], 
+            post: ["void", "null", "zero", "static", "glitch", "archive", "depths", "vault", "pit", "grave", "cell", "gate", "path", "bridge", "end", "system", "logic", "noise", "vision", "relic", "remnant", "spirit", "shade", "curse", "hex"] 
+        },
+        neon: { 
+            pre: ["pulse", "neon", "glow", "flash", "bolt", "dash", "swift", "snap", "pop", "bright", "vivid", "electric", "plasma", "laser", "flux", "flow", "wave", "sonic", "audio", "stereo", "digital", "cyber", "hyper", "ultra", "mega", "turbo", "fast", "quick", "speed", "light", "star", "solar", "lunar", "cosmic", "astral", "nova", "galaxy", "orbit", "flare", "ignite"], 
+            post: ["pulse", "wave", "flow", "glow", "burst", "flash", "spark", "drive", "run", "sync", "link", "mode", "way", "path", "zone", "line", "grid", "network", "stream", "feed", "view", "vision", "optic", "sight", "scope"] 
+        }
+    };
+
+    const separators = [" ", "", "-", "_"];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.4) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.8) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Limit to 25 characters for Twitch Team ID constraints
+        if (name.length > 25) {
+            name = `${pre}${sep}${userWord}`.substring(0, 25);
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // Clipboard Promise + Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Copy Failed', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

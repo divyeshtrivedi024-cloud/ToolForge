@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervillain Moniker Generator | Brixe</title>
+    <meta name="description" content="Generate menacing and iconic supervillain names. Create unique antagonist identities for comics, writing, and gaming with zero-log privacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Supervillain Moniker Gen</h1>
+            <p>Every masterpiece of chaos needs a signature. Design a name that strikes fear into the hearts of heroes.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional power (e.g. 'Cold', 'Void')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="overlord">👑 Galactic Overlord (Cosmic/Tyrant)</option>
+                    <option value="mad-scientist">🧪 Mad Scientist (Tech/Mutation)</option>
+                    <option value="anarchist">💣 Street Anarchist (Chaos/Lethal)</option>
+                    <option value="eldritch">👁️ Eldritch Horror (Magic/Occult)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateVillain()">Unleash Terror</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Psychology of the Antagonist</h2>
+            <p>A great villain name isn't just cool—it's a warning. In comic lore, monikers often highlight a fatal obsession, a tragic origin, or a terrifying power set. Our generator prioritizes high-impact adjectives and authoritative nouns to ensure your villain sounds like a credible threat to any multiverse. Whether they are a master of the shadows or a titan of industry, their name is the first weapon they wield.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Titles of Power</strong> Using prefixes like "Baron," "Doctor," "Lord," or "The" creates an immediate sense of unearned authority and ego.</div>
+                <div class="tip-card"><strong>02. Contrast Branding</strong> Some of the best villains pair something innocent with something lethal (e.g., "The Glass Widow" or "Clockwork Carnage") to create a haunting mental image.</div>
+                <div class="tip-card"><strong>03. Phonetic Harshness</strong> Use hard consonants like K, T, and V to make the name sound aggressive and difficult to ignore.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Supervillain Moniker Generator
+ * 100% Client-Side | Menacing Database
+ */
+function generateVillain() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        overlord: {
+            pre: ["General", "Lord", "Baron", "Grand", "Apex", "Omni", "Solar", "Lunar", "Dark", "Iron", "Steel", "Dread", "Sovereign", "Eternal", "Infinite", "Void", "Zero", "Prime", "Alpha", "Omega", "Titan", "Cosmic", "Galactic", "Fallen", "Shattered", "Silent", "Noble", "Imperial", "Vanquished", "Unbound"],
+            post: ["Tyrant", "Monarch", "Emperor", "Warlord", "Overlord", "Rex", "Sovereign", "Dictator", "Despot", "Regent", "Executioner", "Sentinel", "Conqueror", "Harbinger", "Scourge", "Plague", "Bane", "Ruin", "Eclipse", "Nova"]
+        },
+        "mad-scientist": {
+            pre: ["Doctor", "Professor", "Neural", "Binary", "Digital", "Static", "Toxic", "Acid", "Chrome", "Synth", "Nano", "Macro", "Cyber", "Atomic", "Nuclear", "Genetic", "Mutant", "Viral", "Radical", "Chemical", "Vector", "Optic", "Logic", "Pulse", "Flux", "Circuit", "Silicon", "Carbon", "Data", "Proxy"],
+            post: ["Phobia", "Engine", "Virus", "Error", "Glitch", "System", "Node", "Link", "Sync", "Process", "Subject", "Vessel", "Machine", "Android", "Cyborg", "Automaton", "Construct", "Hybrid", "Anomaly", "Paradox"]
+        },
+        anarchist: {
+            pre: ["Neon", "Riot", "Vandal", "Chaos", "Red", "Black", "Dead", "Wild", "Raw", "Grim", "Silent", "Ghost", "Vamp", "Viper", "Cobra", "Snake", "Rat", "Crow", "Jackal", "Wolf", "Shadow", "Night", "Bullet", "Blade", "Trigger", "Razor", "Spike", "Hammer", "Anvil", "Iron"],
+            post: ["Rebel", "Rogue", "Anarchist", "Outlaw", "Mercenary", "Slayer", "Butcher", "Vandal", "Wraith", "Phantom", "Siren", "Vixen", "Baddie", "Devil", "Demon", "Spectre", "Haze", "Smoke", "Ash", "Dust"]
+        },
+        eldritch: {
+            pre: ["High", "Ancient", "Occult", "Mystic", "Abyssal", "Cursed", "Wicked", "Hidden", "Sacred", "Fallen", "Old", "Elder", "Void", "Ethereal", "Astral", "Spirit", "Deep", "Sunless", "Moonlit", "Nightmare", "Grave", "Crypt", "Bone", "Blood", "Opal", "Ivory", "Black", "Grim", "Fatal", "Lost"],
+            post: ["Priest", "Prophet", "Seeker", "Horror", "King", "Queen", "Terror", "Aura", "Mage", "Witch", "Warlock", "Oracle", "Avatar", "Entity", "Worm", "Eye", "Voice", "Echo", "Shade", "Blight"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        
+        let name = "";
+        const styleRoll = Math.random();
+
+        if (userWord) {
+            if (styleRoll < 0.3) name = `${pre} ${userWord}`;
+            else if (styleRoll < 0.6) name = `${userWord} ${post}`;
+            else name = `The ${userWord} ${post}`;
+        } else {
+            if (styleRoll < 0.4) name = `${pre} ${post}`;
+            else if (styleRoll < 0.8) name = `The ${pre} ${post}`;
+            else name = post;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name.toUpperCase();
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name.toUpperCase()).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "THREAT IDENTIFIED";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Zero logs. Zero latency. Just performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Reach Out</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

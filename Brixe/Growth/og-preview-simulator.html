@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Preview Simulator | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; }
+
+        .uploader-zone {
+            width: 100%; max-width: 600px; margin: 0 auto 40px auto;
+            border: 2px dashed #334155; background: rgba(15, 23, 42, 0.4);
+            border-radius: 20px; padding: 40px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+        .uploader-zone:hover { border-color: var(--primary); background: rgba(255, 0, 127, 0.05); }
+
+        .preview-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .sim-label {
+            font-family: 'Outfit';
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* X (Twitter) Large Card */
+        .x-card {
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+        }
+        .x-img-box { width: 100%; aspect-ratio: 1.91 / 1; background: #111; overflow: hidden; }
+        .x-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .x-meta { padding: 12px; border-top: 1px solid #334155; }
+        .x-site { color: #71767b; font-size: 0.85rem; margin-bottom: 2px; }
+        .x-title { color: #e7e9ea; font-size: 0.95rem; font-weight: 400; }
+
+        /* LinkedIn Post Card */
+        .li-card {
+            width: 100%;
+            max-width: 550px;
+            background: #1b1f23;
+            border: 1px solid #38434f;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont;
+        }
+        .li-img-box { width: 100%; aspect-ratio: 1.91 / 1; background: #2b3137; }
+        .li-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .li-meta { padding: 12px; background: #2b3137; }
+        .li-title { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+        .li-site { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+
+        /* Discord Preview */
+        .ds-card {
+            width: 100%;
+            max-width: 430px;
+            background: #2b2d31;
+            border-left: 4px solid #1e1f22;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-family: 'gg sans', 'Noto Sans', sans-serif;
+        }
+        .ds-site { color: #dbdee1; font-size: 0.75rem; margin-bottom: 8px; }
+        .ds-title { color: #00a8fc; font-size: 1rem; font-weight: 600; margin-bottom: 8px; cursor: pointer; }
+        .ds-img-box { width: 100%; aspect-ratio: 1.91 / 1; border-radius: 8px; overflow: hidden; margin-top: 8px; }
+        .ds-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .brixe-input {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">Back to tools</a>
+        
+        <section class="tool-card">
+            <h1>OG Image Simulator</h1>
+            <p>Paste your meta details to see how your link looks when shared on social media.</p>
+
+            <div class="uploader-zone" onclick="document.getElementById('ogInput').click()">
+                <div style="font-size: 2rem; margin-bottom: 10px;">🖼️</div>
+                <strong id="statusText">Upload OG Image (1200x630 recommended)</strong>
+                <input type="file" id="ogInput" hidden accept="image/*" onchange="loadOG(this)">
+            </div>
+
+            <div style="text-align: center;">
+                <input type="text" id="titleIn" class="brixe-input" placeholder="Page Title (e.g. Brixe Engine | The Future of SEO)" oninput="syncText()">
+            </div>
+
+            <div class="preview-stack">
+                <div>
+                    <span class="sim-label">X / Twitter (Large Card)</span>
+                    <div class="x-card">
+                        <div class="x-img-box"><img class="user-og" src=""></div>
+                        <div class="x-meta">
+                            <div class="x-site">brixe.io</div>
+                            <div class="x-title" id="xTitle">Brixe Engine | The Future of SEO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="sim-label">LinkedIn Feed</span>
+                    <div class="li-card">
+                        <div class="li-img-box"><img class="user-og" src=""></div>
+                        <div class="li-meta">
+                            <div class="li-title" id="liTitle">Brixe Engine | The Future of SEO</div>
+                            <div class="li-site">brixe.io • 1 min read</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="sim-label">Discord Embed</span>
+                    <div class="ds-card">
+                        <div class="ds-site">Brixe Engine</div>
+                        <div class="ds-title" id="dsTitle">Brixe Engine | The Future of SEO</div>
+                        <div class="ds-img-box"><img class="user-og" src=""></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 5px;">Brixe Engine</h3>
+            <p style="font-size: 0.8rem;">Preview logic updated for 2026 API standards.</p>
+        </div>
+    </footer>
+
+    <script>
+        function loadOG(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const images = document.querySelectorAll('.user-og');
+                images.forEach(img => img.src = e.target.result);
+                document.getElementById('statusText').innerText = "Image Loaded";
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function syncText() {
+            const val = document.getElementById('titleIn').value || "Brixe Engine | The Future of SEO";
+            document.getElementById('xTitle').innerText = val;
+            document.getElementById('liTitle').innerText = val;
+            document.getElementById('dsTitle').innerText = val;
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

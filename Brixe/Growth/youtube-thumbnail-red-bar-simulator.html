@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail "Red Bar" Simulator | Brixe Engine</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* THE BRIXE CORE RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --pitch-black: #05070a;
+            --soft-gray: #1e293b;
+            --yt-red: #FF0000;
+            --border: #334155;
+            --text-main: #f1f1f1;
+        }
+
+        body { background: var(--pitch-black); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 320px; gap: 30px; margin-top: 20px; }
+
+        /* The YouTube Video Card Mockup */
+        .yt-card-stage {
+            background: #0f0f0f; /* YouTube Dark Mode Background */
+            border: 1px solid var(--border); border-radius: 12px;
+            position: relative; overflow: hidden; aspect-ratio: 16/9;
+            width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        #mainThumbnail { width: 100%; height: 100%; object-fit: cover; display: none; }
+
+        /* Simulated Time Stamp */
+        .yt-timestamp {
+            position: absolute; bottom: 8px; right: 8px;
+            background: rgba(0,0,0,0.8); color: white;
+            padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: 600;
+            z-index: 10; font-family: Roboto, Arial, sans-serif;
+        }
+
+        /* The Progress Bar Simulation */
+        .yt-progress-container {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(255,255,255,0.3); z-index: 15;
+            display: none; /* Hidden by default */
+        }
+        .yt-progress-fill {
+            height: 100%; background: var(--yt-red); width: 0%;
+        }
+
+        /* Sidebar Controls */
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        .control-card { background: #3d0a2b; border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .control-card h3 { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+
+        .btn-main { background: var(--yt-red); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; margin-bottom: 10px;}
+        .btn-main:hover { background: #cc0000; }
+        .btn-secondary { background: #1a0514; color: #94a3b8; border: 1px solid var(--border); padding: 12px; border-radius: 10px; width: 100%; cursor: pointer; margin-bottom: 10px;}
+        .btn-secondary.active { background: #1a0514; color: white; border-color: #475569;}
+
+        label { display: block; font-size: 0.75rem; margin-bottom: 8px; color: #94a3b8; }
+        input[type="range"] { width: 100%; }
+
+        @media (max-width: 850px) {
+            .layout-grid { grid-template-columns: 1fr; }
+            header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+       
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.2rem;">Thumbnail Red Bar Simulator</h1>
+            <p style="color: #64748b;">Does the "watched" progress bar ruin your thumbnail design?</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="yt-card-stage" id="stage">
+                <img id="mainThumbnail" src="">
+                <div class="yt-timestamp" id="timestamp">12:34</div>
+                <div class="yt-progress-container" id="progressContainer">
+                    <div class="yt-progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div id="dropZone" style="position: absolute; width: 100%; text-align: center; top: 40%; z-index: 20;">
+                    <button class="btn-main" style="width: auto; padding: 10px 25px;" onclick="document.getElementById('fileIn').click()">Upload Thumbnail</button>
+                    <input type="file" id="fileIn" hidden accept="image/*" onchange="processThumbnail(this)">
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>UI Toggles</h3>
+                    <button class="btn-secondary active" id="toggleTime" onclick="toggleElement('timestamp')">Timestamp</button>
+                    <button class="btn-secondary" id="toggleBar" onclick="toggleElement('progressContainer')">Red Progress Bar</button>
+                </div>
+
+                <div class="control-card">
+                    <h3>Simulation Settings</h3>
+                    <label>Video Length (Simulated)</label>
+                    <input type="text" id="timeIn" placeholder="12:34" oninput="updateTimestamp(this.value)" style="width:100%; background:#05070a; border:1px solid var(--border); color:white; padding:10px; border-radius:8px; margin-bottom: 15px;">
+
+                    <label>Watched Percentage</label>
+                    <input type="range" id="progressRange" min="0" max="100" value="75" oninput="updateProgress()">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 80px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit';">Brixe Engine</h3>
+            <p style="font-size: 0.8rem;">YouTube CTR Tools v1.1</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.7rem;">© 2026. Data processed locally in your browser.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mainThumbnail = document.getElementById('mainThumbnail');
+        const timestamp = document.getElementById('timestamp');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+
+        function processThumbnail(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                mainThumbnail.src = e.target.result;
+                mainThumbnail.style.display = 'block';
+                document.getElementById('dropZone').style.display = 'none';
+                updateProgress(); // Initialize with current slider value
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function toggleElement(id) {
+            const el = document.getElementById(id);
+            const btn = document.getElementById(id === 'timestamp' ? 'toggleTime' : 'toggleBar');
+            
+            if (el.style.display === 'none') {
+                el.style.display = id === 'timestamp' ? 'block' : 'block'; // Bars are block, time is block
+                btn.classList.add('active');
+            } else {
+                el.style.display = 'none';
+                btn.classList.remove('active');
+            }
+        }
+
+        function updateTimestamp(val) {
+            timestamp.innerText = val || "12:34";
+        }
+
+        function updateProgress() {
+            const val = document.getElementById('progressRange').value;
+            progressFill.style.width = val + '%';
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

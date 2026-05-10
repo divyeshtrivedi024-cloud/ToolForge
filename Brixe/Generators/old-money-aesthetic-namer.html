@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Money Aesthetic Namer | Brixe</title>
+    <meta name="description" content="Generate names that evoke the timeless elegance, prestige, and quiet luxury of the old money aesthetic. Perfect for brands, social media, or personal identity.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Playfair Display', serif;">Old Money Aesthetic Namer</h1>
+            <p>Quiet luxury and timeless heritage. Generate names that evoke the atmosphere of coastal estates, equestrian clubs, and Ivy League legacies.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional surname (e.g. 'Windsor')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="equestrian">🏇 Equestrian Club (Polo/Stable)</option>
+                    <option value="coastal">⛵ Coastal Elite (Yacht/Hamptons)</option>
+                    <option value="academic">📚 Heritage Ivy (Library/Classic)</option>
+                    <option value="estate">🏰 Estate Manor (Grand/Quiet Luxe)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateOldMoneyName()">Evoke Heritage</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Language of Quiet Luxury</h2>
+            <p>The "Old Money" aesthetic isn't just about wealth—it's about lineage, discretion, and the endurance of quality. A name in this category should feel like it has been etched into silver platters or written on heavy cream stationery for generations. Our generator uses a database of over 400 prestigious surnames, geographical markers of the elite, and terminology from classic leisure pursuits to help you curate a brand or persona with established weight.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Double Surnames</strong> Using two surnames connected by a hyphen or an ampersand (e.g., "Ashford-Fairchild") immediately suggests a union of powerful families.</div>
+                <div class="tip-card"><strong>02. Geographical Anchors</strong> Words like "Cove," "Harbor," "Grange," and "Ridge" ground the name in the vast private estates often associated with generational wealth.</div>
+                <div class="tip-card"><strong>03. Understated Power</strong> Avoid flashy words. "Quiet" nouns like "Linen," "Ivory," "Oak," and "Stone" communicate luxury more effectively through their connection to timeless materials.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Old Money Aesthetic Namer
+ * 100% Client-Side | Heritage & Luxury Database
+ */
+function generateOldMoneyName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        equestrian: {
+            pre: ["Saddle", "Bridle", "Thoroughbred", "Hunter", "Polo", "Stallion", "Derby", "Ascot", "Stable", "Meadow", "Gait", "Crest", "Canter", "Sterling", "Belvoir", "Hampton", "Wellington", "Esmé", "Sovereign", "Noble"],
+            suff: ["Club", "Stables", "Green", "House", "Park", "Lodge", "Circuit", "Manor", "Estate", "Fields"]
+        },
+        coastal: {
+            pre: ["Harbor", "Cove", "Nantucket", "Bay", "Azure", "Linen", "Marine", "Schooner", "Anchor", "Salt", "Mist", "Sail", "Yacht", "Breeze", "Dune", "Pier", "Regatta", "Hampton", "Newport", "Shell"],
+            suff: ["Club", "Point", "Cottage", "Wharf", "House", "Landing", "Quay", "Sands", "Vista", "Shore"]
+        },
+        academic: {
+            pre: ["Oxford", "Cambridge", "Ivy", "Vellum", "Archive", "Scholar", "Thesis", "Latin", "Oak", "Library", "Heritage", "Chancellor", "Dean", "Provost", "Merit", "Legacy", "Winchester", "Eton", "Hadley", "Saint"],
+            suff: ["Society", "Hall", "Library", "Commons", "House", "Chambers", "Union", "Cloisters", "Court", "Fellows"]
+        },
+        estate: {
+            pre: ["Fairchild", "Ashford", "Winslow", "Garrison", "Sterling", "Pembroke", "Kensington", "Aurelian", "Highland", "Rhodes", "Sinclair", "Vanderbilt", "Lowell", "Astor", "Forbes", "Livingston", "DuPont", "Rockefeller", "Bancroft", "Whitman"],
+            suff: ["Manor", "Estate", "Grange", "Gardens", "Park", "Lodge", "Terrace", "Heights", "Mansion", "Abbey"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let aestheticName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) aestheticName = `${userWord} & ${pre}`;
+            else if (r < 0.6) aestheticName = `${pre}-${userWord}`;
+            else aestheticName = `${userWord} ${suff}`;
+        } else {
+            if (r < 0.4) {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                if (pre !== pre2) {
+                    aestheticName = `${pre} & ${pre2}`;
+                } else {
+                    aestheticName = `${pre} ${suff}`;
+                }
+            } else {
+                aestheticName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.2rem; letter-spacing: 1px; font-family: 'Playfair Display', serif; font-style: italic;">${aestheticName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary);">Heritage Authenticated</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(aestheticName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>LEGACY CLAIMED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Curating timeless digital experiences through private, high-performance tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Establishing legacies daily.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

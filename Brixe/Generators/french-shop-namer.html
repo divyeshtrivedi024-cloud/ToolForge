@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French-Aesthetic Shop Namer | Brixe</title>
+    <meta name="description" content="Generate chic, elegant, and romantic French-inspired names for your boutique, bakery, or lifestyle brand. Capture the essence of Parisian style.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Playfair Display', serif;">French-Aesthetic Namer</h1>
+            <p>La vie en rose. Generate shop names that evoke the charm of Parisian arrondissements, Provencal markets, and high-fashion ateliers.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional keyword (e.g. 'Jewels', 'Bread')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="parisienne">👠 Haute Couture (Chic/Sophisticated)</option>
+                    <option value="boulangerie">🥐 Artisan Bakery (Warm/Rustic)</option>
+                    <option value="fleur">🌸 Floral & Garden (Romantic/Natural)</option>
+                    <option value="vintage">🕰️ Antique & Brocante (Eclectic/Historic)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateFrenchName()">Curation de Nom</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Allure of French Branding</h2>
+            <p>French-inspired naming leverages "the halo effect"—a psychological phenomenon where consumers associate French phonetics with luxury, quality, and romanticism. Whether you're opening a minimalist skincare line or a local pastry shop, a French name elevates the perceived value of your brand. Our generator combines classic nouns with chic adjectives and structural prepositions like <em>"de"</em> or <em>"chez"</em> to create an authentic Francophone identity.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The Art of the Article</strong> Using "Le," "La," or "Les" before a noun instantly frames your brand as an established entity with a specific focus.</div>
+                <div class="tip-card"><strong>02. Sensory Sophistication</strong> French words often carry soft, breathy consonants (like 'v', 's', and 'l') which psychologically translate to elegance and comfort in the consumer's mind.</div>
+                <div class="tip-card"><strong>03. Location Cues</strong> Including words like <em>Atelier</em> (workshop), <em>Maison</em> (house), or <em>Studio</em> gives your shop name a sense of place and craftsmanship.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * French-Aesthetic Shop Namer
+ * 100% Client-Side | Romance & Luxury Database
+ */
+function generateFrenchName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        parisienne: {
+            pre: ["L'Élite", "Vogue", "Noir", "Chic", "Luxe", "Soleil", "Bijou", "Perle", "Éclat", "Soie", "Maison", "Atelier", "Studio", "Rive", "Ciel", "Amour", "Dioré", "Velours", "Lumière", "Bleu"],
+            suff: ["Paris", "de Luxe", "Chérie", "Moderne", "Studio", "Atelier", "la Mode", "Doré", "Argenté", "Privé"]
+        },
+        boulangerie: {
+            pre: ["Petit", "Doux", "Levain", "Miel", "Blé", "Sucre", "Beurre", "Crème", "Chocolat", "Citron", "Pain", "Croissant", "Matin", "Jardin", "Fleur", "Cacao", "Sable", "Gâteau", "Fraise", "Vanille"],
+            suff: ["Boulangerie", "Pâtisserie", "du Matin", "et Sucre", "Maison", "Sucré", "Artisan", "Délice", "Cuisine", "Gourmet"]
+        },
+        fleur: {
+            pre: ["Fleur", "Rose", "Lavande", "Pivoine", "Lis", "Jardin", "Forêt", "Rosée", "Saison", "Flore", "Nature", "Verte", "Belle", "Douce", "Sauvage", "Pétale", "Botanique", "Champ", "Vigne", "Brise"],
+            suff: ["de Provence", "Florale", "Boutique", "Jardin", "Sauvage", "et Co.", "Atelier", "Rose", "Naturelle", "Vivante"]
+        },
+        vintage: {
+            pre: ["Ancien", "Brocante", "Héritage", "Passé", "Trésor", "Objet", "Temps", "Mémoire", "Galerie", "Maison", "Archive", "Classique", "Rustique", "Vieux", "Noble", "Musée", "Curio", "L'Esprit", "Histoire", "Époque"],
+            suff: ["Vintage", "Boutique", "Antiquités", "Collection", "de Jadis", "Archive", "Galerie", "Foundry", "Studio", "Shop"]
+        }
+    };
+
+    const preps = ["de", "et", "en", "pour", "chez"];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        const prep = preps[Math.floor(Math.random() * preps.length)];
+        
+        let finalName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalName = `${pre} ${userWord}`;
+            else if (r < 0.7) finalName = `${userWord} ${suff}`;
+            else finalName = `Maison ${userWord}`;
+        } else {
+            if (r < 0.3) {
+                finalName = `Chez ${pre}`;
+            } else if (r < 0.6) {
+                finalName = `${pre} ${prep} ${suff}`;
+            } else {
+                finalName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Playfair Display', serif;">${finalName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary);">Est. 2026 • Paris</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COPIÉ</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The student's choice for aesthetic, high-performance brand tools. Fast, private, and Parisian-chic.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Très magnifique.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

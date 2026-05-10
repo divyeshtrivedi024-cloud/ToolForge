@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dystopian Megacorp Namer | Brixe</title>
+    <meta name="description" content="Generate intimidating, sterile, and powerful megacorporation names for cyberpunk and dystopian worldbuilding.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Michroma&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Michroma', sans-serif; color: #00f2ff; text-shadow: 0 0 12px rgba(0, 242, 255, 0.4);">Megacorp Namer</h1>
+            <p>Ownership of the future. Generate names for the monolithic entities that rule the neon-lit streets, from biotech giants to private security empires.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional focus (e.g. 'Cyber', 'Bio')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="tech">🦾 High-Tech (AI/Software/Hardware)</option>
+                    <option value="bio">🧬 Bio-Genetic (Pharma/Cloning/Life)</option>
+                    <option value="military">🛡️ Security & Defense (PMC/Weaponry)</option>
+                    <option value="monolith">🏢 The Monolith (Abstract/Totalitarian)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" style="background: linear-gradient(135deg, #00416a 0%, #e4e5e6 100%); color: #000;" onclick="generateCorpName()">Authorize Entity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Language of Corporate Domination</h2>
+            <p>Dystopian megacorps thrive on a paradox: their names are either aggressively descriptive or suspiciously vague. In cyberpunk literature, a name like <em>Omni-Consumer Products</em> tells you they own everything, while a name like <em>Arasaka</em> suggests deep-rooted heritage. Our mega-database provides hundreds of Latinate prefixes and brutalist suffixes to help you build a brand that feels large enough to own a government.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Sterile Sophistication</strong> Using words that sound clean and clinical (e.g., "Aether," "Zenith," "Prism") masks the gritty reality of corporate greed.</div>
+                <div class="tip-card"><strong>02. Compound Coldness</strong> Smashing two high-power nouns together (e.g., "NeuroCore," "TerraSync") suggests a seamless integration of technology and nature.</div>
+                <div class="tip-card"><strong>03. Vague Totality</strong> The most frightening corporations use single, abstract words like "The Trust," "Unity," or "Foundry" to imply their presence is inescapable.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Dystopian Megacorp Namer (Mega-Database v1.0)
+ * 100% Client-Side | Cyberpunk & Dystopian Database
+ */
+function generateCorpName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9 ]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        tech: {
+            pre: ["Neuro", "Cyber", "Data", "Quantum", "Silicon", "Nano", "Logic", "Vector", "Binary", "Apex", "Synapse", "Circuit", "Void", "Matrix", "System", "Cloud", "Nexus", "Infini", "Omni", "Core", "Flux", "Static", "Virtu", "Grid", "Pulse", "Node", "Optic", "Techno", "Macro", "Signal", "Byte", "Link", "Protocol", "Wire", "Host", "Buffer", "Array", "Spark", "Flow", "Shift"],
+            suff: ["Systems", "Dynamics", "Logic", "Networks", "Computing", "Solutions", "Global", "Technologies", "Media", "Digital", "Intelligence", "Integration", "Processing", "Interface", "Structure", "Flow", "Stream", "Vault", "Point", "Sphere", "Web", "Sync", "Link", "Circuit", "Node", "Core", "Drive", "Portal", "Vision", "Horizon"]
+        },
+        bio: {
+            pre: ["Bio", "Gen", "Heli", "Vita", "Stem", "Helix", "Organi", "Proto", "Cell", "Evo", "Pharma", "Cure", "Nature", "Aura", "Soma", "Life", "Pure", "Prime", "Med", "Gene", "Syntho", "Chrono", "Vital", "Pneuma", "Holo", "Anima", "Xeno", "Cyto", "Morph", "Vaso", "Neuro", "Hydro", "Morphic", "Basal", "Geno", "Bio-Tech", "Life-Link", "Pro-Life", "Micro", "Macro"],
+            suff: ["Genetics", "Pharmaceuticals", "Medical", "Bioscience", "Laboratories", "Health", "Life", "Clinic", "Foundation", "Institute", "Dynamics", "Labs", "Organics", "Research", "Synthesis", "Growth", "Cell", "Origin", "Vitality", "Future", "Evolution", "Catalyst", "Standard", "Cure", "Heritage", "Alliance", "Group", "Trust", "Project", "Unit"]
+        },
+        military: {
+            pre: ["Iron", "Steel", "Aegis", "Vanguard", "Titan", "Shield", "Fortress", "Strike", "Global", "Sentinel", "Tactical", "Combat", "Ordnance", "Ballistic", "Secure", "Frontier", "Apex", "Black", "Red", "Heavy", "Armored", "Warden", "Guard", "Phalanx", "Rampart", "Sentry", "Bastion", "Legion", "Sector", "Force", "Impact", "Hard", "Direct", "Prime", "Active", "Eagle", "Hawk", "Storm", "Thunder", "Valiant"],
+            suff: ["Security", "Defense", "Tactical", "Operations", "Systems", "Solutions", "Contracting", "Logistics", "Services", "Protective", "Group", "Armory", "Intelligence", "Command", "Strategic", "Agency", "Corp", "Division", "PMC", "Unit", "Assurance", "Neutralization", "Enforcement", "Authority", "Order", "Response", "Protocol", "Shield", "Vanguard", "Trust"]
+        },
+        monolith: {
+            pre: ["Omni", "Terra", "Universal", "Global", "Standard", "United", "Central", "Primary", "Total", "Apex", "Zenith", "Horizon", "Pinnacle", "Aether", "Unity", "Consolidated", "General", "Public", "National", "World", "Foundation", "Trust", "Union", "Alliance", "Cooperative", "Syndicate", "Conglomerate", "Entity", "Monolith", "Structure", "Arch", "Crown", "Empire", "State", "Core", "Base", "Root", "Stem", "Crown", "Sphere"],
+            suff: ["Corp", "Corporation", "Group", "Industries", "Holding", "Enterprise", "Limited", "Unlimited", "Association", "Organization", "Society", "Council", "Chamber", "Directorate", "Board", "Executive", "Authority", "Consortium", "Partners", "Trust", "Empire", "Collective", "Syndicate", "Bloc", "Federation", "Estate", "Legacy", "Future", "Way", "One"]
+        }
+    };
+
+    for (let i = 0; i < 9; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalName = `${userWord} ${suff}`;
+            else if (r < 0.7) finalName = `${pre}${userWord}`;
+            else finalName = `${userWord} ${pre} ${suff}`;
+        } else {
+            if (r < 0.3) {
+                finalName = `${pre}${suff}`;
+            } else if (r < 0.6) {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                finalName = (pre !== pre2) ? `${pre}-${pre2} ${suff}` : `${pre} ${suff}`;
+            } else {
+                finalName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.background = 'rgba(10, 20, 30, 0.8)';
+        div.style.border = '1px solid #1e293b';
+        div.style.letterSpacing = '1px';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: #00f2ff; font-size: 0.95rem; font-family: 'Michroma', sans-serif;">${finalName.toUpperCase()}</div>
+            <div style="opacity: 0.4; font-size: 0.55rem; margin-top: 12px; letter-spacing: 4px; color: #94a3b8; font-weight: bold;">CLASSIFIED // SECTOR 7G</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: #fff; font-weight: 800; letter-spacing: 2px; font-family: Michroma;'>ACCESS GRANTED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Providing the infrastructure for the builders of digital worlds. High-speed, high-performance tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Sector</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="creative-universe.html" style="color: #64748b; text-decoration: none;">Creative Universe</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Compliance is mandatory.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

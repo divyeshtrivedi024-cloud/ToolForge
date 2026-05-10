@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyFans Stage Name Generator | Brixe</title>
+    <meta name="description" content="Generate professional, catchy, and high-converting stage names for adult creators. Optimized for branding, SEO, and anonymity with zero-log privacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">OnlyFans Name Gen</h1>
+            <p>Create a memorable brand alias that strikes the perfect balance between allure and anonymity.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'Jade', 'Nova', 'Honey'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="aesthetic">✨ Aesthetic & Soft (Coquette/Ethereal)</option>
+                    <option value="spicy">🌶️ Spicy & Bold (Alt/Baddie)</option>
+                    <option value="minimalist">🖤 Minimalist & Chic (Luxury/Model)</option>
+                    <option value="cute">🍭 Cute & Playful (Sweet/Bubbles)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateOFName()">Generate Stage Names</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Power of a Digital Persona</h2>
+            <p>In the creator economy, your stage name is your business card. It serves two vital functions: building a cohesive brand that attracts your target demographic and protecting your offline identity. A strong name should be easy to spell, memorable for returning fans, and distinct enough to stand out in a crowded social feed. Our generator uses industry naming trends to ensure your alias sounds professional and established.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Protect Privacy</strong> Never use your real legal name, birth year, or hometown. Choose an alias that allows you to separate your personal life from your professional brand.</div>
+                <div class="tip-card"><strong>02. SEO Keywords</strong> If you have a specific niche (e.g., "Alt," "Goth," "Fitness"), including a subtle keyword in your name can help the right audience find you faster.</div>
+                <div class="tip-card"><strong>03. Phonetic Appeal</strong> Alliteration (e.g., "Misty Muse") or short, punchy mononyms (e.g., "Siren") are statistically more likely to be remembered by subscribers.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * OnlyFans Stage Name Generator Logic
+ * 100% Client-Side | Privacy-First
+ */
+function generateOFName() {
+    // 1. Strict Input Sanitization
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '') || "Muse";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. Comprehensive 40-50 word database for "AI-generated" variety
+    const data = {
+        aesthetic: { 
+            pre: ["velvet", "silk", "ivory", "pearl", "opal", "moon", "star", "haze", "misty", "ethereal", "aura", "dreamy", "pale", "milky", "soft", "serene", "bliss", "angel", "divine", "pure", "luna", "stellar", "celestial", "vivid", "bloom", "petal", "cloudy", "dawn", "dusk", "rose", "fleur", "lily", "violet", "lilac", "peachy", "gold", "silver", "glow", "spark", "muse"], 
+            post: ["archives", "studio", "diary", "tales", "vision", "gallery", "dreams", "exclusive", "society", "club", "haven", "vault", "notes", "bloom", "essence", "aura", "glow", "star", "rose", "doll"] 
+        },
+        spicy: { 
+            pre: ["vandal", "riot", "chaos", "rebel", "wicked", "dark", "noir", "shadow", "phantom", "rogue", "wild", "savage", "bad", "toxic", "neon", "hazard", "cyber", "vamp", "vixen", "succubus", "siren", "venom", "viper", "cobra", "onyx", "raven", "black", "midnight", "fire", "ash", "smoke", "spicy", "hot", "rare", "raw", "sin", "hex", "curse", "jinx", "v2", "zero"], 
+            post: ["unleashed", "private", "afterdark", "exclusive", "wild", "rebel", "vibe", "hq", "base", "core", "room", "den", "vault", "files", "access", "mode", "elite", "prime", "raw", "only"] 
+        },
+        minimalist: { 
+            pre: ["the", "just", "simply", "purely", "it", "this", "real", "official", "only", "main", "prime", "level", "standard", "modish", "chic", "vogue", "saint", "dior", "luxe", "monarch", "modern", "classic", "urban", "global", "direct", "total", "absolute", "true", "candid", "quiet", "silent", "bold", "clear", "sharp", "level", "apex", "zenith", "top", "elite", "pro"], 
+            post: ["official", "online", "live", "daily", "life", "style", "mode", "vibe", "studio", "project", "limited", "edition", "series", "works", "media", "link", "press", "box", "kit", "way"] 
+        },
+        cute: { 
+            pre: ["momo", "coco", "nana", "lulu", "berry", "sugar", "honey", "cherry", "peach", "candy", "sweet", "bunny", "kitty", "pixie", "fairy", "bby", "baby", "tiny", "little", "pinky", "sunny", "bubbles", "minty", "cookie", "cupcake", "daisy", "sunny", "happy", "joy", "sparkle", "glitter", "bonnie", "ruby", "petal", "blossom", "poppy", "clover", "parfait", "latte", "tea"], 
+            post: ["baby", "doll", "bun", "bee", "pop", "pie", "cake", "heart", "love", "chu", "nyan", "wish", "dream", "star", "bloom", "bliss", "land", "world", "space", "haven"] 
+        }
+    };
+
+    const separators = ["", ".", "_", " "];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.33) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.66) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Platform-standard length limit (typically 30 chars for URLs)
+        if (name.length > 30) {
+            name = name.replace(/\s/g, '').substring(0, 30);
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // 4. Clipboard Promise + CSS Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Copy failed', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

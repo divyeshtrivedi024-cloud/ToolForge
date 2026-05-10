@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Substack Newsletter Namer | Brixe</title>
+    <meta name="description" content="Generate professional and high-growth Substack newsletter names. Create unique identities for tech, culture, finance, and creative writing publications.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* Layout stability for high-res displays */
+        body { min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; }
+    </style>
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Substack Newsletter Namer</h1>
+            <p>Launch your publication with a name that builds authority and drives subscriptions.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="e.g. 'Trend', 'Future', 'Mind'">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="intellectual">🧠 Intellectual & Insightful (Brief/Analysis)</option>
+                    <option value="modern">🚀 Tech & Growth (Signal/Pulse)</option>
+                    <option value="creative">✍️ Creative & Narrative (Notes/Archive)</option>
+                    <option value="finance">📈 Finance & Business (Report/Equity)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateSubstackName()">Generate Publication Names</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Science of Newsletter Branding</h2>
+            <p>On Substack, your publication name is your first impression in the inbox. It needs to signal exactly what the reader will learn while remaining broad enough to allow your content to evolve. Our generator focuses on "Compound Professionalism"—pairing abstract concepts with structural nouns to create a name that sounds established and subscription-worthy.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The "The" Rule</strong> Many successful newsletters use "The [Noun]" format. it provides an immediate sense of authority and definitive perspective.</div>
+                <div class="tip-card"><strong>02. URL Compatibility</strong> Substack URLs are formatted as name.substack.com. Ensure your generated name doesn't contain confusing double-letters or difficult spellings.</div>
+                <div class="tip-card"><strong>03. Value Signaling</strong> Use words like "Signal," "Dispatch," or "Report" to tell the reader they are getting curated, high-value information rather than random thoughts.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Substack Newsletter Namer Logic
+ * 100% Client-Side | Privacy-First
+ */
+function generateSubstackName() {
+    // 1. Strict Input Sanitization
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '') || "Signal";
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // 2. Comprehensive 40-50 word database for "AI-generated" variety
+    const data = {
+        intellectual: { 
+            pre: ["The", "Deep", "Pure", "Clear", "Abstract", "Rational", "Critical", "Mental", "First", "Urban", "Global", "Candid", "Quiet", "Serious", "Open", "Sharp", "Whole", "Hidden", "Direct", "Prime", "Civic", "Social", "Cultural", "Human", "Digital", "Moral", "Modern", "Classic", "Vantage", "Apex", "Zenith", "Core", "Root", "Brief", "Small", "Grand", "Silent", "Vocal", "New", "Next"], 
+            post: ["Digest", "Analysis", "Brief", "Review", "Report", "Letter", "Dispatch", "Notes", "Thoughts", "Insights", "Perspective", "View", "Lens", "Angle", "Focus", "Journal", "Gazette", "Observer", "Chronicle", "Monitor", "Standard", "Post", "Times", "Herald", "Courier"] 
+        },
+        modern: { 
+            pre: ["Future", "Hyper", "Meta", "Cyber", "Neural", "Digital", "Alpha", "Flux", "Flow", "Pulse", "Sonic", "Ultra", "Neon", "Sync", "Fast", "Swift", "Smart", "Snap", "Dash", "Bolt", "Vector", "Optic", "Data", "Logic", "Shift", "Grid", "Node", "Link", "Edge", "Front", "Base", "Core", "Main", "Tech", "Next", "Zero", "One", "Prime", "Macro", "Nano"], 
+            post: ["Signal", "Pulse", "Radar", "Forward", "Loop", "Feed", "Stream", "Stack", "Layer", "Drive", "Shift", "Upgrade", "Version", "Path", "Route", "System", "Flow", "Logic", "Wave", "Hub"] 
+        },
+        creative: { 
+            pre: ["The", "Raw", "Wild", "Native", "Musing", "Fabled", "Golden", "Blue", "Paper", "Ink", "Loose", "Soft", "Daily", "Weekly", "Sunday", "Night", "Morning", "Slow", "Quiet", "Loud", "Common", "Rare", "Old", "New", "Fresh", "Bloom", "Root", "Stone", "Wind", "Fire", "Earth", "Tide", "Peak", "Field", "Forest", "Grove", "Valley", "Coast", "Dune", "River"], 
+            post: ["Archive", "Journal", "Notebook", "Letters", "Essays", "Pages", "Scrapbook", "Gallery", "Collection", "Vault", "Room", "Space", "Desk", "Studio", "Atelier", "Press", "Print", "Works", "Project", "Series"] 
+        },
+        finance: { 
+            pre: ["Market", "Equity", "Capital", "Growth", "Alpha", "Beta", "Macro", "Micro", "Fiscal", "Global", "Wealth", "Asset", "Value", "Prime", "Peak", "Summit", "Delta", "Proven", "Expert", "Smart", "Bull", "Bear", "Solid", "Stable", "Liquid", "Direct", "Chief", "Main", "Wall", "Street", "City", "Urban", "Metric", "Ratio", "Standard", "Yield", "Profit", "Return", "Venture", "Foundry"], 
+            post: ["Report", "Update", "Summary", "Letter", "Investor", "Weekly", "Advisor", "Review", "Intelligence", "Signals", "Strategy", "Outlook", "Perspective", "Briefing", "Compass", "Map", "Blueprint", "Sheet", "Ledger", "Balance"] 
+        }
+    };
+
+    const separators = [" ", "", "-"];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const sep = separators[Math.floor(Math.random() * separators.length)];
+        
+        let name = "";
+        const r = Math.random();
+        
+        if (r < 0.33) {
+            name = `${pre}${sep}${userWord}`;
+        } else if (r < 0.66) {
+            name = `${userWord}${sep}${post}`;
+        } else {
+            name = `${pre}${sep}${userWord}${sep}${post}`;
+        }
+
+        // Substack titles can be long, but 40 chars is best for mobile notifications
+        if (name.length > 40) {
+            name = name.substring(0, 37) + "...";
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        // 4. Clipboard Promise + CSS Class Toggling
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            }).catch(err => {
+                console.error('Copy failed', err);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

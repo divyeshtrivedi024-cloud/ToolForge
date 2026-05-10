@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tik Tok Viral Probability Calculator | Brixe</title>
+    <link rel="stylesheet" href="/main-style.css"> 
+    
+    <!-- SCOPED FIXES: These only apply to this page -->
+    <style>
+        #input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px; /* Matches your gen-btn width */
+            margin: 20px 0;
+        }
+        
+        #result-list {
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Forces the card to expand so the footer/SEO content doesn't overlap */
+        .tool-card {
+            height: auto !important;
+            min-height: fit-content;
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body data-theme="growth">
+     <nav class="nav-container"></nav>
+
+<div class="container">
+    <a href="research-seo.html" class="back-btn">← Back to tools</a>
+
+    <div class="tool-card">
+        <h1 id="tool-name">Viral Probabiliity Calculator</h1>
+        <p id="tool-desc">Tool to mathematically and logically calculate the probability of a video getting viral</p>
+
+        <!-- The Engine picks this up -->
+        <div id="input-area"></div>
+
+        <button class="gen-btn" onclick="runToolLogic()">Analyze & Generate</button>
+
+        <div id="result-list"></div>
+    </div>
+</div>
+    
+    
+
+<script>
+/* --- SAME ENGINE LOGIC AS BEFORE --- */
+const CONFIG = {
+    name: "TikTok Viral Probability",
+    desc: "Predict the likelihood of your video hitting the FYP.",
+    category: "VIRALITY LAB",
+    type: "MATH",
+    inputs: [
+        { id: "retention", label: "Avg Watch Time", type: "number", placeholder: "e.g. 12" },
+        { id: "length", label: "Video Length", type: "number", placeholder: "e.g. 15" },
+        { id: "shares", label: "Shares per 1k", type: "number", placeholder: "e.g. 20" }
+    ],
+    execute: function(data) {
+        const retentionRate = (Number(data.retention) / Number(data.length)) * 100;
+        const probability = (retentionRate * 0.7) + (Number(data.shares) * 0.6);
+        return {
+            value: Math.min(Math.round(probability), 100) + "%",
+            label: "Viral Probability",
+            progress: Math.min(probability, 100)
+        };
+    }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const inputArea = document.getElementById('input-area');
+    CONFIG.inputs.forEach(input => {
+        const el = document.createElement(input.type === 'textarea' ? 'textarea' : 'input');
+        el.id = input.id;
+        el.placeholder = input.placeholder;
+        if(input.type !== 'textarea') el.type = input.type;
+        inputArea.appendChild(el);
+    });
+});
+
+function runToolLogic() {
+    const data = {};
+    CONFIG.inputs.forEach(input => {
+        data[input.id] = document.getElementById(input.id).value;
+    });
+
+    const result = CONFIG.execute(data);
+    const display = document.getElementById('result-list');
+    
+    display.innerHTML = `
+        <div class="result-card">
+            <span class="status-pill">${result.label}</span>
+            <p class="rate-val">${result.value}</p>
+            <div class="progress-container">
+                <div class="progress-fill" style="width: ${result.progress}%"></div>
+            </div>
+        </div>
+    `;
+}
+</script>
+
+<script src="../nav.js"></script>
+<footer></footer>
+</body>
+</html>

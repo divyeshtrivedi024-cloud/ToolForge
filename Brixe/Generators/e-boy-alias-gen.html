@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Boy Alias Gen | Brixe</title>
+    <meta name="description" content="Generate edgy, moody, and aesthetic e-boy usernames and aliases for Discord, TikTok, and social media. Triple-expanded database of internet subculture tropes.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Shadows+Into+Light&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass" style="border-right: 5px solid #6366f1;">
+            <h1 class="tool-title" style="font-family: 'Syne', sans-serif; color: #fff; text-transform: lowercase; letter-spacing: -1px;">e-boy alias gen</h1>
+            <p>Digital melancholy. Generate usernames that blend alt-fashion, internet aesthetics, and moody vibes. Featuring a massive-scale database of symbols and keywords.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional name (e.g. 'Kai', 'Ash')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="corpse">💀 Corpse / Edge (Dark/Cynical)</option>
+                    <option value="aesthetic">⛓️ Grunge / Chains (Alt-Fashion)</option>
+                    <option value="lofi">🎧 Lofi / Chill (Sad/Vibey)</option>
+                    <option value="glitch">👾 Glitch / Tech (Cyber/Error)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" style="background: linear-gradient(135deg, #1e1b4b 0%, #6366f1 100%); color: #fff;" onclick="generateEboyName()">Sync Identity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Aesthetic of Internet Subcultures</h2>
+            <p>E-boy branding relies on a specific mix of <strong>Anonymity</strong> and <strong>Vulnerability</strong>. Common naming conventions involve lowercase letters, specialized characters (like underscores or periods), and words that evoke a sense of detachment. Our expanded database is designed to capture the 2026 digital landscape, pulling from anime tropes, gothic streetwear, and lofi music culture to create a profile name that feels authentic to the niche.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Lowercase Dominance</strong> Forgetting the Shift key is a stylistic choice. All-lowercase names (e.g., "starglass") often feel more "aesthetic" and approachable in niche communities.</div>
+                <div class="tip-card"><strong>02. Sensory Contrast</strong> Pairing something beautiful with something harsh—like "Silk" and "Spikes"—creates the tension that defines the alt-aesthetic.</div>
+                <div class="tip-card"><strong>03. Character Replacements</strong> Using 'v' for 'u' or 'x' for spacers (e.g., "vntitled" or "xlyric") helps claim a unique handle even when common words are taken.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * E-Boy Alias Generator (Mega-Database v1.0)
+ * 100% Client-Side | Subculture & Internet Aesthetics
+ */
+function generateEboyName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        corpse: {
+            pre: ["dead", "void", "grim", "hollow", "ghost", "phantom", "rotten", "sin", "vile", "dread", "corpse", "bone", "marrow", "blood", "stigma", "ruin", "doom", "mortal", "final", "lost", "shattered", "broken", "zero", "null", "cold", "bitter", "sour", "acid", "venom", "toxin", "poison", "dark", "night", "shade", "crypt", "grave", "silent", "hush", "echo", "last"],
+            suff: ["-boy", "-kin", "-less", "-void", "ghoul", "fiend", "error", "404", "lost", "found", "end", "rot", "sink", "fall", "crawl", "fade", "kill", "die", "stay", "gone"]
+        },
+        aesthetic: {
+            pre: ["silk", "chains", "velvet", "grunge", "spike", "razor", "chrome", "silver", "onyx", "ink", "ash", "smoke", "haze", "mist", "vogue", "alt", "under", "static", "noise", "wired", "denim", "leather", "lace", "thorn", "rose", "petal", "bleach", "neon", "flash", "glare", "shadow", "ebon", "slate", "grey", "white", "black", "stark", "sharp", "drip", "rare"],
+            suff: ["vibe", "style", "wear", "fit", "look", "soul", "heart", "mind", "life", "dead", "raw", "pure", "real", "fake", "truth", "lies", "hurt", "heal", "care", "less"]
+        },
+        lofi: {
+            pre: ["sleepy", "lazy", "dreamy", "cloud", "soft", "pale", "mellow", "chill", "dusk", "dawn", "twilight", "evening", "night", "moon", "star", "glow", "dim", "faint", "quiet", "still", "calm", "serene", "empty", "lonely", "sad", "unwell", "unfelt", "untold", "low", "high", "rain", "dew", "mist", "breeze", "wind", "slow", "fast", "past", "future", "now"],
+            suff: ["-dreams", "-waves", "-lofi", "-nights", "-beats", "-rain", "-mist", "-haze", "-glow", "-aura", "-vibe", "-feel", "-mood", "-sad", "-happy", "-lost", "-found", "-time", "-space", "-here"]
+        },
+        glitch: {
+            pre: ["cyber", "glitch", "error", "logic", "binary", "system", "vector", "signal", "pulse", "node", "core", "drive", "host", "user", "guest", "admin", "root", "script", "code", "data", "wire", "link", "array", "buffer", "flash", "sync", "shift", "flux", "static", "void", "neural", "synapse", "input", "output", "virtual", "holo", "real", "unreal", "fake", "true"],
+            suff: ["exe", "zip", "sys", "dat", "iso", "run", "log", "bin", "null", "NaN", "root", "sudo", "kill", "stop", "play", "error", "sync", "lost", "found", "void"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) finalName = `${userWord}.${pre}`;
+            else if (r < 0.6) finalName = `x${userWord}x`;
+            else finalName = `${pre}${userWord}`;
+        } else {
+            if (r < 0.25) {
+                finalName = `${pre}_${suff}`;
+            } else if (r < 0.5) {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                finalName = (pre !== pre2) ? `${pre}${pre2}` : `${pre}${suff}`;
+            } else if (r < 0.75) {
+                finalName = `${pre}.${suff}`;
+            } else {
+                finalName = `${pre}${suff}`;
+            }
+        }
+
+        // Apply e-boy styling (all lowercase, sometimes replaces 'u' with 'v')
+        finalName = finalName.toLowerCase();
+        if (Math.random() > 0.8) finalName = finalName.replace(/u/g, 'v');
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.background = '#020617';
+        div.style.border = '1px solid #1e293b';
+        div.style.borderRadius = '0';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1rem; font-family: 'Syne', sans-serif;">${finalName}</div>
+            `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: #6366f1; font-weight: 800; letter-spacing: 1px;'>LINKED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The massive-scale suite for digital identity and internet subculture. Built for the creators of 2026.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Sector</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="creative-universe.html" style="color: #64748b; text-decoration: none;">Creative Universe</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Logged out.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Slide Counter | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* BRIXE CORE RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --card: #0f172a; }
+
+        body { background: #05070a; color: white; font-family: 'Inter', sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        .uploader-zone {
+            width: 100%; border: 2px dashed var(--border); background: rgba(30, 41, 59, 0.4);
+            border-radius: 24px; padding: 60px 20px; text-align: center;
+            cursor: pointer; transition: 0.3s; margin-bottom: 30px;
+        }
+        .uploader-zone:hover { border-color: var(--accent); background: rgba(255, 0, 127, 0.05); }
+
+        .settings-panel {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 25px; margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+        }
+
+        .control-group { display: flex; flex-direction: column; gap: 8px; }
+        .control-group label { font-family: 'Outfit'; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; }
+        
+        select, input {
+            background: #05070a; border: 1px solid var(--border); color: white;
+            padding: 10px; border-radius: 8px; outline: none;
+        }
+
+        .batch-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px; margin-top: 30px;
+        }
+
+        .preview-box {
+            position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
+            background: #111; aspect-ratio: 1/1;
+        }
+        .preview-box canvas { width: 100%; height: 100%; object-fit: contain; }
+
+        .gen-btn {
+            width: 100%; max-width: 400px; margin: 20px auto; display: block;
+            background: var(--accent); color: white; border: none; padding: 18px;
+            border-radius: 15px; font-family: 'Outfit'; font-weight: 800; cursor: pointer;
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .gen-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255, 0, 127, 0.4); }
+
+        .download-all { background: #22c55e; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+       
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.8rem;">Carousel Slide Counter</h1>
+            <p style="color: #64748b;">Batch-add progress markers to your slides for higher retention.</p>
+        </header>
+
+        <div class="uploader-zone" onclick="document.getElementById('imgInput').click()">
+            <div style="font-size: 3rem; margin-bottom: 10px;">📸</div>
+            <strong id="status">Select Multiple Images</strong>
+            <input type="file" id="imgInput" hidden multiple accept="image/*" onchange="loadImages(this)">
+        </div>
+
+        <div class="settings-panel">
+            <div class="control-group">
+                <label>Counter Style</label>
+                <select id="style" onchange="processBatch()">
+                    <option value="minimal">Minimal Pill</option>
+                    <option value="glass">Glassmorphism</option>
+                    <option value="bold">Brixe Neon</option>
+                    <option value="clean">Plain Text</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Position</label>
+                <select id="position" onchange="processBatch()">
+                    <option value="top-right">Top Right</option>
+                    <option value="top-left">Top Left</option>
+                    <option value="bottom-right">Bottom Right</option>
+                    <option value="bottom-left">Bottom Left</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Accent Color</label>
+                <input type="color" id="accentColor" value="#ff007f" onchange="processBatch()">
+            </div>
+        </div>
+
+        <div id="batchGrid" class="batch-grid"></div>
+        
+        <button class="gen-btn download-all" id="downloadAll" onclick="downloadAll()">Download Zip / All Images</button>
+    </div>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem;">Utility Tools for the Viral Era. © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        let imageFiles = [];
+
+        function loadImages(input) {
+            imageFiles = Array.from(input.files);
+            if (imageFiles.length > 0) {
+                document.getElementById('status').innerText = `${imageFiles.length} Images Loaded`;
+                document.getElementById('downloadAll').style.display = 'block';
+                processBatch();
+            }
+        }
+
+        async function processBatch() {
+            const grid = document.getElementById('batchGrid');
+            grid.innerHTML = "";
+            const style = document.getElementById('style').value;
+            const pos = document.getElementById('position').value;
+            const accent = document.getElementById('accentColor').value;
+
+            for (let i = 0; i < imageFiles.length; i++) {
+                const container = document.createElement('div');
+                container.className = "preview-box";
+                const canvas = document.createElement('canvas');
+                container.appendChild(canvas);
+                grid.appendChild(container);
+
+                await drawSlide(canvas, imageFiles[i], i + 1, imageFiles.length, style, pos, accent);
+            }
+        }
+
+        function drawSlide(canvas, file, current, total, style, pos, accent) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const padding = canvas.width * 0.05;
+                    const fontSize = canvas.width * 0.04;
+                    ctx.font = `800 ${fontSize}px Inter`;
+                    const text = `${current}/${total}`;
+                    const metrics = ctx.measureText(text);
+                    const textW = metrics.width;
+                    const textH = fontSize;
+
+                    let x, y;
+                    if (pos.includes('right')) x = canvas.width - textW - padding;
+                    else x = padding;
+                    if (pos.includes('bottom')) y = canvas.height - padding;
+                    else y = padding + textH;
+
+                    // Styles
+                    if (style === 'minimal' || style === 'glass') {
+                        ctx.fillStyle = style === 'minimal' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.2)';
+                        if (style === 'glass') ctx.filter = 'blur(4px)'; // Note: canvas filter support varies
+                        ctx.beginPath();
+                        ctx.roundRect(x - 15, y - textH - 10, textW + 30, textH + 25, 50);
+                        ctx.fill();
+                        ctx.filter = 'none';
+                        ctx.fillStyle = style === 'minimal' ? 'white' : 'black';
+                    } else if (style === 'bold') {
+                        ctx.fillStyle = accent;
+                        ctx.fillRect(x - 10, y - textH - 5, textW + 20, textH + 15);
+                        ctx.fillStyle = 'white';
+                    } else {
+                        ctx.fillStyle = 'white';
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = "rgba(0,0,0,0.5)";
+                    }
+
+                    ctx.fillText(text, x, y);
+                    resolve();
+                };
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        function downloadAll() {
+            const canvases = document.querySelectorAll('canvas');
+            canvases.forEach((c, i) => {
+                const link = document.createElement('a');
+                link.download = `brixe_slide_${i+1}.png`;
+                link.href = c.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

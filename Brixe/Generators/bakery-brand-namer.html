@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Brand Namer | Brixe</title>
+    <meta name="description" content="Generate delicious and memorable names for bakeries, patisseries, and cake shops. Create a unique brand identity for your artisanal baking venture.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Bakery Brand Namer</h1>
+            <p>Rising to the occasion. Generate names for artisanal sourdough labs, elegant patisseries, and cozy neighborhood bakehouses.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional niche (e.g. 'Gluten Free', 'Tart')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="artisanal">🥖 Artisanal & Rustic (Crusty/Handmade)</option>
+                    <option value="elegant">🧁 Elegant Patisserie (Refined/French)</option>
+                    <option value="sweet">🍪 Sweet & Playful (Cookies/Cakes)</option>
+                    <option value="modern">🏙️ Modern Bakehouse (Sleek/Minimalist)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateBakeryName()">Bake Identity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Crafting a Delectable Identity</h2>
+            <p>A bakery name should evoke the warmth of an oven and the freshness of the morning's first batch. In a market where texture and scent are everything, your brand name acts as the visual appetizer. Our generator utilizes a comprehensive database of over 450 ingredients, baking techniques, and sensory adjectives to help you move beyond generic names and toward a brand that clients can almost taste.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Texture-Based Nouns</strong> Words like "Crumb," "Flake," "Rise," and "Glaze" immediately communicate the physical quality of your products.</div>
+                <div class="tip-card"><strong>02. French Inflection</strong> For high-end pastry shops, using words like "Atelier," "Maison," or "Petit" adds a layer of traditional prestige.</div>
+                <div class="tip-card"><strong>03. The "&" Aesthetic</strong> Pairing a functional tool with an ingredient (e.g., "Whisk & Wheat") creates a memorable, balanced brand image.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Bakery Brand Namer
+ * 100% Client-Side | Culinary & Patisserie Database
+ */
+function generateBakeryName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        artisanal: {
+            pre: ["Wild", "Crust", "Crumb", "Hearth", "Grit", "Wheat", "Rye", "Grain", "Stone", "Rise", "Flora", "Ancient", "Mother", "Salt", "Ember", "Dough", "Sourdough", "Miller", "Golden", "Rustic"],
+            suff: ["Lab", "Bakehouse", "Mill", "Oven", "Room", "Atelier", "Works", "Project", "Table", "Provisions"]
+        },
+        elegant: {
+            pre: ["Velvet", "Gilded", "Silk", "Ivory", "Petit", "Maison", "Ciel", "Royal", "Noble", "Bloom", "Opal", "Pearl", "Grand", "Aura", "Pure", "Fine", "Belle", "Luxe", "Satin", "Chiffon"],
+            suff: ["Patisserie", "Studio", "Gallery", "Suite", "Reserve", "Confections", "Atelier", "Salon", "Collection", "Pastry Co"]
+        },
+        sweet: {
+            pre: ["Sugar", "Honey", "Berry", "Peach", "Button", "Cloud", "Merry", "Sunny", "Cookie", "Crumble", "Butter", "Whimsy", "Lemon", "Dottie", "Pink", "Sprinkle", "Sweet", "Cherry", "Cocoa", "Glaze"],
+            suff: ["Cakes", "Cookies", "Corner", "Shop", "Treats", "Joy", "Kitchen", "Box", "Lane", "Boutique"]
+        },
+        modern: {
+            pre: ["Batch", "Shift", "Core", "Peak", "Flux", "Flow", "Daily", "Pure", "Snap", "Zero", "Bolt", "Urban", "Metro", "Next", "Verve", "Axis", "Prime", "Mode", "Icon", "Element"],
+            suff: ["Bakers", "Collective", "Bake", "Point", "Hub", "Station", "Concept", "Base", "Line", "Series"]
+        }
+    };
+
+    const connectors = [" & ", " + ", " and ", " x "];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        const conn = connectors[Math.floor(Math.random() * connectors.length)];
+        
+        let bakeryName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.35) bakeryName = `${userWord}${conn}${pre}`;
+            else if (r < 0.7) bakeryName = `${pre} ${userWord}`;
+            else bakeryName = `${userWord} ${suff}`;
+        } else {
+            if (r < 0.4) {
+                bakeryName = `${pre}${conn}${data[vibe].pre[Math.floor(Math.random() * 20)]}`;
+            } else {
+                bakeryName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit';">${bakeryName}</div>
+            `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(bakeryName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>BRAND SECURED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The entrepreneur's choice for zero-log, high-performance professional tools. Secure and 100% client-side.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watermark Positioner | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --bg: #05070a; --card: #0f172a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 320px; gap: 30px; margin-top: 20px; }
+
+        /* The Phone Stage */
+        .video-stage {
+            background: #000; border: 1px solid var(--border); border-radius: 24px;
+            position: relative; overflow: hidden; aspect-ratio: 9/16;
+            height: 550px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #mainVideo { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1; }
+
+        /* TikTok UI Overlay Simulation */
+        .ui-overlay {
+            position: absolute; width: 100%; height: 100%; 
+            background: url('https://i.imgur.com/7SjL5lM.png'); /* Simulated TikTok UI */
+            background-size: cover; pointer-events: none; z-index: 10; opacity: 0.7; display: none;
+        }
+
+        /* Draggable Watermark */
+        #watermark {
+            position: absolute; top: 10%; left: 10%; 
+            width: 80px; cursor: move; user-select: none;
+            touch-action: none; z-index: 20; opacity: 0.8;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        .control-card { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .control-card h3 { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 15px; }
+
+        .btn-main { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; width: 100%; cursor: pointer; margin-bottom: 10px; }
+        
+        label { display: block; font-size: 0.75rem; margin-bottom: 8px; color: #94a3b8; }
+        input[type="range"] { width: 100%; margin-bottom: 15px; }
+
+        @media (max-width: 850px) {
+            .layout-grid { grid-template-columns: 1fr; }
+            .video-stage { width: 90vw; height: auto; }
+        }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+         <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+       
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.2rem;">Watermark Positioner</h1>
+            <p style="color: #64748b;">Find the "Safe Zone" for your logo before you render.</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="video-stage" id="stage">
+                <video id="mainVideo" loop muted playsinline></video>
+                <div id="uiLayer" class="ui-overlay"></div>
+                <img id="watermark" src="https://brixe.io/logo-placeholder.png" alt="Logo">
+                
+                <div id="dropZone" style="position: absolute; width: 100%; text-align: center; top: 40%; z-index: 30;">
+                    <button class="btn-main" style="width: auto; padding: 10px 20px;" onclick="document.getElementById('vidIn').click()">1. Upload Video</button>
+                    <br>
+                    <button class="btn-main" style="width: auto; padding: 10px 20px; background: #334155;" onclick="document.getElementById('logoIn').click()">2. Upload Logo</button>
+                    <input type="file" id="vidIn" hidden accept="video/*" onchange="loadVideo(this)">
+                    <input type="file" id="logoIn" hidden accept="image/*" onchange="loadLogo(this)">
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>Visual Guides</h3>
+                    <button class="btn-main" style="background: #1e293b;" onclick="toggleUI()">Toggle Social UI Overlays</button>
+                    <p style="font-size: 0.65rem; color: #475569;">Avoid placing logos under the Like/Share buttons or descriptions.</p>
+                </div>
+
+                <div class="control-card">
+                    <h3>Watermark Style</h3>
+                    <label>Logo Size</label>
+                    <input type="range" id="sizeRange" min="30" max="200" value="80" oninput="updateStyle()">
+                    
+                    <label>Opacity</label>
+                    <input type="range" id="opacRange" min="10" max="100" value="80" oninput="updateStyle()">
+                </div>
+
+                <div class="control-card">
+                    <h3>Position Data</h3>
+                    <div id="posData" style="font-family: monospace; font-size: 0.7rem; color: var(--accent);">Top: 10% | Left: 10%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 80px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit';">Brixe Engine</h3>
+            <p style="font-size: 0.8rem;">Content Protection Suite v1.0</p>
+        </div>
+    </footer>
+
+    <script>
+        const watermark = document.getElementById('watermark');
+        const stage = document.getElementById('stage');
+        const video = document.getElementById('mainVideo');
+
+        // --- 2D DRAG LOGIC ---
+        let isDragging = false;
+        let xOffset = 0, yOffset = 0;
+
+        watermark.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            watermark.setPointerCapture(e.pointerId);
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const rect = stage.getBoundingClientRect();
+            let x = e.clientX - rect.left - (watermark.offsetWidth / 2);
+            let y = e.clientY - rect.top - (watermark.offsetHeight / 2);
+
+            // Bounds
+            x = Math.max(0, Math.min(x, rect.width - watermark.offsetWidth));
+            y = Math.max(0, Math.min(y, rect.height - watermark.offsetHeight));
+
+            watermark.style.left = x + 'px';
+            watermark.style.top = y + 'px';
+            
+            // Update Position Data
+            const xPercent = Math.round((x / rect.width) * 100);
+            const yPercent = Math.round((y / rect.height) * 100);
+            document.getElementById('posData').innerText = `Top: ${yPercent}% | Left: ${xPercent}%`;
+        });
+
+        window.addEventListener('pointerup', () => isDragging = false);
+
+        // --- LOADING ASSETS ---
+        function loadVideo(input) {
+            const file = input.files[0];
+            video.src = URL.createObjectURL(file);
+            video.play();
+            document.getElementById('dropZone').style.display = 'none';
+        }
+
+        function loadLogo(input) {
+            const file = input.files[0];
+            watermark.src = URL.createObjectURL(file);
+        }
+
+        function updateStyle() {
+            watermark.style.width = document.getElementById('sizeRange').value + 'px';
+            watermark.style.opacity = document.getElementById('opacRange').value / 100;
+        }
+
+        function toggleUI() {
+            const ui = document.getElementById('uiLayer');
+            ui.style.display = ui.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

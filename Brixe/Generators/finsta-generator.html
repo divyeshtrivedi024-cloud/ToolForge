@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finsta Name Generator | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
+        <section class="tool-card">
+            <h1>Finsta Name Generator</h1>
+            <p>Generate low-profile, ironic, or aesthetic aliases for your private IG.</p>
+            <div class="input-group">
+                <input type="text" id="userInput" placeholder="Your name or niche (e.g. 'chaos')">
+                <select id="vibe-choice">
+                    <option value="ironic">🤡 Ironic & Humorous (Self-deprecating)</option>
+                    <option value="secret">🔒 Private & Lowkey (Minimalist)</option>
+                    <option value="aesthetic">💫 Abstract & Moody (Grunge/Vibe)</option>
+                    <option value="spam">📂 Archive & Dump (Casual/Raw)</option>
+                </select>
+            </div>
+            <button class="gen-btn" onclick="generateFinsta()">Manifest 6 Names</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Secret to a Perfect Finsta</h2>
+            <p>A "Finsta" (Fake Instagram) is all about exclusivity and being unfiltered. Unlike your main account, your Finsta username should be something only your closest friends understand. Our generator helps you strike the balance between "too cool to care" and "completely unsearchable."</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Anti-SEO</strong> Avoid using your full name or birthday. The goal is to be hard to find via the global search bar.</div>
+                <div class="tip-card"><strong>02. Prefix Logic</strong> Adding "not", "actually", or "literally" before your name is the classic Gen-Z way to signal a private space.</div>
+                <div class="tip-card"><strong>03. File Formats</strong> Using suffixes like .png, .mp4, or .zip gives your account an "archival" feel, perfect for photo dumps.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+function generateFinsta() {
+    const userWord = document.getElementById('userInput').value.trim() || "user";
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        ironic: { 
+            pre: ["not", "actually", "literally", "failed", "clown", "local", "unprofessional", "struggling", "certified", "licensed", "professional", "temporary", "retired"], 
+            post: ["moment", "energy", "realness", "activist", "expert", "enthusiast", "failure", "behavior", "core", "inc", "ltd"] 
+        },
+        secret: { 
+            pre: ["hidden", "void", "ghost", "silent", "private", "locked", "user", "unknown", "entry", "secure", "null", "undefined"], 
+            post: ["archive", "files", "vault", "logs", "access", "data", "001", "temp", "only", "member", "mode"] 
+        },
+        aesthetic: { 
+            pre: ["blurry", "faded", "static", "glitch", "vivid", "hazy", "ethereal", "moody", "raw", "digital", "vintage", "grainy", "sepia", "noise"], 
+            post: ["vision", "spirit", "aura", "notes", "chapters", "project", "gallery", "print", "shot", "stills", "media"] 
+        },
+        spam: { 
+            pre: ["daily", "random", "dump", "casual", "raw", "junk", "messy", "extra", "side", "bonus", "another"], 
+            post: ["dump", "spam", "pics", "stuff", "trash", "bin", "scrapbook", "feed", "grid", "content", "b-roll"] 
+        }
+    };
+
+    const separators = [".", "_", "", "__", "x"];
+
+    for (let i = 0; i < 6; i++) {
+    const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+    const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+    const sep = separators[Math.floor(Math.random() * separators.length)];
+    
+    // Clean input: Remove everything except letters, numbers, and allowed IG chars
+    let word = userWord.toLowerCase().replace(/[^a-z0-9._]/g, '');
+    if(!word) word = "alias";
+
+    let name = (Math.random() < 0.5) ? `${pre}${sep}${word}` : `${word}${sep}${post}`;
+    if (Math.random() > 0.7) name = `${pre}${sep}${word}${sep}${post}`;
+
+    // Ensure IG length limit (30 chars)
+    name = name.slice(0, 30);
+
+    const div = document.createElement('div');
+    div.className = 'name-item';
+    div.innerText = name;
+    
+    div.onclick = () => {
+        navigator.clipboard.writeText(name).then(() => {
+            const originalText = div.innerText;
+            div.innerText = "COPIED!";
+            div.classList.add('active-copy'); // Handle color in CSS instead
+            setTimeout(() => {
+                div.innerText = originalText;
+                div.classList.remove('active-copy');
+            }, 800);
+        });
+    };
+    resultList.appendChild(div);
+}
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

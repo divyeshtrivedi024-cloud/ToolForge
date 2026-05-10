@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Firm Namer | Brixe</title>
+    <meta name="description" content="Generate authoritative, professional, and trustworthy names for law firms and legal practices. Perfect for attorneys, solicitors, and legal consultants.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Legal Firm Namer</h1>
+            <p>Command authority in the courtroom. Generate names for prestigious partnerships, modern legal tech firms, and specialized practices.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional surname (e.g. 'Sterling')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="prestige">⚖️ High Prestige (Classical/Partnership)</option>
+                    <option value="modern">⚖️ Modern Counsel (Sleek/Direct)</option>
+                    <option value="technical">⚖️ Tech & IP (Innovation/Digital)</option>
+                    <option value="advocacy">⚖️ Public Advocacy (Strong/Solid)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateLegalFirm()">Establish Counsel</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Architecture of Legal Authority</h2>
+            <p>A law firm's name is its first piece of evidence. It must immediately communicate stability, intellect, and a commitment to the rule of law. While the traditional "Ames & Associates" model remains the gold standard for trust, emerging legal tech and specialized boutique firms are opting for more conceptual identities. Our generator pulls from a database of Latin terminology, constitutional pillars, and professional suffixes to help you build a brand with jurisdictional weight.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The Surname Rule</strong> Using a founder's surname remains the most effective way to build personal brand equity and project long-term stability.</div>
+                <div class="tip-card"><strong>02. Latinate Roots</strong> Incorporating words like "Lex," "Veritas," or "Justus" provides a subtle nod to the historical foundations of law.</div>
+                <div class="tip-card"><strong>03. Group vs. Chambers</strong> Use "Chambers" for more traditional or trial-focused practices, and "Group" or "Legal" for modern, service-oriented firms.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Legal Firm Namer
+ * 100% Client-Side | Professional Jurisprudence Database
+ */
+function generateLegalFirm() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        prestige: {
+            pre: ["Sterling", "Fairchild", "Ashford", "Lexington", "Winslow", "Garrison", "Hampton", "Crestview", "Vanguard", "Chancellor", "Noble", "Sovereign", "Merit", "Pillar", "Heritage", "Standard", "Oxford", "Cambridge", "Summit", "Highland"],
+            suff: ["& Partners", "Associates", "Chambers", "Law Group", "LLP", "Counsel", "Firm", "Partnership", "Group", "& Co"]
+        },
+        modern: {
+            pre: ["Lex", "Justus", "Apex", "Zenith", "Pivot", "Core", "Nexus", "Axis", "Meta", "Omni", "Logic", "Verve", "Pulse", "Edge", "Basis", "Anchor", "Beacon", "Crest", "Direct", "Prime"],
+            suff: ["Legal", "Counsel", "Advisors", "Strategy", "Advocacy", "Solutions", "Point", "Bridge", "Way", "Firm"]
+        },
+        technical: {
+            pre: ["Cipher", "Code", "Node", "Vector", "Binary", "Matrix", "Axiom", "Vertex", "Prime", "Synapse", "Quantum", "Optic", "Heuristic", "Tensor", "Scalar", "Logic", "Schema", "Binary", "Meta", "Alpha"],
+            suff: ["IP", "Legal Tech", "Systems", "Patent Law", "Innovation", "Digital", "Rights", "Intelligence", "Group", "Labs"]
+        },
+        advocacy: {
+            pre: ["Iron", "Solid", "Common", "Bridge", "Union", "Human", "Unity", "Heart", "Soul", "Pure", "Pillar", "Grit", "Basis", "Truth", "Trust", "Garrison", "Beacon", "Standard", "Atlas", "Compass"],
+            suff: ["Advocates", "Defense", "Justice", "Group", "Collective", "Partners", "Rights", "Council", "Chambers", "Center"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let firmName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) firmName = `${userWord} ${suff}`;
+            else if (r < 0.6) firmName = `${userWord} & ${pre}`;
+            else firmName = `${pre} ${userWord}`;
+        } else {
+            if (vibe === 'prestige' && r < 0.4) {
+                const pre2 = data.prestige.pre[Math.floor(Math.random() * 20)];
+                firmName = `${pre} & ${pre2}`;
+            } else {
+                firmName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit'; text-transform: uppercase;">${firmName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">ATTORNEYS AT LAW</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(firmName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COUNSEL RETAINED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The professional choice for zero-log, high-performance branding tools. Secure, private, and client-side.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

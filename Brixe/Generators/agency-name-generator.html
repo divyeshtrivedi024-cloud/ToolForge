@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agency Name Generator | Brixe</title>
+    <meta name="description" content="Generate professional and creative agency names. Create unique brand identities for marketing, design, talent, and digital agencies with an expanded industry database.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Agency Name Generator</h1>
+            <p>Position your expertise. Generate names for creative studios, marketing firms, and strategic consultancies.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional niche (e.g. 'Social', 'Design')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="boutique">🎨 Creative Boutique (Artistic/Studio)</option>
+                    <option value="corporate">🏢 Corporate Alpha (Trust/Authority)</option>
+                    <option value="growth">📈 Growth & Digital (Results/Fast)</option>
+                    <option value="abstract">🔮 Modern Abstract (Vague/Cool)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateAgency()">Establish Agency</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Science of Professional Identity</h2>
+            <p>An agency name is a promise of service. While a product name describes an object, an agency name describes a partnership. Successful agencies often use "high-contrast" naming—pairing a solid, grounded noun with an abstract or energetic adjective. Our database is expanded with over 200 descriptors focusing on strategic prestige, creative fluidity, and digital-first branding to ensure your firm stands out in a crowded RFP process.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The "&" Rule</strong> Many prestigious agencies use the "&" connector (e.g., [Noun] & [Noun]). This implies collaborative depth and traditional craftsmanship.</div>
+                <div class="tip-card"><strong>02. Verbs vs. Nouns</strong> Use verbs (e.g., "Elevate," "Forge," "Shift") for performance-based agencies, and nouns (e.g., "Atelier," "Collective," "Sanctum") for creative studios.</div>
+                <div class="tip-card"><strong>03. Semantic Density</strong> Choose words that carry weight. "Pivot" suggests agility, while "Foundation" suggests long-term security. Choose based on your client's core fears and desires.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Agency Name Generator
+ * 100% Client-Side | Professional Branding Database
+ */
+function generateAgency() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        boutique: {
+            pre: ["Velvet", "Opal", "Canvas", "Gilded", "Atelier", "Indigo", "Mint", "Copper", "Maison", "Petal", "Silk", "Frame", "Urban", "Wild", "Crest", "Bloom", "Hue", "Sketch", "Loom", "Luna"],
+            suff: ["Studio", "Creative", "Collective", "Atelier", "Labs", "House", "Project", "Boutique", "Design", "Arts", "Society", "Gallery"]
+        },
+        corporate: {
+            pre: ["Vanguard", "Summit", "Iron", "Pillar", "Beacon", "Crest", "Alpha", "Sovereign", "Anchor", "Basis", "Global", "Direct", "Prime", "Elite", "Standard", "Capital", "Bridge", "Apex", "Merit", "Stirling"],
+            suff: ["Partners", "Group", "Consulting", "Associates", "Advisors", "Capital", "Holdings", "Strategy", "Firm", "Management", "Solutions", "Corps"]
+        },
+        growth: {
+            pre: ["Velocity", "Pivot", "Scale", "Pulse", "Shift", "Rocket", "Hyper", "Flash", "Click", "Drive", "Metric", "Core", "Agile", "Launch", "Boost", "Rapid", "Viral", "Link", "Edge", "Optic"],
+            suff: ["Media", "Marketing", "Growth", "Digital", "Performance", "Direct", "Social", "Reach", "Lead", "Conversion", "Ads", "Engine"]
+        },
+        abstract: {
+            pre: ["Neon", "Echo", "Flux", "Nexus", "Zero", "Oasis", "Vellum", "Koda", "Mura", "Zeno", "Aura", "Prism", "Soma", "Void", "Kinetix", "Veda", "Lyra", "Nova", "Ono", "Era"],
+            suff: ["& Co", "Concept", "Theory", "Logic", "Vibe", "Flow", "Mind", "Sphere", "Wave", "Point", "Space", "Base"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let name = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.35) name = `${userWord} & ${pre}`;
+            else if (r < 0.7) name = `${pre} ${userWord}`;
+            else name = `${userWord} ${suff}`;
+        } else {
+            if (vibe === 'corporate' && r < 0.3) {
+                name = `${pre} & ${data.corporate.pre[Math.floor(Math.random() * 20)]}`;
+            } else if (r < 0.5) {
+                name = `${pre} ${suff}`;
+            } else {
+                name = `The ${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.2rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: #fff; font-size: 1.1rem; letter-spacing: 0.5px;">${name.toUpperCase()}</div>
+            <div style="opacity: 0.4; font-size: 0.6rem; margin-top: 6px; letter-spacing: 2px;">RECOGNIZED ENTITY</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>BRAND CLAIMED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The entrepreneur's choice for zero-log, high-performance professional tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Blur Generator | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --bg: #05070a; --card: #0f172a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 320px; gap: 30px; margin-top: 20px; }
+
+        /* The 9:16 Story Frame */
+        .story-stage {
+            background: #111; border: 1px solid var(--border); border-radius: 24px;
+            position: relative; overflow: hidden; aspect-ratio: 9/16;
+            height: 580px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            touch-action: none;
+        }
+
+        #bgLayer { 
+            position: absolute; width: 100%; height: 100%; 
+            object-fit: cover; z-index: 1; transform: scale(1.2);
+            filter: blur(40px) brightness(0.7); pointer-events: none;
+        }
+
+        #fgLayer { 
+            position: absolute; width: 80%; 
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 5; border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: move; user-select: none; display: none;
+        }
+
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        .control-card { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .control-card h3 { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+
+        .btn-main { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; transition: 0.3s; }
+        .btn-main:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-download { background: #431a36; margin-top: 10px; display: none; }
+
+        label { display: block; font-size: 0.7rem; margin-bottom: 8px; color: #64748b; font-weight: 700; text-transform: uppercase; }
+        input[type="range"] { width: 100%; margin-bottom: 15px; accent-color: var(--accent); }
+
+        .pos-indicator { font-family: monospace; font-size: 0.65rem; color: var(--accent); text-align: center; margin-top: 5px; }
+
+        @media (max-width: 850px) {
+            .layout-grid { grid-template-columns: 1fr; }
+            .story-stage { width: 90vw; height: auto; }
+        }
+
+        #exportCanvas { display: none; }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">Back to tools</a>
+        
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.2rem;">Story Blur Generator</h1>
+            <p style="color: #64748b;">Aesthetic backdrops with custom positioning.</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="story-stage" id="stage">
+                <img id="bgLayer" src="">
+                <img id="fgLayer" src="">
+                
+                <div id="dropZone" style="position: absolute; width: 100%; text-align: center; top: 45%; z-index: 10;">
+                    <button class="btn-main" style="width: auto; padding: 10px 25px;" onclick="document.getElementById('imgIn').click()">Upload Content</button>
+                    <input type="file" id="imgIn" hidden accept="image/*" onchange="processImage(this)">
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>Backdrop Style</h3>
+                    <label>Blur Intensity</label>
+                    <input type="range" id="blurRange" min="0" max="100" value="40" oninput="updateStyle()">
+                    
+                    <label>Brightness</label>
+                    <input type="range" id="brightRange" min="10" max="100" value="70" oninput="updateStyle()">
+                </div>
+
+                <div class="control-card">
+                    <h3>Foreground</h3>
+                    <label>Scale (%)</label>
+                    <input type="range" id="sizeRange" min="30" max="100" value="85" oninput="updateStyle()">
+                    <div class="pos-indicator" id="posLabel">X: 50% | Y: 50%</div>
+                    <p style="font-size: 0.65rem; color: #475569; margin-top: 10px;">Drag image in the preview to re-position.</p>
+                </div>
+
+                <div class="control-card">
+                    <h3>Export</h3>
+                    <button class="btn-main btn-download" id="dlBtn" onclick="exportStory()">Download 9:16 PNG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="exportCanvas"></canvas>
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">The Digital Identity & Growth Suite for 2026.</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const bg = document.getElementById('bgLayer');
+        const fg = document.getElementById('fgLayer');
+        const stage = document.getElementById('stage');
+        const dlBtn = document.getElementById('dlBtn');
+        const posLabel = document.getElementById('posLabel');
+
+        let isDragging = false;
+        let posX = 50, posY = 50; // Percentages
+
+        // Handle Image Upload
+        function processImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                bg.src = e.target.result;
+                fg.src = e.target.result;
+                bg.style.display = 'block';
+                fg.style.display = 'block';
+                dlBtn.style.display = 'block';
+                document.getElementById('dropZone').style.display = 'none';
+                updateStyle();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Dragging Logic
+        stage.addEventListener('pointerdown', (e) => {
+            if(e.target === fg) isDragging = true;
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const rect = stage.getBoundingClientRect();
+            
+            // Calculate percentage based on stage
+            let x = ((e.clientX - rect.left) / rect.width) * 100;
+            let y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            // Constrain
+            posX = Math.max(0, Math.min(x, 100));
+            posY = Math.max(0, Math.min(y, 100));
+
+            fg.style.left = posX + '%';
+            fg.style.top = posY + '%';
+            posLabel.innerText = `X: ${Math.round(posX)}% | Y: ${Math.round(posY)}%`;
+        });
+
+        window.addEventListener('pointerup', () => isDragging = false);
+
+        function updateStyle() {
+            const blur = document.getElementById('blurRange').value;
+            const bright = document.getElementById('brightRange').value / 100;
+            const size = document.getElementById('sizeRange').value;
+
+            bg.style.filter = `blur(${blur}px) brightness(${bright})`;
+            fg.style.width = size + '%';
+        }
+
+        function exportStory() {
+            const canvas = document.getElementById('exportCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1080;
+            canvas.height = 1920;
+
+            // 1. Background
+            const bVal = document.getElementById('blurRange').value;
+            const brVal = document.getElementById('brightRange').value / 100;
+            ctx.filter = `blur(${bVal}px) brightness(${brVal})`;
+            
+            const scale = Math.max(canvas.width / fg.naturalWidth, canvas.height / fg.naturalHeight) * 1.2;
+            const bW = fg.naturalWidth * scale;
+            const bH = fg.naturalHeight * scale;
+            ctx.drawImage(fg, (canvas.width - bW)/2, (canvas.height - bH)/2, bW, bH);
+
+            // 2. Foreground
+            ctx.filter = 'none';
+            const sizePerc = document.getElementById('sizeRange').value / 100;
+            const fW = canvas.width * sizePerc;
+            const fH = (fg.naturalHeight / fg.naturalWidth) * fW;
+            
+            // Apply coordinates from percentages
+            const drawX = (canvas.width * (posX / 100)) - (fW / 2);
+            const drawY = (canvas.height * (posY / 100)) - (fH / 2);
+
+            ctx.drawImage(fg, drawX, drawY, fW, fH);
+
+            const link = document.createElement('a');
+            link.download = `brixe_story_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

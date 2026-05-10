@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe-Zone Pro | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        :root { --phone-w: 320px; --phone-h: 568px; }
+        * {
+    box-sizing: border-box;
+}
+        .uploader-zone {
+            width: 100%; max-width: 500px; margin: 0 auto 30px auto;
+            border: 2px dashed #334155; background: rgba(15, 23, 42, 0.6);
+            border-radius: 24px; padding: 40px 20px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .workspace { display: flex; justify-content: center; padding: 20px 0; }
+
+        /* The High-Fidelity Phone */
+        .phone-frame {
+            width: var(--phone-w); height: var(--phone-h);
+            background: #000; border: 12px solid #1e293b;
+            border-radius: 48px; position: relative; overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        #mediaRender, #videoRender { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+
+        /* AUTHENTIC APP UI OVERLAY */
+        .ui-mask { position: absolute; inset: 0; pointer-events: none; z-index: 10; color: white; font-family: 'Inter', sans-serif; }
+        
+        .top-nav { display: flex; justify-content: center; gap: 20px; margin-top: 15px; font-size: 0.85rem; font-weight: 600; opacity: 0.9; }
+        
+        .right-sidebar {
+            position: absolute; right: 10px; bottom: 100px;
+            display: flex; flex-direction: column; align-items: center; gap: 18px;
+        }
+
+        /* The Avatar with the Plus Button */
+        .profile-stack { position: relative; width: 40px; height: 40px; border: 2px solid white; border-radius: 50%; background: #333; margin-bottom: 10px; }
+        .plus-btn { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); background: #ff0050; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 12px; border: 1.5px solid white; }
+
+        .icon-unit { text-align: center; font-size: 0.65rem; font-weight: 700; }
+        .icon-svg { width: 28px; height: 28px; fill: white; margin-bottom: 2px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+        .bottom-content { position: absolute; bottom: 25px; left: 12px; width: 75%; }
+        .handle { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+        .caption-dummy { width: 100%; height: 7px; background: rgba(255,255,255,0.3); border-radius: 10px; margin-bottom: 5px; }
+
+        /* Danger/Dead Zone Tint */
+        .dead-zone-tint {
+        position: absolute;
+        inset: 0;
+        /* This gradient keeps the center 100% clear and tints the outer edges */
+        background: radial-gradient(
+            circle, 
+            transparent 35%, 
+            rgba(255, 0, 80, 0.2) 70%, 
+            rgba(255, 0, 80, 0.4) 100%
+        );
+        border: 4px dashed #ff0050;
+        pointer-events: none;
+        display: none;
+        z-index: 20;
+    }
+
+    /* Adding a 'Safe Text' label that only appears when dead-zones are on */
+    .dead-zone-tint::after {
+        content: "SAFE AREA";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ff0050;
+        font-family: 'Outfit';
+        font-weight: 800;
+        font-size: 1.2rem;
+        opacity: 0.5;
+        letter-spacing: 2px;
+    }
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .brixe-btn { background: var(--card); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .brixe-btn.active { background: var(--primary); border-color: var(--primary); }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .record { width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(45deg, #222, #444); border: 4px solid #111; animation: spin 4s linear infinite; }
+    </style>
+    
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">Back to tools</a>
+        
+        <section class="tool-card">
+            <h1>Safe-Zone Pro</h1>
+            <p>Don't let the "Like" button kill your hook. Check your visibility in seconds.</p>
+
+            <div class="uploader-zone" onclick="document.getElementById('fileInput').click()">
+                <strong id="statusText">Upload Frame (Image or Video)</strong>
+                <input type="file" id="fileInput" hidden accept="image/*,video/*" onchange="processFile(this)">
+            </div>
+
+            <div class="btn-group">
+                <button class="brixe-btn active" onclick="toggleLayer('ui-mask', this)">Toggle UI</button>
+                <button class="brixe-btn" onclick="toggleLayer('dead-zone-tint', this)">Dead Zones</button>
+            </div>
+
+            <div class="workspace">
+                <div class="phone-frame">
+                    <img id="mediaRender" src="" style="display:none;">
+                    <video id="videoRender" style="display:none;" autoplay loop muted></video>
+                    
+                    <div class="dead-zone-tint" id="dead-zone-tint"></div>
+
+                    <div class="ui-mask" id="ui-mask">
+                        <div class="top-nav">
+                            <span>Following</span>
+                            <span style="border-bottom: 2px solid white; padding-bottom: 2px;">For You</span>
+                        </div>
+                        
+                        <div class="right-sidebar">
+                            <div class="profile-stack"><div class="plus-btn">+</div></div>
+                            <div class="icon-unit"><div class="icon-svg">❤️</div><span>1.2M</span></div>
+                            <div class="icon-unit"><div class="icon-svg">💬</div><span>4500</span></div>
+                            <div class="icon-unit"><div class="icon-svg">🔖</div><span>82K</span></div>
+                            <div class="icon-unit"><div class="icon-svg">➡️</div><span>Share</span></div>
+                            <div class="record"></div>
+                        </div>
+
+                        <div class="bottom-content">
+                            <div class="handle">@brixe_engine</div>
+                            <div class="caption-dummy"></div>
+                            <div class="caption-dummy" style="width: 60%;"></div>
+                            <div style="font-size: 0.75rem; margin-top: 8px;">🎵 Original Sound - Brixe Engine</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
+        <div style="margin-bottom: 20px;">
+            <img src="../logo.png" alt="Brixe" style="height: 30px; opacity: 0.5;">
+        </div>
+        <p>© 2026 Brixe Engine. All processing is 100% Client-Side for Privacy.</p>
+        <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+            <a href="#" style="color: inherit; text-decoration: none;">Terms</a>
+            <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
+        </div>
+    </footer>
+
+    <script>
+        function processFile(input) {
+            const file = input.files[0];
+            const img = document.getElementById('mediaRender');
+            const video = document.getElementById('videoRender');
+            const status = document.getElementById('statusText');
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                    video.style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                const url = URL.createObjectURL(file);
+                video.src = url;
+                video.style.display = "block";
+                img.style.display = "none";
+            }
+            status.innerText = "File Analyzed Successfully";
+        }
+
+        function toggleLayer(id, btn) {
+            const el = document.getElementById(id);
+            const isVisible = window.getComputedStyle(el).display !== 'none';
+            el.style.display = isVisible ? 'none' : (id === 'ui-mask' ? 'block' : 'block');
+            btn.classList.toggle('active');
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

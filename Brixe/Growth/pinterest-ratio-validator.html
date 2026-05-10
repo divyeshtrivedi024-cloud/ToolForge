@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinterest Ratio Validator | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --p-red: #e60023; --border: #334155; --bg: #05070a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+        .uploader-zone {
+            width: 100%; border: 2px dashed var(--border); background: rgba(30, 41, 59, 0.4);
+            border-radius: 24px; padding: 60px 20px; text-align: center;
+            cursor: pointer; transition: 0.3s; margin-bottom: 40px;
+        }
+        .uploader-zone:hover { border-color: var(--p-red); background: rgba(230, 0, 35, 0.05); }
+
+        .analysis-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+            margin-bottom: 50px; display: none; /* Show on upload */
+        }
+
+        .preview-pane {
+            background: #111; border-radius: 20px; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            border: 1px solid var(--border);
+        }
+        .preview-pane img { max-width: 100%; max-height: 500px; border-radius: 10px; }
+
+        .stats-pane {
+            display: flex; flex-direction: column; gap: 20px;
+        }
+
+        .stat-card {
+            background: #0f172a; border: 1px solid var(--border);
+            padding: 20px; border-radius: 15px; position: relative;
+        }
+        .stat-card h3 { font-family: 'Outfit'; font-size: 0.75rem; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-val { font-size: 1.5rem; font-weight: 800; font-family: 'Outfit'; }
+
+        .health-bar {
+            width: 100%; height: 12px; background: #1e293b; border-radius: 10px; overflow: hidden; margin-top: 10px;
+        }
+        .health-fill { height: 100%; width: 0%; transition: 1s ease-out; }
+
+        .p-btn {
+            background: var(--p-red); color: white; border: none; padding: 15px 30px;
+            border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s;
+            display: inline-block; text-decoration: none; font-size: 0.9rem;
+        }
+        .p-btn:hover { transform: scale(1.05); background: #ad001a; }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">Back to tools</a>
+        
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.8rem; color: #fff;">Pin Ratio Validator</h1>
+            <p style="color: #64748b;">Check if your asset meets the 2:3 Pinterest Algorithm standard.</p>
+        </header>
+
+        <div class="uploader-zone" onclick="document.getElementById('pinInput').click()">
+            <div style="font-size: 3rem; margin-bottom: 10px;">📌</div>
+            <strong id="status">Upload Pinterest Graphic</strong>
+            <input type="file" id="pinInput" hidden accept="image/*" onchange="analyzePin(this)">
+        </div>
+
+        <div class="analysis-grid" id="analysisGrid">
+            <div class="preview-pane">
+                <img id="pinPreview" src="">
+            </div>
+
+            <div class="stats-pane">
+                <div class="stat-card">
+                    <h3>Current Dimensions</h3>
+                    <div class="stat-val" id="dimVal">0 x 0</div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Aspect Ratio</h3>
+                    <div class="stat-val" id="ratioVal">0:0</div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Algo Health Score</h3>
+                    <div class="stat-val" id="scoreVal">0%</div>
+                    <div class="health-bar"><div id="healthFill" class="health-fill"></div></div>
+                </div>
+
+                <div id="feedback" style="padding: 15px; border-radius: 10px; font-size: 0.85rem; font-weight: 500;"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem;">Pinterest SEO Toolset v1.0</p>
+        </div>
+    </footer>
+
+    <script>
+        function analyzePin(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = function() {
+                    const w = img.width;
+                    const h = img.height;
+                    const ratio = (w / h).toFixed(2);
+                    const targetRatio = (2 / 3).toFixed(2);
+                    
+                    document.getElementById('analysisGrid').style.display = 'grid';
+                    document.getElementById('pinPreview').src = e.target.result;
+                    document.getElementById('dimVal').innerText = `${w} x ${h}px`;
+                    document.getElementById('ratioVal').innerText = `${w}:${h}`;
+                    
+                    // Logic for Health Score
+                    let score = 0;
+                    let feedback = "";
+                    let color = "";
+
+                    if (ratio == targetRatio) {
+                        score = 100;
+                        feedback = "Perfect! This is the 2:3 Golden Ratio for Pinterest.";
+                        color = "#22c55e";
+                    } else if (ratio > targetRatio) {
+                        score = Math.max(0, 100 - (ratio - targetRatio) * 100);
+                        feedback = "Warning: Image is too wide. It may get cropped in the feed.";
+                        color = "#f59e0b";
+                    } else {
+                        score = Math.max(0, 100 - (targetRatio - ratio) * 100);
+                        feedback = "Warning: Image is too tall (Giraffe Pin). Pinterest may truncate this.";
+                        color = "#ef4444";
+                    }
+
+                    const scoreEl = document.getElementById('scoreVal');
+                    const fill = document.getElementById('healthFill');
+                    const feedEl = document.getElementById('feedback');
+
+                    scoreEl.innerText = Math.round(score) + "%";
+                    scoreEl.style.color = color;
+                    fill.style.width = score + "%";
+                    fill.style.backgroundColor = color;
+                    feedEl.innerText = feedback;
+                    feedEl.style.backgroundColor = color + "22";
+                    feedEl.style.color = color;
+                    document.getElementById('status').innerText = "Re-upload to check another";
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

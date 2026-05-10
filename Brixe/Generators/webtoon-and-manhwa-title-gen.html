@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webtoon & Manhwa Title Gen | Brixe</title>
+    <meta name="description" content="Generate high-impact, viral-ready titles for Webtoons, Manhwa, and Manga. From Isekai to Solo Leveling tropes, find the perfect hook for your series.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Bangers&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Bangers', cursive; letter-spacing: 2px; color: var(--primary);">Webtoon Title Gen</h1>
+            <p>From zero to S-Rank. Generate addictive, clickable titles for your next Webtoon or Manhwa project, optimized for modern reader trends.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional protagonist (e.g. 'Necromancer')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="isekai">🏰 Isekai/Fantasy (Rebirth & Reversal)</option>
+                    <option value="leveling">⚔️ Solo Leveling (Systems & Ranks)</option>
+                    <option value="romance">🌸 Otome/Romance (Villainess & Dukes)</option>
+                    <option value="action">🔥 Modern Action (Dungeons & Murim)</option>
+                    <option value="comedy">🎭 Gag & Slice of Life (Absurdity)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateWebtoonTitle()">Release the Series</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Massive Database Update</h2>
+            <p>Our generator has been upgraded with over 200 linguistic hooks common in top-ranking Webtoon platforms. We've categorized titles based on current metadata trends: <strong>Progression Fantasy</strong>, <strong>Regression Narratives</strong>, and <strong>Status Reversals</strong>. Whether you need a short, punchy manga title or a long-form Korean sentence-style title, ToolForge provides the most accurate genre tropes available.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The "Regressor" Hook</strong> Using words like "Return," "Again," or "Second Life" immediately satisfies the reader's desire for a protagonist with future knowledge.</div>
+                <div class="tip-card"><strong>02. S-Rank Metadata</strong> Including specific ranks (S-Rank, F-Rank, 99th Level) gives the reader a clear sense of the power scaling they can expect.</div>
+                <div class="tip-card"><strong>03. The Villainess Pivot</strong> For romance, titles focusing on "Taming," "Surviving," or "Changing" the original plotline are currently the highest-performing tropes.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Webtoon & Manhwa Title Generator (v2.0 - Expanded Database)
+ * 100% Client-Side | Creative & Viral Database
+ */
+function generateWebtoonTitle() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9 ]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        isekai: {
+            pre: ["I Reincarnated as a", "The Reborn", "Twice-Lived", "The Duke's Secret", "The Villainess is a", "Starting Life as a", "The Legendary", "Accidental", "The Forbidden", "King of the", "The Last Living", "Trapped in the Game as a", "The Goddess's Favorite", "Reborn into a 1-Star", "The Overpowered", "Transmigrated as the", "Exiled", "The Saintess who", "The Rejected", "Empress of"],
+            suff: ["Princess", "Mage", "Saintess", "Hero", "Alchemist", "Blacksmith", "God", "Tyrant", "Servant", "Swordmaster", "Sage", "Dragon", "Commoner", "Shadow", "Sorcerer", "Vanguard", "Prophet", "Knight", "Rogue", "Heir"]
+        },
+        leveling: {
+            pre: ["Solo", "The S-Rank", "Maximum", "The Hidden", "Level Up with the", "Infinite", "The Player who", "The Constellation's", "The Last", "99th Level", "The Bug in the", "Auto-Hunting with", "The Tutorial is", "Ranker of the", "The Glitched", "Path of the", "System", "Zero-Rank", "Leveling up my", "The Only One who"],
+            suff: ["Ranker", "Hunter", "Necromancer", "Player", "Glitch", "System", "Awakening", "Newbie", "Conqueror", "Shadow", "Monarch", "Executioner", "Slayer", "Warrior", "Legend", "Monster", "Guardian", "Reaper", "Spirit", "User"]
+        },
+        romance: {
+            pre: ["The Villainess Wants a", "Contract", "My Protective", "The Cold Duke and the", "Beware of the", "The Lady's", "My Sweet", "The Empress's", "How to Tame a", "Secret", "I Married the", "The Obsessive", "The Tyrant's", "The Divorcee's", "Saving the", "Why are you doing this,", "I'm a Stepmother but my", "The Disguised", "Please Don't Eat Me,", "For My"],
+            suff: ["Marriage", "Villain", "Duke", "Fiancé", "Maid", "Heart", "Rose", "Lovers", "Predator", "Duchess", "Prince", "Monster", "Contractor", "Lady", "Gentleman", "Butler", "Empress", "Knight", "Master", "Escort"]
+        },
+        action: {
+            pre: ["Return of the", "The God of", "Dungeon", "Murim", "The Heavenly", "Absolute", "Mercenary", "The Peerless", "Deadly", "Revenge of the", "The Undefeatable", "Legendary Fist of", "Shadow of the", "The 10th Circle", "Supreme", "The Blade of", "Invincible", "Northern", "Godly", "Ruinous"],
+            suff: ["God", "Demon", "Warrior", "Shadow", "Grandmaster", "Blade", "Fist", "Legend", "Exterminator", "Fallen", "Sword", "Clan", "Sect", "Dragon", "Killer", "Assassin", "Master", "Discipine", "Soldier", "Spirit"]
+        },
+        comedy: {
+            pre: ["My Roommate is a", "Help! My", "The Ordinary Life of a", "I accidentally became a", "Why is the", "Is this a", "A Guide to", "The Absurd", "Daily Life of the", "Stop being a"],
+            suff: ["Idol", "Cat", "Hero", "Failure", "Loser", "Ghost", "Stalker", "Genius", "Alien", "Zombie"]
+        }
+    };
+
+    const connectors = ["in another world", "with a hidden system", "to save the empire", "from the future", "only I can see", "for the second time", "just to survive", "by eating monsters", "using only my fists", "with a 1% success rate", "after being betrayed", "inside a novel"];
+
+    for (let i = 0; i < 8; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        const conn = connectors[Math.floor(Math.random() * connectors.length)];
+        
+        let finalTitle = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.3) finalTitle = `${pre} ${userWord}`;
+            else if (r < 0.6) finalTitle = `The ${userWord} who ${conn}`;
+            else if (r < 0.8) finalTitle = `${userWord}: ${pre} ${suff}`;
+            else finalTitle = `How I became a ${userWord} in another world`;
+        } else {
+            if (r < 0.4) {
+                finalTitle = `${pre} ${suff}`;
+            } else if (r < 0.8) {
+                finalTitle = `${pre} ${suff} ${conn}`;
+            } else {
+                finalTitle = `${suff} of the ${pre.split(' ').slice(-1)}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        div.style.borderLeft = '4px solid var(--primary)';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: #fff; font-size: 1.1rem; line-height: 1.3; font-family: 'Outfit'; text-transform: uppercase;">${finalTitle}</div>
+            <div style="opacity: 0.6; font-size: 0.65rem; margin-top: 10px; letter-spacing: 2px; color: var(--primary);">STATUS: SERIALIZING / 2026</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalTitle).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>READY TO PUBLISH</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The ultimate creative suite for the next generation of storytellers and web developers.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Sector</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="creative-universe.html" style="color: #64748b; text-decoration: none;">Creative Universe</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. See you in the next chapter.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

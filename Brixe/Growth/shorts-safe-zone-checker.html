@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Shorts Safe-Zone Pro | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* THE CRITICAL BOX-MODEL FIX */
+        * { box-sizing: border-box; }
+
+        :root { --phone-w: 320px; --phone-h: 568px; }
+
+        .uploader-zone {
+            width: 100%; max-width: 500px; margin: 0 auto 30px auto;
+            border: 2px dashed #334155; background: rgba(15, 23, 42, 0.6);
+            border-radius: 24px; padding: 30px 15px; text-align: center;
+            cursor: pointer; transition: 0.3s; overflow: hidden;
+        }
+
+        .workspace { display: flex; justify-content: center; padding: 20px 10px; width: 100%; }
+
+        .phone-frame {
+            width: var(--phone-w); height: var(--phone-h);
+            background: #000; border: 12px solid #1e293b;
+            border-radius: 48px; position: relative; overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        #mediaRender, #videoRender { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+
+        /* YOUTUBE SHORTS UI OVERLAY */
+        .ui-mask { position: absolute; inset: 0; pointer-events: none; z-index: 10; color: white; font-family: "YouTube Sans", "Roboto", sans-serif; }
+        
+        .yt-top { position: absolute; top: 15px; left: 0; width: 100%; display: flex; justify-content: space-between; padding: 0 15px; align-items: center; }
+        .yt-logo { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 4px; }
+        .yt-red-dot { width: 12px; height: 12px; background: #ff0000; border-radius: 3px; }
+
+        .right-sidebar {
+            position: absolute; right: 8px; bottom: 60px;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+
+        .icon-unit { text-align: center; font-size: 0.6rem; font-weight: 500; }
+        .icon-svg { width: 26px; height: 26px; fill: white; margin-bottom: 2px; }
+
+        .bottom-content { position: absolute; bottom: 15px; left: 12px; width: 80%; }
+        .yt-channel { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.85rem; margin-bottom: 10px; }
+        .sub-btn { background: white; color: black; border-radius: 18px; padding: 4px 10px; font-size: 0.7rem; font-weight: 700; }
+        
+        .caption-dummy { width: 95%; height: 6px; background: rgba(255,255,255,0.3); border-radius: 10px; margin-bottom: 6px; }
+
+        .dead-zone-tint {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle, transparent 38%, rgba(255, 0, 0, 0.15) 70%, rgba(255, 0, 0, 0.35) 100%);
+            border: 4px dashed #ff0000;
+            display: none; z-index: 5;
+        }
+        .dead-zone-tint::after {
+            content: "SAFE AREA"; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            color: #ff0000; font-family: 'Outfit'; font-weight: 800; opacity: 0.4; letter-spacing: 3px;
+        }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .brixe-btn { background: var(--card); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .brixe-btn.active { background: #ff0000; border-color: #ff0000; }
+
+        .yt-audio-disk { width: 30px; height: 30px; border-radius: 4px; background: #333; border: 1px solid rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">Back to tools</a>
+        
+        <section class="tool-card">
+            <h1>YouTube Shorts Safe-Zone</h1>
+            <p>Ensure your titles and subs aren't blocked by the YouTube overlay.</p>
+
+            <div class="uploader-zone" onclick="document.getElementById('fileInput').click()">
+                <strong id="statusText">Upload Shorts Frame</strong>
+                <input type="file" id="fileInput" hidden accept="image/*,video/*" onchange="processFile(this)">
+            </div>
+
+            <div class="btn-group">
+                <button class="brixe-btn active" onclick="toggleLayer('ui-mask', this)">YouTube UI</button>
+                <button class="brixe-btn" onclick="toggleLayer('dead-zone-tint', this)">Dead Zones</button>
+            </div>
+
+            <div class="workspace">
+                <div class="phone-frame">
+                    <img id="mediaRender" src="" style="display:none;">
+                    <video id="videoRender" style="display:none;" autoplay loop muted></video>
+                    
+                    <div class="dead-zone-tint" id="dead-zone-tint"></div>
+
+                    <div class="ui-mask" id="ui-mask">
+                        <div class="yt-top">
+                            <div class="yt-logo"><div class="yt-red-dot"></div><span>Shorts</span></div>
+                            <span style="font-size:1.2rem;">🔍 ⋮</span>
+                        </div>
+                        
+                        <div class="right-sidebar">
+                            <div class="icon-unit"><div class="icon-svg">👍</div><span>Like</span></div>
+                            <div class="icon-unit"><div class="icon-svg">👎</div><span>Dislike</span></div>
+                            <div class="icon-unit"><div class="icon-svg">💬</div><span>842</span></div>
+                            <div class="icon-unit"><div class="icon-svg">✈️</div><span>Share</span></div>
+                            <div class="icon-unit"><div class="icon-svg">🔄</div><span>Remix</span></div>
+                            <div class="yt-audio-disk"></div>
+                        </div>
+
+                        <div class="bottom-content">
+                            <div class="yt-channel">
+                                <div style="width:28px; height:28px; background:#444; border-radius:50%;"></div>
+                                <span>@BrixeEngine</span>
+                                <div class="sub-btn">Subscribe</div>
+                            </div>
+                            <div class="caption-dummy"></div>
+                            <div class="caption-dummy" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">The Digital Identity & Growth Suite for 2026.</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function processFile(input) {
+            const file = input.files[0];
+            const img = document.getElementById('mediaRender');
+            const video = document.getElementById('videoRender');
+            const status = document.getElementById('statusText');
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                    video.style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                const url = URL.createObjectURL(file);
+                video.src = url;
+                video.style.display = "block";
+                img.style.display = "none";
+            }
+            status.innerText = "Shorts Layout Ready";
+        }
+
+        function toggleLayer(id, btn) {
+            const el = document.getElementById(id);
+            const isVisible = window.getComputedStyle(el).display !== 'none';
+            el.style.display = isVisible ? 'none' : (id === 'ui-mask' ? 'block' : 'block');
+            btn.classList.toggle('active');
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

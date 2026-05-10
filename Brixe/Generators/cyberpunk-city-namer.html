@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk City Namer | Brixe</title>
+    <meta name="description" content="Generate immersive Cyberpunk city names and megacity aliases. Create high-tech, low-life urban sprawl identities for RPGs, world-building, and creative writing.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Cyberpunk City Namer</h1>
+            <p>Construct a neon-drenched megacity. High-tech nomenclature meets urban decay.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional keyword (e.g. 'Neo', 'Chrome')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="corporate">🏢 Corporate High-Rise (Clean/Oppressive)</option>
+                    <option value="slum">🏚️ The Sprawl (Low-Life/Gritty)</option>
+                    <option value="neon">🌈 Neon District (Japanese-Influenced/Nightlife)</option>
+                    <option value="orbital">🛰️ Orbital Station (Tech/Space-Bound)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateCyberCity()">Initialize Sprawl</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Anatomy of a Megacity</h2>
+            <p>Cyberpunk cities are more than just locations; they are characters. From the smoke-clogged alleys of "The Sprawl" to the sterile, floating gardens of "Upper Aether," the name must reflect the divide between the 1% and the street. Our generator prioritizes a massive database of industrial terms, Japanese loanwords, and tech-slang to ensure your setting feels lived-in and dangerous.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Prefix Dominance</strong> Names like "Neo-Kobe" or "Mega-London" signal a city built on the ruins of the old world. Use "New" only if the city is a sterile reconstruction.</div>
+                <div class="tip-card"><strong>02. Compound Suffixes</strong> Combining an industry with a landform (e.g., "Steel-Port" or "Data-Bay") creates an immediate sense of the city's primary function in the global economy.</div>
+                <div class="tip-card"><strong>03. The Language of the Future</strong> Incorporating "Chiba," "Kuro," or "Shin" reflects the genre's traditional roots in 80s-era Japanese economic dominance.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Cyberpunk City Namer Logic
+ * 100% Client-Side | Massive Database Priority
+ */
+function generateCyberCity() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    // Massive database to ensure high-quality output regardless of user input
+    const data = {
+        corporate: {
+            pre: ["Aether", "Zenith", "Apex", "Prime", "Echelon", "Paradigm", "Nexus", "Vertex", "Omni", "Core", "Axiom", "Vector", "Optic", "Prism", "Sovereign", "Imperial", "Grand", "Noble", "High", "Clean", "Azure", "Ivory", "Silver", "Gold", "Diamond", "Glass", "Crystal", "Static", "Logic", "Neural", "Cortex", "System", "Cloud", "Vista", "Beacon", "Pillar", "Throne", "Mercy", "Unity", "Order"],
+            post: ["Complex", "Plaza", "Spire", "Tower", "Center", "Heights", "Station", "Sector", "Block", "District", "Plateau", "Apex", "Garden", "Hub", "Gateway", "Citadel", "Fortress", "Arch", "Domain", "Reach"]
+        },
+        slum: {
+            pre: ["The", "Rust", "Gutter", "Low", "Dust", "Ash", "Smoke", "Slag", "Iron", "Steel", "Oil", "Mud", "Shadow", "Grim", "Dark", "Broken", "Lost", "Wild", "Grey", "Black", "Acid", "Hazard", "Vandal", "Riot", "Chaos", "Gully", "Sewer", "Vent", "Pipe", "Pit", "Basement", "Under", "Sub", "Deep", "Trench", "Bottom", "Street", "Back", "Rat", "Junkyard"],
+            post: ["Sprawl", "Alley", "Trench", "Slums", "Basin", "Hollow", "End", "Edge", "Yard", "Gully", "Vents", "Docks", "Works", "Foundry", "Pit", "Gut", "Veins", "Hole", "Warren", "Den"]
+        },
+        neon: {
+            pre: ["Neo", "Shin", "Kuro", "Shiro", "Ginza", "Shinjuku", "Kobe", "Osaka", "Chiba", "Electric", "Neon", "Glow", "Pulse", "Cyber", "Synth", "Chrome", "Jade", "Ruby", "Lotus", "Dragon", "Tiger", "Crane", "Night", "Dark", "Flash", "Vivid", "Pink", "Violet", "Midnight", "Solar", "Lunar", "Star", "Astro", "Nova", "Cosmo", "Zen", "Mecha", "Glitch", "Bit", "Vector"],
+            post: ["City", "Town", "Ward", "District", "Street", "Plaza", "Arcade", "Hub", "Quarter", "Lane", "Road", "Square", "Bridge", "Gate", "Port", "Harbor", "Nexus", "Zone", "Front", "Strip"]
+        },
+        orbital: {
+            pre: ["Station", "Orbital", "High", "Void", "Zero", "Vacuum", "Star", "Solar", "Lunar", "Astro", "Celestial", "Galactic", "Horizon", "Zenith", "Apex", "Nova", "Cosmos", "Ether", "Atmosphere", "Sphere", "Shell", "Halo", "Ring", "Disk", "Satellite", "Node", "Link", "Sync", "Flux", "Gravity", "Weightless", "Silent", "Infinite", "Beyond", "Deep", "Cold", "Dark", "Light", "Sun", "Moon"],
+            post: ["One", "Alpha", "Prime", "Station", "Platform", "Array", "Nexus", "Ring", "Shell", "Spire", "Satellite", "Point", "Base", "Outpost", "Facility", "Lab", "Observation", "Dock", "Gate", "Port"]
+        }
+    };
+
+    const connectors = ["-", " ", "", " "];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        const conn = connectors[Math.floor(Math.random() * connectors.length)];
+        
+        let name = "";
+        const styleRoll = Math.random();
+
+        if (userWord) {
+            // Integration logic for user word
+            if (styleRoll < 0.3) {
+                name = `${userWord}${conn}${post}`;
+            } else if (styleRoll < 0.6) {
+                name = `${pre}${conn}${userWord}`;
+            } else {
+                name = `${pre}-${userWord}-${post}`;
+            }
+        } else {
+            // Pure database logic
+            if (styleRoll < 0.5) {
+                name = `${pre}${conn}${post}`;
+            } else {
+                // Occasional single-word "Impact" names
+                name = pre;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name.toUpperCase();
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name.toUpperCase()).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "COPIED!";
+                div.classList.add('active-copy'); 
+                
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions or feedback? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

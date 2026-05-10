@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Apocalyptic Faction Namer | Brixe</title>
+    <meta name="description" content="Generate gritty and immersive post-apocalyptic faction names. Create unique tribe, cult, and survivor group identities for RPGs and world-building.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Wasteland Faction Gen</h1>
+            <p>The old world fell. Something new rose from the ashes. Name your survivors, raiders, or cults.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional scavenged word (e.g. 'Gear', 'Dust')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="raider">💀 Raider Gang (Brutal/Chaos)</option>
+                    <option value="scavenger">🔧 Scavenger Union (Tech/Salvage)</option>
+                    <option value="cult">👁️ Doomsday Cult (Religious/Mystic)</option>
+                    <option value="militia">🎖️ Civil Militia (Order/Hardline)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateFaction()">Sift Through Rubble</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Societies of the Ruined World</h2>
+            <p>In a post-apocalyptic setting, a faction's name represents their philosophy of survival. Names often draw from the remnants of the past—misinterpreted corporate slogans, military jargon, or primal descriptions of the environment. Our generator prioritizes "End-World" phonetics, blending industrial rot with tribal grit to ensure your group feels like a permanent fixture of the wasteland.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Found Language</strong> Tribes often name themselves after signs or objects they don't fully understand (e.g., "The Stop-Sign Kings" or "The Route 66ers").</div>
+                <div class="tip-card"><strong>02. Primal Hierarchy</strong> Use words that suggest a new social order, like "Brood," "Sons," "Collective," or "Remnant," to show how the group views their lineage.</div>
+                <div class="tip-card"><strong>03. Harsh Geography</strong> If the world is a desert, names should sound dry (Rust, Dust, Bone). If it's a nuclear winter, names should feel cold (Frost, Static, Grey).</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Post-Apocalyptic Faction Namer
+ * 100% Client-Side | Gritty Database
+ */
+function generateFaction() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        raider: {
+            pre: ["Blood", "Rust", "War", "Skull", "Bone", "Riot", "Vandal", "Wild", "Savage", "Gutter", "Ash", "Smoke", "Spike", "Chain", "Iron", "Steel", "Scourge", "Dead", "Grim", "Broken", "Mean", "Bad", "Mad", "Bullet", "Shell", "Fire", "Diesel", "Oil", "Chrome", "Black"],
+            post: ["Dogs", "Hounds", "Kings", "Raiders", "Pack", "Swarm", "Drones", "Freaks", "Vultures", "Wolves", "Reapers", "Slayers", "Butchers", "Rats", "Sons", "Brood", "Horde", "Tribals", "Hunters", "Warriors"]
+        },
+        scavenger: {
+            pre: ["Gear", "Bolt", "Wrench", "Rust", "Metal", "Wreck", "Scrap", "Salvage", "Zinc", "Copper", "Circuit", "Static", "Signal", "Grey", "Dust", "Sift", "Pipe", "Valve", "Tank", "Engine", "Motor", "Wire", "Tech", "Hybrid", "Analog", "Shift", "Core", "Drift", "Vane", "Spark"],
+            post: ["Union", "Guild", "Assembly", "Network", "Collective", "Salvage", "Works", "Foundry", "Yard", "Docks", "Engineers", "Keepers", "Seekers", "Traders", "Watch", "Crews", "Squad", "Unit", "Dredgers", "Drifters"]
+        },
+        cult: {
+            pre: ["Holy", "Last", "Great", "Eternal", "Solar", "Lunar", "Silent", "Blind", "Sunless", "Void", "Nuclear", "Atom", "Final", "Sacred", "Golden", "Radiant", "Fallen", "Hidden", "Secret", "Whispering", "Dark", "Deep", "Infinite", "Ancient", "Prophet", "Children", "Apostles", "Disciples", "Pure", "True"],
+            post: ["Cult", "Children", "Sons", "Daughters", "Prophecy", "Church", "Covenant", "Order", "Light", "Flame", "Faith", "Eye", "Voice", "Echo", "Shade", "Path", "Gaze", "Tide", "Vessel", "Rune"]
+        },
+        militia: {
+            pre: ["Fort", "Guard", "Law", "Order", "Hard", "Iron", "Safe", "Steel", "Peace", "High", "First", "Last", "Allied", "Global", "Local", "Home", "Bastion", "Citadel", "Pillar", "Wall", "Fence", "Gate", "Sentry", "Vanguard", "Shield", "Hammer", "Strike", "Point", "Front", "Base"],
+            post: ["Militia", "Regiment", "Division", "Corps", "Force", "Command", "Security", "Guardians", "Defense", "Watch", "Sentinels", "Wardens", "Marshals", "Rangers", "Troopers", "Knights", "Legion", "Patrol", "Authority", "Agency"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const post = data[vibe].post[Math.floor(Math.random() * data[vibe].post.length)];
+        
+        let name = "";
+        const styleRoll = Math.random();
+
+        if (userWord) {
+            if (styleRoll < 0.4) name = `${pre} ${userWord}`;
+            else if (styleRoll < 0.8) name = `${userWord} ${post}`;
+            else name = `The ${userWord} ${post}`;
+        } else {
+            if (styleRoll < 0.5) name = `${pre} ${post}`;
+            else if (styleRoll < 0.8) name = `The ${pre} ${post}`;
+            else name = `${pre}-${post}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name.toUpperCase();
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name.toUpperCase()).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "SCAVENGED";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Utility for the end-user. High-performance generation with zero-log security.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Engine</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Connect</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All logic processed client-side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

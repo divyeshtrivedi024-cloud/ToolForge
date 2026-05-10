@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Name Generator | Brixe</title>
+    <meta name="description" content="Generate majestic and legendary kingdom names. Create unique realms for high fantasy, historical fiction, and world-building with an expanded database.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Kingdom Name Generator</h1>
+            <p>Claim your throne. Generate names for sprawling empires, noble principalities, and ancient dynasties.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional house/region (e.g. 'Storm')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="high-fantasy">🏰 High Fantasy (Noble/Elder)</option>
+                    <option value="historical">🛡️ Historical (Feudal/Grit)</option>
+                    <option value="imperial">⚔️ Imperial (Conquest/Grandeur)</option>
+                    <option value="eldritch">👁️ Lost Realm (Mystic/Forbidden)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateKingdom()">Claim Sovereignty</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Cartography of Power</h2>
+            <p>A kingdom's name reflects its geography, its lineage, or its divine mandate. In epic fantasy, names like "Gondor" or "Westeros" convey a sense of permanence and culture. Our engine utilizes an expanded database of topographical markers (vales, peaks, reaches) and heraldic descriptors to ensure your realm feels established and lived-in. Whether you are building a merchant republic or a dark caliphate, the right name anchors your world’s history.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Topographical Roots</strong> Kingdoms are often named after their most prominent feature, such as a river (The Rhineland) or a mountain range (Ironpeaks).</div>
+                <div class="tip-card"><strong>02. Suffix Governance</strong> The political structure matters: use "Empire" for conquest-based states, "Principality" for smaller noble lands, or "Theocracy" for religious domains.</div>
+                <div class="tip-card"><strong>03. Elder Tongues</strong> For ancient realms, combine soft vowels with archaic suffixes like "-ia", "-ath", or "-dor" to imply a deep, pre-human history.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Kingdom Name Generator
+ * 100% Client-Side | Expanded Sovereignty Database
+ */
+function generateKingdom() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        "high-fantasy": {
+            pre: ["Aethel", "Cael", "Lumi", "Valer", "Orel", "Eldar", "Silvar", "Gwen", "Thal", "Mith", "Aure", "Ever", "Fey", "Glor", "Hallow", "Star", "Moon", "Dawn", "High", "Azure"],
+            mid: ["gard", "dor", "ion", "ath", "lor", "marr", "vale", "dale", "reach", "wood", "shire", "land", "coast", "crest", "moor", "spire", "crag", "gate", "keep", "haven"],
+            suff: ["Kingdom", "Realm", "Sovereignty", "Dominion", "Lands", "Highness"]
+        },
+        historical: {
+            pre: ["North", "South", "East", "West", "Iron", "Stone", "Clay", "Oak", "River", "Bridge", "White", "Black", "Grey", "Saxon", "Norm", "Castel", "Burg", "Ham", "Field", "Wold"],
+            mid: ["bury", "ford", "wick", "chester", "ham", "stead", "ton", "thorpe", "kirk", "by", "low", "ridge", "well", "den", "hurst", "worth", "field", "wood", "marsh", "port"],
+            suff: ["Kingdom", "Duchy", "Principality", "Earldom", "Barony", "Fiefdom"]
+        },
+        imperial: {
+            pre: ["Grand", "Imperial", "Solar", "Golden", "Iron", "Steel", "Victory", "Absolute", "Eternal", "United", "Central", "Titan", "Majestic", "Noble", "Sovereign", "Law", "Order", "Crimson", "Royal", "Apex"],
+            mid: ["ia", "ium", "on", "or", "us", "is", "os", "ax", "ar", "ix", "en", "at", "um", "an", "ex", "it", "un", "el", "is", "od"],
+            suff: ["Empire", "Hegemony", "Consortium", "Imperium", "Sultanate", "Caliphate"]
+        },
+        eldritch: {
+            pre: ["Void", "Shadow", "Null", "Abyss", "Grim", "Silent", "Lost", "Ancient", "Fallen", "Ruined", "Cursed", "Wicked", "Hidden", "Sunless", "Dark", "Obsidian", "Deep", "Empty", "Hollow", "Dead"],
+            mid: ["hollow", "pit", "grave", "void", "rift", "abyss", "ruin", "depths", "veil", "crypt", "scar", "waste", "blight", "scourge", "shroud", "echo", "whisper", "tomb", "vault", "end"],
+            suff: ["Expanse", "Remnant", "Void", "Hollow", "Domain", "Reach"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const mid = data[vibe].mid[Math.floor(Math.random() * data[vibe].mid.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let kingdomName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) kingdomName = `${userWord} ${suff}`;
+            else if (r < 0.7) kingdomName = `The ${pre} ${userWord} ${suff}`;
+            else kingdomName = `The ${suff} of ${userWord}`;
+        } else {
+            if (r < 0.4) kingdomName = `${pre}${mid}`;
+            else if (r < 0.7) kingdomName = `The ${suff} of ${pre}${mid}`;
+            else kingdomName = `${pre}${mid} ${suff}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1rem; letter-spacing: 0.5px;">${kingdomName.toUpperCase()}</div>
+             `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(kingdomName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800;'>SOVEREIGNTY CLAIMED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Unleashing digital creativity. Secure. Private. Fast. Expanded databases for professional world-building.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Support</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars OC Namer | Brixe</title>
+    <meta name="description" content="Generate authentic Star Wars Original Character (OC) names. Create unique identities for Jedi, Sith, Bounty Hunters, and Scoundrels with zero-log privacy.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Star Wars OC Namer</h1>
+            <p>Generate names from a galaxy far, far away. Optimized for phonetics that fit the Star Wars universe lore.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional hint (e.g. 'Ren', 'Darth')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="force">⚔️ Force User (Jedi/Sith/Mystic)</option>
+                    <option value="scoundrel">🔫 Scoundrel (Bounty Hunter/Smuggler)</option>
+                    <option value="imperial">🎖️ Imperial (Officer/Clone/Trooper)</option>
+                    <option value="alien">👽 Outer Rim (Alien/Unique Phonetics)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateSWName()">Generate Identity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Phonetics of the Galaxy</h2>
+            <p>Star Wars names follow specific linguistic patterns—often combining sharp consonants with flowing vowels to create names that feel ancient yet futuristic. Our generator uses a deep database of Galactic Basic phonemes, ensuring your character sounds like they belong in a cantina or a Jedi High Council meeting. Whether you need a mono-name like "Rey" or a complex dynastic title, we prioritize lore-accurate syllable structures.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Apostrophe Usage</strong> In Star Wars, apostrophes often denote specific planetary dialects (e.g., Twi'lek or Rodian). Use them sparingly to signify an Outer Rim origin.</div>
+                <div class="tip-card"><strong>02. Darth Titles</strong> Sith names often reference negative concepts (e.g., Sidious/Insidious, Vader/Invader). If you're building a Sith, look for words that imply corruption or power.</div>
+                <div class="tip-card"><strong>03. Two-Part Names</strong> Most Core World humans use a First and Last name structure. Scoundrels and Bounty Hunters often use short, punchy mononyms for quick recognition in the underworld.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Star Wars OC Name Generator
+ * 100% Client-Side | Massive Phoneme Database
+ */
+function generateSWName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z]/g, '');
+    
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        force: {
+            syl1: ["Kael", "Jax", "Sora", "Zeen", "Mace", "Qui", "Obi", "Anakin", "Rey", "Ben", "Kylo", "Darth", "Mal", "Vane", "Sid", "Tyr", "Exar", "Ulic", "Satele", "Bastila", "Dooku", "Ventress", "Savage", "Maul", "Ahsoka", "Kanan", "Ezra", "Cere", "Merrin", "Taron"],
+            syl2: ["-Wan", "-Gon", "-Ren", "Vader", "Maul", "Revan", "Malak", "Bane", "Zannah", "Plagueis", "Tenebrous", "Nihilus", "Sion", "Trayas", "Vitiate", "Kun", "Qel-Droma", "Shan", "Koth", "Fisto", "Ti", "Secura", "Windu", "Skywalker", "Kenobi", "Tano", "Jarrus", "Bridger", "Kestis", "Malicos"]
+        },
+        scoundrel: {
+            syl1: ["Han", "Lando", "Boba", "Jango", "Din", "Fennec", "Greedo", "Cad", "Aurra", "Hondo", "Dash", "Kyle", "Jan", "Cassian", "Jyn", "K-2", "Poe", "Finn", "Maz", "Zuck", "Dengar", "Bossk", "IG-", "4-LOM", "Qi'ra", "Enfys", "Tobias", "L3-", "Nien", "Wedge"],
+            syl2: ["Solo", "Calrissian", "Fett", "Djarin", "Shand", "Bane", "Sing", "Ohnaka", "Rendar", "Katarn", "Ors", "Andor", "Erso", "Dameron", "Kanata", "muss", "Vane", "Nest", "Beckett", "37", "Nunb", "Antilles", "Starcore", "Voidrunner", "Kriff", "Scrap", "Rust", "Shadow", "Quick", "Blast"]
+        },
+        imperial: {
+            syl1: ["Wilhuff", "Thrawn", "Gideon", "Firmus", "Krennic", "Hux", "Tarkin", "Veers", "Piet", "Ozzel", "Needa", "Jerjerrod", "Tagge", "Motti", "Yularen", "Rax", "Sloane", "Pellaeon", "Daala", "Isard", "CT-", "CC-", "ARC-", "RC-", "TK-", "FN-", "Crosshair", "Hunter", "Wrecker", "Tech"],
+            syl2: ["Tarkin", "Mitth'raw'nuruodo", "Gideon", "Piett", "Krennic", "Hux", "Veers", "Ozzel", "Needa", "Jerjerrod", "Tagge", "Motti", "Yularen", "7567", "2224", "5555", "Echo", "Fives", "Rex", "Cody", "99", "1138", "2187", "Vane", "Steranko", "Skerris", "Vanto", "Price", "Meeko", "Versio"]
+        },
+        alien: {
+            syl1: ["Qu", "Za", "Xi", "Ro", "T'", "V'", "K'", "B'", "Ch", "Dh", "G'", "J'", "L'", "M'", "N'", "P'", "S'", "W'", "X'", "Y'"],
+            syl2: ["-lan", "-rak", "-sek", "-tor", "-vax", "-zyn", "-mor", "-kad", "-lis", "-narr", "-tull", "-vinn", "-zorn", "-pher", "-thax", "-garr", "-marr", "-sarr", "-tarr", "-varr"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const s1 = data[vibe].syl1[Math.floor(Math.random() * data[vibe].syl1.length)];
+        const s2 = data[vibe].syl2[Math.floor(Math.random() * data[vibe].syl2.length)];
+        
+        let name = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) name = `${userWord} ${s2}`;
+            else if (r < 0.7) name = `${s1} ${userWord}`;
+            else name = `${userWord}-${s1}`;
+        } else {
+            if (r < 0.5) name = `${s1} ${s2}`;
+            else name = `${s1}${s2.toLowerCase()}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.innerText = name;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name).then(() => {
+                const originalText = div.innerText;
+                div.innerText = "NAME LOGGED";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerText = originalText;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The web’s fastest utility engine. Built for developers, creators, and power users who value privacy and performance.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Platform</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/contact.html" style="color: #64748b; text-decoration: none;">Contact Support</a></li>
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Questions? <br>
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

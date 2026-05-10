@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="growth"> <!-- Toggle theme: growth, technical, generators -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Name | Brixe Engine</title>
+    <link rel="stylesheet" href="master.css"> <!-- Your CSS File -->
+</head>
+<body>
+
+<div class="container">
+    <a href="#" class="back-btn">← Back to Suite</a>
+
+    <div class="tool-card">
+        <span class="status-pill" id="tool-category">VIRALITY LAB</span>
+        <h1 id="tool-name">Tool Name</h1>
+        <p id="tool-desc">Quick description of what this tool does.</p>
+
+        <!-- INPUT SECTION: This area adapts to the tool type -->
+        <div id="input-area" class="control-panel">
+            <!-- JS will inject inputs here -->
+        </div>
+
+        <button class="gen-btn" onclick="runToolLogic()">Analyze & Generate</button>
+
+        <!-- RESULT SECTION: This area displays the output -->
+        <div id="result-list">
+            <!-- JS will inject results here based on Tool Type -->
+        </div>
+    </div>
+
+    <!-- SEO CONTENT: Static section for Google Traffic -->
+    <section class="seo-content">
+        <h2 id="seo-title">Why use this tool?</h2>
+        <div class="tips-grid" id="seo-tips">
+            <!-- Static SEO content goes here -->
+        </div>
+    </section>
+</div>
+
+<script>
+/* --- 1. THE TOOL CONFIGURATION (The only part you change per page) --- */
+const CONFIG = {
+    name: "TikTok Engagement Calculator",
+    desc: "Calculate your true influence in seconds.",
+    category: "VIRALITY LAB",
+    type: "MATH", // Options: MATH, SPINNER, AUDIT, CANVAS
+    inputs: [
+        { id: "followers", label: "Total Followers", type: "number", placeholder: "e.g. 50000" },
+        { id: "likes", label: "Avg Likes", type: "number", placeholder: "e.g. 1200" },
+        { id: "comments", label: "Avg Comments", type: "number", placeholder: "e.g. 50" }
+    ],
+    // The logic for the tool
+    execute: function(data) {
+        const score = ((Number(data.likes) + Number(data.comments)) / Number(data.followers)) * 100;
+        return {
+            value: score.toFixed(2) + "%",
+            label: "Engagement Rate",
+            progress: Math.min(score * 10, 100) // Visual progress bar
+        };
+    }
+};
+
+/* --- 2. THE UNIVERSAL ENGINE (Do not touch this) --- */
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('tool-name').innerText = CONFIG.name;
+    document.getElementById('tool-desc').innerText = CONFIG.desc;
+    document.getElementById('tool-category').innerText = CONFIG.category;
+    
+    const inputArea = document.getElementById('input-area');
+    CONFIG.inputs.forEach(input => {
+        const el = document.createElement(input.type === 'textarea' ? 'textarea' : 'input');
+        el.id = input.id;
+        el.placeholder = input.placeholder;
+        if(input.type !== 'textarea') el.type = input.type;
+        inputArea.appendChild(el);
+    });
+});
+
+function runToolLogic() {
+    const data = {};
+    CONFIG.inputs.forEach(input => {
+        data[input.id] = document.getElementById(input.id).value;
+    });
+
+    const result = CONFIG.execute(data);
+    const display = document.getElementById('result-list');
+    display.innerHTML = ''; // Clear previous
+
+    if (CONFIG.type === "MATH") {
+        display.innerHTML = `
+            <div class="result-card">
+                <span class="status-pill">${result.label}</span>
+                <p class="rate-val">${result.value}</p>
+                <div class="progress-container"><div class="progress-fill" style="width: ${result.progress}%"></div></div>
+            </div>`;
+    } else if (CONFIG.type === "SPINNER") {
+        display.innerHTML = `
+            <div class="winner-card" onclick="navigator.clipboard.writeText('${result.value}')">
+                <span class="copy-hint">Click to Copy</span>
+                <span class="winner-label">${result.label}</span>
+                <p class="winner-name">${result.value}</p>
+            </div>`;
+    }
+    // (We will add Audit and Canvas modes as we build those specific tools)
+}
+</script>
+
+</body>
+</html>

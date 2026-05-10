@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Codename Generator | Brixe</title>
+    <meta name="description" content="Generate high-impact, secret, and professional codenames for your next big project. Perfect for developers, startups, and creative teams.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Project Codename Generator</h1>
+            <p>Every breakthrough starts in stealth mode. Generate professional-grade codenames to keep your development cycles organized and inspiring.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional theme (e.g. 'Web', 'Fast')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="tech">🛰️ Silicon Valley (Tech/Sleek)</option>
+                    <option value="military">🦅 Tactical Ops (Bold/Strong)</option>
+                    <option value="nature">🌋 Elemental Force (Nature/Raw)</option>
+                    <option value="abstract">🌌 Deep Space (Abstract/Mysterious)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateCodename()">Initialize Codename</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Power of a Project Alias</h2>
+            <p>Codenames aren't just for secret agents. In the world of software development and product design, a strong codename prevents premature leaks, simplifies internal communication, and builds team morale. Our generator creates unique pairings that avoid common clichés, focusing on a balance between aggressive momentum and professional mystery. Whether you're building a lightweight JS library or a massive scalable platform, the right alias sets the tone for the build.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Neutrality is Key</strong> A good codename shouldn't reveal the final product's function. This maintains "stealth" and allows the project scope to pivot without the name becoming obsolete.</div>
+                <div class="tip-card"><strong>02. Phonetic Impact</strong> Choose names that are easy to say and hard to forget. Two-syllable combinations (e.g., "Silver Hawk") often perform best in fast-paced standup meetings.</div>
+                <div class="tip-card"><strong>03. Alphabetical Iteration</strong> Many top-tier tech companies use themes like "Big Cats" or "Planets" in alphabetical order to track project generations and timeline progression.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Project Codename Generator
+ * 100% Client-Side | Professional & Stealth Database
+ */
+function generateCodename() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        tech: {
+            pre: ["Vector", "Silicon", "Nexus", "Quantum", "Cyber", "Logic", "Matrix", "Aero", "Pulse", "Digital", "Flux", "Sync", "Bit", "Hex", "Neon", "Void", "Cloud", "Apex", "Grid", "Signal"],
+            suff: ["Engine", "Node", "Link", "Protocol", "Flow", "Core", "Shift", "Grid", "System", "Sphere"]
+        },
+        military: {
+            pre: ["Titan", "Viper", "Raptor", "Stryker", "Onyx", "Sentry", "Vanguard", "Iron", "Falcon", "Ghost", "Bravo", "Delta", "Nomad", "Havoc", "Guardian", "Cobra", "Aegis", "Phantom", "Sovereign", "Shadow"],
+            suff: ["Strike", "Force", "Zero", "Alpha", "Omega", "Base", "Command", "Watch", "Ops", "Front"]
+        },
+        nature: {
+            pre: ["Terra", "Summit", "Ridge", "Basalt", "Tundra", "Glacier", "Magma", "Canyon", "River", "Everest", "Forest", "Willow", "Ash", "Cedar", "Ocean", "Thunder", "Ember", "Frost", "Granite", "Moss"],
+            suff: ["Point", "Ridge", "Fall", "Crest", "Peak", "Valley", "Moor", "Rock", "Stone", "Wild"]
+        },
+        abstract: {
+            pre: ["Aether", "Zenith", "Horizon", "Eclipse", "Nova", "Nebula", "Solstice", "Prism", "Mirage", "Echo", "Vesper", "Lumina", "Atlas", "Orion", "Arcadia", "Spectral", "Cosmos", "Halcyon", "Azure", "Indigo"],
+            suff: ["Vision", "Draft", "Project", "Concept", "Blue", "Theory", "Phase", "Origin", "Horizon", "Edge"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalCode = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.5) finalCode = `${userWord.toUpperCase()} ${pre.toUpperCase()}`;
+            else finalCode = `${pre.toUpperCase()} ${userWord.toUpperCase()}`;
+        } else {
+            finalCode = `${pre.toUpperCase()} ${suff.toUpperCase()}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.1rem; letter-spacing: 2px; font-family: 'Space Mono', monospace;">${finalCode}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary);">INTERNAL USE ONLY</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalCode).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COPIED TO SECURE CHANNEL</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Helping students and creators launch the next big thing with private, high-performance tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Build in silence.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Name Generator | Brixe</title>
+    <meta name="description" content="Generate charming, punny, and regal names for your indoor plants and garden favorites. Give your green friends a unique personality.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Plant Name Generator</h1>
+            <p>Because "Fern" is too generic. Generate names for leafy monsters, prickly succulents, and delicate floral friends.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional species (e.g. 'Pothos', 'Ivy')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="punny">😂 Punny & Fun (Witty/Wordplay)</option>
+                    <option value="regal">👑 Regal & Grand (Stately/Elegant)</option>
+                    <option value="mystical">✨ Mystical & Zen (Ethereal/Calm)</option>
+                    <option value="cute">🌱 Small & Sweet (Adorable/Short)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generatePlantName()">Sprout a Name</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Why Name Your Plants?</h2>
+            <p>Naming your plants creates a deeper bond with your living decor. Whether it's a "Monstera" that dominates the living room or a tiny "Succulent" on your desk, giving them a title makes the routine of watering and care more engaging. Our generator pulls from botanical Latin, pop-culture puns, and nature-inspired adjectives to find the perfect match for your plant's unique look and vibe.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Leafy Personalities</strong> Broad-leafed plants often suit "Grand" or "Stately" names, while trailing vines work well with "Ethereal" or "Mystical" titles.</div>
+                <div class="tip-card"><strong>02. The Pun Strategy</strong> Wordplay on celebrity names (e.g., "Morgan Treeman") or common verbs (e.g., "Count Plantula") adds a layer of humor to your shelf.</div>
+                <div class="tip-card"><strong>03. Growth Habits</strong> Consider how your plant grows. A fast-growing climber might be a "Voyager," while a slow-growing cactus is a "Zen Master."</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Plant Name Generator
+ * 100% Client-Side | Botanical & Humor Database
+ */
+function generatePlantName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        punny: {
+            pre: ["Morgan", "Orlando", "Sir", "Count", "Snake", "Justin", "Fernie", "Leaf", "Woody", "Christo-fern", "Root", "Elvis", "Spike", "Prickly", "Bill", "Sherlock", "Pete", "Meryl", "Cactus", "Orlando"],
+            suff: ["Treeman", "Bloom", "Plantula", "Timberlake", "Sanders", "Gyllenhaal", "Presley", "Jackman", "Lee", "Streep", "The Great", "Holmes", "Potter", "Spriggs", "Underwood"]
+        },
+        regal: {
+            pre: ["Aurelian", "Augustus", "Bartholomew", "Maximilian", "Sebastian", "Genevieve", "Isabella", "Theodore", "Archibald", "Florence", "Seraphina", "Constantine", "Victoria", "Leopold", "Beatrice", "Clementine", "Julian", "Ophelia", "Benedict", "Persephone"],
+            suff: ["The Great", "The Stately", "Of The Glen", "I", "II", "The Bold", "The Ancient", "The Verdant", "Esquire", "The Guardian"]
+        },
+        mystical: {
+            pre: ["Luna", "Echo", "Aura", "Solaris", "Nova", "Lyra", "Zenith", "Gaia", "Willow", "Sage", "Indigo", "Cosmos", "Spirit", "Atlas", "Terra", "Ciel", "Vesper", "Ember", "Mist", "Flora"],
+            suff: ["Soul", "Mist", "Gaze", "Shadow", "Bloom", "Root", "Spirit", "Vibe", "Dream", "Light"]
+        },
+        cute: {
+            pre: ["Sprout", "Bean", "Button", "Pip", "Puff", "Sunny", "Tiny", "Mochi", "Buddy", "Kiwi", "Peppy", "Zippy", "Clover", "Twig", "Leafy", "Bitty", "Dottie", "Coco", "Berry", "Chip"],
+            suff: ["Puff", "Sprout", "Friend", "Bud", "Leaf", "Petal", "Dot", "Squish", "Baby", "Junior"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let plantName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (vibe === 'punny') {
+                 plantName = `${pre} ${userWord}`;
+            } else {
+                if (r < 0.5) plantName = `${userWord} ${suff}`;
+                else plantName = `${pre} ${userWord}`;
+            }
+        } else {
+            plantName = `${pre} ${suff}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit';">${plantName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">BOTANICAL COMPANION</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(plantName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>ADOPTED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Nurturing your lifestyle with simple, private, and high-performance tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Sprouting since '24.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian Fashion Label Generator | Brixe</title>
+    <meta name="description" content="Generate high-end, sophisticated Italian-inspired fashion label names. Perfect for luxury clothing brands, leather goods, and sartorial houses.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Bodoni+Moda:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Bodoni Moda', serif;">Italian Fashion Label Gen</h1>
+            <p>L'eleganza senza tempo. Generate names that evoke the craftsmanship of Milanese ateliers, the luxury of Florentine leather, and the heritage of Italian tailoring.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional surname or word (e.g. 'Rossi')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="luxury">💎 Alta Moda (High Luxury/Couture)</option>
+                    <option value="street">👟 Milano Street (Modern/Ready-to-Wear)</option>
+                    <option value="heritage">🏛️ Sartoria (Traditional/Tailoring)</option>
+                    <option value="minimal">🍷 L'Essenziale (Minimalist/Quiet Luxury)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateItalianName()">Tailor a Label</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The prestige of "Made in Italy"</h2>
+            <p>Italian fashion naming is rooted in a blend of family legacy (the <em>Casata</em>) and artistic flair. A successful Italian label name communicates "sprezzatura"—a certain nonchalance that masks meticulous effort. Our generator utilizes traditional linguistic patterns, such as the use of prepositions like <em>"di"</em> and <em>"da"</em>, and classic suffixes to create a brand identity that feels both established and aspirational.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The Surname Power</strong> Many of the world's greatest fashion houses are simply family names. Using a melodic Italian surname adds instant historical weight to your brand.</div>
+                <div class="tip-card"><strong>02. Descriptive Elegance</strong> Using words like <em>Velo</em> (veil), <em>Pelle</em> (leather), or <em>Seta</em> (silk) in the name clearly defines your niche while maintaining an air of luxury.</div>
+                <div class="tip-card"><strong>03. Phonetic Flow</strong> Italian is a vowel-heavy language. Ending your brand name with 'o', 'a', or 'i' gives it a rhythmic, high-end sound that is easy to market globally.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Italian Fashion Label Generator
+ * 100% Client-Side | Sartorial & Luxury Database
+ */
+function generateItalianName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        luxury: {
+            pre: ["Aurelio", "Valentino", "Lusso", "Regia", "Palazzo", "Divino", "Oro", "Nobile", "Grandioso", "Vittorio", "Sola", "Altissimo", "L'Opera", "Eterna", "Primo", "Stella", "D'Oro", "Luminoso", "Maestro", "Infinito"],
+            suff: ["Milano", "Roma", "Firenze", "Couture", "Casa", "Studio", "Privato", "Elite", "Luxe", "Sartoriale"]
+        },
+        street: {
+            pre: ["Veloce", "Milano", "Nuovo", "Stile", "Fumo", "Strada", "Vero", "Nero", "Pazzo", "Corso", "Vita", "Sotto", "Sopra", "Fresco", "Mondo", "Urban", "Metro", "Aria", "Zona", "Tempo"],
+            suff: ["Lab", "Project", "Club", "Collective", "Wear", "Studio", "Works", "Concept", "X", "Uno"]
+        },
+        heritage: {
+            pre: ["Sartoria", "Pelletteria", "Bottega", "Antico", "Fatto", "Artigiano", "Cuoio", "Legato", "Tradizione", "Pelle", "Lana", "Seta", "Puro", "Classico", "Storico", "Casata", "Bello", "Figli", "Fratelli", "Padre"],
+            suff: ["Dal 1924", "Manifattura", "Atelier", "Officina", "Eredi", "Archivio", "Standard", "Gilda", "Bottega", "Originale"]
+        },
+        minimal: {
+            pre: ["Puro", "Bianco", "Nudo", "Linea", "Semplice", "Meno", "Vero", "Solo", "Essere", "Forma", "Ombra", "Luce", "Trama", "Tatto", "Spazio", "Anima", "Silenzio", "Punto", "Vento", "Marmo"],
+            suff: ["L'Atelier", "Studio", "Design", "Concept", "Essential", "Object", "Series", "Base", "Elemento", "Mood"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let finalLabel = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) finalLabel = `${userWord} ${suff}`;
+            else if (r < 0.7) finalLabel = `${pre} ${userWord}`;
+            else finalLabel = `Sartoria ${userWord}`;
+        } else {
+            if (r < 0.3) {
+                finalLabel = `${pre} di ${suff}`;
+            } else if (r < 0.6) {
+                const pre2 = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+                finalLabel = (pre !== pre2) ? `${pre} & ${pre2}` : `${pre} ${suff}`;
+            } else {
+                finalName = `${pre} ${suff}`;
+                finalLabel = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.2rem; letter-spacing: 1px; font-family: 'Bodoni Moda', serif; font-style: italic;">${finalLabel}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--primary);">Made in Italy • 2026</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(finalLabel).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>MARCATO</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The expert tool for student-led digital empires. Lightweight, private, and optimized for speed.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Bellissimo.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

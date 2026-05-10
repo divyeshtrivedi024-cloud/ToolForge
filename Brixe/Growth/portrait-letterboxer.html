@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait Letterboxer | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        /* BRIXE CORE RESET */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --bg: #05070a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* RESPONSIVE GRID */
+        .layout-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 320px; 
+            gap: 30px; 
+            margin-top: 20px; 
+        }
+
+        /* The Output Preview (9:16) */
+        .preview-stage {
+            background: #111; border: 1px solid var(--border); border-radius: 20px;
+            position: relative; overflow: hidden; aspect-ratio: 9/16;
+            height: 550px; width: auto; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #bgBlur { 
+            position: absolute; width: 100%; height: 100%; 
+            object-fit: cover; filter: blur(30px) brightness(0.6); 
+            transform: scale(1.1); z-index: 1; display: none;
+        }
+
+        #mainAsset { 
+            position: absolute; width: 100%; top: 50%; left: 0; 
+            transform: translateY(-50%); z-index: 5; display: none;
+        }
+
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        .control-card { background: #0f172a; border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .control-card h3 { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 15px; }
+
+        .btn-main { 
+            background: var(--accent); color: white; border: none; 
+            padding: 15px; border-radius: 12px; font-weight: 700; 
+            width: 100%; cursor: pointer; transition: 0.3s;
+        }
+
+        .download-btn { background: #7d1777; margin-top: 10px; display: none; }
+
+        /* MOBILE FIXES */
+        @media (max-width: 850px) {
+            .layout-grid {
+                grid-template-columns: 1fr; /* Stack Sidebar below Video */
+            }
+            .preview-stage {
+                height: auto;
+                width: 90vw; /* Scale to screen width */
+                max-width: 350px;
+            }
+            header h1 { font-size: 1.8rem; }
+        }
+
+        #canvasExport { display: none; }
+    </style>
+</head>
+<body>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+         <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+       
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.2rem;">Portrait Letterboxer</h1>
+            <p style="color: #64748b;">Convert 1:1 Square assets to 9:16 Viral Portrait format.</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="preview-stage" id="stage">
+                <img id="bgBlur" src="">
+                <img id="mainAsset" src="">
+                
+                <div id="dropZone" style="position: absolute; width: 100%; text-align: center; top: 45%; z-index: 10; padding: 0 20px;">
+                    <button class="btn-main" style="width: auto; padding: 10px 25px;" onclick="document.getElementById('fileIn').click()">Upload Square Image</button>
+                    <input type="file" id="fileIn" hidden accept="image/*" onchange="processAsset(this)">
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>Style Controls</h3>
+                    <label style="font-size: 0.75rem; color: #94a3b8;">Background Blur</label>
+                    <input type="range" id="blurRange" min="0" max="100" value="30" oninput="updateBlur()">
+                    
+                    <label style="font-size: 0.75rem; color: #94a3b8; margin-top: 15px; display: block;">Overlay Tint</label>
+                    <input type="range" id="tintRange" min="0" max="100" value="40" oninput="updateBlur()">
+                </div>
+
+                <div class="control-card">
+                    <h3>Export</h3>
+                    <button class="btn-main download-btn" id="dlBtn" onclick="exportPortrait()">Download 9:16 PNG</button>
+                    <p style="font-size: 0.65rem; color: #475569; margin-top: 10px; text-align: center;">Processes at 1080x1920 HD Resolution</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="canvasExport"></canvas>
+
+</div>
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>Brixe</h3>
+            <p>The web’s fastest utility engine. Built for performance and creators.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Platform</h4>
+            <ul>
+                <li><a href="/contact.html">Contact Support</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Get in Touch</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color:var(--primary); text-decoration:none; font-weight:700;">growthdriven024@gmail.com</a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 60px; color: #334155; font-size: 0.75rem; border-top: 1px solid #0f172a; padding-top: 30px;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+
+    <script>
+        const bgBlur = document.getElementById('bgBlur');
+        const mainAsset = document.getElementById('mainAsset');
+        const dlBtn = document.getElementById('dlBtn');
+
+        function processAsset(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                bgBlur.src = e.target.result;
+                mainAsset.src = e.target.result;
+                bgBlur.style.display = 'block';
+                mainAsset.style.display = 'block';
+                dlBtn.style.display = 'block';
+                document.getElementById('dropZone').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateBlur() {
+            const b = document.getElementById('blurRange').value;
+            const t = 1 - (document.getElementById('tintRange').value / 100);
+            bgBlur.style.filter = `blur(${b}px) brightness(${t})`;
+        }
+
+        function exportPortrait() {
+            const canvas = document.getElementById('canvasExport');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1080;
+            canvas.height = 1920;
+            const bValue = document.getElementById('blurRange').value;
+            const tValue = 1 - (document.getElementById('tintRange').value / 100);
+            ctx.filter = `blur(${bValue}px) brightness(${tValue})`;
+            ctx.drawImage(mainAsset, -200, 0, 1480, 1920);
+            ctx.filter = 'none';
+            const squareSize = 1080;
+            const yOffset = (1920 - 1080) / 2;
+            ctx.drawImage(mainAsset, 0, yOffset, squareSize, squareSize);
+            const link = document.createElement('a');
+            link.download = 'brixe_portrait_ready.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+<script src="../nav.js"></script>
+</body>
+</html>

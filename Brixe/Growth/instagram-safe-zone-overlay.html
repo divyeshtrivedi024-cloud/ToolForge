@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Safe-Zone Pro | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        :root { --phone-w: 320px; --phone-h: 568px; }
+        * {
+    box-sizing: border-box;
+}
+        .uploader-zone {
+            width: 100%; max-width: 500px; margin: 0 auto 30px auto;
+            border: 2px dashed #334155; background: rgba(15, 23, 42, 0.6);
+            border-radius: 24px; padding: 40px 20px; text-align: center;
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .workspace { display: flex; justify-content: center; padding: 20px 0; }
+
+        .phone-frame {
+            width: var(--phone-w); height: var(--phone-h);
+            background: #000; border: 12px solid #1e293b;
+            border-radius: 48px; position: relative; overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        }
+
+        #mediaRender, #videoRender { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+
+        /* AUTHENTIC INSTAGRAM UI OVERLAY */
+        .ui-mask { position: absolute; inset: 0; pointer-events: none; z-index: 10; color: white; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        
+        .insta-top { position: absolute; top: 20px; left: 0; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; align-items: center; }
+        .insta-top span { font-weight: 700; font-size: 1.1rem; }
+
+        .right-sidebar {
+            position: absolute; right: 12px; bottom: 80px;
+            display: flex; flex-direction: column; align-items: center; gap: 22px;
+        }
+
+        .icon-unit { text-align: center; font-size: 0.7rem; font-weight: 600; }
+        /* Instagram uses slightly different stroke icons */
+        .icon-svg { width: 26px; height: 26px; fill: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+
+        .bottom-content { position: absolute; bottom: 20px; left: 15px; width: 75%; }
+        .insta-handle { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
+        .follow-btn { border: 1px solid white; border-radius: 4px; padding: 2px 8px; font-size: 0.7rem; }
+        
+        .caption-dummy { width: 90%; height: 6px; background: rgba(255,255,255,0.4); border-radius: 10px; margin-bottom: 6px; }
+
+        .dead-zone-tint {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle, transparent 40%, rgba(131, 58, 180, 0.2) 75%, rgba(225, 48, 108, 0.4) 100%);
+            border: 4px dashed #e1306c;
+            display: none; z-index: 5;
+        }
+        .dead-zone-tint::after {
+            content: "SAFE ZONE"; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+            color: #e1306c; font-family: 'Outfit'; font-weight: 800; opacity: 0.4; letter-spacing: 3px;
+        }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .brixe-btn { background: var(--card); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .brixe-btn.active { background: #e1306c; border-color: #e1306c; }
+
+        .audio-square { width: 28px; height: 28px; border: 2px solid white; border-radius: 6px; background: #222; }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">← Back to tools</a>
+        
+        <section class="tool-card">
+            <h1>Instagram Safe-Zone</h1>
+            <p>The Reels algorithm hates hidden text. Preview your layout for maximum engagement.</p>
+
+            <div class="uploader-zone" onclick="document.getElementById('fileInput').click()">
+                <strong id="statusText">Upload Reels Frame</strong>
+                <input type="file" id="fileInput" hidden accept="image/*,video/*" onchange="processFile(this)">
+            </div>
+
+            <div class="btn-group">
+                <button class="brixe-btn active" onclick="toggleLayer('ui-mask', this)">Reels UI</button>
+                <button class="brixe-btn" onclick="toggleLayer('dead-zone-tint', this)">Dead Zones</button>
+            </div>
+
+            <div class="workspace">
+                <div class="phone-frame">
+                    <img id="mediaRender" src="" style="display:none;">
+                    <video id="videoRender" style="display:none;" autoplay loop muted></video>
+                    
+                    <div class="dead-zone-tint" id="dead-zone-tint"></div>
+
+                    <div class="ui-mask" id="ui-mask">
+                        <div class="insta-top">
+                            <span style="font-size:1.4rem;">←</span>
+                            <span>Reels</span>
+                            <span style="font-size:1.4rem;">📷</span>
+                        </div>
+                        
+                        <div class="right-sidebar">
+                            <div class="icon-unit"><div class="icon-svg">🤍</div><span>Likes</span></div>
+                            <div class="icon-unit"><div class="icon-svg">💬</div><span>42</span></div>
+                            <div class="icon-unit"><div class="icon-svg">✈️</div></div>
+                            <div class="icon-unit"><div class="icon-svg">⋮</div></div>
+                            <div class="audio-square"></div>
+                        </div>
+
+                        <div class="bottom-content">
+                            <div class="insta-handle">
+                                <div style="width:24px; height:24px; background:#444; border-radius:50%;"></div>
+                                <span>brixe_engine</span>
+                                <div class="follow-btn">Follow</div>
+                            </div>
+                            <div class="caption-dummy"></div>
+                            <div class="caption-dummy" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">Precision Tools for the Viral Era.</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function processFile(input) {
+            const file = input.files[0];
+            const img = document.getElementById('mediaRender');
+            const video = document.getElementById('videoRender');
+            const status = document.getElementById('statusText');
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                    video.style.display = "none";
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                const url = URL.createObjectURL(file);
+                video.src = url;
+                video.style.display = "block";
+                img.style.display = "none";
+            }
+            status.innerText = "Reels Layout Ready";
+        }
+
+        function toggleLayer(id, btn) {
+            const el = document.getElementById(id);
+            const isVisible = window.getComputedStyle(el).display !== 'none';
+            el.style.display = isVisible ? 'none' : 'block';
+            btn.classList.toggle('active');
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

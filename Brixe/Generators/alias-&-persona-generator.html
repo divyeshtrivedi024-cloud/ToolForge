@@ -13,7 +13,7 @@
     <nav class="nav-container"></nav>
 <div class="container">
     
-    <a href="index.html" class="back-btn">← Back to Category</a>
+    <a href="digital-identity.html" class="back-btn">← Back to Tools</a>
     <section class="tool-card">
         <h1>Alias & Persona Generator</h1>
         <p>Create a deep, undercover identity for storytelling, security testing, or RPGs.</p>
@@ -55,7 +55,7 @@ function generatePersona() {
             cities: ["New Amsterdam", "Old London", "Seattle Hub", "Pacific Palisades", "Iron Ridge", "Portsmouth", "Silver City", "Dusk Valley", "Raven's Hollow", "Titan Bay", "Marble Falls", "Evergreen Terrace", "Opal Coast", "Ghost Ridge", "Vanguard City", "Stonehaven"]
         },
         eastern: {
-            names: ["Kenji Sato", "Mei Lin", "Haruto Tanaka", "Ji-Woo Park", "Sora Akamine", "Wei Chen", "Yuki Hiroshi", "Ananya Rao", "Daiki Kim", "Hina Mori", "Tenzin Dorji", "Aiko Yoshida", "Zayan Malik", "Rina Zhang", "Kaito Kurosawa", "Sunita Devi", "Ren Ishida", "Li Wei", "Arjun Nair", "Choi Min-ho", "Saki Hanari", "Zheng Xiao", "Prisha Kapoor", "Yusuf Khan", "Emi Nakamura", "Tanvi Joshi", "Hiroshi Varma", "Kiran Shah", "Bao Nguyen", "Sarita Ray"],
+            names: ["Kenji Sato", "Mei Lin", "Haruto Tanaka", "Ji-Woo Park", "Sora Akamine", "Wei Chen", "Yuki Hiroshi","Raj Panwar","Parth Bhatt" ,"Ananya Rao", "Daiki Kim", "Hina Mori", "Tenzin Dorji", "Aiko Yoshida", "Zayan Malik", "Rina Zhang", "Kaito Kurosawa", "Sunita Devi", "Ren Ishida", "Li Wei", "Arjun Nair", "Choi Min-ho", "Saki Hanari", "Zheng Xiao", "Prisha Kapoor", "Yusuf Khan", "Emi Nakamura", "Tanvi Joshi", "Hiroshi Varma", "Kiran Shah", "Bao Nguyen", "Sarita Ray"],
             cities: ["Neo-Tokyo", "Shanghai Central", "Seoul Sector 7", "Singapore Heights", "Kyoto District", "Mumbai Metro", "Bangkok Bay", "Taipei Tower", "Osaka Port", "Hong Kong Hub", "Hanoi Sector", "Bengaluru Tech-Park", "Manila Bay", "Chiba Labs", "Nagoya Gate"]
         },
         cyber: {
@@ -88,10 +88,10 @@ function generatePersona() {
     div.style.fontSize = "1rem"; // Since there is more text, we shrink it slightly
 
     div.innerHTML = `
-        <span style="color:var(--white); font-weight:800; font-size:1.2rem; margin-bottom:5px;">
+        <span style="color:var(--primary); font-weight:800; font-size:1.2rem; margin-bottom:5px;">
             ${shuffledNames[i % shuffledNames.length]}
         </span>
-        <span style="font-size:0.9rem; opacity:0.7; color:var(--text);">
+        <span style="font-size:0.9rem; opacity:0.7; color:var(--primary);">
             ${shuffledJobs[i % shuffledJobs.length]}
         </span>
         <span style="font-size:0.9rem; color:var(--primary); font-weight:700;">

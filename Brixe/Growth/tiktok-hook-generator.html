@@ -3,147 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tweet Thread Starter | Brixe</title>
+    <title>TikTok Hook Generator | Brixe</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/main-style.css">
     <style>
-        /* Centering and Stacking */
+        * { box-sizing: border-box; }
+
         .input-group {
             display: flex;
             flex-direction: column; 
-            gap: 10px; 
-            margin: 0 auto 25px auto; /* Centers the group itself */
+            gap: 12px; 
+            margin: 0 auto 30px auto; 
             width: 100%;
-            max-width: 600px; /* Limits width to keep it looking clean */
+            max-width: 600px;
             align-items: center; 
         }
 
-        /* Full width for inputs and select within that centered group */
         .input-group input, 
         .input-group select {
             width: 100%;
             display: block;
-            box-sizing: border-box;
-            text-align: center; /* Centers text inside the boxes */
+            text-align: center;
         }
 
-        /* Adjust select padding to ensure the text stays centered */
-        .input-group select {
-            text-align-last: center; 
+        .input-group select { text-align-last: center; }
+
+        /* The Phone Preview Area */
+        .preview-zone {
+            margin: 30px auto;
+            max-width: 320px;
+            aspect-ratio: 9 / 16;
+            background: linear-gradient(180deg, #0f0212 0%, #000 100%);
+            border: 10px solid #1a0b1e;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #mockText {
+            color: #fff;
+            font-family: 'Inter';
+            font-weight: 800;
+            font-size: 1.3rem;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,1);
+            background: #ff0050; /* TikTok Pink */
+            padding: 12px;
+            box-shadow: 8px 8px 0px #00f2ea; /* TikTok Cyan shadow */
+            width: 90%;
+            line-height: 1.2;
         }
     </style>
 </head>
 <body data-theme="growth">
     <nav class="nav-container"></nav>
 
-<div class="container">
-    <a href="index.html" class="back-btn">← Creator Hub</a>
-    
-    <section class="tool-card">
-        <h1>Thread Starter</h1>
-        <p>Engineer the perfect X/Twitter hook to maximize impressions and retweets.</p>
+    <div class="container">
+        <a href="text-formatting.html" class="back-btn">Back to tools</a>
         
-        <div class="input-group">
-            <input type="text" id="topicInput" placeholder="Main Topic (e.g. Passive Income, Coding Tips, SEO)">
-            <select id="vibeInput">
-                <option value="growth">Growth & Systems</option>
-                <option value="story">Storytelling / POV</option>
-                <option value="curated">Curated Lists</option>
-            </select>
-        </div>
-        
-        <button class="gen-btn" onclick="generateThreads()">Generate 5 Hooks</button>
-        
-        <div id="result-list" class="grid-mode">
+        <section class="tool-card">
+            <h1>TikTok Hook Generator</h1>
+            <p>Stop the scroll with 2026's most effective psychological hook frameworks.</p>
+            
+            <div class="input-group">
+                <input type="text" id="topicInput" placeholder="Your Topic (e.g. SEO, Making Coffee, Dating Tips)" oninput="updatePreview()">
+                <select id="vibeInput">
+                    <option value="negative">Negative Constraint (Fear of Loss)</option>
+                    <option value="gatekeeping">The "Gatekeeper" (Exclusivity)</option>
+                    <option value="fast">High-Speed Results (Efficiency)</option>
+                    <option value="expert">Expert Authority (Status)</option>
+                </select>
             </div>
-    </section>
+            
+            <button class="gen-btn" onclick="generateHooks()">Generate 5 Viral Hooks</button>
 
-    <div class="info-header">
-        <h2>The Thread Formula</h2>
+            <div class="preview-zone">
+                <div id="mockText">YOUR HOOK GOES HERE</div>
+            </div>
+            
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <div class="info-header"><h2>The Retention Formula</h2></div>
+        <div class="info-grid">
+            <div class="info-card">
+                <strong>Negative Bias</strong>
+                <p>Humans are 2x more likely to click on a warning than a tip. Use "Stop doing X" instead of "How to do X."</p>
+            </div>
+            <div class="info-card">
+                <strong>The 1.5s Rule</strong>
+                <p>If your text takes longer than 1.5 seconds to read, the viewer has already scrolled. Keep it punchy.</p>
+            </div>
+        </div>
     </div>
-    
-    <div class="info-grid">
-        <div class="info-card">
-            <strong>The Hook is Everything</strong>
-            <p>If the first tweet doesn't stop the scroll, the other 10 don't matter. Give them enough to be interested, but not enough to feel they've already learned the lesson.</p>
+
+    <script>
+    const database = {
+        negative: [
+            "Stop [A] if you actually want to see results.",
+            "You’re failing at [A] because of this one mistake.",
+            "99% of people are doing [A] completely wrong.",
+            "The reason your [A] isn't working? It's simple.",
+            "Quit [A] before you ruin your progress."
+        ],
+        gatekeeping: [
+            "I’m going to get in trouble for sharing this [A] secret.",
+            "The [A] tool that experts are keeping from you.",
+            "This is how the top 1% actually handle [A].",
+            "Stop paying for [A] advice. Here it is for free.",
+            "The [A] strategy no one wants to talk about."
+        ],
+        fast: [
+            "How to master [A] in exactly 48 hours.",
+            "The lazy way to get better at [A] today.",
+            "I fixed my [A] in 3 simple steps. Here’s how.",
+            "The 30-second trick to 10x your [A].",
+            "Stop wasting time. This is the [A] shortcut."
+        ],
+        expert: [
+            "I’ve spent 5 years studying [A] so you don't have to.",
+            "What they don't tell you about [A] in school.",
+            "The only [A] tutorial you will ever need to watch.",
+            "3 [A] lessons that changed my entire life.",
+            "I studied the best at [A]. Here is what I found."
+        ]
+    };
+
+    function generateHooks() {
+        let topic = document.getElementById('topicInput').value.trim() || "this";
+        const vibe = document.getElementById('vibeInput').value;
+        const resultList = document.getElementById('result-list');
+        resultList.innerHTML = "";
+
+        let selected = [...database[vibe]].sort(() => Math.random() - 0.5).slice(0, 5);
+
+        selected.forEach((template, i) => {
+            let final = template.replace(/\[A\]/g, topic);
+            const div = document.createElement('div');
+            div.className = 'name-item'; 
+            div.style.animationDelay = `${i * 0.05}s`;
+            div.onclick = function() { copyToClipboard(final, this); };
+            div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${final}`;
+            resultList.appendChild(div);
+        });
+    }
+
+    function updatePreview() {
+        const input = document.getElementById('topicInput').value;
+        document.getElementById('mockText').innerText = input ? input.toUpperCase() : "YOUR TOPIC HERE";
+    }
+
+    function copyToClipboard(text, element) {
+        navigator.clipboard.writeText(text).then(() => {
+            const hint = element.querySelector('.copy-hint');
+            hint.innerText = "COPIED!";
+            hint.style.color = "#00ff88";
+            document.getElementById('mockText').innerText = text.toUpperCase();
+            setTimeout(() => { 
+                hint.innerText = "One-Tap Copy"; 
+                hint.style.color = "var(--primary)"; 
+            }, 1500);
+        });
+    }
+    </script>
+
+    <footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">The Virality Lab: Hooking the Future.</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. All Rights Reserved.</p>
         </div>
-        <div class="info-card">
-            <strong>Use White Space</strong>
-            <p>X is for fast reading. Avoid massive paragraphs. One sentence per line is the gold standard for high-performance threads.</p>
-        </div>
-        <div class="info-card">
-            <strong>The Curiosity Gap</strong>
-            <p>A winning hook creates a "gap" between what they know and what they want to know. Use numbers and bold claims to bridge that gap.</p>
-        </div>
-    </div>
-</div>
+    </footer>
 
-<script>
-const database = {
-    growth: [
-        "[topic] is easy.\n\nBut 99% of people overcomplicate it.\n\nIf you want to master it in 2026, follow these 5 simple steps:\n\n👇",
-        "Most people think [topic] requires luck.\n\nReality? It requires a system.\n\nHere is the exact blueprint I used to conquer [topic] from scratch:\n\n🧵",
-        "The 'Standard Advice' for [topic] is dead.\n\nIf you’re still following the 2022 playbook, you’re losing.\n\nHere is the new way to win at [topic]:",
-        "Unpopular opinion: [topic] is the most undervalued skill in 2026.\n\nIf you aren't focusing on it, you're falling behind.\n\nHere’s why (and how to start today):",
-        "If I had to start [topic] from $0 in 2026, this is exactly what I’d do.\n\nNo fluff. Just the raw strategy:\n\n👇"
-    ],
-    story: [
-        "I spent 100+ hours studying [topic] so you don't have to.\n\nHere are the 7 most valuable lessons I learned (that most people ignore): \n\n🧵 Thread",
-        "I’ve read 50+ books on [topic].\n\nSave yourself 500 hours of reading.\n\nHere are the 10 'Golden Nuggets' that will put you ahead of 90% of people:",
-        "The day I realized I was doing [topic] all wrong was the day everything changed.\n\nHere is the story (and the lesson for you):",
-        "I tried every [topic] strategy on the planet.\n\nOnly one actually worked.\n\nSteal my routine here: 🧵",
-        "Nobody talks about the dark side of [topic].\n\nI’m breaking my silence.\n\nHere’s what you actually need to know:"
-    ],
-    curated: [
-        "How to master [topic] without quitting your 9-5.\n\nI’ve perfected this 30-minute daily routine.\n\nSteal it here: 🧵",
-        "I curated the top 10 resources for [topic] so you don't have to.\n\nEverything you need to go from Zero to Hero:\n\n👇",
-        "The [topic] toolkit for 2026.\n\n7 free tools that will save you 20+ hours a week.\n\nBookmarked? Good. Let's dive in:",
-        "Stop wasting money on [topic] courses.\n\nEverything you need to know is right here for free.\n\n🧵 A Thread",
-        "The most successful people in [topic] all have one thing in common.\n\nIt’s not what you think.\n\nThread below:"
-    ]
-};
-
-function generateThreads() {
-    let rawTopic = document.getElementById('topicInput').value.trim() || "this niche";
-    const vibe = document.getElementById('vibeInput').value;
-    const resultList = document.getElementById('result-list');
-    resultList.innerHTML = "";
-
-    // Formatting the topic
-    const topic = rawTopic.charAt(0).toUpperCase() + rawTopic.slice(1);
-
-    // CHANGE: .slice(0, 5) ensures only 5 results appear
-    let selected = [...database[vibe]].sort(() => Math.random() - 0.5).slice(0, 5);
-
-    selected.forEach((text, i) => {
-        const threadText = text.replace(/\[topic\]/g, topic);
-        const div = document.createElement('div');
-        div.className = 'name-item'; 
-        div.style.animationDelay = `${i * 0.05}s`;
-        div.onclick = function() { copyToClipboard(threadText, this); };
-        div.innerHTML = `<span class="copy-hint">One-Tap Copy</span>${threadText.replace(/\n/g, '<br>')}`;
-        resultList.appendChild(div);
-    });
-}
-
-function copyToClipboard(text, element) {
-    navigator.clipboard.writeText(text).then(() => {
-        const hint = element.querySelector('.copy-hint');
-        hint.innerText = "COPIED!";
-        hint.style.color = "#00ff88";
-        setTimeout(() => { 
-            hint.innerText = "One-Tap Copy"; 
-            hint.style.color = "var(--primary)"; 
-        }, 1500);
-    });
-}
-</script>
-
-<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;">
-    © 2026 Brixe Engine. All processing is 100% Client-Side.
-</footer>
-
-<script src="../nav.js"></script>
+    <script src="../nav.js"></script>
 </body>
 </html>

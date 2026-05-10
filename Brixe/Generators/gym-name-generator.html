@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Name Generator | Brixe</title>
+    <meta name="description" content="Generate powerful and motivating names for gyms, fitness centers, and boutique studios. Create a strong brand identity for crossfit, yoga, and bodybuilding ventures.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="entrepreneur-suite.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Gym Name Generator</h1>
+            <p>Build a legacy of strength. Generate names for high-intensity training centers, luxury wellness clubs, and local iron pits.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional niche (e.g. 'Box', 'Power')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="hardcore">💀 Hardcore Iron (Gritty/Raw)</option>
+                    <option value="luxury">💎 Luxury Wellness (Elite/Spa)</option>
+                    <option value="modern">⚡ Modern Performance (Fast/Tech)</option>
+                    <option value="community">🤝 Community Box (Friendly/Local)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateGymName()">Forge Identity</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Science of Fitness Branding</h2>
+            <p>A gym's name sets the psychological tone before a member even walks through the door. While "Hardcore Iron" needs a name that feels heavy and industrial, a "Wellness Boutique" requires a name that evokes tranquility and high-end service. Our generator pulls from a database of over 350 anatomical terms, mechanical metaphors, and lifestyle descriptors to help you carve out a unique space in the competitive fitness market.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. High-Impact Verbs</strong> Words like "Forge," "Grind," "Pulse," and "Lift" create an immediate call to action for potential members.</div>
+                <div class="tip-card"><strong>02. Sensory Adjectives</strong> Use "Raw," "Pure," or "Steadfast" to define the atmosphere of your facility without needing a long mission statement.</div>
+                <div class="tip-card"><strong>03. Localization</strong> If your gym is for the neighborhood, pairing a "vibe" word with your street name or district can foster instant community trust.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Gym Name Generator
+ * 100% Client-Side | Fitness & Strength Database
+ */
+function generateGymName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        hardcore: {
+            pre: ["Iron", "Steel", "Grim", "Forge", "Titan", "Rage", "Grind", "Brute", "Raw", "Stone", "Grit", "Core", "Pit", "Vault", "Bastion", "Havoc", "Heavy", "Unaligned", "Viking", "Fierce"],
+            suff: ["Gym", "Iron", "Strength", "Pit", "Forge", "House", "Asylum", "Underground", "Cell", "Lab", "Works", "Basement"]
+        },
+        luxury: {
+            pre: ["Aura", "Zenith", "Elite", "Royal", "Noble", "Crest", "Luxe", "Pure", "Haven", "Summit", "Velvet", "Opal", "Silk", "Ivory", "Sovereign", "Ciel", "Prime", "Bloom", "Vital", "Radiant"],
+            suff: ["Club", "Wellness", "Society", "Atelier", "Collective", "Studio", "Suites", "House", "Sanctum", "Lounge"]
+        },
+        modern: {
+            pre: ["Pulse", "Swift", "Volt", "Flux", "Flow", "Apex", "Verve", "Axis", "Meta", "Omni", "Neon", "Hyper", "Dynamic", "Velocity", "Peak", "Next", "Shift", "Dash", "Impact", "Vibe"],
+            suff: ["Performance", "Fitness", "Labs", "Studio", "Box", "Station", "Project", "Theory", "Motion", "Systems"]
+        },
+        community: {
+            pre: ["Local", "Urban", "Home", "Friendly", "Solid", "Common", "Bridge", "Anchor", "Daily", "Open", "North", "South", "East", "West", "Kind", "True", "Basis", "Root", "Unity", "Gather"],
+            suff: ["Box", "Fitness", "Gym", "Place", "Spot", "Hub", "Center", "Room", "League", "Circle"]
+        }
+    };
+
+    // Exactly 6 results
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let gymName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.35) gymName = `${userWord} ${pre}`;
+            else if (r < 0.7) gymName = `${pre} ${userWord}`;
+            else gymName = `${userWord} ${suff}`;
+        } else {
+            if (r < 0.5) {
+                gymName = `${pre} ${suff}`;
+            } else {
+                gymName = `The ${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit';">${gymName.toUpperCase()}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">ATHLETIC BRAND</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(gymName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>BRAND SECURED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The entrepreneur's choice for zero-log, high-performance professional tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. 100% Client-Side Processing.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

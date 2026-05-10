@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gender Neutral Name Generator | Brixe</title>
+    <meta name="description" content="Generate versatile, modern, and beautiful gender-neutral names. Perfect for parents seeking unisex options or individuals looking for a balanced identity.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Gender Neutral Name Generator</h1>
+            <p>Identity without limits. Generate balanced, unisex names that fit any personality, ranging from nature-inspired to sleek modern classics.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional surname (e.g. 'Reed')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="modern">✨ Modern & Chic (Short/Trendy)</option>
+                    <option value="nature">🌿 Earthy & Organic (Natural/Grounded)</option>
+                    <option value="vintage">🏛️ Classic Unisex (Timeless/Professional)</option>
+                    <option value="celestial">🌙 Ethereal & Space (Abstract/Atmospheric)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateNeutralName()">Find Balance</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Rise of Unisex Names</h2>
+            <p>Gender-neutral names offer a sense of fluidity and modern sophistication. Whether you're naming a child, choosing a pen name, or redefining your own identity, a unisex name provides a versatile foundation that focuses on the individual's character rather than traditional expectations. Our generator pulls from a diverse linguistic spectrum, combining surname-style first names with nature-based nouns and historically neutral identifiers.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. The Surname Style</strong> Many of the most successful gender-neutral names originate as surnames (e.g., Parker, Quinn, Blair). They carry a professional and established weight.</div>
+                <div class="tip-card"><strong>02. Nature is Neutral</strong> Elements of the natural world—like River, Sage, or Rowan—are inherently non-gendered, making them perfect for an organic identity.</div>
+                <div class="tip-card"><strong>03. Phonetic Balance</strong> Look for names with soft endings (vowels) or crisp consonants that don't lean toward hyper-masculine or hyper-feminine phonetic patterns.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Gender Neutral Name Generator
+ * 100% Client-Side | Modern Onomastics Database
+ */
+function generateNeutralName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        modern: ["Arlo", "Quinn", "Sloane", "Finn", "Remi", "Luca", "Blake", "Charlie", "Ellis", "Marlowe", "Emery", "Skyler", "Peyton", "Riley", "Sawyer", "Jude", "Reese", "Lennon", "Oakley", "Parker"],
+        nature: ["River", "Sage", "Rowan", "Wren", "Willow", "Ash", "Forest", "Briar", "Cedar", "Indigo", "Rain", "Ocean", "Aspen", "Clover", "Reed", "Sky", "Moss", "Juniper", "Falcon", "Brook"],
+        vintage: ["Francis", "Robin", "Morgan", "Casey", "Alex", "Jordan", "Taylor", "Jamie", "Lee", "Blair", "Sidney", "Marion", "Adrian", "Kit", "Pat", "Leslie", "Jackie", "Dale", "Kelly", "Terry"],
+        celestial: ["Nova", "Solaris", "Zenith", "Atlas", "Lyra", "Cosmos", "Vesper", "Lumina", "Echo", "Aura", "Nebula", "Sol", "Astra", "Ciel", "Lux", "Moon", "Stellar", "Orion", "Halo", "Eventide"]
+    };
+
+    const names = data[vibe];
+    const shuffled = names.sort(() => 0.5 - Math.random());
+
+    for (let i = 0; i < 6; i++) {
+        const name = shuffled[i];
+        const surname = userWord ? ` ${userWord}` : "";
+        
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.15rem; letter-spacing: 0.5px; font-family: 'Outfit';">${name}${surname}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">UNISEX IDENTITY</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(name + surname).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COPIED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Helping you find the perfect fit with private, fast, and 100% client-side tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

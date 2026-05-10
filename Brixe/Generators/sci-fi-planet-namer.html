@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sci-Fi Planet Namer | Brixe</title>
+    <meta name="description" content="Generate immersive and diverse sci-fi planet names. Create unique star systems for space operas, hard sci-fi, and cosmic horror with an expanded astronomical database.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="creative-universe.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title">Sci-Fi Planet Namer</h1>
+            <p>Chart the unknown reaches of the galaxy. Generate names for habitable worlds, gas giants, and mysterious moons.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional star system (e.g. 'Kepler')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="utopian">✨ Utopian (Lush/Civilized)</option>
+                    <option value="industrial">🏭 Industrial (Mining/Onerous)</option>
+                    <option value="ancient">🏛️ Ancient (Ruins/Alien)</option>
+                    <option value="anomalous">🌀 Anomalous (Cosmic Horror/Unstable)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generatePlanet()">Scan Quadrant</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Cosmic Toponymy</h2>
+            <p>Naming a planet defines its role in your universe. A world named "Aegis" implies a fortress, while "X-429" suggests an unexplored or strictly scientific outpost. Our engine combines Greek/Latin roots with mathematical designations and evocative imagery to ensure your star charts sound professional and vast. From terraformed paradises to tidally-locked hellscapes, the name is the first thing a traveler sees on their HUD.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Numerical Designations</strong> Using Roman numerals (e.g., Prime, II, IV) indicates the planet's position relative to its host star.</div>
+                <div class="tip-card"><strong>02. Descriptive Suffixes</strong> Use terms like "Station," "Outpost," "Expanse," or "Landing" for colonies rather than sovereign planets.</div>
+                <div class="tip-card"><strong>03. Linguistic Texture</strong> Hard sci-fi often uses phonetic, multi-syllabic names (Eriadan), while pulp sci-fi favors punchy, descriptive titles (The Dust World).</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Sci-Fi Planet Namer
+ * 100% Client-Side | Interstellar Database
+ */
+function generatePlanet() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        utopian: {
+            pre: ["Aurelia", "Caelum", "Elysium", "Genesis", "Hesperia", "Lumina", "Nova", "Oasis", "Pax", "Serenity", "Veridia", "Zenith", "Arcadia", "Eterna", "Helios", "Selene", "Vesta", "Eden", "Gaia", "Terra"],
+            mid: [" Prime", " Alpha", " Major", " Minor", " IV", " Delta", " Sigma", " One", " VII", " Omega"],
+            suff: ["Lush", "Verdant", "Radiant", "Crystalline", "Harmonious", "Bountiful", "Sacred", "Golden", "Azure", "Emerald"]
+        },
+        industrial: {
+            pre: ["Iron", "Steel", "Forge", "Core", "Drill", "Gear", "Rust", "Dust", "Ash", "Coal", "Slate", "Obsidian", "Carbon", "Quarry", "Mine", "Grit", "Vault", "Bastion", "Foundry", "Slag"],
+            mid: ["-42", "-X", " Sector 7", " Outpost", " Site B", " Unit 01", " Hub", " Complex", " Yard", " Grid"],
+            suff: ["Onerous", "Barren", "Heaving", "Mechanical", "Smoky", "Hollowed", "Gritty", "Unforgiving", "Hostile", "Static"]
+        },
+        ancient: {
+            pre: ["Xylos", "Vora", "Zalth", "Khar", "Marr", "Thal", "Orell", "Aethel", "Mith", "Drak", "Yul", "Zyn", "Kael", "Orax", "Kyber", "Sark", "Vyr", "Jor", "Mal", "Xan"],
+            mid: [" of Old", " Eternal", " Hidden", " Forgotten", " Primeval", " Elder", " Lost", " Ruined", " Silent", " Ancient"],
+            suff: ["Archaic", "Precursor", "Echoing", "Monolithic", "Ancestral", "Shadowy", "Dusty", "Morphic", "Runic", "Stilled"]
+        },
+        anomalous: {
+            pre: ["Void", "Null", "Abyss", "Rift", "Singularity", "Pulsar", "Quasar", "Chaos", "Entropy", "Blight", "Shadow", "Night", "Echo", "Ghost", "Wraith", "Phantom", "Dark", "Empty", "Hollow", "Zero"],
+            mid: [" Event", " Horizon", " Paradox", " Fracture", " Strain", " Error", " Drift", " Pulse", " Wave", " Point"],
+            suff: ["Unstable", "Distorted", "Ominous", "Maddening", "Shifting", "Bleak", "Silent", "Infinite", "Waning", "Grim"]
+        }
+    };
+
+    const greek = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Theta", "Iota", "Kappa", "Lambda"];
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const mid = data[vibe].mid[Math.floor(Math.random() * data[vibe].mid.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        const letter = greek[Math.floor(Math.random() * greek.length)];
+        
+        let planetName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) planetName = `${userWord} ${pre}${mid}`;
+            else if (r < 0.7) planetName = `${pre} of ${userWord}`;
+            else planetName = `${userWord}-${Math.floor(Math.random() * 900 + 100)}`;
+        } else {
+            if (r < 0.4) planetName = `${pre}${mid}`;
+            else if (r < 0.7) planetName = `${pre} ${letter}`;
+            else planetName = `${pre}`;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.2rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.1rem; letter-spacing: 1px;">${planetName.toUpperCase()}</div>
+            <div style="opacity: 0.4; font-size: 0.6rem; margin-top: 6px; letter-spacing: 2px;">${suff.toUpperCase()} CLASS</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(planetName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>COORDINATES SAVED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                Secure. Private. Fast. Expanded databases for professional star-charting.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Privacy Policy</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Support</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. All processing is 100% Client-Side.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>

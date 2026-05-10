@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thumbnail Squint Test | Brixe</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --accent: #ff007f; --border: #334155; --bg: #05070a; --card: #0f172a; }
+
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        .layout-grid { display: grid; grid-template-columns: 1fr 320px; gap: 30px; margin-top: 20px; }
+
+        /* The Testing Arena */
+        .test-bench {
+            background: #000; border: 1px solid var(--border); border-radius: 20px;
+            padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 30px;
+        }
+
+        .preview-box { position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; }
+        
+        #mainThumb { width: 100%; height: 100%; object-fit: cover; display: none; transition: filter 0.1s linear; }
+
+        /* Small Screen Simulation */
+        .mobile-preview {
+            width: 160px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden;
+            border: 2px solid var(--accent); position: relative; box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);
+        }
+        .mobile-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* UI */
+        .sidebar { display: flex; flex-direction: column; gap: 15px; }
+        .control-card { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 15px; }
+        .control-card h3 { font-family: 'Outfit'; font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+
+        .btn-main { background: var(--accent); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 700; width: 100%; cursor: pointer; }
+        
+        label { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 10px; color: #94a3b8; }
+        input[type="range"] { width: 100%; margin-bottom: 20px; accent-color: var(--accent); }
+
+        .audit-list { font-size: 0.75rem; color: #94a3b8; list-style: none; }
+        .audit-list li { margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+        .audit-list span { color: var(--accent); font-weight: bold; }
+
+        @media (max-width: 850px) { .layout-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body data-theme="growth">
+    <nav class="nav-container"></nav>
+
+    <div class="container">
+        <a href="visual-layout.html" class="back-btn">back to tools</a>
+        
+        <header style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-family: 'Outfit'; font-size: 2.5rem;">Thumbnail Squint Test</h1>
+            <p style="color: #64748b;">If you can't read it blurred, they won't click it small.</p>
+        </header>
+
+        <div class="layout-grid">
+            <div class="test-bench">
+                <div class="preview-box">
+                    <img id="mainThumb" src="">
+                    <div id="uploadPrompt" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #0f172a;">
+                        <button class="btn-main" style="width: auto; padding: 12px 30px;" onclick="document.getElementById('thumbIn').click()">Upload Thumbnail</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <div class="mock-label" style="margin-bottom: 10px; font-size: 0.6rem; color: #64748b; text-transform: uppercase;">Simulated Mobile Feed Size</div>
+                    <div class="mobile-preview">
+                        <img id="smallThumb" src="">
+                    </div>
+                </div>
+                <input type="file" id="thumbIn" hidden accept="image/*" onchange="loadThumbnail(this)">
+            </div>
+
+            <div class="sidebar">
+                <div class="control-card">
+                    <h3>Simulation Controls</h3>
+                    <label>Blur Intensity <span id="blurVal">5px</span></label>
+                    <input type="range" id="blurRange" min="0" max="25" value="5" oninput="updateTest()">
+                    
+                    <label>Grayscale (Contrast Check)</label>
+                    <input type="range" id="grayRange" min="0" max="100" value="0" oninput="updateTest()">
+                </div>
+
+                <div class="control-card">
+                    <h3>Audit Checklist</h3>
+                    <ul class="audit-list">
+                        <li><span>✔</span> Main Subject is recognizable?</li>
+                        <li><span>✔</span> Text is readable at 160px?</li>
+                        <li><span>✔</span> Faces pop from background?</li>
+                        <li><span>✔</span> High contrast focal point?</li>
+                    </ul>
+                </div>
+
+                <div class="control-card" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.05);">
+                    <h3 style="color: #f59e0b;">Vibe Tip</h3>
+                    <p style="font-size: 0.7rem; color: #d97706; line-height: 1.4;">YouTube's algorithm prioritizes thumbnails that have a clear <b>Visual Anchor</b>. Use the grayscale slider to see if your subject gets lost in the colors.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<footer style="margin-top: 120px; padding: 80px 20px; background: #05070a; border-top: 1px solid #1e293b; text-align: center; color: #64748b;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="color: white; font-family: 'Outfit'; margin-bottom: 10px;">Brixe Engine</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 20px;">The Digital Identity & Growth Suite for 2026.</p>
+            <div style="height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin-bottom: 20px;"></div>
+            <p style="font-size: 0.75rem;">© 2026 Brixe Engine. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        function loadThumbnail(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imgData = e.target.result;
+                document.getElementById('mainThumb').src = imgData;
+                document.getElementById('smallThumb').src = imgData;
+                document.getElementById('mainThumb').style.display = 'block';
+                document.getElementById('uploadPrompt').style.display = 'none';
+                updateTest();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateTest() {
+            const blur = document.getElementById('blurRange').value;
+            const gray = document.getElementById('grayRange').value;
+            const main = document.getElementById('mainThumb');
+            const small = document.getElementById('smallThumb');
+
+            document.getElementById('blurVal').innerText = blur + 'px';
+            
+            const filterString = `blur(${blur}px) grayscale(${gray}%)`;
+            main.style.filter = filterString;
+            small.style.filter = filterString;
+        }
+    </script>
+    <script src="../nav.js"></script>
+</body>
+</html>

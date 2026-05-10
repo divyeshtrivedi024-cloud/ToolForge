@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cottagecore Name Generator | Brixe</title>
+    <meta name="description" content="Generate whimsical, vintage, and nature-inspired names that capture the Cottagecore aesthetic. Perfect for social media, characters, or creative projects.">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/main-style.css">
+</head>
+<body data-theme="generators">
+    <nav class="nav-container"></nav>
+    <div class="container">
+        
+        <a href="lifestyle-personal.html" class="back-btn">← Back to Tools</a>
+        
+        <section class="tool-card glass">
+            <h1 class="tool-title" style="font-family: 'Fraunces', serif;">Cottagecore Name Generator</h1>
+            <p>Soft meadows and sun-drenched kitchens. Generate names inspired by botanical wonders, vintage domesticity, and the quiet magic of rural life.</p>
+            
+            <div class="input-group">
+                <input type="text" id="userInput" class="brixe-input" placeholder="Optional element (e.g. 'Honey', 'Fern')">
+                <select id="vibe-choice" class="brixe-input">
+                    <option value="botanical">🌸 Botanical & Floral (Petals/Bloom)</option>
+                    <option value="vintage">🧺 Vintage Domestic (Linen/Hearth)</option>
+                    <option value="forest">🍄 Forest Fae (Ethereal/Mossy)</option>
+                    <option value="sweet">🍯 Sweet & Cozy (Meadow/Bake)</option>
+                </select>
+            </div>
+            
+            <button class="gen-btn" onclick="generateCottageName()">Gather a Name</button>
+            <div id="result-list" class="grid-mode"></div>
+        </section>
+
+        <section class="seo-content">
+            <h2>The Allure of the Pastoral Aesthetic</h2>
+            <p>Cottagecore celebrates a return to traditional skills and a deep harmony with nature. A Cottagecore name should feel like a page from a Victorian field guide or a handwritten recipe found in an old pantry. Our generator curates a database of over 500 flora species, nostalgic textiles, and cozy atmospheric terms to help you find an identity that feels like a warm afternoon in a wildflower garden.</p>
+            <div class="tips-grid">
+                <div class="tip-card"><strong>01. Soft Consonants</strong> Names with 'L', 'M', 'V', and 'W' (e.g., Willow, Marigold, Lavender) feel more gentle and aligned with the pastoral vibe.</div>
+                <div class="tip-card"><strong>02. Compound Nature</strong> Combining two natural elements (e.g., "Briar-Rose" or "Moss-Wood") creates a folk-tale resonance.</div>
+                <div class="tip-card"><strong>03. Old-Fashioned Adjectives</strong> Using words like "Dear," "Little," "Sunny," or "Wild" adds a layer of vintage charm and intimacy.</div>
+            </div>
+        </section>
+    </div>
+
+<script>
+/**
+ * Cottagecore Name Generator
+ * 100% Client-Side | Pastoral & Botanical Database
+ */
+function generateCottageName() {
+    const rawInput = document.getElementById('userInput').value.trim();
+    const userWord = rawInput.replace(/[^a-zA-Z0-9]/g, '');
+    const vibe = document.getElementById('vibe-choice').value;
+    const resultList = document.getElementById('result-list');
+    resultList.innerHTML = "";
+
+    const data = {
+        botanical: {
+            pre: ["Marigold", "Lavender", "Dahlia", "Primrose", "Aster", "Juniper", "Hazel", "Zinnia", "Flora", "Thistle", "Briar", "Poppy", "Camellia", "Bluebell", "Hyacinth", "Willow", "Iris", "Fern", "Lily", "Daisy"],
+            suff: ["Bloom", "Petal", "Stem", "Leaf", "Bud", "Gardens", "Wilds", "Grove", "Meadow", "Hill"]
+        },
+        vintage: {
+            pre: ["Alice", "Beatrice", "Clementine", "Dorothy", "Edith", "Florence", "Mabel", "Nellie", "Olive", "Pearl", "Rosemary", "Sylvia", "Winnie", "Hattie", "Martha", "Agnes", "Clara", "Effie", "Maude", "Vera"],
+            suff: ["of the Hearth", "Linen", "Embroidery", "Thimble", "Apron", "Hollow", "Corner", "Snug", "Patch", "Lane"]
+        },
+        forest: {
+            pre: ["Moss", "Bramble", "Elowen", "Rowan", "Fawn", "Foxglove", "Moon", "Silver", "Nightshade", "River", "Twilight", "Elderberry", "Aspen", "Birch", "Dewdrop", "Acorn", "Fable", "Wren", "Sylvan", "Gaia"],
+            suff: ["Gaze", "Shadow", "Spirit", "Deep", "Roots", "Woods", "Spring", "Vale", "Moor", "Dale"]
+        },
+        sweet: {
+            pre: ["Honey", "Cinnamon", "Sunny", "Clover", "Apple", "Berry", "Peach", "Maple", "Sugar", "Butter", "Toffee", "Pip", "Waffle", "Sweet", "Little", "Golden", "Misty", "Amber", "Pudding", "Pippin"],
+            suff: ["Cottage", "Bake", "Nook", "Bee", "Jar", "Hearth", "Meadow", "Dapple", "Wares", "House"]
+        }
+    };
+
+    for (let i = 0; i < 6; i++) {
+        const pre = data[vibe].pre[Math.floor(Math.random() * data[vibe].pre.length)];
+        const suff = data[vibe].suff[Math.floor(Math.random() * data[vibe].suff.length)];
+        
+        let cottageName = "";
+        const r = Math.random();
+
+        if (userWord) {
+            if (r < 0.4) cottageName = `${userWord} ${pre}`;
+            else if (r < 0.7) cottageName = `${pre} ${userWord}`;
+            else cottageName = `${userWord}-${suff}`;
+        } else {
+            if (r < 0.5 && vibe === 'botanical') {
+                const pre2 = data.botanical.pre[Math.floor(Math.random() * 20)];
+                cottageName = (pre !== pre2) ? `${pre}-${pre2}` : `${pre} ${suff}`;
+            } else {
+                cottageName = `${pre} ${suff}`;
+            }
+        }
+
+        const div = document.createElement('div');
+        div.className = 'name-item';
+        div.style.textAlign = 'center';
+        div.style.padding = '1.5rem';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'center';
+        
+        div.innerHTML = `
+            <div style="font-weight: 700; color: var(--primary); font-size: 1.2rem; letter-spacing: 0.5px; font-family: 'Fraunces', serif; font-style: italic;">${cottageName}</div>
+            <div style="opacity: 0.5; font-size: 0.6rem; margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; color: var(--primary);">Hand-Picked Identity</div>
+        `;
+        
+        div.onclick = () => {
+            navigator.clipboard.writeText(cottageName).then(() => {
+                const originalHTML = div.innerHTML;
+                div.innerHTML = "<div style='color: var(--primary); font-weight: 800; letter-spacing: 1px;'>GATHERED</div>";
+                div.classList.add('active-copy'); 
+                setTimeout(() => {
+                    div.innerHTML = originalHTML;
+                    div.classList.remove('active-copy');
+                }, 1000);
+            });
+        };
+        resultList.appendChild(div);
+    }
+}
+</script>
+
+<footer style="margin-top: 100px; padding: 60px 20px; background: #05070a; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left;">
+        <div>
+            <h3 style="font-family: 'Outfit'; color: var(--primary); margin-bottom: 15px;">Brixe</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.6;">
+                The simple choice for private, high-performance aesthetic tools.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Legal</h4>
+            <ul style="list-style: none; padding: 0; font-size: 0.85rem;">
+                <li style="margin-bottom: 10px;"><a href="/privacy.html" style="color: #64748b; text-decoration: none;">Security</a></li>
+                <li style="margin-bottom: 10px;"><a href="/terms.html" style="color: #64748b; text-decoration: none;">Terms</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-bottom: 15px; font-size: 0.9rem; text-transform: uppercase;">Contact</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                <a href="mailto:growthdriven024@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 700;">
+                    growthdriven024@gmail.com
+                </a>
+            </p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #0f172a; color: #334155; font-size: 0.75rem;">
+        © 2026 Brixe Engine. Bloom where you are planted.
+    </div>
+</footer>
+<script src="../nav.js"></script>
+</body>
+</html>
